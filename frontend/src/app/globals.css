@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-sable: #c8863a;
+    --color-terre: #6b3418;
+    --color-vert: #2e7d32;
+    --color-laterite: #c0392b;
+  }
+
+  body {
+    @apply bg-sable-50 text-terre font-sans;
+  }
+
+  h1, h2, h3 {
+    @apply font-display;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-vert text-white px-4 py-2 rounded-lg font-medium hover:bg-vert-500 transition-colors;
+  }
+
+  .btn-secondary {
+    @apply bg-terre text-white px-4 py-2 rounded-lg font-medium hover:bg-terre-600 transition-colors;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-sable-100 p-4;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
+  }
+
+  .badge-vert {
+    @apply badge bg-vert-100 text-vert;
+  }
+
+  .badge-terre {
+    @apply badge bg-terre-100 text-terre;
+  }
+}

@@ -1,0 +1,468 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// =============================================
+// UTILISATEURS & PROFILS
+// =============================================
+
+enum Role {
+  MEMBRE
+  VOLONTAIRE
+  PRESIDENT_CERCLE
+  RESPONSABLE_ASSO
+  MODERATEUR
+  ADMIN
+}
+
+enum StatutInscription {
+  EN_ATTENTE
+  VALIDE
+  REFUSE
+  SUSPENDU
+}
+
+enum SituationActuelle {
+  ETUDIANT
+  PROFESSIONNEL
+  ENTREPRENEUR
+  EN_RECHERCHE
+}
+
+model User {
+  id            String            @id @default(cuid())
+  prenom        String
+  nom           String
+  email         String            @unique
+  motDePasse    String
+  dateNaissance DateTime
+  role          Role              @default(MEMBRE)
+  statut        StatutInscription @default(EN_ATTENTE)
+  emailVerifie  Boolean           @default(false)
+  codeVerif     String?
+  codeExpire    DateTime?
+  cguAccepteLe  DateTime?
+  parrainId     String?
+  parrain       User?             @relation("Parrainage", fields: [parrainId], references: [id])
+  filleuls      User[]            @relation("Parrainage")
+  profil        Profil?
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+}
+
+model Profil {
+  id                String            @id @default(cuid())
+  userId            String            @unique
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  telephone         String?
+  pays              String?
+  ville             String?
+  situation         SituationActuelle?
+  titre             String?
+  bio               String?
+  photo             String?
+  linkedin          String?
+  emailVisible      Boolean           @default(false)
+  telephoneVisible  Boolean           @default(false)
+  estVolontaire     Boolean           @default(false)
+  onboardingEtape   Int               @default(0)
+  onboardingFini    Boolean           @default(false)
+  formations        Formation[]
+  experiences       Experience[]
+  synergiesEnvoyees Synergie[]        @relation("Demandeur")
+  synergiesRecues   Synergie[]        @relation("Recepteur")
+  conversations     ConversationMembre[]
+  messages          Message[]
+  rdvDemandes       RendezVous[]      @relation("Demandeur")
+  volontaire        Volontaire?
+  cerclesMembres    CercleMembre[]
+  associations      AssociationMembre[]
+  evenements        EvenementParticipant[]
+  offres            Offre[]
+  signalements      Signalement[]
+  createdAt         DateTime          @default(now())
+}
+
+// =============================================
+// FORMATIONS & ÉTABLISSEMENTS
+// =============================================
+
+enum TypeEtablissement {
+  FONDAMENTALE
+  LYCEE
+  UNIVERSITE
+  ECOLE_SUPERIEURE
+}
+
+enum StatutEtablissement {
+  PUBLIC
+  PRIVE
+}
+
+model Etablissement {
+  id          String              @id @default(cuid())
+  nom         String
+  sigle       String?
+  type        TypeEtablissement
+  pays        String
+  ville       String
+  statut      StatutEtablissement
+  habilite    Boolean?
+  description String?
+  valide      Boolean             @default(true)
+  formations  Formation[]
+  avis        AvisEtablissement[]
+  createdAt   DateTime            @default(now())
+}
+
+model Formation {
+  id              String          @id @default(cuid())
+  profilId        String
+  profil          Profil          @relation(fields: [profilId], references: [id], onDelete: Cascade)
+  type            String
+  etablissementId String?
+  etablissement   Etablissement?  @relation(fields: [etablissementId], references: [id])
+  autreEtablissement String?
+  anneeDebut      Int?
+  anneeFin        Int?
+  diplome         String?
+  filiere         String?
+  serie           String?
+  enCours         Boolean         @default(false)
+  avis            AvisEtablissement?
+}
+
+model AvisEtablissement {
+  id                  String        @id @default(cuid())
+  formationId         String        @unique
+  formation           Formation     @relation(fields: [formationId], references: [id], onDelete: Cascade)
+  etablissementId     String
+  etablissement       Etablissement @relation(fields: [etablissementId], references: [id])
+  noteEnseignement    Int?
+  noteInfrastructures Int?
+  noteInsertion       Int?
+  noteAmbiance        Int?
+  commentaire         String?
+  anneePromo          Int?
+  createdAt           DateTime      @default(now())
+}
+
+model Experience {
+  id          String   @id @default(cuid())
+  profilId    String
+  profil      Profil   @relation(fields: [profilId], references: [id], onDelete: Cascade)
+  poste       String
+  entreprise  String
+  ville       String?
+  pays        String?
+  secteur     String?
+  dateDebut   DateTime
+  dateFin     DateTime?
+  estActuel   Boolean  @default(false)
+  description String?
+}
+
+// =============================================
+// SYNERGIES
+// =============================================
+
+enum StatutSynergie {
+  EN_ATTENTE
+  ACCEPTE
+  REFUSE
+}
+
+model Synergie {
+  id          String          @id @default(cuid())
+  demandeurId String
+  demandeur   Profil          @relation("Demandeur", fields: [demandeurId], references: [id])
+  recepteurId String
+  recepteur   Profil          @relation("Recepteur", fields: [recepteurId], references: [id])
+  statut      StatutSynergie  @default(EN_ATTENTE)
+  raison      String?
+  createdAt   DateTime        @default(now())
+
+  @@unique([demandeurId, recepteurId])
+}
+
+// =============================================
+// MESSAGERIE
+// =============================================
+
+model Conversation {
+  id           String               @id @default(cuid())
+  titre        String?
+  estGroupe    Boolean              @default(false)
+  participants ConversationMembre[]
+  messages     Message[]
+  createdAt    DateTime             @default(now())
+}
+
+model ConversationMembre {
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  profilId       String
+  profil         Profil       @relation(fields: [profilId], references: [id])
+  rejointLe      DateTime     @default(now())
+
+  @@id([conversationId, profilId])
+}
+
+model Message {
+  id             String       @id @default(cuid())
+  conversationId String
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
+  auteurId       String
+  auteur         Profil       @relation(fields: [auteurId], references: [id])
+  contenu        String
+  lu             Boolean      @default(false)
+  createdAt      DateTime     @default(now())
+}
+
+// =============================================
+// MENTORAT / VOLONTAIRES
+// =============================================
+
+model Volontaire {
+  id            String       @id @default(cuid())
+  profilId      String       @unique
+  profil        Profil       @relation(fields: [profilId], references: [id], onDelete: Cascade)
+  specialite    String
+  disponible    Boolean      @default(true)
+  fuseau        String       @default("Africa/Bamako")
+  dureeCreneau  Int          @default(30)
+  delaiMinResa  Int          @default(24)
+  rdvs          RendezVous[]
+}
+
+enum StatutRDV {
+  EN_ATTENTE
+  ACCEPTE
+  REFUSE
+  ANNULE
+}
+
+model RendezVous {
+  id           String     @id @default(cuid())
+  volontaireId String
+  volontaire   Volontaire @relation(fields: [volontaireId], references: [id])
+  demandeurId  String
+  demandeur    Profil     @relation("Demandeur", fields: [demandeurId], references: [id])
+  debut        DateTime
+  fin          DateTime
+  motif        String
+  statut       StatutRDV  @default(EN_ATTENTE)
+  lienAppel    String?
+  createdAt    DateTime   @default(now())
+}
+
+// =============================================
+// CERCLES
+// =============================================
+
+model Cercle {
+  id          String         @id @default(cuid())
+  nom         String
+  theme       String
+  description String?
+  presidentId String
+  actif       Boolean        @default(true)
+  membres     CercleMembre[]
+  documents   CercleDocument[]
+  reunions    CercleReunion[]
+  messages    CercleMessage[]
+  createdAt   DateTime       @default(now())
+}
+
+enum StatutMembreCercle {
+  EN_ATTENTE
+  ACCEPTE
+  REFUSE
+}
+
+model CercleMembre {
+  cercleId   String
+  cercle     Cercle             @relation(fields: [cercleId], references: [id])
+  profilId   String
+  profil     Profil             @relation(fields: [profilId], references: [id])
+  statut     StatutMembreCercle @default(EN_ATTENTE)
+  motivation String?
+  rejointLe  DateTime?
+
+  @@id([cercleId, profilId])
+}
+
+model CercleDocument {
+  id        String   @id @default(cuid())
+  cercleId  String
+  cercle    Cercle   @relation(fields: [cercleId], references: [id])
+  titre     String
+  url       String
+  createdAt DateTime @default(now())
+}
+
+model CercleReunion {
+  id          String   @id @default(cuid())
+  cercleId    String
+  cercle      Cercle   @relation(fields: [cercleId], references: [id])
+  titre       String
+  ordreJour   String?
+  date        DateTime
+  lienAppel   String?
+  createdAt   DateTime @default(now())
+}
+
+model CercleMessage {
+  id        String   @id @default(cuid())
+  cercleId  String
+  cercle    Cercle   @relation(fields: [cercleId], references: [id])
+  auteurId  String
+  contenu   String
+  createdAt DateTime @default(now())
+}
+
+// =============================================
+// ÉDUCATION — FORUM
+// =============================================
+
+model ForumQuestion {
+  id              String          @id @default(cuid())
+  auteurId        String
+  titre           String
+  contenu         String
+  secteur         String?
+  etablissementId String?
+  valide          Boolean         @default(true)
+  reponses        ForumReponse[]
+  createdAt       DateTime        @default(now())
+}
+
+model ForumReponse {
+  id          String        @id @default(cuid())
+  questionId  String
+  question    ForumQuestion @relation(fields: [questionId], references: [id])
+  auteurId    String
+  contenu     String
+  estAcceptee Boolean       @default(false)
+  createdAt   DateTime      @default(now())
+}
+
+// =============================================
+// ASSOCIATIONS
+// =============================================
+
+model Association {
+  id            String               @id @default(cuid())
+  nom           String
+  description   String?
+  pays          String
+  site          String?
+  responsableId String?
+  valide        Boolean              @default(true)
+  membres       AssociationMembre[]
+  createdAt     DateTime             @default(now())
+}
+
+enum StatutAffiliation {
+  EN_ATTENTE
+  VERIFIE
+  DECLARE
+}
+
+model AssociationMembre {
+  associationId String
+  association   Association       @relation(fields: [associationId], references: [id])
+  profilId      String
+  profil        Profil            @relation(fields: [profilId], references: [id])
+  statut        StatutAffiliation @default(EN_ATTENTE)
+  rejointLe     DateTime?
+
+  @@id([associationId, profilId])
+}
+
+// =============================================
+// ÉVÉNEMENTS
+// =============================================
+
+model Evenement {
+  id            String                 @id @default(cuid())
+  titre         String
+  description   String
+  type          String
+  lieu          String?
+  lienVideo     String?
+  dateDebut     DateTime
+  dateFin       DateTime?
+  capacite      Int?
+  organisateurId String
+  valide        Boolean                @default(false)
+  participants  EvenementParticipant[]
+  createdAt     DateTime               @default(now())
+}
+
+model EvenementParticipant {
+  evenementId String
+  evenement   Evenement @relation(fields: [evenementId], references: [id])
+  profilId    String
+  profil      Profil    @relation(fields: [profilId], references: [id])
+  inscritLe   DateTime  @default(now())
+
+  @@id([evenementId, profilId])
+}
+
+// =============================================
+// OFFRES D'EMPLOI
+// =============================================
+
+model Offre {
+  id             String   @id @default(cuid())
+  titre          String
+  entreprise     String
+  type           String
+  secteur        String
+  pays           String
+  ville          String?
+  teletravail    Boolean  @default(false)
+  description    String
+  lienCandidature String?
+  emailContact   String?
+  dateExpiration DateTime?
+  publieurId     String
+  publieur       Profil   @relation(fields: [publieurId], references: [id])
+  valide         Boolean  @default(false)
+  createdAt      DateTime @default(now())
+}
+
+// =============================================
+// SIGNALEMENTS
+// =============================================
+
+model Signalement {
+  id          String   @id @default(cuid())
+  signaleurId String
+  signaleur   Profil   @relation(fields: [signaleurId], references: [id])
+  cibleType   String
+  cibleId     String
+  motif       String
+  traite      Boolean  @default(false)
+  noteInterne String?
+  createdAt   DateTime @default(now())
+}
+
+// =============================================
+// ANNONCES ADMIN
+// =============================================
+
+model Annonce {
+  id        String   @id @default(cuid())
+  titre     String
+  contenu   String
+  epingle   Boolean  @default(false)
+  auteurId  String
+  createdAt DateTime @default(now())
+}
