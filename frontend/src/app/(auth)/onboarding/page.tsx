@@ -30,57 +30,59 @@ export default function OnboardingPage() {
   // Écran de bienvenue
   if (step === 0) {
     return (
-      <div className="min-h-screen bg-sable-50 flex flex-col items-center justify-center px-4 py-12">
-        <div className="w-full max-w-2xl space-y-4">
+      <main className="min-h-screen overflow-x-hidden bg-[#f6efe3] px-4 py-8 sm:px-6 sm:py-10">
+        <div className="mx-auto w-full max-w-[1040px] space-y-6">
 
           {/* Header terre */}
-          <div className="bg-terre rounded-2xl p-8 text-white">
-            <p className="text-xs font-semibold tracking-widest text-sable-200 uppercase mb-3">
+          <section className="rounded-[22px] bg-[#735133] px-6 py-8 text-[#fffaf4] sm:px-10 sm:py-10 lg:px-12 lg:py-11">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-[#fffaf4] sm:text-base">
               Bienvenue sur Mali Wuli
             </p>
-            <h1 className="font-display text-3xl md:text-4xl font-bold leading-tight mb-4">
+            <h1 className="mb-5 max-w-[850px] font-display text-3xl font-bold leading-[1.2] sm:text-4xl lg:text-[40px]">
               Un seul réseau pour les talents du Mali, ici et ailleurs.
             </h1>
-            <p className="text-sable-200 text-sm leading-relaxed">
+            <p className="max-w-[900px] text-base leading-[1.7] text-[#fffaf4] sm:text-[17px] lg:text-lg">
               Mali Wuli relie ceux qui cherchent et ceux qui proposent : mentorat, orientation,
-              chantiers concrets, emplois et cercles de réflexion. Un seul espace, les mêmes droits
-              pour tous : chacun y demande, y propose et y répond librement.
+              chantiers concrets, emplois et cercles de réflexion.
             </p>
-          </div>
+          </section>
 
           {/* Étapes */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-sable-100">
-            <div className="flex items-center gap-3 mb-5">
-              <span className="text-xs font-bold px-3 py-1 rounded-full bg-laterite text-white uppercase tracking-wide">
+          <section className="rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-5 shadow-sm sm:p-8 lg:p-9">
+            <div className="mb-6 flex flex-wrap items-center gap-3">
+              <span className="rounded-[9px] border border-[#edc9b7] bg-[#f8e4d7] px-3 py-2 text-sm font-bold uppercase tracking-[0.04em] text-[#2e261f] sm:text-base">
                 Environ 5 minutes
               </span>
-              <span className="text-sm text-terre-300">Quatre étapes courtes. Vous pouvez compléter le reste plus tard.</span>
+              <span className="text-sm text-[#2e261f] sm:text-base">
+                Quatre étapes courtes. Vous pouvez compléter le reste plus tard.
+              </span>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+            <div className="mb-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                { num: "ÉTAPE 1", titre: "Où vous vivez", desc: "Pays et ville : c'est ce qui relie le pays et la diaspora." },
+                { num: "ÉTAPE 1", titre: "Vos informations", desc: "Nom, prénom et lieu de résidence : de quoi vous identifier dans l'annuaire." },
                 { num: "ÉTAPE 2", titre: "Vos formations", desc: "École, lycée, université, et votre avis noté sur chacune pour guider les plus jeunes." },
                 { num: "ÉTAPE 3", titre: "Vos expériences", desc: "Postes et missions : ce qui permet aux autres de savoir quoi vous demander." },
                 { num: "ÉTAPE 4", titre: "Le mentorat", desc: "Voulez-vous ouvrir des créneaux ? Vous choisissez lesquels, et vous restez libre." },
               ].map((s) => (
-                <div key={s.num} className="bg-sable-50 rounded-xl p-3 border border-sable-100">
-                  <p className="text-xs font-bold text-laterite mb-1">{s.num}</p>
-                  <p className="text-sm font-semibold text-terre mb-1">{s.titre}</p>
-                  <p className="text-xs text-terre-300 leading-relaxed">{s.desc}</p>
-                </div>
+                <article key={s.num} className="min-h-[200px] rounded-[18px] border border-[#ead8bd] bg-[#fffbf5] p-5 lg:min-h-[210px]">
+                  <p className="mb-2 text-sm font-bold text-[#c65327] sm:text-base">{s.num}</p>
+                  <h2 className="mb-2 font-sans text-lg font-bold text-[#2e261f]">{s.titre}</h2>
+                  <p className="text-[15px] leading-[1.55] text-[#2e261f] lg:text-base">{s.desc}</p>
+                </article>
               ))}
             </div>
 
             <button
+              type="button"
               onClick={() => setStep(1)}
-              className="w-full py-4 rounded-xl bg-vert text-white font-semibold text-sm hover:bg-vert-500 transition-colors"
+              className="w-full rounded-full bg-[#0d6738] px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 sm:text-lg"
             >
               Commencer le questionnaire
             </button>
-          </div>
+          </section>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -118,11 +120,14 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-sable-50 px-4 py-10">
-      <div className="w-full max-w-2xl mx-auto">
+    <div className="min-h-screen overflow-x-hidden bg-[#f6efe3]">
+      <div className="border-b border-[#ead8bd] bg-[#fffbf5] px-4 py-5 sm:px-6">
+        <div className="mx-auto w-full max-w-[1320px]">
+          <StepIndicator currentStep={step} steps={STEPS} />
+        </div>
+      </div>
 
-        {/* Step indicator */}
-        <StepIndicator currentStep={step} steps={STEPS} />
+      <main className="mx-auto w-full min-w-0 max-w-[1320px] overflow-x-hidden px-4 py-8 sm:px-6 sm:py-12">
 
         {/* Étapes */}
         {step === 1 && (
@@ -157,7 +162,7 @@ export default function OnboardingPage() {
             }}
           />
         )}
-      </div>
+      </main>
     </div>
   );
 }

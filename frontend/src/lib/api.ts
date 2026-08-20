@@ -1,14 +1,15 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api",
+  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8002/api",
   headers: { "Content-Type": "application/json" },
 });
 
 // Injecter le token JWT à chaque requête
 api.interceptors.request.use((config) => {
   if (typeof window !== "undefined") {
-    const token = localStorage.getItem("mali_wuli_token");
+    const token = localStorage.getItem("mali_wuli_token")
+      || localStorage.getItem("mali_wuli_registration_token");
     if (token) config.headers.Authorization = `Bearer ${token}`;
   }
   return config;

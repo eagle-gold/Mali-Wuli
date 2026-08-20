@@ -1,53 +1,79 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
 
+const CODE_LENGTH = 6;
+
 export default function VerifyEmailPage() {
   const router = useRouter();
-  const [code, setCode] = useState(["", "", "", "", "", ""]);
+  const [code, setCode] = useState(Array(CODE_LENGTH).fill(""));
   const [loading, setLoading] = useState(false);
   const [erreur, setErreur] = useState("");
   const [renvoiOk, setRenvoiOk] = useState(false);
   const [email, setEmail] = useState("");
   const inputs = useRef<(HTMLInputElement | null)[]>([]);
 
+  const codeComplet = code.every(Boolean);
+  const codeSaisi = code.join("");
+
   useEffect(() => {
-    const e = localStorage.getItem("mali_wuli_pending_email") || "";
-    setEmail(e);
+    setEmail(localStorage.getItem("mali_wuli_pending_email") || "");
   }, []);
+
+  const appliquerCode = (valeur: string) => {
+    const chiffres = valeur.replace(/\D/g, "").slice(0, CODE_LENGTH);
+    setCode(Array.from({ length: CODE_LENGTH }, (_, index) => chiffres[index] || ""));
+    setErreur("");
+  };
 
   const handleChange = (index: number, value: string) => {
     if (!/^\d?$/.test(value)) return;
-    const newCode = [...code];
-    newCode[index] = value;
-    setCode(newCode);
-    if (value && index < 5) inputs.current[index + 1]?.focus();
+
+    const nouveauCode = [...code];
+    nouveauCode[index] = value;
+    setCode(nouveauCode);
+    setErreur("");
+
+    if (value && index < CODE_LENGTH - 1) {
+      inputs.current[index + 1]?.focus();
+    }
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === "Backspace" && !code[index] && index > 0) {
+  const handleKeyDown = (index: number, event: React.KeyboardEvent) => {
+    if (event.key === "Backspace" && !code[index] && index > 0) {
       inputs.current[index - 1]?.focus();
     }
   };
 
-  const handlePaste = (e: React.ClipboardEvent) => {
-    const pasted = e.clipboardData.getData("text").replace(/\D/g, "").slice(0, 6);
-    if (pasted.length === 6) {
-      setCode(pasted.split(""));
-      inputs.current[5]?.focus();
-    }
+  const handlePaste = (event: React.ClipboardEvent) => {
+    event.preventDefault();
+    appliquerCode(event.clipboardData.getData("text"));
+    inputs.current[CODE_LENGTH - 1]?.focus();
   };
 
   const handleVerify = async () => {
-    const fullCode = code.join("");
-    if (fullCode.length < 6) { setErreur("Entrez les 6 chiffres du code."); return; }
+    if (!codeComplet) {
+      setErreur("Entrez les 6 chiffres du code.");
+      return;
+    }
+
     setLoading(true);
     setErreur("");
+
     try {
-      const userId = localStorage.getItem("mali_wuli_pending_userId");
-      await api.post("/auth/verify-email", { userId, code: fullCode });
+      const verificationId = localStorage.getItem("mali_wuli_pending_verificationId");
+      const res = await api.post("/auth/verify-registration-email", {
+        verificationId,
+        email,
+        code: codeSaisi,
+      });
+      localStorage.setItem("mali_wuli_token", res.data.token);
+      localStorage.setItem("mali_wuli_user_id", res.data.user.id);
+      localStorage.removeItem("mali_wuli_pending_email");
+      localStorage.removeItem("mali_wuli_pending_verificationId");
+      localStorage.removeItem("mali_wuli_registration_token");
       router.push("/onboarding");
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
@@ -57,10 +83,25 @@ export default function VerifyEmailPage() {
     }
   };
 
+  const handleNext = () => {
+    if (!codeComplet) {
+      setErreur(
+        "Pour continuer, consultez votre boîte e-mail, saisissez ici le code à 6 chiffres reçu, puis cliquez sur « Confirmer ».",
+      );
+      return;
+    }
+
+    void handleVerify();
+  };
+
   const handleResend = async () => {
+    setErreur("");
+    setRenvoiOk(false);
+
     try {
-      const userId = localStorage.getItem("mali_wuli_pending_userId");
-      await api.post("/auth/resend-code", { userId });
+      const verificationId = localStorage.getItem("mali_wuli_pending_verificationId");
+      await api.post("/auth/resend-registration-code", { verificationId });
+      appliquerCode("");
       setRenvoiOk(true);
       setTimeout(() => setRenvoiOk(false), 5000);
     } catch {
@@ -68,64 +109,96 @@ export default function VerifyEmailPage() {
     }
   };
 
-  return (
-    <div className="min-h-screen bg-sable-50 flex items-center justify-center px-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-sable-100 w-full max-w-md p-8 text-center">
-        <div className="w-14 h-14 rounded-full bg-vert-100 flex items-center justify-center mx-auto mb-4">
-          <svg className="w-7 h-7 text-vert" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
-        </div>
+  const handleBack = () => {
+    localStorage.removeItem("mali_wuli_pending_email");
+    localStorage.removeItem("mali_wuli_pending_verificationId");
+    localStorage.removeItem("mali_wuli_registration_token");
+    router.push("/register");
+  };
 
-        <h1 className="font-display text-2xl font-bold text-terre mb-2">Vérifiez votre email</h1>
-        <p className="text-sm text-terre-300 mb-8">
-          Nous avons envoyé un code à 6 chiffres à{" "}
-          <strong className="text-terre">{email || "votre adresse email"}</strong>.
-          <br />Le code est valable 15 minutes.
+  return (
+    <main className="min-h-screen bg-[#f6efe3] flex items-center justify-center px-4 py-10">
+      <section className="bg-[#fffbf5] rounded-2xl shadow-sm border border-[#e4d2b3] w-full max-w-md p-8 text-center">
+        <nav className="flex items-center justify-between mb-7" aria-label="Navigation de l'inscription">
+          <button
+            type="button"
+            onClick={handleBack}
+            className="text-sm font-semibold text-[#2e261f] hover:text-[#0d6738] hover:underline"
+          >
+            Retour
+          </button>
+          <button
+            type="button"
+            onClick={handleNext}
+            className="text-sm font-semibold text-[#0d6738] hover:underline"
+          >
+            Suivant
+          </button>
+        </nav>
+
+        <h1 className="font-display text-3xl font-bold text-[#2e261f] mb-3">
+          Confirmez votre e-mail
+        </h1>
+        <p className="text-sm text-[#2e261f] mb-8">
+          Code à 6 chiffres envoyé à {" "}
+          <strong>{email || "votre adresse e-mail"}</strong>
         </p>
 
-        {/* Inputs code */}
-        <div className="flex justify-center gap-2 mb-6" onPaste={handlePaste}>
-          {code.map((digit, i) => (
+        <div
+          className="flex justify-center gap-2 mb-6"
+          onPaste={handlePaste}
+          aria-label="Code de confirmation"
+        >
+          {code.map((digit, index) => (
             <input
-              key={i}
-              ref={(el) => { inputs.current[i] = el; }}
+              key={index}
+              ref={(element) => {
+                inputs.current[index] = element;
+              }}
               type="text"
               inputMode="numeric"
+              autoComplete={index === 0 ? "one-time-code" : "off"}
               maxLength={1}
               value={digit}
-              onChange={(e) => handleChange(i, e.target.value)}
-              onKeyDown={(e) => handleKeyDown(i, e)}
-              className={`w-12 h-14 text-center text-xl font-bold border-2 rounded-xl transition-colors
-                ${digit ? "border-vert text-vert" : "border-sable-200 text-terre"}
-                focus:outline-none focus:border-vert`}
+              aria-label={`Chiffre ${index + 1}`}
+              onChange={(event) => handleChange(index, event.target.value)}
+              onKeyDown={(event) => handleKeyDown(index, event)}
+              className={`h-14 w-11 sm:w-12 rounded-xl border text-center text-xl font-bold text-[#2e261f] outline-none transition-colors focus:ring-2 focus:ring-[#0d6738] ${
+                digit
+                  ? "border-[#0d6738] bg-[#eaf1e9]"
+                  : "border-[#dfc9a8] bg-[#fffbf5]"
+              }`}
             />
           ))}
         </div>
 
-        {erreur && (
-          <p className="text-sm text-red-500 mb-4">{erreur}</p>
-        )}
-        {renvoiOk && (
-          <p className="text-sm text-vert mb-4">Code renvoyé !</p>
-        )}
+        {erreur && <p role="alert" className="text-sm text-red-600 mt-4">{erreur}</p>}
+        {renvoiOk && <p className="text-sm text-[#0d6738] mt-4">Code renvoyé !</p>}
 
         <button
+          type="button"
           onClick={handleVerify}
-          disabled={loading}
-          className={`w-full py-4 rounded-xl text-white font-semibold text-sm mb-4 transition-colors
-            ${loading ? "bg-sable-200 cursor-not-allowed" : "bg-vert hover:bg-vert-500"}`}
+          disabled={!codeComplet || loading}
+          className={`w-full py-4 rounded-xl font-semibold text-sm mt-6 transition-colors ${
+            codeComplet && !loading
+              ? "bg-[#0d6738] text-white hover:bg-[#09572f]"
+              : "bg-[#eee2d0] text-[#ad9d89] cursor-not-allowed"
+          }`}
         >
-          {loading ? "Vérification..." : "Vérifier mon adresse"}
+          {loading ? "Vérification..." : "Confirmer"}
         </button>
 
-        <button
-          onClick={handleResend}
-          className="text-sm text-terre-300 hover:text-vert transition-colors"
-        >
-          Je n'ai pas reçu le code — Renvoyer
-        </button>
-      </div>
-    </div>
+        <p className="mt-5 text-sm text-[#2e261f]">
+          Pas reçu ? {" "}
+          <button
+            type="button"
+            onClick={handleResend}
+            className="font-semibold text-[#0d6738] hover:underline"
+          >
+            Renvoyer le code
+          </button>
+        </p>
+      </section>
+    </main>
   );
 }

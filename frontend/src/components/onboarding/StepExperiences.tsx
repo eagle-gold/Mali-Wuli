@@ -1,13 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import SearchCombobox, { type SearchOption } from "./SearchCombobox";
 
 export interface Experience {
   id: string;
   poste: string;
   structure: string;
   typeContrat: string;
-  lieu: string;
+  pays: string;
+  paysCode: string;
+  ville: string;
+  /** Conservé pour relire les anciennes données locales. */
+  lieu?: string;
   anneeDebut: string;
   anneeFin: string;
   posteActuel: boolean;
@@ -20,215 +25,382 @@ interface StepExperiencesProps {
   initialData?: Experience[];
 }
 
+type PaysOption = { code: string; nom: string; drapeau: string };
+type VilleOption = { id: number; nom: string; region: string };
+
 const TYPES_CONTRAT = [
-  "CDI", "CDD", "Stage", "Alternance", "Freelance",
-  "Entrepreneuriat", "Mission", "Bénévolat", "Autre",
+  "CDI",
+  "CDD",
+  "Stage",
+  "Alternance",
+  "Freelance",
+  "Entrepreneuriat",
+  "Mission",
+  "Bénévolat",
+  "Engagement associatif",
+  "Autre",
 ];
 
-function ExperienceCard({ exp, onRetirer }: { exp: Experience; onRetirer: () => void }) {
+const PAYS_DE_SECOURS: PaysOption[] = [
+  { code: "ML", nom: "Mali", drapeau: "🇲🇱" },
+  { code: "CI", nom: "Côte d’Ivoire", drapeau: "🇨🇮" },
+  { code: "NG", nom: "Nigéria", drapeau: "🇳🇬" },
+  { code: "NE", nom: "Niger", drapeau: "🇳🇪" },
+  { code: "MR", nom: "Mauritanie", drapeau: "🇲🇷" },
+  { code: "FR", nom: "France", drapeau: "🇫🇷" },
+];
+
+const FIELD_CLASS =
+  "w-full min-w-0 rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-5 py-4 text-base text-[#2e261f] outline-none transition focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 disabled:cursor-not-allowed disabled:bg-[#eee2d0] disabled:text-[#776b5e] sm:text-lg";
+const LABEL_CLASS = "mb-2 block text-base font-semibold text-[#2e261f]";
+
+const creerExperienceVide = (): Omit<Experience, "id"> => ({
+  poste: "",
+  structure: "",
+  typeContrat: "CDI",
+  pays: "Mali",
+  paysCode: "ML",
+  ville: "",
+  lieu: "",
+  anneeDebut: "",
+  anneeFin: "",
+  posteActuel: false,
+  description: "",
+});
+
+const normaliserAncienneExperience = (experience: Experience): Experience => {
+  if (experience.paysCode && experience.pays && experience.ville) return experience;
+  const [ville = "", pays = ""] = (experience.lieu || "").split(",").map((partie) => partie.trim());
+  const paysConnu = PAYS_DE_SECOURS.find((option) => option.nom === pays);
+  return {
+    ...experience,
+    pays: experience.pays || pays || "Mali",
+    paysCode: experience.paysCode || paysConnu?.code || "ML",
+    ville: experience.ville || ville,
+  };
+};
+
+const initialesStructure = (structure: string) => {
+  const mots = structure.trim().split(/\s+/).filter(Boolean);
+  if (!mots.length) return "EX";
+  if (mots.length === 1) return mots[0].slice(0, 2).toLocaleUpperCase("fr");
+  return `${mots[0][0]}${mots[1][0]}`.toLocaleUpperCase("fr");
+};
+
+function ExperienceCard({
+  experience,
+  onModifier,
+  onRetirer,
+}: {
+  experience: Experience;
+  onModifier: () => void;
+  onRetirer: () => void;
+}) {
+  const localisation = [experience.ville, experience.pays].filter(Boolean).join(", ") || experience.lieu;
+
   return (
-    <div className="border border-sable-200 rounded-xl p-4 mb-3 bg-white">
-      <div className="flex justify-between items-start">
-        <div>
-          <p className="font-semibold text-terre text-sm">{exp.poste}</p>
-          <p className="text-xs text-terre-300">{exp.structure} · {exp.lieu}</p>
-          <p className="text-xs text-terre-300">
-            {exp.anneeDebut} → {exp.posteActuel ? "aujourd'hui" : exp.anneeFin}
-            <span className="ml-2 px-2 py-0.5 rounded-full bg-sable-100 text-terre-300">{exp.typeContrat}</span>
-          </p>
-          {exp.description && <p className="text-xs text-terre-300 mt-1 italic">{exp.description}</p>}
-        </div>
-        <button onClick={onRetirer} className="text-xs text-terre-300 hover:text-laterite ml-2">
-          Retirer
-        </button>
+    <article className="mb-5 flex min-w-0 gap-4 rounded-[18px] border border-[#e4d2b3] bg-[#fffbf5] p-4 sm:gap-5 sm:p-6">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[12px] bg-[#e1f1e6] text-sm font-bold text-[#0d6738] sm:h-14 sm:w-14 sm:text-base">
+        {initialesStructure(experience.structure)}
       </div>
-    </div>
+      <div className="min-w-0 flex-1">
+        <div className="flex min-w-0 flex-col justify-between gap-3 sm:flex-row sm:items-start">
+          <div className="min-w-0">
+            <div className="flex min-w-0 flex-wrap items-center gap-2">
+              <h3 className="break-words text-base font-bold text-[#2e261f] [overflow-wrap:anywhere] sm:text-lg">
+                {experience.poste}
+              </h3>
+              <span className="rounded-[7px] bg-[#eee2d0] px-3 py-1 text-xs font-bold text-[#2e261f] sm:text-sm">
+                {experience.typeContrat}
+              </span>
+            </div>
+            <p className="mt-1 break-words text-sm text-[#2e261f] [overflow-wrap:anywhere] sm:text-base">
+              {experience.structure} · {localisation} · {experience.anneeDebut} → {experience.posteActuel ? "aujourd’hui" : experience.anneeFin}
+            </p>
+            {experience.description && (
+              <p className="mt-2 break-words text-sm leading-relaxed text-[#56493e] [overflow-wrap:anywhere] sm:text-base">
+                {experience.description}
+              </p>
+            )}
+          </div>
+          <div className="flex shrink-0 gap-4 sm:flex-col sm:items-end sm:gap-2">
+            <button type="button" onClick={onModifier} className="text-sm font-semibold text-[#0d6738] hover:underline sm:text-base">
+              Modifier
+            </button>
+            <button type="button" onClick={onRetirer} className="text-sm font-semibold text-[#2e261f] hover:text-[#b84f25] sm:text-base">
+              Retirer
+            </button>
+          </div>
+        </div>
+      </div>
+    </article>
   );
 }
 
-function ExperienceForm({ onSave, onCancel }: { onSave: (e: Experience) => void; onCancel: () => void }) {
-  const [form, setForm] = useState({
-    poste: "",
-    structure: "",
-    typeContrat: "CDI",
-    lieu: "",
-    anneeDebut: "",
-    anneeFin: "",
-    posteActuel: false,
-    description: "",
-  });
+function ExperienceForm({
+  initialData,
+  onSave,
+  onCancel,
+}: {
+  initialData?: Experience;
+  onSave: (experience: Experience) => void;
+  onCancel: () => void;
+}) {
+  const [form, setForm] = useState<Omit<Experience, "id">>(() =>
+    initialData ? normaliserAncienneExperience(initialData) : creerExperienceVide(),
+  );
+  const [pays, setPays] = useState<PaysOption[]>(PAYS_DE_SECOURS);
+  const [villes, setVilles] = useState<VilleOption[]>([]);
+  const [rechercheVille, setRechercheVille] = useState(false);
 
-  const set = (field: keyof typeof form, value: unknown) =>
-    setForm((p) => ({ ...p, [field]: value }));
+  const set = <K extends keyof Omit<Experience, "id">>(champ: K, valeur: Omit<Experience, "id">[K]) =>
+    setForm((precedent) => ({ ...precedent, [champ]: valeur }));
 
-  const canSave = form.poste && form.structure && form.anneeDebut;
+  useEffect(() => {
+    let actif = true;
+    fetch("/api/locations/countries")
+      .then((reponse) => reponse.ok ? reponse.json() : Promise.reject(new Error("Pays indisponibles")))
+      .then((donnees: { pays?: PaysOption[] }) => {
+        if (actif && donnees.pays?.length) setPays(donnees.pays);
+      })
+      .catch(() => undefined);
+    return () => {
+      actif = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const recherche = form.ville.trim();
+    if (recherche.length < 2) {
+      setVilles([]);
+      setRechercheVille(false);
+      return;
+    }
+    let actif = true;
+    const temporisateur = window.setTimeout(() => {
+      setRechercheVille(true);
+      const parametres = new URLSearchParams({ country: form.paysCode, q: recherche, limit: "60" });
+      fetch(`/api/locations/cities?${parametres}`)
+        .then((reponse) => reponse.ok ? reponse.json() : Promise.reject(new Error("Villes indisponibles")))
+        .then((donnees: { villes?: VilleOption[] }) => {
+          if (actif) setVilles(donnees.villes || []);
+        })
+        .catch(() => {
+          if (actif) setVilles([]);
+        })
+        .finally(() => {
+          if (actif) setRechercheVille(false);
+        });
+    }, 250);
+    return () => {
+      actif = false;
+      window.clearTimeout(temporisateur);
+    };
+  }, [form.paysCode, form.ville]);
+
+  const villeOptions = useMemo<SearchOption[]>(() => villes.map((ville) => ({
+    id: String(ville.id),
+    label: ville.nom,
+    secondary: ville.region,
+  })), [villes]);
+
+  const canSave = Boolean(
+    form.poste.trim()
+    && form.structure.trim()
+    && form.typeContrat
+    && form.paysCode
+    && form.ville.trim()
+    && form.anneeDebut
+    && (form.posteActuel || form.anneeFin)
+    && form.description.trim(),
+  );
 
   return (
-    <div className="border border-sable-200 rounded-xl p-5 mb-4 bg-sable-50">
-      <h3 className="font-semibold text-terre mb-4">Nouvelle expérience</h3>
+    <section className="mb-6 rounded-[18px] border border-[#cfe0d2] bg-[#f4f0e6] p-5 sm:p-7">
+      <h3 className="mb-5 text-lg font-bold text-[#2e261f] sm:text-xl">
+        {initialData ? "Modifier l’expérience" : "Nouvelle expérience"}
+      </h3>
 
-      {/* Poste + Structure */}
-      <div className="grid grid-cols-2 gap-3 mb-3">
-        <div>
-          <label className="block text-xs font-medium text-terre mb-1">Intitulé du poste</label>
-          <input
-            type="text"
-            value={form.poste}
-            onChange={(e) => set("poste", e.target.value)}
-            className="w-full border border-sable-200 rounded-xl px-3 py-2.5 text-sm text-terre bg-white focus:outline-none focus:ring-2 focus:ring-vert"
-          />
+      <div className="mb-5 grid min-w-0 gap-5 md:grid-cols-2">
+        <div className="min-w-0">
+          <label htmlFor="experience-poste" className={LABEL_CLASS}>Intitulé du poste <span className="text-[#c65327]">*</span></label>
+          <input id="experience-poste" value={form.poste} onChange={(event) => set("poste", event.target.value)} placeholder="Ex. Cheffe de projet" className={FIELD_CLASS} />
         </div>
-        <div>
-          <label className="block text-xs font-medium text-terre mb-1">Structure</label>
-          <input
-            type="text"
-            value={form.structure}
-            onChange={(e) => set("structure", e.target.value)}
-            className="w-full border border-sable-200 rounded-xl px-3 py-2.5 text-sm text-terre bg-white focus:outline-none focus:ring-2 focus:ring-vert"
-          />
+        <div className="min-w-0">
+          <label htmlFor="experience-structure" className={LABEL_CLASS}>Structure <span className="text-[#c65327]">*</span></label>
+          <input id="experience-structure" value={form.structure} onChange={(event) => set("structure", event.target.value)} placeholder="Entreprise, association, administration…" className={FIELD_CLASS} />
         </div>
       </div>
 
-      {/* Type de contrat + Lieu */}
-      <div className="grid grid-cols-2 gap-3 mb-3">
-        <div>
-          <label className="block text-xs font-medium text-terre mb-1">Type de contrat</label>
-          <select
-            value={form.typeContrat}
-            onChange={(e) => set("typeContrat", e.target.value)}
-            className="w-full border border-sable-200 rounded-xl px-3 py-2.5 text-sm text-terre bg-white focus:outline-none focus:ring-2 focus:ring-vert"
-          >
-            {TYPES_CONTRAT.map((t) => <option key={t}>{t}</option>)}
+      <div className="mb-5 grid min-w-0 gap-5 md:grid-cols-2">
+        <div className="min-w-0">
+          <label htmlFor="experience-contrat" className={LABEL_CLASS}>Type de contrat <span className="text-[#c65327]">*</span></label>
+          <select id="experience-contrat" value={form.typeContrat} onChange={(event) => set("typeContrat", event.target.value)} className={FIELD_CLASS}>
+            {TYPES_CONTRAT.map((type) => <option key={type} value={type}>{type}</option>)}
           </select>
         </div>
-        <div>
-          <label className="block text-xs font-medium text-terre mb-1">Lieu</label>
-          <input
-            type="text"
-            value={form.lieu}
-            onChange={(e) => set("lieu", e.target.value)}
-            placeholder="Ville, Pays"
-            className="w-full border border-sable-200 rounded-xl px-3 py-2.5 text-sm text-terre bg-white focus:outline-none focus:ring-2 focus:ring-vert"
-          />
+        <div className="min-w-0">
+          <label htmlFor="experience-pays" className={LABEL_CLASS}>Pays <span className="text-[#c65327]">*</span></label>
+          <select
+            id="experience-pays"
+            value={form.paysCode}
+            onChange={(event) => {
+              const selection = pays.find((item) => item.code === event.target.value);
+              if (!selection) return;
+              setForm((precedent) => ({ ...precedent, pays: selection.nom, paysCode: selection.code, ville: "", lieu: "" }));
+            }}
+            className={FIELD_CLASS}
+          >
+            {pays.map((item) => <option key={item.code} value={item.code}>{item.drapeau} {item.nom}</option>)}
+          </select>
         </div>
       </div>
 
-      {/* Période */}
-      <div className="mb-3">
-        <label className="block text-xs font-medium text-terre mb-1">Période</label>
-        <div className="flex items-center gap-2">
+      <div className="mb-5 max-w-full md:w-[calc(50%-0.625rem)]">
+        <SearchCombobox
+          id="experience-ville"
+          label="Ville"
+          value={form.ville}
+          placeholder="Recherchez la ville"
+          options={villeOptions}
+          loading={rechercheVille}
+          minChars={2}
+          required
+          helperText="Tapez au moins 2 lettres, puis sélectionnez la ville."
+          onChange={(value) => setForm((precedent) => ({ ...precedent, ville: value, lieu: `${value}, ${precedent.pays}` }))}
+          onSelect={(option) => setForm((precedent) => ({ ...precedent, ville: option.label, lieu: `${option.label}, ${precedent.pays}` }))}
+        />
+      </div>
+
+      <div className="mb-5">
+        <label className={LABEL_CLASS}>Période <span className="text-[#c65327]">*</span></label>
+        <div className="grid min-w-0 items-center gap-3 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto]">
+          <input aria-label="Année de début" type="number" min="1940" max="2100" value={form.anneeDebut} onChange={(event) => set("anneeDebut", event.target.value)} placeholder="Année de début" className={FIELD_CLASS} />
+          <span aria-hidden="true" className="hidden text-lg text-[#776b5e] sm:block">→</span>
           <input
+            aria-label="Année de fin"
             type="number"
-            value={form.anneeDebut}
-            onChange={(e) => set("anneeDebut", e.target.value)}
-            placeholder="2013"
-            className="flex-1 border border-sable-200 rounded-xl px-3 py-2.5 text-sm text-terre bg-white focus:outline-none focus:ring-2 focus:ring-vert"
-          />
-          <span className="text-terre-300">→</span>
-          <input
-            type="number"
+            min="1940"
+            max="2100"
             value={form.posteActuel ? "" : form.anneeFin}
-            onChange={(e) => set("anneeFin", e.target.value)}
-            placeholder={form.posteActuel ? "aujourd'hui" : "2024"}
+            onChange={(event) => set("anneeFin", event.target.value)}
+            placeholder={form.posteActuel ? "aujourd’hui" : "Année de fin"}
             disabled={form.posteActuel}
-            className={`flex-1 border border-sable-200 rounded-xl px-3 py-2.5 text-sm text-terre focus:outline-none focus:ring-2 focus:ring-vert
-              ${form.posteActuel ? "bg-sable-100 text-terre-300" : "bg-white"}`}
+            className={FIELD_CLASS}
           />
-          <label className="flex items-center gap-2 text-xs text-terre cursor-pointer whitespace-nowrap">
+          <label className="flex cursor-pointer items-center gap-3 whitespace-nowrap text-base font-semibold text-[#2e261f] lg:pl-1">
             <input
               type="checkbox"
               checked={form.posteActuel}
-              onChange={(e) => set("posteActuel", e.target.checked)}
-              className="accent-vert"
+              onChange={(event) => setForm((precedent) => ({ ...precedent, posteActuel: event.target.checked, anneeFin: event.target.checked ? "" : precedent.anneeFin }))}
+              className="h-5 w-5 accent-[#0d6738]"
             />
             Poste actuel
           </label>
         </div>
       </div>
 
-      {/* Description */}
-      <div className="mb-4">
-        <label className="block text-xs font-medium text-terre mb-1">Ce que vous y faites (2 lignes suffisent)</label>
+      <div className="mb-6">
+        <label htmlFor="experience-description" className={LABEL_CLASS}>Ce que vous y faites <span className="text-[#c65327]">*</span></label>
         <textarea
+          id="experience-description"
           value={form.description}
-          onChange={(e) => set("description", e.target.value)}
-          placeholder="Missions, réalisations, ce sur quoi vous pouvez aider les autres membres..."
-          rows={3}
-          className="w-full border border-sable-200 rounded-xl px-3 py-2.5 text-sm text-terre bg-white focus:outline-none focus:ring-2 focus:ring-vert resize-y"
+          onChange={(event) => set("description", event.target.value)}
+          placeholder="Missions, réalisations, sujets sur lesquels vous pouvez aider les autres membres…"
+          rows={4}
+          className={`${FIELD_CLASS} resize-y`}
         />
       </div>
 
-      {/* Actions */}
-      <div className="flex gap-3">
-        <button
-          type="button"
-          onClick={onCancel}
-          className="px-5 py-2.5 rounded-xl border border-sable-200 text-terre text-sm font-medium hover:bg-sable-100 transition-colors"
-        >
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <button type="button" onClick={onCancel} className="rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-7 py-4 text-base font-semibold text-[#2e261f] hover:bg-[#f6efe3]">
           Annuler
         </button>
         <button
           type="button"
           disabled={!canSave}
-          onClick={() => canSave && onSave({ ...form, id: Date.now().toString() })}
-          className={`flex-1 py-2.5 rounded-xl text-white font-semibold text-sm transition-colors
-            ${canSave ? "bg-vert hover:bg-vert-500" : "bg-sable-200 cursor-not-allowed"}`}
+          onClick={() => {
+            if (!canSave) return;
+            onSave({ ...form, lieu: `${form.ville}, ${form.pays}`, id: initialData?.id || crypto.randomUUID() });
+          }}
+          className={`flex-1 rounded-[14px] px-7 py-4 text-base font-semibold text-white transition-colors ${canSave ? "bg-[#0d6738] hover:bg-[#09572f]" : "cursor-not-allowed bg-[#aa997f]"}`}
         >
-          Enregistrer cette expérience
+          {initialData ? "Enregistrer les modifications" : "Enregistrer cette expérience"}
         </button>
       </div>
-    </div>
+    </section>
   );
 }
 
 export default function StepExperiences({ onNext, onBack, initialData }: StepExperiencesProps) {
-  const [experiences, setExperiences] = useState<Experience[]>(initialData || []);
+  const [experiences, setExperiences] = useState<Experience[]>(() => (initialData || []).map(normaliserAncienneExperience));
   const [formOuvert, setFormOuvert] = useState(false);
+  const [editionId, setEditionId] = useState<string | null>(null);
+  const experienceEnEdition = editionId ? experiences.find((experience) => experience.id === editionId) : undefined;
+
+  const fermerFormulaire = () => {
+    setFormOuvert(false);
+    setEditionId(null);
+  };
+
+  const sauvegarder = (experience: Experience) => {
+    setExperiences((precedentes) => {
+      const index = precedentes.findIndex((item) => item.id === experience.id);
+      if (index < 0) return [...precedentes, experience];
+      return precedentes.map((item) => item.id === experience.id ? experience : item);
+    });
+    fermerFormulaire();
+  };
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-sm border border-sable-100">
-      <h2 className="font-display text-2xl font-bold text-terre mb-1">Vos expériences</h2>
-      <p className="text-sm text-terre-300 mb-6">
-        Postes, missions, stages, engagements associatifs. C'est ce qui permet aux autres membres de savoir quoi vous
-        demander, et à vous de recevoir les bonnes sollicitations.
+    <section className="min-w-0 rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-5 shadow-sm sm:p-8 lg:p-9">
+      <h2 className="mb-2 font-display text-2xl font-bold text-[#2e261f] sm:text-3xl">Vos expériences</h2>
+      <p className="mb-7 max-w-[1050px] text-sm leading-relaxed text-[#2e261f] sm:text-base">
+        Postes, missions, stages, engagements associatifs. C’est ce qui permet aux autres membres de savoir quoi vous demander, et à vous de recevoir les bonnes sollicitations.
       </p>
 
-      {/* Expériences ajoutées */}
-      {experiences.map((e) => (
-        <ExperienceCard key={e.id} exp={e} onRetirer={() => setExperiences((p) => p.filter((x) => x.id !== e.id))} />
+      {experiences.map((experience) => (
+        <ExperienceCard
+          key={experience.id}
+          experience={experience}
+          onModifier={() => {
+            setEditionId(experience.id);
+            setFormOuvert(true);
+          }}
+          onRetirer={() => {
+            setExperiences((precedentes) => precedentes.filter((item) => item.id !== experience.id));
+            if (editionId === experience.id) fermerFormulaire();
+          }}
+        />
       ))}
 
-      {/* Formulaire */}
       {formOuvert ? (
-        <ExperienceForm onSave={(e) => { setExperiences((p) => [...p, e]); setFormOuvert(false); }} onCancel={() => setFormOuvert(false)} />
+        <ExperienceForm key={editionId || "nouvelle"} initialData={experienceEnEdition} onSave={sauvegarder} onCancel={fermerFormulaire} />
       ) : (
         <button
           type="button"
-          onClick={() => setFormOuvert(true)}
-          className="w-full py-3 rounded-xl border border-dashed border-sable-300 text-sm text-terre-300 hover:border-vert hover:text-vert transition-colors mb-4"
+          onClick={() => {
+            setEditionId(null);
+            setFormOuvert(true);
+          }}
+          className="mb-6 w-full rounded-[14px] border border-dashed border-[#d7b98d] px-5 py-4 text-base font-semibold text-[#0d6738] transition-colors hover:border-[#0d6738] hover:bg-[#f6efe3]"
         >
           + Ajouter une expérience
         </button>
       )}
 
-      {/* Navigation */}
-      <div className="flex gap-3 pt-2 border-t border-sable-100">
-        <button
-          type="button"
-          onClick={onBack}
-          className="px-6 py-3 rounded-xl border border-sable-200 text-terre text-sm font-medium hover:bg-sable-100 transition-colors"
-        >
+      <div className="flex flex-col gap-3 sm:flex-row">
+        <button type="button" onClick={onBack} className="rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-7 py-4 text-base font-semibold text-[#2e261f] hover:bg-[#f6efe3]">
           Retour
         </button>
         <button
           type="button"
           onClick={() => onNext(experiences)}
-          className="flex-1 py-3 rounded-xl font-semibold text-sm text-white transition-colors"
-          style={{ backgroundColor: "#b8a898" }}
+          className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${experiences.length ? "bg-[#0d6738] hover:bg-[#09572f]" : "bg-[#aa997f] hover:bg-[#96866e]"}`}
         >
-          Passer cette étape
+          {experiences.length ? "Continuer vers le mentorat" : "Passer cette étape"}
         </button>
       </div>
-    </div>
+    </section>
   );
 }

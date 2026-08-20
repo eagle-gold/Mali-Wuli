@@ -36,11 +36,11 @@ enum SituationActuelle {
 
 model User {
   id            String            @id @default(cuid())
-  prenom        String
-  nom           String
+  prenom        String?
+  nom           String?
   email         String            @unique
-  motDePasse    String
-  dateNaissance DateTime
+  motDePasse    String?
+  dateNaissance DateTime?
   role          Role              @default(MEMBRE)
   statut        StatutInscription @default(EN_ATTENTE)
   emailVerifie  Boolean           @default(false)
@@ -55,10 +55,20 @@ model User {
   updatedAt     DateTime          @updatedAt
 }
 
+model EmailVerification {
+  id         String    @id @default(cuid())
+  email      String    @unique
+  code       String
+  codeExpire DateTime
+  verifieLe  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
 model Profil {
-  id                String            @id @default(cuid())
-  userId            String            @unique
-  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String                 @id @default(cuid())
+  userId            String                 @unique
+  user              User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   telephone         String?
   pays              String?
   ville             String?
@@ -67,25 +77,25 @@ model Profil {
   bio               String?
   photo             String?
   linkedin          String?
-  emailVisible      Boolean           @default(false)
-  telephoneVisible  Boolean           @default(false)
-  estVolontaire     Boolean           @default(false)
-  onboardingEtape   Int               @default(0)
-  onboardingFini    Boolean           @default(false)
+  emailVisible      Boolean                @default(false)
+  telephoneVisible  Boolean                @default(false)
+  estVolontaire     Boolean                @default(false)
+  onboardingEtape   Int                    @default(0)
+  onboardingFini    Boolean                @default(false)
   formations        Formation[]
   experiences       Experience[]
-  synergiesEnvoyees Synergie[]        @relation("Demandeur")
-  synergiesRecues   Synergie[]        @relation("Recepteur")
+  synergiesEnvoyees Synergie[]             @relation("Demandeur")
+  synergiesRecues   Synergie[]             @relation("Recepteur")
   conversations     ConversationMembre[]
   messages          Message[]
-  rdvDemandes       RendezVous[]      @relation("Demandeur")
+  rdvDemandes       RendezVous[]           @relation("Demandeur")
   volontaire        Volontaire?
   cerclesMembres    CercleMembre[]
   associations      AssociationMembre[]
   evenements        EvenementParticipant[]
   offres            Offre[]
   signalements      Signalement[]
-  createdAt         DateTime          @default(now())
+  createdAt         DateTime               @default(now())
 }
 
 // =============================================
@@ -102,39 +112,388 @@ enum TypeEtablissement {
 enum StatutEtablissement {
   PUBLIC
   PRIVE
+  INCONNU
+}
+
+enum NiveauEducation {
+  PRESCOLAIRE
+  PRIMAIRE
+  FONDAMENTAL
+  SECONDAIRE
+  PROFESSIONNEL
+  SUPERIEUR
+  FORMATION_CONTINUE
+}
+
+enum TypeProgrammeEducation {
+  DOMAINE
+  FORMATION
+  FILIERE
+  SPECIALITE
+  PARCOURS
+  SERIE
+}
+
+enum ModeUtilisationSource {
+  IMPORT_OUVERT
+  API_OFFICIELLE
+  VALIDATION_SEULE
+  REFERENCEMENT
+}
+
+enum StatutImportEducation {
+  EN_COURS
+  TERMINE
+  PARTIEL
+  ECHEC
+}
+
+enum TypeSuggestionCatalogue {
+  ETABLISSEMENT
+  PROGRAMME
+  SPECIALITE
+  SERIE
+  DIPLOME
+}
+
+enum StatutSuggestionCatalogue {
+  EN_ATTENTE
+  A_VALIDER
+  ACCEPTEE
+  REFUSEE
+  FUSIONNEE
+}
+
+model PaysEducation {
+  code             String               @id @db.Char(2)
+  nom              String
+  nomAnglais       String?
+  codeIso3         String?              @unique @db.Char(3)
+  drapeau          String?
+  indicatif        String?
+  prioriteDiaspora Int                  @default(999)
+  etablissements   Etablissement[]      @relation("PaysEtablissement")
+  programmes       ProgrammeEducation[]
+  diplomes         DiplomeEducation[]
+  sources          SourceEducative[]
+  imports          ImportEducation[]
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
 }
 
 model Etablissement {
-  id          String              @id @default(cuid())
-  nom         String
-  sigle       String?
-  type        TypeEtablissement
-  pays        String
-  ville       String
-  statut      StatutEtablissement
-  habilite    Boolean?
-  description String?
-  valide      Boolean             @default(true)
-  formations  Formation[]
-  avis        AvisEtablissement[]
-  createdAt   DateTime            @default(now())
+  id                  String                   @id @default(cuid())
+  nom                 String
+  nomNormalise        String
+  sigle               String?
+  type                TypeEtablissement
+  paysCode            String                   @db.Char(2)
+  pays                PaysEducation            @relation("PaysEtablissement", fields: [paysCode], references: [code])
+  // Le pays d'implantation et le système scolaire suivi sont deux notions
+  // différentes (ex. un lycée français situé au Mali).
+  // Code ISO du système national (ML, FR...) ou AUTRE.
+  systemeEducatifCode String                   @db.VarChar(16)
+  ville               String?
+  villeNormalisee     String                   @default("")
+  statut              StatutEtablissement      @default(INCONNU)
+  habilite            Boolean?
+  description         String?
+  siteWeb             String?
+  latitude            Decimal?                 @db.Decimal(9, 6)
+  longitude           Decimal?                 @db.Decimal(9, 6)
+  valide              Boolean                  @default(true)
+  niveaux             EtablissementNiveau[]
+  programmes          EtablissementProgramme[]
+  alias               EtablissementAlias[]
+  sources             EtablissementSource[]
+  formations          Formation[]
+  avis                AvisEtablissement[]
+  createdAt           DateTime                 @default(now())
+  updatedAt           DateTime                 @updatedAt
+
+  // Deux établissements distincts peuvent légitimement porter le même nom dans
+  // une même ville. L'unicité repose sur les identifiants de provenance (UAI,
+  // ROR, URN…), pas sur un libellé humain.
+  @@index([paysCode, nomNormalise, villeNormalisee])
+  @@index([paysCode, type, villeNormalisee])
+  @@index([systemeEducatifCode])
+  @@index([nomNormalise])
+}
+
+model EtablissementNiveau {
+  etablissementId String
+  etablissement   Etablissement   @relation(fields: [etablissementId], references: [id], onDelete: Cascade)
+  niveau          NiveauEducation
+
+  @@id([etablissementId, niveau])
+  @@index([niveau])
+}
+
+model EtablissementAlias {
+  id              String        @id @default(cuid())
+  etablissementId String
+  etablissement   Etablissement @relation(fields: [etablissementId], references: [id], onDelete: Cascade)
+  nom             String
+  nomNormalise    String
+  langue          String?
+  createdAt       DateTime      @default(now())
+
+  @@unique([etablissementId, nomNormalise])
+  @@index([nomNormalise])
+}
+
+model ProgrammeEducation {
+  id                    String                   @id @default(cuid())
+  paysCode              String?                  @db.Char(2)
+  pays                  PaysEducation?           @relation(fields: [paysCode], references: [code])
+  parentId              String?
+  parent                ProgrammeEducation?      @relation("HierarchieProgrammes", fields: [parentId], references: [id], onDelete: Cascade)
+  enfants               ProgrammeEducation[]     @relation("HierarchieProgrammes")
+  nom                   String
+  nomNormalise          String
+  sigle                 String?
+  type                  TypeProgrammeEducation
+  niveau                NiveauEducation
+  codeOfficiel          String?
+  description           String?
+  actif                 Boolean                  @default(true)
+  etablissements        EtablissementProgramme[]
+  sources               ProgrammeSource[]
+  formationsPrincipales Formation[]              @relation("FormationProgramme")
+  formationsParcours    Formation[]              @relation("FormationParcours")
+  createdAt             DateTime                 @default(now())
+  updatedAt             DateTime                 @updatedAt
+
+  @@index([paysCode, type, niveau])
+  @@index([parentId])
+  @@index([nomNormalise])
+}
+
+model DiplomeEducation {
+  id           String                   @id @default(cuid())
+  paysCode     String                   @db.Char(2)
+  pays         PaysEducation            @relation(fields: [paysCode], references: [code])
+  nom          String
+  nomNormalise String
+  sigle        String?
+  niveau       NiveauEducation
+  niveauEntree String?
+  niveauSortie String?
+  actif        Boolean                  @default(true)
+  programmes   EtablissementProgramme[]
+  sources      DiplomeSource[]
+  formations   Formation[]
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  @@unique([paysCode, niveau, nomNormalise])
+  @@index([paysCode, niveau])
+}
+
+model EtablissementProgramme {
+  id              String                 @id @default(cuid())
+  etablissementId String
+  etablissement   Etablissement          @relation(fields: [etablissementId], references: [id], onDelete: Cascade)
+  programmeId     String
+  programme       ProgrammeEducation     @relation(fields: [programmeId], references: [id], onDelete: Cascade)
+  diplomeId       String?
+  diplome         DiplomeEducation?      @relation(fields: [diplomeId], references: [id])
+  niveau          NiveauEducation
+  actif           Boolean                @default(true)
+  sources         OffreFormationSource[]
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+
+  @@unique([etablissementId, programmeId, diplomeId])
+  @@index([etablissementId, niveau])
+  @@index([programmeId])
+}
+
+model SourceEducative {
+  id              String                 @id @default(cuid())
+  code            String                 @unique
+  nom             String
+  url             String
+  paysCode        String?                @db.Char(2)
+  pays            PaysEducation?         @relation(fields: [paysCode], references: [code])
+  licence         String?
+  conditionsUrl   String?
+  modeUtilisation ModeUtilisationSource
+  priorite        Int                    @default(100)
+  actif           Boolean                @default(true)
+  etablissements  EtablissementSource[]
+  programmes      ProgrammeSource[]
+  diplomes        DiplomeSource[]
+  offres          OffreFormationSource[]
+  imports         ImportEducation[]
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
+}
+
+model EtablissementSource {
+  id                 String          @id @default(cuid())
+  etablissementId    String
+  etablissement      Etablissement   @relation(fields: [etablissementId], references: [id], onDelete: Cascade)
+  sourceId           String
+  source             SourceEducative @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  identifiantExterne String
+  urlSource          String?
+  confiance          Float           @default(0.5)
+  vuLe               DateTime        @default(now())
+  donneesBrutes      Json?
+
+  @@unique([sourceId, identifiantExterne])
+  @@index([etablissementId])
+}
+
+model ProgrammeSource {
+  id                 String             @id @default(cuid())
+  programmeId        String
+  programme          ProgrammeEducation @relation(fields: [programmeId], references: [id], onDelete: Cascade)
+  sourceId           String
+  source             SourceEducative    @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  identifiantExterne String
+  urlSource          String?
+  confiance          Float              @default(0.5)
+  vuLe               DateTime           @default(now())
+
+  @@unique([sourceId, identifiantExterne])
+  @@index([programmeId])
+}
+
+model DiplomeSource {
+  id                 String           @id @default(cuid())
+  diplomeId          String
+  diplome            DiplomeEducation @relation(fields: [diplomeId], references: [id], onDelete: Cascade)
+  sourceId           String
+  source             SourceEducative  @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  identifiantExterne String
+  urlSource          String?
+  confiance          Float            @default(0.5)
+  vuLe               DateTime         @default(now())
+
+  @@unique([sourceId, identifiantExterne])
+  @@index([diplomeId])
+}
+
+model OffreFormationSource {
+  id                 String                 @id @default(cuid())
+  offreId            String
+  offre              EtablissementProgramme @relation(fields: [offreId], references: [id], onDelete: Cascade)
+  sourceId           String
+  source             SourceEducative        @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+  identifiantExterne String
+  urlSource          String?
+  confiance          Float                  @default(0.5)
+  vuLe               DateTime               @default(now())
+
+  @@unique([sourceId, identifiantExterne])
+  @@index([offreId])
+}
+
+model ImportEducation {
+  id         String                @id @default(cuid())
+  sourceId   String
+  source     SourceEducative       @relation(fields: [sourceId], references: [id])
+  paysCode   String?               @db.Char(2)
+  pays       PaysEducation?        @relation(fields: [paysCode], references: [code])
+  statut     StatutImportEducation @default(EN_COURS)
+  ajoutes    Int                   @default(0)
+  modifies   Int                   @default(0)
+  ignores    Int                   @default(0)
+  erreurs    Int                   @default(0)
+  detail     Json?
+  commenceLe DateTime              @default(now())
+  termineLe  DateTime?
+
+  @@index([sourceId, paysCode, commenceLe])
+}
+
+model SuggestionCatalogue {
+  id                  String                            @id @default(cuid())
+  type                TypeSuggestionCatalogue
+  fingerprint         String
+  libelleBrut         String
+  libelleNormalise    String
+  paysCode            String                            @db.Char(2)
+  ville               String?
+  villeNormalisee     String                            @default("")
+  contexteCle         String                            @default("")
+  contexte            Json
+  statut              StatutSuggestionCatalogue         @default(EN_ATTENTE)
+  nombreContributeurs Int                               @default(0)
+  candidatId          String?
+  scoreDeterministe   Float?
+  decisionIA          Json?
+  modeleIA            String?
+  versionPrompt       String?
+  canoniqueId         String?
+  valideParId         String?
+  valideLe            DateTime?
+  contributions       ContributionSuggestionCatalogue[]
+  notification        NotificationAdmin?
+  createdAt           DateTime                          @default(now())
+  updatedAt           DateTime                          @updatedAt
+
+  @@unique([type, fingerprint])
+  @@index([type, paysCode, villeNormalisee, statut])
+  @@index([statut, nombreContributeurs])
+}
+
+model ContributionSuggestionCatalogue {
+  id             String              @id @default(cuid())
+  suggestionId   String
+  suggestion     SuggestionCatalogue @relation(fields: [suggestionId], references: [id], onDelete: Cascade)
+  contributorKey String
+  libelleBrut    String
+  contexte       Json?
+  createdAt      DateTime            @default(now())
+
+  @@unique([suggestionId, contributorKey])
+  @@index([contributorKey])
+}
+
+model NotificationAdmin {
+  id           String              @id @default(cuid())
+  type         String
+  titre        String
+  message      String
+  suggestionId String              @unique
+  suggestion   SuggestionCatalogue @relation(fields: [suggestionId], references: [id], onDelete: Cascade)
+  lue          Boolean             @default(false)
+  traitee      Boolean             @default(false)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  @@index([traitee, createdAt])
 }
 
 model Formation {
-  id              String          @id @default(cuid())
-  profilId        String
-  profil          Profil          @relation(fields: [profilId], references: [id], onDelete: Cascade)
-  type            String
-  etablissementId String?
-  etablissement   Etablissement?  @relation(fields: [etablissementId], references: [id])
-  autreEtablissement String?
-  anneeDebut      Int?
-  anneeFin        Int?
-  diplome         String?
-  filiere         String?
-  serie           String?
-  enCours         Boolean         @default(false)
-  avis            AvisEtablissement?
+  id                   String              @id @default(cuid())
+  profilId             String
+  profil               Profil              @relation(fields: [profilId], references: [id], onDelete: Cascade)
+  type                 String
+  etablissementId      String?
+  etablissement        Etablissement?      @relation(fields: [etablissementId], references: [id])
+  programmeReferenceId String?
+  programmeReference   ProgrammeEducation? @relation("FormationProgramme", fields: [programmeReferenceId], references: [id])
+  parcoursReferenceId  String?
+  parcoursReference    ProgrammeEducation? @relation("FormationParcours", fields: [parcoursReferenceId], references: [id])
+  diplomeReferenceId   String?
+  diplomeReference     DiplomeEducation?   @relation(fields: [diplomeReferenceId], references: [id])
+  autreEtablissement   String?
+  anneeDebut           Int?
+  anneeFin             Int?
+  diplome              String?
+  mention              String?
+  filiere              String?
+  serie                String?
+  enCours              Boolean             @default(false)
+  avis                 AvisEtablissement?
+
+  @@index([programmeReferenceId])
+  @@index([parcoursReferenceId])
+  @@index([diplomeReferenceId])
 }
 
 model AvisEtablissement {
@@ -153,9 +512,9 @@ model AvisEtablissement {
 }
 
 model Experience {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   profilId    String
-  profil      Profil   @relation(fields: [profilId], references: [id], onDelete: Cascade)
+  profil      Profil    @relation(fields: [profilId], references: [id], onDelete: Cascade)
   poste       String
   entreprise  String
   ville       String?
@@ -163,7 +522,7 @@ model Experience {
   secteur     String?
   dateDebut   DateTime
   dateFin     DateTime?
-  estActuel   Boolean  @default(false)
+  estActuel   Boolean   @default(false)
   description String?
 }
 
@@ -178,14 +537,14 @@ enum StatutSynergie {
 }
 
 model Synergie {
-  id          String          @id @default(cuid())
+  id          String         @id @default(cuid())
   demandeurId String
-  demandeur   Profil          @relation("Demandeur", fields: [demandeurId], references: [id])
+  demandeur   Profil         @relation("Demandeur", fields: [demandeurId], references: [id])
   recepteurId String
-  recepteur   Profil          @relation("Recepteur", fields: [recepteurId], references: [id])
-  statut      StatutSynergie  @default(EN_ATTENTE)
+  recepteur   Profil         @relation("Recepteur", fields: [recepteurId], references: [id])
+  statut      StatutSynergie @default(EN_ATTENTE)
   raison      String?
-  createdAt   DateTime        @default(now())
+  createdAt   DateTime       @default(now())
 
   @@unique([demandeurId, recepteurId])
 }
@@ -229,15 +588,15 @@ model Message {
 // =============================================
 
 model Volontaire {
-  id            String       @id @default(cuid())
-  profilId      String       @unique
-  profil        Profil       @relation(fields: [profilId], references: [id], onDelete: Cascade)
-  specialite    String
-  disponible    Boolean      @default(true)
-  fuseau        String       @default("Africa/Bamako")
-  dureeCreneau  Int          @default(30)
-  delaiMinResa  Int          @default(24)
-  rdvs          RendezVous[]
+  id           String       @id @default(cuid())
+  profilId     String       @unique
+  profil       Profil       @relation(fields: [profilId], references: [id], onDelete: Cascade)
+  specialite   String
+  disponible   Boolean      @default(true)
+  fuseau       String       @default("Africa/Bamako")
+  dureeCreneau Int          @default(30)
+  delaiMinResa Int          @default(24)
+  rdvs         RendezVous[]
 }
 
 enum StatutRDV {
@@ -266,17 +625,17 @@ model RendezVous {
 // =============================================
 
 model Cercle {
-  id          String         @id @default(cuid())
+  id          String           @id @default(cuid())
   nom         String
   theme       String
   description String?
   presidentId String
-  actif       Boolean        @default(true)
+  actif       Boolean          @default(true)
   membres     CercleMembre[]
   documents   CercleDocument[]
   reunions    CercleReunion[]
   messages    CercleMessage[]
-  createdAt   DateTime       @default(now())
+  createdAt   DateTime         @default(now())
 }
 
 enum StatutMembreCercle {
@@ -307,14 +666,14 @@ model CercleDocument {
 }
 
 model CercleReunion {
-  id          String   @id @default(cuid())
-  cercleId    String
-  cercle      Cercle   @relation(fields: [cercleId], references: [id])
-  titre       String
-  ordreJour   String?
-  date        DateTime
-  lienAppel   String?
-  createdAt   DateTime @default(now())
+  id        String   @id @default(cuid())
+  cercleId  String
+  cercle    Cercle   @relation(fields: [cercleId], references: [id])
+  titre     String
+  ordreJour String?
+  date      DateTime
+  lienAppel String?
+  createdAt DateTime @default(now())
 }
 
 model CercleMessage {
@@ -331,15 +690,15 @@ model CercleMessage {
 // =============================================
 
 model ForumQuestion {
-  id              String          @id @default(cuid())
+  id              String         @id @default(cuid())
   auteurId        String
   titre           String
   contenu         String
   secteur         String?
   etablissementId String?
-  valide          Boolean         @default(true)
+  valide          Boolean        @default(true)
   reponses        ForumReponse[]
-  createdAt       DateTime        @default(now())
+  createdAt       DateTime       @default(now())
 }
 
 model ForumReponse {
@@ -357,15 +716,15 @@ model ForumReponse {
 // =============================================
 
 model Association {
-  id            String               @id @default(cuid())
+  id            String              @id @default(cuid())
   nom           String
   description   String?
   pays          String
   site          String?
   responsableId String?
-  valide        Boolean              @default(true)
+  valide        Boolean             @default(true)
   membres       AssociationMembre[]
-  createdAt     DateTime             @default(now())
+  createdAt     DateTime            @default(now())
 }
 
 enum StatutAffiliation {
@@ -390,19 +749,19 @@ model AssociationMembre {
 // =============================================
 
 model Evenement {
-  id            String                 @id @default(cuid())
-  titre         String
-  description   String
-  type          String
-  lieu          String?
-  lienVideo     String?
-  dateDebut     DateTime
-  dateFin       DateTime?
-  capacite      Int?
+  id             String                 @id @default(cuid())
+  titre          String
+  description    String
+  type           String
+  lieu           String?
+  lienVideo      String?
+  dateDebut      DateTime
+  dateFin        DateTime?
+  capacite       Int?
   organisateurId String
-  valide        Boolean                @default(false)
-  participants  EvenementParticipant[]
-  createdAt     DateTime               @default(now())
+  valide         Boolean                @default(false)
+  participants   EvenementParticipant[]
+  createdAt      DateTime               @default(now())
 }
 
 model EvenementParticipant {
@@ -420,22 +779,22 @@ model EvenementParticipant {
 // =============================================
 
 model Offre {
-  id             String   @id @default(cuid())
-  titre          String
-  entreprise     String
-  type           String
-  secteur        String
-  pays           String
-  ville          String?
-  teletravail    Boolean  @default(false)
-  description    String
+  id              String    @id @default(cuid())
+  titre           String
+  entreprise      String
+  type            String
+  secteur         String
+  pays            String
+  ville           String?
+  teletravail     Boolean   @default(false)
+  description     String
   lienCandidature String?
-  emailContact   String?
-  dateExpiration DateTime?
-  publieurId     String
-  publieur       Profil   @relation(fields: [publieurId], references: [id])
-  valide         Boolean  @default(false)
-  createdAt      DateTime @default(now())
+  emailContact    String?
+  dateExpiration  DateTime?
+  publieurId      String
+  publieur        Profil    @relation(fields: [publieurId], references: [id])
+  valide          Boolean   @default(false)
+  createdAt       DateTime  @default(now())
 }
 
 // =============================================
