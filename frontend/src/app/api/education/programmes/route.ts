@@ -12,129 +12,6 @@ const normaliser = (valeur: string) =>
     .replace(/[^a-z0-9]+/g, " ")
     .trim();
 
-const echapperOds = (valeur: string) => valeur.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
-
-const phrase = (valeur: string) => {
-  const propre = valeur.trim().replace(/\s+/g, " ");
-  if (!propre || propre !== propre.toUpperCase()) return propre;
-  const minuscules = propre.toLocaleLowerCase("fr");
-  return minuscules.charAt(0).toLocaleUpperCase("fr") + minuscules.slice(1);
-};
-
-const formaterMention = (valeur: string) =>
-  phrase(valeur)
-    .replace(/^Metiers des etudes/i, "Métiers des études")
-    .replace(/\(meci\)/i, "(MECI)");
-
-const ajouterAcronymeParcours = (valeur: string) => {
-  const parcours = phrase(valeur);
-  if (/projets informatiques et strat[ée]gie d['’]entreprise/i.test(valeur)) {
-    return "PISE — Projets informatiques et stratégie d’entreprise";
-  }
-  if (/^am[ée]nagement et d[ée]veloppement local$/i.test(valeur)) {
-    return "ADL — Aménagement et développement local";
-  }
-  if (/^consultants et charg[ée]s d['’][ée]tudes socio/i.test(valeur)) {
-    return "CCESE — Consultants et chargés d’études socio-économiques et environnementales";
-  }
-  return parcours;
-};
-
-const lireJson = async <T,>(url: string) => {
-  const reponse = await fetch(url, {
-    headers: { "User-Agent": "MaliWuli/0.1 (education directory)" },
-    signal: AbortSignal.timeout(7_000),
-    next: { revalidate: 86_400 },
-  });
-  if (!reponse.ok) throw new Error(`Source distante indisponible (${reponse.status}).`);
-  return reponse.json() as Promise<T>;
-};
-
-const chercherMonMaster = async (uai: string, recherche: string): Promise<ProgrammeReference[]> => {
-  const conditions = [`session=2025`, `eta_uai="${uai}"`];
-  if (recherche) {
-    const q = echapperOds(recherche);
-    conditions.push(`(search(mention,"${q}") or search(parcours,"${q}"))`);
-  }
-  const parametres = new URLSearchParams({
-    select: "inm,mention,parcours",
-    where: conditions.join(" and "),
-    order_by: "mention,parcours",
-    limit: "100",
-  });
-  const url = `https://data.enseignementsup-recherche.gouv.fr/api/explore/v2.1/catalog/datasets/fr-esr-mon_master/records?${parametres}`;
-  const donnees = await lireJson<{
-    results?: Array<{ inm: string; mention: string; parcours?: string }>;
-  }>(url);
-
-  const programmes = new Map<string, ProgrammeReference>();
-  for (const resultat of donnees.results || []) {
-    const id = `monmaster:${resultat.inm || normaliser(resultat.mention)}`;
-    const label = `Master — ${formaterMention(resultat.mention)}`;
-    const specialite = resultat.parcours ? ajouterAcronymeParcours(resultat.parcours) : "Parcours général";
-    const existant = programmes.get(id);
-    if (existant) {
-      if (!existant.specialites.includes(specialite)) existant.specialites.push(specialite);
-    } else {
-      programmes.set(id, {
-        id,
-        label,
-        specialites: [specialite, "Autre"],
-        diplomes: ["Master (Bac+5)"],
-        diplomeSuggere: "Master (Bac+5)",
-      });
-    }
-  }
-  return [...programmes.values()];
-};
-
-const diplomeParType = (type: string) => {
-  const cle = normaliser(type);
-  if (cle.includes("bts")) return "BTS / BTSA";
-  if (cle.includes("but") || cle.includes("dut")) return "DUT / BUT";
-  if (cle.includes("licence")) return "Licence (Bac+3)";
-  if (cle.includes("ingenieur")) return "Diplôme d’ingénieur";
-  return undefined;
-};
-
-const chercherParcoursup = async (uai: string, recherche: string): Promise<ProgrammeReference[]> => {
-  const conditions = [`annee=2026`, `etab_uai="${uai}"`];
-  if (recherche) {
-    const q = echapperOds(recherche);
-    conditions.push(`(search(nm,"${q}") or search(fl,"${q}"))`);
-  }
-  const parametres = new URLSearchParams({
-    select: "code_formation,tf,fl,nm",
-    where: conditions.join(" and "),
-    order_by: "fl",
-    limit: "100",
-  });
-  const url = `https://data.enseignementsup-recherche.gouv.fr/api/explore/v2.1/catalog/datasets/fr-esr-cartographie_formations_parcoursup/records?${parametres}`;
-  const donnees = await lireJson<{
-    results?: Array<{
-      code_formation?: string;
-      tf?: string[];
-      fl?: string[];
-      nm?: string[];
-    }>;
-  }>(url);
-
-  return (donnees.results || []).flatMap((resultat, index) => {
-    const formations = resultat.fl?.length ? resultat.fl : resultat.tf || [];
-    const specialites = resultat.nm?.length ? resultat.nm : ["Parcours général"];
-    return formations.map((formation, formationIndex) => {
-      const diplomeSuggere = diplomeParType(resultat.tf?.[0] || formation);
-      return {
-        id: `parcoursup:${resultat.code_formation || `${index}-${formationIndex}`}`,
-        label: phrase(formation),
-        specialites: [...new Set([...specialites.map(phrase), "Autre"])],
-        diplomes: diplomeSuggere ? [diplomeSuggere] : [],
-        diplomeSuggere,
-      };
-    });
-  });
-};
-
 const chercherCatalogue = async (
   paysCode: string,
   institutionId: string,
@@ -208,28 +85,22 @@ export async function GET(request: NextRequest) {
     return normaliser(`${programme.label} ${programme.specialites.join(" ")}`).includes(rechercheNormalisee);
   });
 
-  const recherches: Array<Promise<ProgrammeReference[]>> = [];
-  if (paysCode === "FR" && /^[0-9]{7}[A-Z]$/.test(institutionId)) {
-    recherches.push(chercherMonMaster(institutionId, recherche));
-    recherches.push(chercherParcoursup(institutionId, recherche));
-  }
-  const [catalogue, distants] = await Promise.all([
-    chercherCatalogue(paysCode, institutionId, recherche).catch(() => ({
-      programmes: [] as ProgrammeReference[],
-      couvertureEtablissement: false,
-    })),
-    Promise.allSettled(recherches),
-  ]);
-  const programmesDistants = distants.flatMap((resultat) =>
-    resultat.status === "fulfilled" ? resultat.value : [],
-  );
+  const catalogue = await chercherCatalogue(paysCode, institutionId, recherche).catch(() => ({
+    programmes: [] as ProgrammeReference[],
+    couvertureEtablissement: false,
+  }));
   const programmes = catalogue.couvertureEtablissement
-    ? fusionner([...programmesDistants, ...catalogue.programmes])
-    : fusionner([...programmesDistants, ...catalogue.programmes, ...references]);
+    ? fusionner(catalogue.programmes)
+    : fusionner([...catalogue.programmes, ...references]);
 
   return NextResponse.json({
     programmes,
-    couvertureEtablissement: catalogue.couvertureEtablissement || programmesDistants.length > 0,
-    sources: ["Catalogue relationnel Mali Wuli", "Mon Master", "Parcoursup", "UNESCO ISCED-F 2013"],
+    couvertureEtablissement: catalogue.couvertureEtablissement,
+    sources: [
+      "Catalogue PostgreSQL Mali Wuli",
+      "Mon Master (import officiel)",
+      "Parcoursup (import officiel)",
+      "UNESCO ISCED-F 2013",
+    ],
   });
 }

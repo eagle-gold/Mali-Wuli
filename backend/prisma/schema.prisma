@@ -134,6 +134,13 @@ enum TypeProgrammeEducation {
   SERIE
 }
 
+enum StatutDiplomeFormation {
+  OBTENU
+  EN_COURS
+  NON_OBTENU
+  NON_DIPLOMANTE
+}
+
 enum ModeUtilisationSource {
   IMPORT_OUVERT
   API_OFFICIELLE
@@ -469,26 +476,31 @@ model NotificationAdmin {
 }
 
 model Formation {
-  id                   String              @id @default(cuid())
+  id                   String                 @id @default(cuid())
   profilId             String
-  profil               Profil              @relation(fields: [profilId], references: [id], onDelete: Cascade)
+  profil               Profil                 @relation(fields: [profilId], references: [id], onDelete: Cascade)
   type                 String
   etablissementId      String?
-  etablissement        Etablissement?      @relation(fields: [etablissementId], references: [id])
+  etablissement        Etablissement?         @relation(fields: [etablissementId], references: [id])
   programmeReferenceId String?
-  programmeReference   ProgrammeEducation? @relation("FormationProgramme", fields: [programmeReferenceId], references: [id])
+  programmeReference   ProgrammeEducation?    @relation("FormationProgramme", fields: [programmeReferenceId], references: [id])
   parcoursReferenceId  String?
-  parcoursReference    ProgrammeEducation? @relation("FormationParcours", fields: [parcoursReferenceId], references: [id])
+  parcoursReference    ProgrammeEducation?    @relation("FormationParcours", fields: [parcoursReferenceId], references: [id])
   diplomeReferenceId   String?
-  diplomeReference     DiplomeEducation?   @relation(fields: [diplomeReferenceId], references: [id])
+  diplomeReference     DiplomeEducation?      @relation(fields: [diplomeReferenceId], references: [id])
   autreEtablissement   String?
+  moisDebut            Int?
   anneeDebut           Int?
+  moisFin              Int?
   anneeFin             Int?
   diplome              String?
   mention              String?
   filiere              String?
+  specialite           String?
   serie                String?
-  enCours              Boolean             @default(false)
+  statutDiplome        StatutDiplomeFormation @default(OBTENU)
+  // Conservé pendant la transition des anciennes données.
+  enCours              Boolean                @default(false)
   avis                 AvisEtablissement?
 
   @@index([programmeReferenceId])

@@ -65,7 +65,8 @@ app.get("/api/health", (_req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-httpServer.listen(PORT, () => {
+const HOST = process.env.HOST || "0.0.0.0";
+httpServer.listen(Number(PORT), HOST, () => {
   console.log(`🚀 Serveur Mali Wuli démarré sur http://localhost:${PORT}`);
 });
 

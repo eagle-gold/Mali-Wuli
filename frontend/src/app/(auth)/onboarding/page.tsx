@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import StepIndicator from "@/components/onboarding/StepIndicator";
 import StepInformations, { type InfoData } from "@/components/onboarding/StepInformations";
 import StepFormations, { type Formation } from "@/components/onboarding/StepFormations";
@@ -22,9 +23,114 @@ type OnboardingData = {
   mentorat?: MentoratData;
 };
 
+function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () => void }) {
+  const router = useRouter();
+  const [lienInvitation, setLienInvitation] = useState("https://maliwuli.com/invite/votre-code");
+  const [lienCopie, setLienCopie] = useState(false);
+
+  useEffect(() => {
+    const codeExistant = localStorage.getItem("mali_wuli_invitation_code")?.trim();
+    const codeInvitation = codeExistant || `mw-${crypto.randomUUID().slice(0, 8)}`;
+    if (!codeExistant) localStorage.setItem("mali_wuli_invitation_code", codeInvitation);
+    setLienInvitation(`https://maliwuli.com/invite/${codeInvitation}`);
+  }, []);
+
+  const formationsNotees = useMemo(() => (data.formations || []).filter((formation) => [
+    formation.noteEnseignants,
+    formation.noteContenu,
+    formation.noteCadre,
+    formation.noteInsertion,
+  ].some((note) => typeof note === "number" && note > 0)).length, [data.formations]);
+
+  const copierLien = async () => {
+    try {
+      await navigator.clipboard.writeText(lienInvitation);
+      setLienCopie(true);
+      window.setTimeout(() => setLienCopie(false), 2_000);
+    } catch {
+      setLienCopie(false);
+    }
+  };
+
+  const residence = data.informations?.ville?.trim()
+    || data.informations?.pays?.trim()
+    || "Non renseignée";
+
+  return (
+    <main className="min-h-screen bg-[#f6efe3] px-4 py-6 sm:px-6 sm:py-10">
+      <section className="mx-auto w-full max-w-[984px] rounded-[20px] border border-[#e4d2b3] bg-[#fffbf5] px-5 py-8 shadow-sm sm:px-10 sm:py-10">
+        <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#e3f0e9] text-[#0d6738] sm:h-[68px] sm:w-[68px]">
+          <svg aria-hidden="true" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="m5 12.5 4 4L19 6.5" />
+          </svg>
+        </div>
+
+        <h1 className="text-center font-display text-4xl font-bold leading-tight text-[#735133] sm:text-5xl">
+          Bienvenue sur Mali Wuli !
+        </h1>
+        <p className="mx-auto mt-4 max-w-[730px] text-center text-base font-semibold leading-relaxed text-[#17120f] sm:text-lg">
+          Votre profil est en cours de validation par l’équipe. Vous recevrez un e-mail dès que vous pourrez accéder à la communauté.
+        </p>
+
+        <div className="mt-8 rounded-[16px] bg-[#f6efe3] px-4 py-6 sm:px-7">
+          <h2 className="text-center text-2xl font-bold text-[#2e261f]">Invitez vos proches</h2>
+          <p className="mt-1 text-center text-base text-[#a44d28] sm:text-lg">
+            Partagez votre lien d’invitation et agrandissez la communauté !
+          </p>
+          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+            <input
+              aria-label="Lien d’invitation"
+              readOnly
+              value={lienInvitation}
+              className="min-w-0 flex-1 rounded-[11px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none sm:text-base"
+            />
+            <button
+              type="button"
+              onClick={copierLien}
+              className="rounded-[11px] bg-[#0d6738] px-6 py-3 font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2"
+            >
+              {lienCopie ? "Copié !" : "Copier"}
+            </button>
+          </div>
+          <p aria-live="polite" className="sr-only">{lienCopie ? "Lien d’invitation copié." : ""}</p>
+        </div>
+
+        <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { valeur: String(formationsNotees), libelle: "formation(s) notée(s)", couleur: "text-[#0d6738]" },
+            { valeur: String(data.experiences?.length || 0), libelle: "expérience(s)", couleur: "text-[#0d6738]" },
+            { valeur: residence, libelle: "résidence", couleur: "text-[#17120f]" },
+            { valeur: data.mentorat?.estVolontaire ? "Oui" : "Non", libelle: "mentorat", couleur: "text-[#0d6738]" },
+          ].map((item) => (
+            <article key={item.libelle} className="min-w-0 rounded-[15px] border border-[#ead8bd] bg-[#fffbf5] px-5 py-5">
+              <p className={`break-words text-2xl font-bold ${item.couleur}`}>{item.valeur}</p>
+              <p className="mt-1 text-base leading-snug text-[#2e261f]">{item.libelle}</p>
+            </article>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={() => router.push("/dashboard")}
+          className="mt-7 w-full rounded-[11px] bg-[#0d6738] px-6 py-4 text-base font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 sm:text-lg"
+        >
+          Découvrir votre profil en attendant
+        </button>
+        <button
+          type="button"
+          onClick={onBack}
+          className="mx-auto mt-4 block px-4 py-1 text-base font-semibold text-[#2e261f] hover:text-[#0d6738]"
+        >
+          ‹ Revenir au mentorat
+        </button>
+      </section>
+    </main>
+  );
+}
+
 
 export default function OnboardingPage() {
-  const [step, setStep] = useState<0 | 1 | 2 | 3 | 4>(0); // 0 = écran de bienvenue
+  const [step, setStep] = useState<0 | 1 | 2 | 3 | 4 | 5>(0); // 0 = écran de bienvenue
   const [data, setData] = useState<OnboardingData>({});
 
   // Écran de bienvenue
@@ -87,36 +193,8 @@ export default function OnboardingPage() {
   }
 
   // Écran de fin
-  if (step === 5 as unknown as number) {
-    return (
-      <div className="min-h-screen bg-sable-50 flex items-center justify-center px-4">
-        <div className="bg-white rounded-2xl p-8 shadow-sm border border-sable-100 max-w-md w-full text-center">
-          <div className="w-16 h-16 rounded-full bg-vert-100 flex items-center justify-center mx-auto mb-4">
-            <svg className="w-8 h-8 text-vert" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
-          </div>
-          <h2 className="font-display text-2xl font-bold text-terre mb-2">Bienvenue sur Mali Wuli !</h2>
-          <p className="text-sm text-terre-300 mb-6">
-            Votre profil est en cours de validation par l'équipe. Vous recevrez une notification dès que vous pourrez accéder à la communauté.
-          </p>
-          <div className="bg-sable-50 rounded-xl p-4 mb-6 text-sm text-terre-300">
-            <p className="font-medium text-terre mb-1">Invitez vos proches</p>
-            <p className="text-xs mb-3">Partagez votre lien d'invitation et agrandissez la communauté !</p>
-            <div className="flex gap-2">
-              <input
-                readOnly
-                value="https://maliwuli.com/invite/votre-code"
-                className="flex-1 border border-sable-200 rounded-lg px-3 py-2 text-xs bg-white"
-              />
-              <button className="px-3 py-2 bg-vert text-white rounded-lg text-xs font-medium">
-                Copier
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
+  if (step === 5) {
+    return <EcranConfirmation data={data} onBack={() => setStep(4)} />;
   }
 
   return (
@@ -153,12 +231,13 @@ export default function OnboardingPage() {
         )}
         {step === 4 && (
           <StepMentorat
+            initialData={data.mentorat}
             onBack={() => setStep(3)}
             onNext={(d) => {
               setData((p) => ({ ...p, mentorat: d }));
               // TODO : envoyer les données à l'API
               console.log("Onboarding complet :", { ...data, mentorat: d });
-              setStep(5 as unknown as 4);
+              setStep(5);
             }}
           />
         )}

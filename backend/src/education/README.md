@@ -18,9 +18,13 @@ Une offre établissement–formation n'est créée que lorsqu'une source permet 
 ```bash
 DATABASE_URL='postgresql://…' npm run education:seed
 DATABASE_URL='postgresql://…' npm run education:seed:all
+DATABASE_URL='postgresql://…' npm run education:import:france-programmes -- --institution=fr-universite-paris-cite
+DATABASE_URL='postgresql://…' npm run education:import:france-universites
 ```
 
 Le second script ajoute le catalogue mondial Hipo. Les imports sont idempotents et fusionnent les lignes à partir de l'identifiant externe, puis du nom et de la ville normalisés.
+
+L'import des programmes français charge Mon Master et Parcoursup en dehors du parcours utilisateur, relie les formations à l'établissement par son UAI officiel, fusionne les codes techniques qui désignent le même intitulé et conserve la provenance. La commande `education:import:france-universites` traite en une fois tous les établissements présents dans Mon Master et ajoute également leurs formations Parcoursup. La recherche côté interface lit ensuite uniquement PostgreSQL.
 
 Les recherches d'écoles et de lycées peuvent compléter la base à la demande depuis Wikidata (CC0). Une ligne ainsi découverte est persistée avec son identifiant Wikidata.
 

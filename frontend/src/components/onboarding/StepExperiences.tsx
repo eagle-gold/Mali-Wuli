@@ -2,6 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import SearchCombobox, { type SearchOption } from "./SearchCombobox";
+import {
+  MOIS,
+  anneeEstValide,
+  formaterMoisAnnee,
+  normaliserAnnee,
+  periodeEstValide,
+} from "@/lib/periode";
 
 export interface Experience {
   id: string;
@@ -13,7 +20,9 @@ export interface Experience {
   ville: string;
   /** Conservé pour relire les anciennes données locales. */
   lieu?: string;
+  moisDebut: string;
   anneeDebut: string;
+  moisFin: string;
   anneeFin: string;
   posteActuel: boolean;
   description: string;
@@ -62,14 +71,15 @@ const creerExperienceVide = (): Omit<Experience, "id"> => ({
   paysCode: "ML",
   ville: "",
   lieu: "",
+  moisDebut: "",
   anneeDebut: "",
+  moisFin: "",
   anneeFin: "",
   posteActuel: false,
   description: "",
 });
 
 const normaliserAncienneExperience = (experience: Experience): Experience => {
-  if (experience.paysCode && experience.pays && experience.ville) return experience;
   const [ville = "", pays = ""] = (experience.lieu || "").split(",").map((partie) => partie.trim());
   const paysConnu = PAYS_DE_SECOURS.find((option) => option.nom === pays);
   return {
@@ -77,6 +87,8 @@ const normaliserAncienneExperience = (experience: Experience): Experience => {
     pays: experience.pays || pays || "Mali",
     paysCode: experience.paysCode || paysConnu?.code || "ML",
     ville: experience.ville || ville,
+    moisDebut: experience.moisDebut || "",
+    moisFin: experience.moisFin || "",
   };
 };
 
@@ -115,7 +127,7 @@ function ExperienceCard({
               </span>
             </div>
             <p className="mt-1 break-words text-sm text-[#2e261f] [overflow-wrap:anywhere] sm:text-base">
-              {experience.structure} · {localisation} · {experience.anneeDebut} → {experience.posteActuel ? "aujourd’hui" : experience.anneeFin}
+              {experience.structure} · {localisation} · {formaterMoisAnnee(experience.moisDebut, experience.anneeDebut)} → {experience.posteActuel ? "aujourd’hui" : formaterMoisAnnee(experience.moisFin, experience.anneeFin)}
             </p>
             {experience.description && (
               <p className="mt-2 break-words text-sm leading-relaxed text-[#56493e] [overflow-wrap:anywhere] sm:text-base">
@@ -204,14 +216,19 @@ function ExperienceForm({
     secondary: ville.region,
   })), [villes]);
 
+  const anneesCompletes = anneeEstValide(form.anneeDebut)
+    && (form.posteActuel || anneeEstValide(form.anneeFin));
+  const periodeCompleteEtValide = form.posteActuel
+    ? Boolean(form.moisDebut && anneeEstValide(form.anneeDebut))
+    : periodeEstValide(form.moisDebut, form.anneeDebut, form.moisFin, form.anneeFin);
   const canSave = Boolean(
     form.poste.trim()
     && form.structure.trim()
     && form.typeContrat
     && form.paysCode
     && form.ville.trim()
-    && form.anneeDebut
-    && (form.posteActuel || form.anneeFin)
+    && anneesCompletes
+    && periodeCompleteEtValide
     && form.description.trim(),
   );
 
@@ -274,30 +291,53 @@ function ExperienceForm({
 
       <div className="mb-5">
         <label className={LABEL_CLASS}>Période <span className="text-[#c65327]">*</span></label>
-        <div className="grid min-w-0 items-center gap-3 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto]">
-          <input aria-label="Année de début" type="number" min="1940" max="2100" value={form.anneeDebut} onChange={(event) => set("anneeDebut", event.target.value)} placeholder="Année de début" className={FIELD_CLASS} />
+        <div className="grid min-w-0 items-center gap-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto]">
+          <div className="grid min-w-0 gap-3 sm:grid-cols-2">
+            <select aria-label="Mois de début" value={form.moisDebut} onChange={(event) => set("moisDebut", event.target.value)} className={FIELD_CLASS}>
+              <option value="">Mois de début</option>
+              {MOIS.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
+            </select>
+            <input aria-label="Année de début" type="text" inputMode="numeric" maxLength={4} value={form.anneeDebut} onChange={(event) => set("anneeDebut", normaliserAnnee(event.target.value))} placeholder="Année de début" className={FIELD_CLASS} />
+          </div>
           <span aria-hidden="true" className="hidden text-lg text-[#776b5e] sm:block">→</span>
-          <input
-            aria-label="Année de fin"
-            type="number"
-            min="1940"
-            max="2100"
-            value={form.posteActuel ? "" : form.anneeFin}
-            onChange={(event) => set("anneeFin", event.target.value)}
-            placeholder={form.posteActuel ? "aujourd’hui" : "Année de fin"}
-            disabled={form.posteActuel}
-            className={FIELD_CLASS}
-          />
+          <div className="grid min-w-0 gap-3 sm:grid-cols-2">
+            <select aria-label="Mois de fin" value={form.posteActuel ? "" : form.moisFin} onChange={(event) => set("moisFin", event.target.value)} disabled={form.posteActuel} className={FIELD_CLASS}>
+              <option value="">{form.posteActuel ? "Aujourd’hui" : "Mois de fin"}</option>
+              {MOIS.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
+            </select>
+            <input
+              aria-label="Année de fin"
+              type="text"
+              inputMode="numeric"
+              maxLength={4}
+              value={form.posteActuel ? "" : form.anneeFin}
+              onChange={(event) => set("anneeFin", normaliserAnnee(event.target.value))}
+              placeholder={form.posteActuel ? "Aujourd’hui" : "Année de fin"}
+              disabled={form.posteActuel}
+              className={FIELD_CLASS}
+            />
+          </div>
           <label className="flex cursor-pointer items-center gap-3 whitespace-nowrap text-base font-semibold text-[#2e261f] lg:pl-1">
             <input
               type="checkbox"
               checked={form.posteActuel}
-              onChange={(event) => setForm((precedent) => ({ ...precedent, posteActuel: event.target.checked, anneeFin: event.target.checked ? "" : precedent.anneeFin }))}
+              onChange={(event) => setForm((precedent) => ({
+                ...precedent,
+                posteActuel: event.target.checked,
+                moisFin: event.target.checked ? "" : precedent.moisFin,
+                anneeFin: event.target.checked ? "" : precedent.anneeFin,
+              }))}
               className="h-5 w-5 accent-[#0d6738]"
             />
             Poste actuel
           </label>
         </div>
+        {(form.anneeDebut && !anneeEstValide(form.anneeDebut)) || (!form.posteActuel && form.anneeFin && !anneeEstValide(form.anneeFin)) ? (
+          <p className="mt-2 text-sm font-medium text-[#a44824]">Une année doit contenir exactement 4 chiffres.</p>
+        ) : null}
+        {!form.posteActuel && anneesCompletes && form.moisDebut && form.moisFin && !periodeCompleteEtValide ? (
+          <p className="mt-2 text-sm font-medium text-[#a44824]">La date de début doit être antérieure ou égale à la date de fin.</p>
+        ) : null}
       </div>
 
       <div className="mb-6">

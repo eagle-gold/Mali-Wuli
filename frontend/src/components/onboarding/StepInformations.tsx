@@ -268,7 +268,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
           />
         </div>
         <p className="mt-2 text-sm text-[#2e261f] sm:text-base">
-          Jamais affiché publiquement. Sert uniquement à confirmer un rendez-vous.
+          Jamais affiché publiquement.
         </p>
       </div>
 

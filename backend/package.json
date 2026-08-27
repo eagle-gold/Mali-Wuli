@@ -13,6 +13,8 @@
     "education:seed:all": "tsx src/scripts/seed-education.ts --hipo",
     "education:import:ror": "tsx src/scripts/import-ror.ts",
     "education:import:france": "tsx src/scripts/import-france-education.ts",
+    "education:import:france-programmes": "tsx src/scripts/import-france-programmes.ts",
+    "education:import:france-universites": "tsx src/scripts/import-france-programmes.ts --all-universities",
     "education:audit:dedup": "tsx src/scripts/audit-education-dedup.ts",
     "education:import:canada": "tsx src/scripts/import-canada-education.ts",
     "education:import:maroc": "tsx src/scripts/import-maroc-education.ts",

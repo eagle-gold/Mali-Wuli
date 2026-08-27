@@ -1,10 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import SearchCombobox, { type SearchOption } from "./SearchCombobox";
 import StarRating from "./StarRating";
 import type { FormationType, ProgrammeReference } from "@/lib/education/reference";
 import api from "@/lib/api";
+import {
+  MOIS,
+  anneeEstValide,
+  formaterMoisAnnee,
+  normaliserAnnee,
+  periodeEstValide,
+} from "@/lib/periode";
 
 type TypeSuggestionCatalogue = "ETABLISSEMENT" | "PROGRAMME" | "SPECIALITE" | "SERIE" | "DIPLOME";
 
@@ -25,11 +32,27 @@ type PropositionCatalogue = {
 
 export type StatutDiplome = "OBTENU" | "EN_COURS" | "NON_OBTENU" | "NON_DIPLOMANTE";
 
-const STATUTS_DIPLOME: Array<{ valeur: StatutDiplome; libelle: string }> = [
-  { valeur: "OBTENU", libelle: "Oui, diplôme obtenu" },
-  { valeur: "EN_COURS", libelle: "En cours" },
-  { valeur: "NON_OBTENU", libelle: "Non obtenu" },
-  { valeur: "NON_DIPLOMANTE", libelle: "Formation non diplômante" },
+const STATUTS_DIPLOME: Array<{ valeur: StatutDiplome; libelle: string; explication: string }> = [
+  {
+    valeur: "OBTENU",
+    libelle: "Oui, diplôme obtenu",
+    explication: "Vous avez terminé la formation et obtenu le diplôme. Le diplôme et l’année de promotion seront demandés.",
+  },
+  {
+    valeur: "EN_COURS",
+    libelle: "En cours",
+    explication: "Vous suivez encore cette formation. Indiquez le diplôme préparé et l’année prévue d’obtention.",
+  },
+  {
+    valeur: "NON_OBTENU",
+    libelle: "Non obtenu",
+    explication: "Vous avez suivi la formation sans obtenir le diplôme. Aucun diplôme ni aucune mention ne sera demandé.",
+  },
+  {
+    valeur: "NON_DIPLOMANTE",
+    libelle: "Formation non diplômante",
+    explication: "Cette formation ne prépare pas à un diplôme. Aucun diplôme ni aucune mention ne sera demandé.",
+  },
 ];
 
 export interface Formation {
@@ -46,7 +69,9 @@ export interface Formation {
   specialite: string;
   specialiteId?: string;
   specialiteEstAutre?: boolean;
+  moisDebut: string;
   anneeDebut: string;
+  moisFin: string;
   anneeFin: string;
   statutDiplome: StatutDiplome;
   diplomeObtenu: boolean;
@@ -124,6 +149,47 @@ const FIELD_CLASS =
   "w-full rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-5 py-4 text-base text-[#2e261f] outline-none transition focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 sm:text-lg";
 
 const LABEL_CLASS = "mb-2 block text-base font-semibold text-[#2e261f]";
+
+interface ZoneGuideeProps {
+  bloquee: boolean;
+  indication: string;
+  onBlockedClick: () => void;
+  children: ReactNode;
+  className?: string;
+}
+
+type BlocageFormulaire = {
+  titre: string;
+  message: string;
+  cibleId: string;
+  action: string;
+};
+
+function ZoneGuidee({ bloquee, indication, onBlockedClick, children, className = "" }: ZoneGuideeProps) {
+  return (
+    <div className={`relative min-w-0 ${className}`}>
+      <fieldset
+        disabled={bloquee}
+        aria-disabled={bloquee}
+        className={`m-0 min-w-0 border-0 p-0 transition ${bloquee ? "pointer-events-none select-none opacity-45" : ""}`}
+      >
+        {children}
+      </fieldset>
+      {bloquee && (
+        <button
+          type="button"
+          onClick={onBlockedClick}
+          aria-label={`${indication}. Cliquez pour savoir quoi compléter.`}
+          className="absolute inset-0 z-10 flex cursor-help items-start justify-end rounded-[14px] p-2 text-left focus:outline-none focus:ring-2 focus:ring-[#0d6738]/30"
+        >
+          <span className="rounded-full border border-[#d8c5a7] bg-[#fffaf4] px-3 py-1 text-xs font-semibold text-[#56493e] shadow-sm">
+            🔒 {indication}
+          </span>
+        </button>
+      )}
+    </div>
+  );
+}
 
 const normaliserLibelle = (valeur: string) =>
   valeur
@@ -225,7 +291,9 @@ const creerFormationVide = (type: FormationType): Omit<Formation, "id"> => ({
   specialite: "",
   specialiteId: "",
   specialiteEstAutre: false,
+  moisDebut: "",
   anneeDebut: "",
+  moisFin: "",
   anneeFin: "",
   statutDiplome: "OBTENU",
   diplomeObtenu: true,
@@ -262,19 +330,19 @@ function FormationCard({
   const moyenne = calculerMoyenne(formation);
   const statutDiplome = formation.statutDiplome
     || (formation.diplomeObtenu ? "OBTENU" : "EN_COURS");
-  const libelleStatutDiplome: Record<StatutDiplome, string> = {
+  const libelleDiplome: Record<StatutDiplome, string> = {
     OBTENU: formation.diplome,
     EN_COURS: formation.diplome ? `${formation.diplome} en cours` : "Formation en cours",
-    NON_OBTENU: "Diplôme non obtenu",
-    NON_DIPLOMANTE: "Formation non diplômante",
+    NON_OBTENU: "",
+    NON_DIPLOMANTE: "",
   };
   const informations = [
-    libelleStatutDiplome[statutDiplome],
+    libelleDiplome[statutDiplome],
     statutDiplome === "OBTENU" && formation.mention ? `mention ${formation.mention}` : "",
     formation.programme,
     formation.specialite,
     `${formation.ville}, ${formation.pays}`,
-    `${formation.anneeDebut} – ${formation.anneeFin}`,
+    `${formaterMoisAnnee(formation.moisDebut, formation.anneeDebut)} – ${formaterMoisAnnee(formation.moisFin, formation.anneeFin)}`,
     formation.anneePromo
       ? statutDiplome === "EN_COURS"
         ? `diplôme prévu en ${formation.anneePromo}`
@@ -294,14 +362,6 @@ function FormationCard({
               <h3 className="min-w-0 break-words text-lg font-bold text-[#2e261f] [overflow-wrap:anywhere] sm:text-xl">{formation.etablissement}</h3>
               <span className="max-w-full break-words rounded-[7px] bg-[#eee2d0] px-3 py-1 text-xs font-bold text-[#2e261f] [overflow-wrap:anywhere] sm:text-sm">
                 {TYPE_LABELS[formation.type]}
-              </span>
-              <span className={`max-w-full break-words rounded-[7px] px-3 py-1 text-xs font-bold [overflow-wrap:anywhere] sm:text-sm ${statutDiplome === "OBTENU" ? "bg-[#e1f1e6] text-[#0d6738]" : "bg-[#f1e4d1] text-[#735133]"}`}>
-                {{
-                  OBTENU: "DIPLÔME OBTENU",
-                  EN_COURS: "EN COURS",
-                  NON_OBTENU: "DIPLÔME NON OBTENU",
-                  NON_DIPLOMANTE: "NON DIPLÔMANTE",
-                }[statutDiplome]}
               </span>
               {formation.synchronisationCatalogue === "EN_COURS" && (
                 <span className="max-w-full rounded-[7px] bg-[#eee2d0] px-3 py-1 text-xs font-bold text-[#735133] sm:text-sm">
@@ -457,6 +517,8 @@ function FormationForm({
   );
   const [diplomeAutre, setDiplomeAutre] = useState(Boolean(initialData?.diplomeEstAutre));
   const [mentionAutre, setMentionAutre] = useState(Boolean(initialData?.mentionEstAutre));
+  const [statutInfoOuvert, setStatutInfoOuvert] = useState<StatutDiplome | null>(null);
+  const [blocageFormulaire, setBlocageFormulaire] = useState<BlocageFormulaire | null>(null);
 
   const set = <K extends keyof Omit<Formation, "id">>(field: K, value: Omit<Formation, "id">[K]) =>
     setForm((precedent) => ({ ...precedent, [field]: value }));
@@ -473,6 +535,23 @@ function FormationForm({
       document.removeEventListener("visibilitychange", actualiserSiVisible);
     };
   }, []);
+
+  useEffect(() => {
+    if (!statutInfoOuvert && !blocageFormulaire) return;
+    const fermerAvecEchap = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setStatutInfoOuvert(null);
+        setBlocageFormulaire(null);
+      }
+    };
+    const overflowPrecedent = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", fermerAvecEchap);
+    return () => {
+      document.body.style.overflow = overflowPrecedent;
+      window.removeEventListener("keydown", fermerAvecEchap);
+    };
+  }, [blocageFormulaire, statutInfoOuvert]);
 
   useEffect(() => {
     let actif = true;
@@ -650,20 +729,70 @@ function FormationForm({
     && form.noteCadre !== null
     && (type === "ecole" || form.noteInsertion !== null);
   const detailsTypeComplets = type === "ecole"
-    || (type === "lycee" ? Boolean(form.specialite.trim()) : Boolean(form.programme.trim() && form.specialite.trim()));
+    || (type === "lycee" ? Boolean(form.specialite.trim()) : Boolean(form.programme.trim()));
   const diplomeAttendu = form.statutDiplome === "OBTENU" || form.statutDiplome === "EN_COURS";
-  const diplomeComplet = !diplomeAttendu || Boolean(form.diplome.trim() && form.anneePromo.trim());
+  const statutInfoAffiche = STATUTS_DIPLOME.find(({ valeur }) => valeur === statutInfoOuvert);
+  const diplomeComplet = !diplomeAttendu || Boolean(form.diplome.trim() && anneeEstValide(form.anneePromo));
+  const anneesCompletes = anneeEstValide(form.anneeDebut) && anneeEstValide(form.anneeFin);
+  const periodeCompleteEtValide = periodeEstValide(form.moisDebut, form.anneeDebut, form.moisFin, form.anneeFin);
+  const villeComplete = form.ville.trim().length >= 2;
+  const etablissementComplet = villeComplete && form.etablissement.trim().length >= 2;
+  const parcoursComplet = type === "ecole"
+    ? etablissementComplet
+    : type === "lycee"
+      ? etablissementComplet && Boolean(form.specialite.trim())
+      : etablissementComplet && Boolean(form.programme.trim());
+  const cibleEtablissement = etablissementAutre ? "etablissement-autre" : "formation-etablissement";
+  const cibleParcours = type === "lycee"
+    ? "formation-serie"
+    : programmeAutre
+      ? "programme-autre"
+      : "formation-programme";
   const canSave = Boolean(
     form.paysCode
     && form.ville.trim()
     && form.etablissement.trim()
-    && form.anneeDebut.trim()
-    && form.anneeFin.trim()
+    && anneesCompletes
+    && periodeCompleteEtValide
     && detailsTypeComplets
     && diplomeComplet
     && notesCompletes
     && form.commentaire.trim(),
   );
+
+  const demanderVille = () => setBlocageFormulaire({
+    titre: "Commencez par la ville",
+    message: "Indiquez d’abord la ville de l’établissement. Nous pourrons ensuite vous proposer les bonnes écoles et formations.",
+    cibleId: "formation-ville",
+    action: "Choisir la ville",
+  });
+
+  const demanderEtablissement = () => setBlocageFormulaire({
+    titre: "Choisissez d’abord l’établissement",
+    message: "Une fois l’établissement choisi, nous afficherons les formations ou séries qui lui correspondent.",
+    cibleId: cibleEtablissement,
+    action: "Choisir l’établissement",
+  });
+
+  const demanderParcours = () => setBlocageFormulaire({
+    titre: type === "lycee" ? "Choisissez d’abord la série" : "Choisissez d’abord la formation",
+    message: type === "lycee"
+      ? "Sélectionnez votre série ou spécialité avant de renseigner la période, le diplôme et votre avis."
+      : "Sélectionnez la formation suivie avant de renseigner la période, le diplôme et votre avis.",
+    cibleId: cibleParcours,
+    action: type === "lycee" ? "Choisir la série" : "Choisir la formation",
+  });
+
+  const revenirAuChampManquant = () => {
+    if (!blocageFormulaire) return;
+    const cibleId = blocageFormulaire.cibleId;
+    setBlocageFormulaire(null);
+    window.setTimeout(() => {
+      const cible = document.getElementById(cibleId);
+      cible?.scrollIntoView({ behavior: "smooth", block: "center" });
+      cible?.focus();
+    }, 80);
+  };
 
   const handlePaysChange = (code: string) => {
     const selection = pays.find((item) => item.code === code);
@@ -771,21 +900,69 @@ function FormationForm({
           required
           helperText="Tapez au moins 2 lettres, puis sélectionnez la ville."
           onChange={(value) => {
-            setForm((precedent) => ({ ...precedent, ville: value, etablissement: "", etablissementId: "" }));
+            setForm((precedent) => ({
+              ...precedent,
+              ville: value,
+              etablissement: "",
+              etablissementId: "",
+              programme: "",
+              programmeId: "",
+              specialite: "",
+              diplome: "",
+              mention: "",
+            }));
             setEtablissementAutre(false);
+            setProgrammeAutre(false);
+            setSpecialiteAutre(type === "universite");
+            setDiplomeAutre(false);
+            setMentionAutre(false);
           }}
-          onSelect={(option) => setForm((precedent) => ({ ...precedent, ville: option.label, etablissement: "", etablissementId: "" }))}
+          onSelect={(option) => {
+            setForm((precedent) => ({
+              ...precedent,
+              ville: option.label,
+              etablissement: "",
+              etablissementId: "",
+              programme: "",
+              programmeId: "",
+              specialite: "",
+              diplome: "",
+              mention: "",
+            }));
+            setEtablissementAutre(false);
+            setProgrammeAutre(false);
+            setSpecialiteAutre(type === "universite");
+            setDiplomeAutre(false);
+            setMentionAutre(false);
+          }}
         />
       </div>
 
-      <div className="mb-6">
+      <ZoneGuidee
+        bloquee={!villeComplete}
+        indication="Disponible après la ville"
+        onBlockedClick={demanderVille}
+        className="mb-6"
+      >
+      <div>
         {etablissementAutre ? (
           <div>
             <div className="mb-2 flex flex-col items-start gap-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between min-[420px]:gap-3">
               <label htmlFor="etablissement-autre" className="text-base font-semibold text-[#2e261f]">
                 Nom de l’établissement <span className="text-[#c65327]">*</span>
               </label>
-              <button type="button" onClick={() => { setEtablissementAutre(false); set("etablissement", ""); }} className="text-sm font-semibold text-[#0d6738] hover:underline">
+              <button type="button" onClick={() => {
+                setEtablissementAutre(false);
+                setForm((precedent) => ({
+                  ...precedent,
+                  etablissement: "",
+                  etablissementId: "",
+                  programme: "",
+                  programmeId: "",
+                  specialite: "",
+                  diplome: "",
+                }));
+              }} className="text-sm font-semibold text-[#0d6738] hover:underline">
                 Revenir à la liste
               </button>
             </div>
@@ -793,8 +970,16 @@ function FormationForm({
               id="etablissement-autre"
               value={form.etablissement}
               onChange={(event) => {
-                set("etablissement", event.target.value);
-                set("etablissementId", `autre:${event.target.value}`);
+                const valeur = event.target.value;
+                setForm((precedent) => ({
+                  ...precedent,
+                  etablissement: valeur,
+                  etablissementId: `autre:${valeur}`,
+                  programme: "",
+                  programmeId: "",
+                  specialite: "",
+                  diplome: "",
+                }));
               }}
               placeholder="Saisissez le nom exact de l’établissement"
               className={FIELD_CLASS}
@@ -816,16 +1001,39 @@ function FormationForm({
             otherLabel="Mon établissement n’est pas dans la liste"
             onOther={() => {
               setEtablissementAutre(true);
-              setForm((precedent) => ({ ...precedent, etablissement: "", etablissementId: "autre:" }));
+              setForm((precedent) => ({
+                ...precedent,
+                etablissement: "",
+                etablissementId: "autre:",
+                programme: "",
+                programmeId: "",
+                specialite: "",
+                diplome: "",
+              }));
             }}
-            onChange={(value) => setForm((precedent) => ({ ...precedent, etablissement: value, etablissementId: "" }))}
+            onChange={(value) => setForm((precedent) => ({
+              ...precedent,
+              etablissement: value,
+              etablissementId: "",
+              programme: "",
+              programmeId: "",
+              specialite: "",
+              diplome: "",
+            }))}
             onSelect={handleInstitutionSelect}
           />
         )}
       </div>
+      </ZoneGuidee>
 
       {type === "lycee" && (
-        <div className="mb-6">
+        <ZoneGuidee
+          bloquee={!etablissementComplet}
+          indication="Disponible après l’établissement"
+          onBlockedClick={demanderEtablissement}
+          className="mb-6"
+        >
+        <div>
           <SelectAvecAutre
             id="formation-serie"
             label="Série / spécialité"
@@ -837,10 +1045,16 @@ function FormationForm({
             onOtherChange={(value) => set("specialite", value)}
           />
         </div>
+        </ZoneGuidee>
       )}
 
       {type === "universite" && (
         <div className="mb-6 space-y-5">
+          <ZoneGuidee
+            bloquee={!etablissementComplet}
+            indication="Disponible après l’établissement"
+            onBlockedClick={demanderEtablissement}
+          >
           {programmeAutre ? (
             <div>
               <div className="mb-2 flex flex-col items-start gap-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between min-[420px]:gap-3">
@@ -906,10 +1120,16 @@ function FormationForm({
               onSelect={handleProgrammeSelect}
             />
           )}
+          </ZoneGuidee>
 
+          <ZoneGuidee
+            bloquee={!parcoursComplet}
+            indication="Disponible après la formation"
+            onBlockedClick={demanderParcours}
+          >
           <div>
             <label htmlFor="formation-specialite" className={LABEL_CLASS}>
-              Spécialité / parcours <span className="text-[#c65327]">*</span>
+              Spécialité / parcours <span className="font-normal text-[#74685c]">· facultatif</span>
             </label>
             <input
               id="formation-specialite"
@@ -925,16 +1145,50 @@ function FormationForm({
               Saisissez l’intitulé tel qu’il apparaît dans votre parcours.
             </p>
           </div>
+          </ZoneGuidee>
         </div>
       )}
 
+      <ZoneGuidee
+        bloquee={!parcoursComplet}
+        indication={!villeComplete
+          ? "Disponible après la ville"
+          : !etablissementComplet
+            ? "Disponible après l’établissement"
+            : type === "lycee"
+              ? "Disponible après la série"
+              : "Disponible après la formation"}
+        onBlockedClick={!villeComplete
+          ? demanderVille
+          : !etablissementComplet
+            ? demanderEtablissement
+            : demanderParcours}
+      >
       <div className="mb-6">
-        <label className={LABEL_CLASS}>Années <span className="text-[#c65327]">*</span></label>
-        <div className="grid items-center gap-3 sm:grid-cols-[1fr_auto_1fr]">
-          <input aria-label="Année de début" type="number" min="1940" max="2100" value={form.anneeDebut} onChange={(event) => set("anneeDebut", event.target.value)} placeholder="Année de début" className={FIELD_CLASS} />
+        <label className={LABEL_CLASS}>Période <span className="text-[#c65327]">*</span></label>
+        <div className="grid items-center gap-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
+          <div className="grid min-w-0 gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <select aria-label="Mois de début" value={form.moisDebut} onChange={(event) => set("moisDebut", event.target.value)} className={FIELD_CLASS}>
+              <option value="">Mois de début</option>
+              {MOIS.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
+            </select>
+            <input aria-label="Année de début" type="text" inputMode="numeric" maxLength={4} value={form.anneeDebut} onChange={(event) => set("anneeDebut", normaliserAnnee(event.target.value))} placeholder="Année de début" className={FIELD_CLASS} />
+          </div>
           <span aria-hidden="true" className="hidden text-xl text-[#2e261f] sm:block">→</span>
-          <input aria-label="Année de fin" type="number" min="1940" max="2100" value={form.anneeFin} onChange={(event) => set("anneeFin", event.target.value)} placeholder="Année de fin" className={FIELD_CLASS} />
+          <div className="grid min-w-0 gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+            <select aria-label="Mois de fin" value={form.moisFin} onChange={(event) => set("moisFin", event.target.value)} className={FIELD_CLASS}>
+              <option value="">Mois de fin</option>
+              {MOIS.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
+            </select>
+            <input aria-label="Année de fin" type="text" inputMode="numeric" maxLength={4} value={form.anneeFin} onChange={(event) => set("anneeFin", normaliserAnnee(event.target.value))} placeholder="Année de fin" className={FIELD_CLASS} />
+          </div>
         </div>
+        {(form.anneeDebut && !anneeEstValide(form.anneeDebut)) || (form.anneeFin && !anneeEstValide(form.anneeFin)) ? (
+          <p className="mt-2 text-sm font-medium text-[#a44824]">Une année doit contenir exactement 4 chiffres.</p>
+        ) : null}
+        {anneesCompletes && form.moisDebut && form.moisFin && !periodeCompleteEtValide ? (
+          <p className="mt-2 text-sm font-medium text-[#a44824]">La date de début doit être antérieure ou égale à la date de fin.</p>
+        ) : null}
       </div>
 
       <div className="mb-6">
@@ -943,19 +1197,71 @@ function FormationForm({
           {STATUTS_DIPLOME.map(({ valeur, libelle }) => {
             const selectionne = form.statutDiplome === valeur;
             return (
-              <button
-                key={valeur}
-                type="button"
-                aria-pressed={selectionne}
-                onClick={() => choisirStatutDiplome(valeur)}
-                className={`min-h-[54px] rounded-[13px] border px-5 py-3 text-base font-semibold transition-colors ${selectionne ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#dfc9a8] bg-[#fffbf5] text-[#776b5e] hover:border-[#0d6738] hover:text-[#0d6738]"}`}
-              >
-                {libelle}
-              </button>
+              <div key={valeur} className="relative min-w-0">
+                <button
+                  type="button"
+                  aria-pressed={selectionne}
+                  onClick={() => choisirStatutDiplome(valeur)}
+                  className={`h-[74px] w-full rounded-[13px] border px-10 py-3 text-base font-semibold leading-tight transition-colors ${selectionne ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#dfc9a8] bg-[#fffbf5] text-[#776b5e] hover:border-[#0d6738] hover:text-[#0d6738]"}`}
+                >
+                  {libelle}
+                </button>
+                <button
+                  type="button"
+                  aria-label={`En savoir plus : ${libelle}`}
+                  aria-expanded={statutInfoOuvert === valeur}
+                  onClick={() => setStatutInfoOuvert((ouvert) => ouvert === valeur ? null : valeur)}
+                  className={`absolute right-3 top-3 flex h-[18px] w-[18px] items-center justify-center rounded-full border text-[10px] font-bold leading-none transition hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#0d6738]/30 ${selectionne ? "border-white/70 text-white" : "border-[#8e806f] text-[#2e261f]"}`}
+                >
+                  i
+                </button>
+              </div>
             );
           })}
         </div>
       </div>
+
+      {statutInfoAffiche && (
+        <div
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2e261f]/45 p-4 backdrop-blur-[2px]"
+          onMouseDown={(event) => {
+            if (event.currentTarget === event.target) setStatutInfoOuvert(null);
+          }}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="titre-modal-statut-formation"
+            className="w-full max-w-md rounded-[22px] border border-[#ead8bd] bg-[#fffbf5] p-6 shadow-2xl sm:p-7"
+          >
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#e4f0e8] text-sm font-bold text-[#0d6738]">i</span>
+                <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#0d6738]">Statut de la formation</p>
+              </div>
+              <button
+                type="button"
+                aria-label="Fermer la fenêtre d’information"
+                onClick={() => setStatutInfoOuvert(null)}
+                className="flex h-8 w-8 items-center justify-center rounded-full text-xl text-[#2e261f] transition hover:bg-[#f1e4d1]"
+              >
+                ×
+              </button>
+            </div>
+            <h3 id="titre-modal-statut-formation" className="mb-3 font-display text-2xl font-bold text-[#2e261f]">
+              {statutInfoAffiche.libelle}
+            </h3>
+            <p className="text-base leading-relaxed text-[#2e261f]">{statutInfoAffiche.explication}</p>
+            <button
+              type="button"
+              onClick={() => setStatutInfoOuvert(null)}
+              className="mt-6 w-full rounded-full bg-[#0d6738] px-5 py-3 font-semibold text-white transition hover:bg-[#09572f]"
+            >
+              J’ai compris
+            </button>
+          </div>
+        </div>
+      )}
 
       {diplomeAttendu && (
         <div className="mb-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -978,7 +1284,10 @@ function FormationForm({
             <label htmlFor="formation-promotion" className={LABEL_CLASS}>
               {form.statutDiplome === "OBTENU" ? "Année de votre promotion" : "Année de diplôme prévue"} <span className="text-[#c65327]">*</span>
             </label>
-            <input id="formation-promotion" type="number" min="1940" max="2100" value={form.anneePromo} onChange={(event) => set("anneePromo", event.target.value)} placeholder={form.statutDiplome === "OBTENU" ? "Ex. 2023" : "Ex. 2027"} className={FIELD_CLASS} />
+            <input id="formation-promotion" type="text" inputMode="numeric" maxLength={4} value={form.anneePromo} onChange={(event) => set("anneePromo", normaliserAnnee(event.target.value))} placeholder={form.statutDiplome === "OBTENU" ? "Ex. 2023" : "Ex. 2027"} className={FIELD_CLASS} />
+            {form.anneePromo && !anneeEstValide(form.anneePromo) && (
+              <p className="mt-2 text-sm font-medium text-[#a44824]">L’année doit contenir exactement 4 chiffres.</p>
+            )}
           </div>
           {form.statutDiplome === "OBTENU" && (
             <SelectAvecAutre
@@ -994,18 +1303,6 @@ function FormationForm({
             />
           )}
         </div>
-      )}
-
-      {form.statutDiplome === "NON_OBTENU" && (
-        <p className="mb-8 rounded-[14px] border border-[#ead8bd] bg-[#fff8ee] px-5 py-4 text-sm leading-relaxed text-[#56493e]">
-          Vous avez suivi cette formation, mais vous n’avez pas obtenu le diplôme. Aucun diplôme ni aucune mention ne sera affiché sur votre profil.
-        </p>
-      )}
-
-      {form.statutDiplome === "NON_DIPLOMANTE" && (
-        <p className="mb-8 rounded-[14px] border border-[#cfe0d2] bg-[#edf5ef] px-5 py-4 text-sm leading-relaxed text-[#315f43]">
-          Cette formation ne délivre pas de diplôme. Elle apparaîtra sur votre profil comme « formation non diplômante ».
-        </p>
       )}
 
       <div className="border-t border-[#e4d2b3] pt-7">
@@ -1034,6 +1331,52 @@ function FormationForm({
           className={`${FIELD_CLASS} resize-y`}
         />
       </div>
+      </ZoneGuidee>
+
+      {blocageFormulaire && (
+        <div
+          className="fixed inset-0 z-[110] flex items-center justify-center bg-[#2e261f]/45 p-4 backdrop-blur-[2px]"
+          onMouseDown={(event) => {
+            if (event.currentTarget === event.target) setBlocageFormulaire(null);
+          }}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="titre-modal-etape-manquante"
+            className="w-full max-w-md rounded-[22px] border border-[#ead8bd] bg-[#fffbf5] p-6 shadow-2xl sm:p-7"
+          >
+            <div className="mb-5 flex items-start justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e4f0e8] text-base font-bold text-[#0d6738]">→</span>
+                <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#0d6738]">Parcours guidé</p>
+              </div>
+              <button
+                type="button"
+                aria-label="Fermer la fenêtre"
+                onClick={() => setBlocageFormulaire(null)}
+                className="flex h-8 w-8 items-center justify-center rounded-full text-xl text-[#2e261f] transition hover:bg-[#f1e4d1]"
+              >
+                ×
+              </button>
+            </div>
+            <h3 id="titre-modal-etape-manquante" className="mb-3 font-display text-2xl font-bold text-[#2e261f]">
+              {blocageFormulaire.titre}
+            </h3>
+            <p className="text-base leading-relaxed text-[#2e261f]">{blocageFormulaire.message}</p>
+            <p className="mt-4 rounded-[12px] bg-[#f6efe3] px-4 py-3 text-sm leading-relaxed text-[#2e261f]">
+              Pas d’inquiétude : le formulaire s’ouvrira progressivement à mesure que vous avancez.
+            </p>
+            <button
+              type="button"
+              onClick={revenirAuChampManquant}
+              className="mt-6 w-full rounded-full bg-[#0d6738] px-5 py-3 font-semibold text-white transition hover:bg-[#09572f]"
+            >
+              {blocageFormulaire.action}
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-col gap-3 sm:flex-row">
         <button type="button" onClick={onCancel} className="rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-8 py-4 text-base font-semibold text-[#2e261f] hover:bg-[#f6efe3]">
