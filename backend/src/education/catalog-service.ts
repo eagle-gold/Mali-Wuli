@@ -27,22 +27,22 @@ const filtreType = (type: TypeRechercheEtablissement): Prisma.EtablissementWhere
       ],
     };
   }
-  if (type === "lycee") {
-    return {
-      OR: [
-        { type: TypeEtablissement.LYCEE },
-        { niveaux: { some: { niveau: NiveauEducation.SECONDAIRE } } },
-      ],
-    };
-  }
+  // « École » et « Lycée » interrogent volontairement le même catalogue.
+  // Beaucoup d'établissements couvrent plusieurs cycles sans que les sources
+  // permettent de les classer proprement dans une seule catégorie.
   return {
     OR: [
-      { type: TypeEtablissement.FONDAMENTALE },
+      { type: { in: [TypeEtablissement.FONDAMENTALE, TypeEtablissement.LYCEE] } },
       {
         niveaux: {
           some: {
             niveau: {
-              in: [NiveauEducation.PRESCOLAIRE, NiveauEducation.PRIMAIRE, NiveauEducation.FONDAMENTAL],
+              in: [
+                NiveauEducation.PRESCOLAIRE,
+                NiveauEducation.PRIMAIRE,
+                NiveauEducation.FONDAMENTAL,
+                NiveauEducation.SECONDAIRE,
+              ],
             },
           },
         },
@@ -167,8 +167,9 @@ const compatibleAvecType = (nom: string, type: TypeRechercheEtablissement) => {
   const superieur = /universit|university|polytech|facult|institut superieur|higher education/.test(valeur);
   const secondaire = /lycee|secondary|high school|senior school|college secondaire|gymnasium/.test(valeur);
   if (type === "universite") return superieur || !secondaire;
-  if (type === "lycee") return secondaire && !superieur;
-  return !secondaire && !superieur;
+  // Le primaire, le fondamental et le secondaire partagent désormais le même
+  // catalogue : seule une correspondance clairement supérieure est exclue.
+  return !superieur;
 };
 
 const typePrisma = (type: TypeRechercheEtablissement) => {

@@ -13,6 +13,8 @@ Le catalogue sépare les données de référence des formations déclarées par 
 
 Une offre établissement–formation n'est créée que lorsqu'une source permet de l'attester. Les domaines génériques ne sont donc pas attribués artificiellement à toutes les universités.
 
+Dans l'onboarding, les choix « École » et « Lycée » consultent le même catalogue d'établissements : préscolaire, primaire, fondamental et secondaire sont proposés ensemble. Le niveau choisi continue uniquement de déterminer les séries, formations et diplômes affichés après la sélection de l'établissement.
+
 ## Import
 
 ```bash
