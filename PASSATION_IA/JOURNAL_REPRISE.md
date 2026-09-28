@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-EN COURS — Claude cloud, 2026-09-28 20:27 UTC, contrôles avant publication typo+perf
+LIBRE — dernière session terminée : Claude cloud, 2026-09-28 20:50 UTC (contrôles typo+perf ; publication à faire depuis le poste local).
 
 ## Modèle d'entrée
 
@@ -31,16 +31,18 @@ EN COURS — Claude cloud, 2026-09-28 20:27 UTC, contrôles avant publication ty
 ## Entrées
 
 ### 2026-09-28 20:27 UTC — Claude cloud — Contrôles avant publication typo+perf
-- Statut : EN COURS
+- Statut : INTERROMPU (publication à faire depuis le poste local)
 - Demande de l'utilisateur : depuis une session cloud sans accès SSH, contrôler le code de main (npm ci, TypeScript, tests ciblés des lots typographie et performance), comparer la version publiée `versions/20260928-liens-sociaux` avec main et préparer la publication locale (PUBLICATION_LOCALE.md). Aucune action sur la production ni sur une base.
 - État Git au début : branche `main`, HEAD `06bd669`, 0 modifié / 0 non suivi (clone frais de `Alienmap/mali-wuli`).
-- Fichiers touchés : journal ; preuves à venir dans `PASSATION_IA/output/2026-09-28-typo-perf/`.
-- Fait et vérifié : lecture passation et journal en cours.
-- Fait mais non vérifié : —
-- Actions à effet externe : aucune (session cloud sans SSH ni base).
+- Fichiers touchés : ce journal ; `PASSATION_IA/output/2026-09-28-typo-perf/` (`verification.json`, `PUBLICATION_LOCALE.md`). Aucun code modifié.
+- Fait et vérifié : SHA contrôlé `9ad8df3` (arbres frontend `564ace2`, backend `db7ac8f`). Node 22.22.2 / npm 10.9.7 : `npm ci` frontend et backend PASS ; `prisma generate` PASS ; `tsc --noEmit` backend 0 erreur ; `npm run type-check` frontend 0 erreur. Tests ciblés rejoués sur le code de main (chemins Mac/staging redirigés dans des copies hors dépôt) : typographie PASS (3 fichiers), session/performance 19 groupes PASS, catalogue 4 contrôles PASS, logos 3 groupes PASS. Tests backend : 178/178 (177 sous garde anti-E/S ; `onboarding-school-records` relancé hors garde car il écoute sur 127.0.0.1, 7/7, base injoignable). Aucun vrai échec de code.
+- Comparaison publié/main : aucun commit ne correspond à `versions/20260928-liens-sociaux` (publiée depuis un arbre non commité) ; comparaison par les 235 empreintes de `output/2026-09-28-liens-sociaux/source-manifest.json`. 223 identiques, 12 modifiés, 4 sources + 7 WebP ajoutés, 0 retiré : tous expliqués par les deux lots (empreintes `after` du lot performance et du lot typographie). Hors manifeste : exemples `.env`, docs API et `frontend/tsconfig.tsbuildinfo` suivi (artefact à exclure). 15 migrations, aucune postérieure à `20260928220000_profile_social_links` ; `schema.prisma` inchangé.
+- Fait mais non vérifié : build de production Next (à faire sur Hostinger : next/font, Sharp Linux) ; QA navigateur non rejouée ici (preuve Codex `output/2026-09-28-performance/browser-qa.json`).
+- Points d'attention : `ROW_NUMBER() OVER` dans les facettes → version MySQL à relever (≥ 8.0) ; publier le backend avant le frontend ; lacunes listées dans `output/2026-09-28-performance/MERGE_REVIEW.md` (pas de test backend dédié à `/users/me/session`, facettes par niveau, cache des WebP).
+- Actions à effet externe : aucune (ni SSH, ni base, ni production). Pushes GitHub `Alienmap/mali-wuli` `main` seulement.
 - Décisions de l'utilisateur prises pendant la session : publication faite plus tard depuis le poste local par une autre session.
-- Arrêté à : début de session.
-- Prochaine action : contrôles étape a.
+- Arrêté à : contrôles et préparation terminés ; aucune publication commencée.
+- Prochaine action : session locale — suivre `output/2026-09-28-typo-perf/PUBLICATION_LOCALE.md` (relevé lecture seule, candidates `20260929-typo-perf`, backend puis frontend).
 - Preuves : `output/2026-09-28-typo-perf/`
 
 ### 2026-09-28 — Claude — Sauvegarde sur GitHub privé

@@ -1,0 +1,73 @@
+{
+  "status": "PASS_LOCAL_CHECKS_PUBLICATION_PENDING",
+  "at": "2026-09-28T20:45:00Z",
+  "agent": "Claude cloud (sans SSH, sans base)",
+  "mainControlled": {
+    "commit": "9ad8df3b12f5cbc799ff3dafd34b797fa6f966d7",
+    "treeFrontend": "564ace231998e15277fb7fa59c3bd222bcd5bc68",
+    "treeBackend": "db7ac8f5980841dcc7d8b589a00510f6935a120e",
+    "note": "Commits suivants de cette session : documentation PASSATION_IA seulement ; les arbres frontend/backend restent identiques."
+  },
+  "environment": { "node": "v22.22.2", "npm": "10.9.7" },
+  "checks": {
+    "npmCiFrontend": "PASS",
+    "npmCiBackend": "PASS",
+    "prismaGenerate": "PASS (client seulement, aucune connexion)",
+    "tscBackend": "PASS (0 erreur)",
+    "typeCheckFrontend": "PASS (0 erreur)",
+    "verifyProfileTypography": "PASS (3 fichiers)",
+    "verifySessionPerformance": "PASS (19 groupes)",
+    "verifyCataloguePerformance": "PASS (4 contrôles)",
+    "verifyLogoVariants": "PASS (3 groupes ; LandingArbre avant reconstruit et comparé à l'empreinte publiée)",
+    "backendUnitTests": "178/178 PASS (177 sous garde anti-E/S ; onboarding-school-records relancé sans garde car il écoute sur 127.0.0.1 : 7/7, base volontairement injoignable)",
+    "productionBuild": "NON FAIT ici : à faire sur Hostinger (next/font et Sharp Linux)"
+  },
+  "testAdaptation": "Scripts de preuves copiés hors dépôt ; chemins Mac et dossier staging (absent de GitHub) redirigés vers le code de main.",
+  "comparisonPublishedVsMain": {
+    "published": "versions/20260928-liens-sociaux, build MF940TX4N8sLGFRsT_gyN",
+    "method": "empreintes SHA-256 de output/2026-09-28-liens-sociaux/source-manifest.json (235 sources) ; aucun commit ne correspond à la version publiée (publiée depuis un arbre non commité sur 0d01264)",
+    "unchanged": 223,
+    "modified": [
+      "backend/src/routes/education.routes.ts",
+      "backend/src/routes/user.routes.ts",
+      "frontend/src/app/(platform)/layout.tsx",
+      "frontend/src/components/MaliWuliHeader.tsx",
+      "frontend/src/components/auth/PlatformAuthGuard.tsx",
+      "frontend/src/components/education/CatalogueEtablissements.tsx",
+      "frontend/src/components/landing/LandingArbre.tsx",
+      "frontend/src/components/profile/AssociationsProfil.tsx",
+      "frontend/src/components/profile/LiensSociauxProfil.tsx",
+      "frontend/src/components/profile/ProfilMembre.tsx",
+      "frontend/src/hooks/useSessionAccueil.ts",
+      "frontend/src/lib/session.ts"
+    ],
+    "added": [
+      "backend/src/services/education-facettes.service.ts",
+      "frontend/src/app/(platform)/loading.tsx",
+      "frontend/src/components/LogoMaliWuliImage.tsx",
+      "frontend/src/components/auth/SessionMembreContext.tsx",
+      "frontend/public/images/optimized/ (7 WebP)"
+    ],
+    "removed": [],
+    "allExplainedByLots": true,
+    "detail": "Les 21 fichiers du lot performance ont exactement l'empreinte 'after' de son installed.json ; AssociationsProfil et LiensSociauxProfil ont l'empreinte du lot typographie ; ProfilMembre combine les deux lots.",
+    "otherTrackedFilesOutsideManifest": [
+      "backend/.env.example, frontend/.env.local.example (exemples factices)",
+      "backend/COMMUNITY_API.md, backend/SOCIAL_API.md (documentation)",
+      "frontend/tsconfig.tsbuildinfo (artefact TypeScript suivi par erreur ; à exclure de l'archive)"
+    ]
+  },
+  "migrations": {
+    "count": 15,
+    "last": "20260928220000_profile_social_links",
+    "pendingAfterPublished": 0,
+    "schemaPrismaUnchanged": true
+  },
+  "pointsDAttention": [
+    "education-facettes.service.ts utilise ROW_NUMBER() OVER : exige MySQL >= 8.0 (ou MariaDB >= 10.2) ; version à relever en lecture seule avant publication.",
+    "Backend à publier avant le frontend (le frontend appelle GET /api/users/me/session).",
+    "MERGE_REVIEW performance : pas de test backend dédié à /users/me/session ; facettes non vérifiées pour chaque niveau ; pas de cache immutable pour /images/optimized/*."
+  ],
+  "externalActions": { "ssh": 0, "database": 0, "deployment": false, "gitPushTarget": "Alienmap/mali-wuli main" },
+  "secrets": "aucun lu ni écrit"
+}
