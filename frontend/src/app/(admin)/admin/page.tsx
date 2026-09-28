@@ -164,7 +164,7 @@ export default function AdminPage() {
     }
   };
 
-  if (!aAccesAdministration(compte)) return <main className="min-h-screen bg-[var(--color-page)] px-4 py-10"><section className="mx-auto max-w-xl rounded-2xl border border-[#e4d2b3] bg-white p-6"><h1 className="font-display text-2xl">Administration</h1>{erreurAcces ? <><p role="alert" className="mt-4 text-[#a22922]">{erreurAcces}</p><button type="button" onClick={() => void verifierAcces()} className="mt-4 rounded-xl border border-[#dfc9a8] px-4 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0d6738]">Réessayer</button></> : <p className="mt-4" role={compte === null ? "status" : undefined}>{compte === null ? "Vérification de votre accès…" : "Cet espace est réservé à l’équipe de modération."}</p>}<Link href="/dashboard" className="mt-5 block font-semibold text-[#0d6738]">Retour au réseau</Link></section></main>;
+  if (!aAccesAdministration(compte)) return <main className="min-h-screen bg-[var(--color-page)] px-4 py-10"><section className="mx-auto max-w-xl rounded-2xl border border-[#e4d2b3] bg-white p-6"><h1 className="font-display text-2xl text-[#292119]">Administration</h1>{erreurAcces ? <><p role="alert" className="mt-4 text-[#a22922]">{erreurAcces}</p><button type="button" onClick={() => void verifierAcces()} className="mt-4 rounded-xl border border-[#dfc9a8] px-4 py-3 text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#0d6738]">Réessayer</button></> : <p className="mt-4" role={compte === null ? "status" : undefined}>{compte === null ? "Vérification de votre accès…" : "Cet espace est réservé à l’équipe de modération."}</p>}<Link href="/dashboard" className="mt-5 block font-semibold text-[#0d6738]">Retour au réseau</Link></section></main>;
 
   return (
     <main className="min-h-screen bg-[var(--color-page)] px-4 py-8 sm:px-6 lg:px-10">
@@ -174,27 +174,27 @@ export default function AdminPage() {
           <p className="mb-2 text-sm font-bold uppercase tracking-[0.08em] text-[#c65327]">
             Équipe Mali Wuli
           </p>
-          <h1 className="font-display text-3xl font-bold text-[#2e261f] sm:text-4xl">
+          <h1 className="font-display text-3xl font-bold text-[#292119] sm:text-4xl">
             Administration
           </h1>
         </header>
 
         {(aPermission(compte, "ROLES_GERER") || aPermission(compte, "MEMBRES_GERER")) && <Link href="/admin/membres" className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#e4d2b3] bg-[#fffbf5] p-5 text-[#2e261f] transition hover:border-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738]">
-          <span><strong className="block text-lg font-semibold">Membres et rôles</strong><span className="mt-1 block text-sm text-[#695c4b]">Rechercher un membre, gérer son accès et les délégations autorisées.</span></span><span className="font-semibold text-[#0d6738]">Gérer les membres →</span>
+          <span><strong className="titre-element block">Membres et rôles</strong><span className="mt-1 block text-sm text-[#695c4b]">Rechercher un membre, gérer son accès et les délégations autorisées.</span></span><span className="font-semibold text-[#0d6738]">Gérer les membres →</span>
         </Link>}
         {aPermission(compte, "PUBLICATIONS_MODERER") && <Link href="/dashboard" className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#e4d2b3] bg-[#fffbf5] p-5 text-[#2e261f] transition hover:border-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738]">
-          <span><strong className="block text-lg font-semibold">Publications et commentaires</strong><span className="mt-1 block text-sm text-[#695c4b]">Retirer une publication ou un commentaire depuis le fil du réseau.</span></span><span className="font-semibold text-[#0d6738]">Ouvrir le fil →</span>
+          <span><strong className="titre-element block">Publications et commentaires</strong><span className="mt-1 block text-sm text-[#695c4b]">Retirer une publication ou un commentaire depuis le fil du réseau.</span></span><span className="font-semibold text-[#0d6738]">Ouvrir le fil →</span>
         </Link>}
         {aPermission(compte, "ASSOCIATIONS_GERER") && <Link href="/admin/associations" className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#e4d2b3] bg-[#fffbf5] p-5 text-[#2e261f] transition hover:border-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738]">
-          <span><strong className="block text-lg font-semibold">Associations</strong><span className="mt-1 block text-sm text-[#695c4b]">Créer les fiches, désigner les responsables et traiter les propositions.</span></span><span className="font-semibold text-[#0d6738]">Gérer les associations →</span>
+          <span><strong className="titre-element block">Associations</strong><span className="mt-1 block text-sm text-[#695c4b]">Créer les fiches, désigner les responsables et traiter les propositions.</span></span><span className="font-semibold text-[#0d6738]">Gérer les associations →</span>
         </Link>}
 
         {aPermission(compte, "OFFRES_MODERER") && <Link href="/admin/offres" className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#e4d2b3] bg-[#fffbf5] p-5 text-[#2e261f] transition hover:border-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738]">
-          <div><h2 className="font-sans text-lg font-bold">Offres d’emploi</h2><p className="mt-1 text-sm">Vérifier les offres proposées avant leur publication.</p></div>
+          <div><h2 className="titre-element">Offres d’emploi</h2><p className="mt-1 text-sm">Vérifier les offres proposées avant leur publication.</p></div>
           <span className="font-semibold text-[#0d6738]">Ouvrir la validation →</span>
         </Link>}
         {aPermission(compte, "EVENEMENTS_MODERER") && <Link href="/admin/evenements" className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#e4d2b3] bg-[#fffbf5] p-5 text-[#2e261f] transition hover:border-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738]">
-          <span><strong className="block text-lg font-semibold">Événements</strong><span className="mt-1 block text-sm text-[#695c4b]">Vérifier les propositions avant leur publication dans le réseau.</span></span><span className="font-semibold text-[#0d6738]">Valider les événements →</span>
+          <span><strong className="titre-element block">Événements</strong><span className="mt-1 block text-sm text-[#695c4b]">Vérifier les propositions avant leur publication dans le réseau.</span></span><span className="font-semibold text-[#0d6738]">Valider les événements →</span>
         </Link>}
 
         {aPermission(compte, "STATS_CONSULTER") && stats && (
@@ -221,7 +221,7 @@ export default function AdminPage() {
         {aPermission(compte, "INSCRIPTIONS_GERER") && <section className="rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-5 shadow-sm sm:p-8">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h2 className="font-display text-2xl font-bold text-[#2e261f]">Profils à valider</h2>
+              <h2 className="titre-section">Profils à valider</h2>
               <p className="mt-2 text-sm text-[#56493e] sm:text-base">
                 Vérifiez que le profil est complet avant de lui ouvrir l’accès à l’annuaire.
               </p>
@@ -245,7 +245,7 @@ export default function AdminPage() {
                 return (
                   <article key={inscription.id} className="flex flex-col gap-4 rounded-2xl border border-[#e4d2b3] bg-white p-5 lg:flex-row lg:items-center">
                     <div className="min-w-0 flex-1">
-                      <h3 className="font-bold text-[#2e261f]">{nom}</h3>
+                      <h3 className="titre-element">{nom}</h3>
                       <p className="mt-1 break-all text-sm text-[#735133]">{inscription.email}</p>
                       <p className="mt-2 text-sm text-[#56493e]">
                         {[inscription.profil?.titre, inscription.profil?.ville, inscription.profil?.pays].filter(Boolean).join(" · ") || "Informations professionnelles à compléter"}
@@ -273,7 +273,7 @@ export default function AdminPage() {
         {aPermission(compte, "CATALOGUE_GERER") && <section className="rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-5 shadow-sm sm:p-8">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h2 className="font-display text-2xl font-bold text-[#2e261f]">
+              <h2 className="titre-section">
                 Données éducatives à valider
               </h2>
               <p className="mt-2 text-sm text-[#56493e] sm:text-base">
@@ -309,7 +309,7 @@ export default function AdminPage() {
                             {suggestion.nombreContributeurs} contributeurs
                           </span>
                         </div>
-                        <h3 className="break-words text-xl font-bold text-[#2e261f] [overflow-wrap:anywhere]">
+                        <h3 className="titre-element break-words [overflow-wrap:anywhere]">
                           {suggestion.libelleBrut}
                         </h3>
                         <p className="mt-1 text-sm text-[#56493e]">
@@ -391,7 +391,7 @@ export default function AdminPage() {
           )}
         </section>}
         {aPermission(compte, "SIGNALEMENTS_CONSULTER") && <section className="min-w-0 rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-5 shadow-sm sm:p-8" aria-labelledby="signalements-titre">
-          <h2 id="signalements-titre" className="font-display text-2xl font-bold text-[#2e261f]">Signalements</h2>
+          <h2 id="signalements-titre" className="titre-section">Signalements</h2>
           <p className="mt-2 text-sm text-[#56493e]">Les 200 signalements les plus récents, pour consultation par l’équipe de modération.</p>
           {chargement ? <p role="status" className="py-6 text-[#735133]">Chargement des signalements…</p> : !signalements.length ? <p className="mt-5 text-sm text-[#56493e]">Aucun signalement à afficher.</p> : <ul className="mt-5 space-y-3">{signalements.map((signalement) => <li key={signalement.id} className="min-w-0 rounded-xl border border-[#e4d2b3] bg-white p-4">
             <p className="font-semibold text-[#2e261f]">{signalement.cibleType === "PUBLICATION" ? "Publication" : signalement.cibleType === "COMMENTAIRE" ? "Commentaire" : signalement.cibleType === "MEMBRE" ? "Membre" : signalement.cibleType}</p>

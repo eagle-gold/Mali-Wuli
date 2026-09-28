@@ -72,7 +72,7 @@ export function Modal({
         <div className="mb-5 flex items-center justify-between gap-4">
           <h2
             id="titre-modal-communaute"
-            className="text-xl font-bold text-terre"
+            className="titre-section"
           >
             {titre}
           </h2>

@@ -315,7 +315,7 @@ export default function NotificationsPopover({ onOpen }: NotificationsPopoverPro
           className="fixed inset-x-3 top-[84px] z-[70] max-h-[calc(100dvh-172px)] overflow-y-auto overscroll-contain rounded-2xl border border-[#e9dcc8] bg-[#fffaf3] text-[#2d241d] shadow-[0_24px_55px_rgba(73,52,34,0.22)] sm:absolute sm:left-auto sm:right-0 sm:top-[calc(100%+12px)] sm:w-[528px] md:[max-height:min(642px,calc(100dvh-120px))]"
         >
           <header className="sticky top-0 z-10 flex min-h-[64px] items-center justify-between gap-4 border-b border-[#eee3d2] bg-[#fffaf3]/95 px-5 py-4 backdrop-blur-sm sm:px-6">
-            <h2 id="titre-notifications" className="font-display text-2xl font-bold leading-none">Notifications</h2>
+            <h2 id="titre-notifications" className="titre-section leading-none">Notifications</h2>
             <div className="flex items-center gap-3">
               <span className="hidden text-sm text-[#887764] min-[420px]:inline sm:text-base">cette semaine</span>
               {nombreNonLues > 0 && (

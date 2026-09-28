@@ -440,7 +440,7 @@ function ModaleSoutiens({
           <div>
             <h2
               id="titre-soutiens"
-              className="font-sans text-xl font-bold text-[#2f261e]"
+              className="titre-section"
             >
               Personnes qui soutiennent
             </h2>
@@ -1362,7 +1362,7 @@ function CartePublication({ publication, onSupprime, actualiser }: { publication
           photo={publication.photo}
         />
         <div className="min-w-0 flex-1">
-          <h2 className="truncate font-sans text-lg font-bold text-[#2f261e] sm:text-xl">
+          <h2 className="truncate titre-element">
             {publication.auteur}
           </h2>
           <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm text-[#806f5e] sm:text-base">
@@ -1642,7 +1642,7 @@ function ColonneProfil({
               photo={urlMediaBackend(profil.photo)}
             />
           </div>
-          <h2 className="mt-3 font-sans text-xl font-bold text-[#2f261e]">
+          <h2 className="mt-3 titre-element">
             {nom}
           </h2>
           <p className="mt-1 text-[#4f4339]">
@@ -1751,7 +1751,7 @@ function ColonneSuggestions({
       className="hidden space-y-5 min-[1750px]:block"
     >
       <section className="rounded-2xl border border-[#eadcc7] bg-[#fffaf4] p-5">
-        <h2 className="font-sans text-base font-extrabold uppercase tracking-wide text-[#332920]">
+        <h2 className="titre-section">
           Synergies suggérées
         </h2>
         {suggestions.length ? (
@@ -1841,7 +1841,7 @@ function ColonneSuggestions({
 
       <section className="rounded-2xl border border-[#eadcc7] bg-[#fffaf4] p-5">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="font-sans text-base font-extrabold uppercase tracking-wide text-[#332920]">
+          <h2 className="titre-section">
             Événements à venir
           </h2>
           <Link

@@ -41,8 +41,11 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        display: ["Playfair Display", "serif"],
+        // next/font expose les polices chargées via des variables CSS (layout.tsx) :
+        // le nom de famille brut « Inter » / « Playfair Display » ne correspond à
+        // aucune police chargée et retombait sur la police système.
+        sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
+        display: ["var(--font-playfair)", "Playfair Display", "Georgia", "serif"],
       },
     },
   },

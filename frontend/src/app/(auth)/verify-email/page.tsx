@@ -141,7 +141,7 @@ export default function VerifyEmailPage() {
           </button>
         </nav>
 
-        <h1 className="font-display text-3xl font-bold text-[#2e261f] mb-3">
+        <h1 className="font-display text-3xl font-bold text-[#292119] mb-3">
           Confirmez votre e-mail
         </h1>
         <p className="break-words text-sm text-[#2e261f] mb-8">

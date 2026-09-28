@@ -172,7 +172,7 @@ export default function VolontairesPage() {
     <div className="mx-auto min-w-0 max-w-7xl [overflow-wrap:anywhere] space-y-6 p-4 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-terre">Volontaires</h1>
+          <h1 className="font-display text-2xl font-bold text-[#292119]">Volontaires</h1>
           <p className="mt-1 text-sm text-terre-300">
             Trouvez un membre disponible pour vous écouter et vous accompagner.
           </p>
@@ -286,7 +286,7 @@ export default function VolontairesPage() {
                       )}
                     </div>
                     <div>
-                      <h2 className="font-sans text-base font-bold text-terre">
+                      <h2 className="titre-element">
                         {noms || "Volontaire Mali Wuli"}
                       </h2>
                       <p className="text-sm text-terre-300">

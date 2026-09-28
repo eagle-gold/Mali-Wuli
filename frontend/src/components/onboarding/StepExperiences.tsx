@@ -120,7 +120,7 @@ function ExperienceCard({
         <div className="flex min-w-0 flex-col justify-between gap-3 sm:flex-row sm:items-start">
           <div className="min-w-0">
             <div className="flex min-w-0 flex-wrap items-center gap-2">
-              <h3 className="break-words text-base font-bold text-[#2e261f] [overflow-wrap:anywhere] sm:text-lg">
+              <h3 className="titre-element break-words [overflow-wrap:anywhere]">
                 {experience.poste}
               </h3>
               <span className="rounded-[7px] bg-[#eee2d0] px-3 py-1 text-xs font-bold text-[#2e261f] sm:text-sm">
@@ -235,7 +235,7 @@ function ExperienceForm({
 
   return (
     <section className="mb-6 rounded-[18px] border border-[#cfe0d2] bg-[#f4f0e6] p-5 sm:p-7">
-      <h3 className="mb-5 text-lg font-bold text-[#2e261f] sm:text-xl">
+      <h3 className="mb-5 titre-element">
         {initialData ? "Modifier l’expérience" : "Nouvelle expérience"}
       </h3>
 
@@ -395,7 +395,7 @@ export default function StepExperiences({ onNext, onBack, initialData }: StepExp
 
   return (
     <section className="min-w-0 rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-5 shadow-sm sm:p-8 lg:p-9">
-      <h2 className="mb-2 font-display text-2xl font-bold text-[#2e261f] sm:text-3xl">Vos expériences</h2>
+      <h2 className="mb-2 titre-section">Vos expériences</h2>
       <p className="mb-7 max-w-[1050px] text-sm leading-relaxed text-[#2e261f] sm:text-base">
         Postes, missions, stages, engagements associatifs. C’est ce qui permet aux autres membres de savoir quoi vous demander, et à vous de recevoir les bonnes sollicitations.
       </p>

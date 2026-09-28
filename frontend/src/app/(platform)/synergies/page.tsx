@@ -65,7 +65,7 @@ function CarteProfil({
           )}
         </div>
         <div className="min-w-0">
-          <h2 className="truncate font-sans text-base font-bold text-terre">
+          <h2 className="truncate titre-element">
             {nomComplet(profil.user.prenom, profil.user.nom)}
           </h2>
           <p className="text-sm text-terre-300">
@@ -185,7 +185,7 @@ export default function SynergiesPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-6 p-4 sm:p-6">
       <div>
-        <h1 className="text-2xl font-bold text-terre">Synergies</h1>
+        <h1 className="font-display text-2xl font-bold text-[#292119]">Synergies</h1>
         <p className="mt-1 text-sm text-terre-300">
           Créez des liens utiles et suivez vos demandes de mise en relation.
         </p>
@@ -258,7 +258,7 @@ export default function SynergiesPage() {
           <div className="space-y-6">
             {donnees?.recues.length ? (
               <section>
-                <h2 className="mb-3 font-sans text-base font-bold text-terre">
+                <h2 className="mb-3 titre-section">
                   Demandes reçues
                 </h2>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -288,7 +288,7 @@ export default function SynergiesPage() {
             ) : null}
             {donnees?.envoyees.length ? (
               <section>
-                <h2 className="mb-3 font-sans text-base font-bold text-terre">
+                <h2 className="mb-3 titre-section">
                   Demandes envoyées
                 </h2>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">

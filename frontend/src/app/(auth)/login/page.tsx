@@ -238,7 +238,7 @@ export default function LoginPage() {
             ? `Code reçu par e-mail · étape ${etape === "email" ? "1" : "2"} sur 2`
             : "Avec mon mot de passe"}
         </p>
-        <h1 className="mb-3 text-center font-display text-3xl font-bold text-[#2e261f]">
+        <h1 className="mb-3 text-center font-display text-3xl font-bold text-[#292119]">
           Se connecter
         </h1>
         <p className="mb-5 text-center text-sm leading-relaxed text-[#776b5e]">

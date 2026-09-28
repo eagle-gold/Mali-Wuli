@@ -475,7 +475,7 @@ function FormationCard({
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-start">
           <div className="min-w-0">
             <div className="mb-1 flex flex-wrap items-center gap-2">
-              <h3 className="min-w-0 break-words text-lg font-bold text-[#2e261f] [overflow-wrap:anywhere] sm:text-xl">{formation.etablissement}</h3>
+              <h3 className="titre-element min-w-0 break-words [overflow-wrap:anywhere]">{formation.etablissement}</h3>
               <span className="max-w-full break-words rounded-[7px] bg-[#eee2d0] px-3 py-1 text-xs font-bold text-[#2e261f] [overflow-wrap:anywhere] sm:text-sm">
                 {TYPE_LABELS[formation.type]}
               </span>
@@ -1155,7 +1155,7 @@ function FormationForm({
 
   return (
     <section className="mb-8 rounded-[18px] border border-[#cfe0d2] bg-[#f8f1e6] p-5 sm:p-8">
-      <h2 className="mb-1 text-xl font-bold text-[#2e261f] sm:text-2xl">{TYPE_TITRES[type]}</h2>
+      <h2 className="mb-1 titre-section">{TYPE_TITRES[type]}</h2>
       <p className="mb-7 text-sm text-[#56493e] sm:text-base">
         Commencez par le lieu : les établissements proposés respectent le pays et le niveau choisis.
       </p>
@@ -1527,7 +1527,7 @@ function FormationForm({
                 ×
               </button>
             </div>
-            <h3 id="titre-modal-statut-formation" className="mb-3 font-display text-2xl font-bold text-[#2e261f]">
+            <h3 id="titre-modal-statut-formation" className="mb-3 titre-section">
               {statutInfoAffiche.libelle}
             </h3>
             <p className="text-base leading-relaxed text-[#2e261f]">{statutInfoAffiche.explication}</p>
@@ -1544,7 +1544,7 @@ function FormationForm({
 
       {estEtablissementScolaire && diplomeAttendu && (
         <section className="mb-8 space-y-4" aria-labelledby="diplomes-scolaires-titre">
-          <h3 id="diplomes-scolaires-titre" className="text-xl font-bold text-[#2e261f]">Diplômes dans cet établissement</h3>
+          <h3 id="diplomes-scolaires-titre" className="titre-element">Diplômes dans cet établissement</h3>
           <p className="text-sm text-[#56493e]">Vous pouvez ajouter le brevet ou DEF et le bac à des années différentes pendant la même scolarité, ainsi que tout autre diplôme.</p>
           {diplomesScolaires.map((diplome, index) => (
             <fieldset key={clesDiplomesScolaires.current[index]} className="rounded-[14px] border border-[#dfc9a8] p-4 sm:p-5">
@@ -1654,7 +1654,7 @@ function FormationForm({
 
       {insertionDemandee && (
         <section className="mb-8 border-t border-[#e4d2b3] pt-7" aria-labelledby="titre-suivi-insertion">
-          <h3 id="titre-suivi-insertion" className="mb-1 text-xl font-bold text-[#2e261f]">
+          <h3 id="titre-suivi-insertion" className="mb-1 titre-element">
             Après la formation
           </h3>
           <p className="mb-5 max-w-4xl text-sm leading-relaxed text-[#56493e] sm:text-base">
@@ -1745,7 +1745,7 @@ function FormationForm({
       {avisDisponible ? (
         <>
           <div className="border-t border-[#e4d2b3] pt-7">
-            <h3 className="mb-1 text-xl font-bold text-[#2e261f]">Votre avis sur cette formation</h3>
+            <h3 className="mb-1 titre-element">Votre avis sur cette formation</h3>
             <p className="mb-4 text-sm text-[#56493e] sm:text-base">
               {nombreNotes} notes sur 5, puis un mot sur votre expérience. Ces avis aideront les membres du réseau à s’orienter.
             </p>
@@ -1813,7 +1813,7 @@ function FormationForm({
                 ×
               </button>
             </div>
-            <h3 id="titre-modal-etape-manquante" className="mb-3 font-display text-2xl font-bold text-[#2e261f]">
+            <h3 id="titre-modal-etape-manquante" className="mb-3 titre-section">
               {blocageFormulaire.titre}
             </h3>
             <p className="text-base leading-relaxed text-[#2e261f]">{blocageFormulaire.message}</p>
@@ -2022,7 +2022,7 @@ export default function StepFormations({ onNext, onBack, initialData }: StepForm
 
   return (
     <section className="min-w-0 overflow-hidden rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-4 shadow-sm sm:p-9 lg:p-12">
-      <h1 className="mb-3 font-display text-3xl font-bold text-[#2e261f] sm:text-[36px]">Votre parcours de formation</h1>
+      <h1 className="mb-3 font-display text-3xl font-bold text-[#292119] sm:text-[36px]">Votre parcours de formation</h1>
       <p className="mb-8 max-w-[1160px] text-base leading-relaxed text-[#2e261f] sm:text-lg">
         Ajoutez vos établissements : ils seront classés automatiquement du plus récent au plus ancien. Regroupez le brevet ou DEF, le bac et vos autres diplômes sur une seule fiche par école ou lycée. Les questions sur l’insertion concernent uniquement le supérieur.
       </p>

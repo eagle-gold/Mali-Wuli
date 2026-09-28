@@ -1,7 +1,10 @@
 .landing {
+  /* Polices et encre alignées sur la plateforme (Playfair Display + Inter, #292119). */
+  --font-landing-heading: var(--font-playfair);
+  --font-landing-body: var(--font-inter);
   --cream: var(--color-page, #f4ecdd);
   --card: #fdfaf3;
-  --ink: #1a1410;
+  --ink: #292119;
   --green: #0f5c33;
   --brown: #6b4a2f;
   --border: #e4d8c4;
@@ -14,7 +17,8 @@
 .landing *, .landing *::before, .landing *::after { box-sizing: border-box; }
 .landing h1, .landing h2, .svgHeading { font-family: var(--font-landing-heading), Georgia, serif; }
 .landing h1, .landing h2, .landing h3, .landing p { margin: 0; }
-.landing h2 { font-size: 40px; font-weight: 600; line-height: 1.1; }
+.landing h2 { font-size: 1.5rem; font-weight: 700; line-height: 1.25; }
+@media (min-width: 640px) { .landing h2 { font-size: 1.875rem; line-height: 2.25rem; } }
 .landing h3, .landing button, .landing input, .svgBody { font-family: var(--font-landing-body), system-ui, sans-serif; }
 .landing button, .landing a, .landing input { -webkit-tap-highlight-color: transparent; }
 .landing button { cursor: pointer; }
@@ -63,7 +67,7 @@
 .panelHeading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .panelHeading > div { min-width: 0; }
 .panelHeading .eyebrow { font-size: 11.5px; letter-spacing: .1em; }
-.panelHeading h2 { margin-top: 4px; font-size: 26px; line-height: 1.2; outline: none; }
+.panelHeading h2 { margin-top: 4px; outline: none; }
 .panelHeading h2 + p { font-size: 14px; margin-top: 4px; line-height: 1.45; }
 .closeButton { border: 0; background: transparent; color: var(--ink); width: 30px; height: 30px; flex: none; display: flex; align-items: center; justify-content: center; border-radius: 6px; margin: -5px -8px 0 0; }
 .closeButton:hover { background: var(--cream); }
@@ -86,7 +90,8 @@
 .steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .stepCard { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
 .stepNumber { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: var(--brown); color: var(--card); font-weight: 800; }
-.stepCard h3 { font-size: 19px; font-weight: 700; line-height: 1.3; }
+.stepCard h3, .postOffer h3, .eventCard h3 { font-family: var(--font-landing-heading), Georgia, serif; font-size: 1.125rem; font-weight: 700; line-height: 1.375; }
+@media (min-width: 640px) { .stepCard h3, .postOffer h3, .eventCard h3 { font-size: 1.25rem; line-height: 1.75rem; } }
 .stepCard p { font-size: 15px; line-height: 1.6; }
 .opportunitySection { padding: 88px 48px; background: var(--brown); color: #fff; }
 .sectionHeading { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
@@ -107,7 +112,6 @@
 .postText { padding: 14px 18px 0; font-size: 14.5px; line-height: 1.55; }
 .postOffer { margin: 14px 18px 0; border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
 .postOffer > span { font-size: 11.5px; font-weight: 800; letter-spacing: .08em; }
-.postOffer h3 { font-size: 16px; font-weight: 700; line-height: 1.35; }
 .postOffer p { font-size: 13px; line-height: 1.4; }
 .postCounts { display: flex; justify-content: space-between; padding: 10px 18px; font-size: 12.5px; gap: 8px; }
 .postActions { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid #efe6d6; }
@@ -121,7 +125,6 @@
 .calendar { width: 56px; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; text-align: center; flex: none; align-self: flex-start; background: #fff; }
 .calendar > span { display: block; background: var(--green); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .08em; padding: 3px 0; }
 .calendar strong { display: block; font-family: var(--font-landing-heading), Georgia, serif; font-size: 24px; font-weight: 600; padding: 5px 0; }
-.eventCard h3 { font-size: 16px; font-weight: 700; line-height: 1.35; }
 .eventCard p { font-size: 13.5px; line-height: 1.5; margin-top: 8px; }
 .eventCard .eventLocation { margin-top: 4px; }
 .landing .eventButton { display: inline-flex; align-items: center; gap: 5px; color: var(--green); background: transparent; border: 0; padding: 0; margin-top: 12px; font-size: 12px; font-weight: 700; text-align: left; }
@@ -186,8 +189,6 @@
   .detailPanel::before { content: ""; width: 36px; height: 4px; border-radius: 8px; background: var(--border); align-self: center; margin: -12px 0 4px; }
   .closeButton { width: 36px; height: 36px; }
   .howSection, .opportunitySection { padding: 56px 20px; }
-  .landing h2 { font-size: 33px; }
-  .panelHeading h2 { font-size: 26px; }
   .steps, .opportunityGrid, .eventsGrid, .faqGrid { grid-template-columns: minmax(0, 1fr); }
   .steps { gap: 14px; }
   .stepCard { padding: 22px; }

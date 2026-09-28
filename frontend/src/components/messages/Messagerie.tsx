@@ -518,7 +518,7 @@ export default function Messagerie() {
         className={`${conversationMobile ? "hidden md:flex" : "flex"} min-w-0 w-full shrink-0 flex-col border-r border-[#eadfce] bg-[#fffaf3] md:w-[350px] xl:w-[480px]`}
       >
         <div className="flex min-h-[86px] items-center justify-between gap-2 px-3 py-4 min-[360px]:gap-3 min-[360px]:px-4 sm:px-6">
-          <h1 className="font-display text-2xl font-bold leading-none text-[#2d241d] min-[360px]:text-3xl sm:text-4xl">Messages</h1>
+          <h1 className="font-display text-2xl font-bold leading-none text-[#292119] min-[360px]:text-3xl sm:text-4xl">Messages</h1>
           <button
             ref={boutonNouvelleConversation}
             type="button"
@@ -536,7 +536,7 @@ export default function Messagerie() {
           <div className="min-h-0 flex-1 px-4 pb-4 sm:px-6">
             <section className="flex max-h-full min-h-0 flex-col rounded-2xl border border-[#eadfce] bg-[#fffdf9] p-4 sm:p-5">
               <div className="flex items-center justify-between gap-4">
-                <h2 className="font-sans text-lg font-bold text-[#2d241d] sm:text-xl">À qui écrivez-vous ?</h2>
+                <h2 className="titre-element">À qui écrivez-vous ?</h2>
                 <button
                   type="button"
                   onClick={() => {
@@ -667,7 +667,7 @@ export default function Messagerie() {
             </button>
             <Avatar personne={conversationActive.interlocuteur} grand />
             <div className="min-w-0">
-              <h2 className="truncate font-sans text-lg font-bold text-[#2d241d] sm:text-2xl">{conversationActive.interlocuteur.nom}</h2>
+              <h2 className="truncate titre-element">{conversationActive.interlocuteur.nom}</h2>
               <p className="truncate text-sm text-[#887764] sm:text-lg">{conversationActive.interlocuteur.fonction} · {conversationActive.interlocuteur.ville}</p>
             </div>
           </header>

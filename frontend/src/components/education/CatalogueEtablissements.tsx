@@ -62,7 +62,7 @@ export default function CatalogueEtablissements() {
     <section className="min-h-[calc(100dvh-112px)] min-w-0 [overflow-wrap:anywhere] bg-[var(--color-page)] px-4 py-8 text-[#2d241d] sm:px-6 sm:py-10 lg:px-10">
       <div className="mx-auto w-full max-w-[1510px]">
         <header>
-          <h1 className="font-display text-3xl font-bold leading-tight sm:text-4xl">Établissements</h1>
+          <h1 className="font-display text-3xl font-bold leading-tight text-[#292119] sm:text-4xl">Établissements</h1>
           <p className="mt-1 max-w-[900px] text-sm leading-relaxed text-[#55483b] sm:text-base lg:text-lg">Lycées, universités, grandes écoles et instituts. Chaque fiche rassemble les membres qui y sont passés, d’après leur inscription, et le devenir des promotions.</p>
         </header>
 
@@ -107,13 +107,13 @@ export default function CatalogueEtablissements() {
 }
 
 function EtatMessage({ titre, texte, children }: { titre: string; texte: string; children?: React.ReactNode }) {
-  return <div className="mt-6 rounded-[18px] border border-[#eadfce] bg-[#fffdf9] px-6 py-14 text-center"><h2 className="text-xl font-bold">{titre}</h2><p className="mt-2 text-[#887764]">{texte}</p>{children}</div>;
+  return <div className="mt-6 rounded-[18px] border border-[#eadfce] bg-[#fffdf9] px-6 py-14 text-center"><h2 className="titre-section">{titre}</h2><p className="mt-2 text-[#887764]">{texte}</p>{children}</div>;
 }
 
 function CarteEtablissement({ etablissement }: { etablissement: EtablissementListe }) {
   const estSuperieur = etablissement.type === "UNIVERSITE" || etablissement.type === "ECOLE_SUPERIEURE";
   return <Link href={`/education/etablissements/${encodeURIComponent(etablissement.id)}`} className="group flex min-h-[272px] flex-col rounded-[18px] border border-[#eadfce] bg-[#fffdf9] p-5 transition hover:-translate-y-0.5 hover:border-[#d5bd98] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#0d6738] sm:p-7">
-    <div className="flex min-w-0 items-start gap-4"><span className={`flex h-14 min-w-14 shrink-0 items-center justify-center rounded-xl px-2 text-center text-sm font-bold sm:h-16 sm:min-w-16 ${TONS[etablissement.ton]}`}>{sigle(etablissement)}</span><span className="min-w-0 flex-1"><strong className="block text-lg font-bold leading-tight group-hover:text-[#0d6738] sm:text-xl">{etablissement.nom}</strong><span className="mt-1 block text-sm text-[#887764]">{[etablissement.niveau, [etablissement.ville, etablissement.pays].filter(Boolean).join(", "), etablissement.statut].filter(Boolean).join(" · ")}</span><span className="mt-2 flex flex-wrap items-center gap-2">{etablissement.note === null ? <span className="text-sm text-[#887764]">Pas encore d’avis</span> : <><NoteEtoiles note={etablissement.note} compacte /><b className="text-sm">{etablissement.note.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b><span className="text-sm text-[#887764]">({etablissement.nombreAvis} avis)</span></>}</span></span></div>
+    <div className="flex min-w-0 items-start gap-4"><span className={`flex h-14 min-w-14 shrink-0 items-center justify-center rounded-xl px-2 text-center text-sm font-bold sm:h-16 sm:min-w-16 ${TONS[etablissement.ton]}`}>{sigle(etablissement)}</span><span className="min-w-0 flex-1"><strong className="titre-element block group-hover:text-[#0d6738]">{etablissement.nom}</strong><span className="mt-1 block text-sm text-[#887764]">{[etablissement.niveau, [etablissement.ville, etablissement.pays].filter(Boolean).join(", "), etablissement.statut].filter(Boolean).join(" · ")}</span><span className="mt-2 flex flex-wrap items-center gap-2">{etablissement.note === null ? <span className="text-sm text-[#887764]">Pas encore d’avis</span> : <><NoteEtoiles note={etablissement.note} compacte /><b className="text-sm">{etablissement.note.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b><span className="text-sm text-[#887764]">({etablissement.nombreAvis} avis)</span></>}</span></span></div>
     <p className="my-5 flex-1 text-sm leading-relaxed text-[#40372f] sm:text-base">{etablissement.resume || "Aucune description n’a encore été renseignée pour cet établissement."}</p>
     <dl className={`grid grid-cols-2 gap-4 border-t border-[#eee3d2] pt-4 ${estSuperieur ? "sm:grid-cols-3" : ""}`}><Stat valeur={etablissement.membres} libelle="membres affiliés" couleur="text-[#0d6738]" /><Stat valeur={etablissement.promotions} libelle="promotions représentées" couleur="text-[#765131]" />{estSuperieur && <Stat valeur={etablissement.insertion === null ? "—" : `${etablissement.insertion} %`} libelle={etablissement.insertion === null ? "pas encore de suivi exploitable" : `insertion à 12 mois · ${etablissement.repondantsInsertion} répondant${etablissement.repondantsInsertion > 1 ? "s" : ""}`} couleur={etablissement.insertion === null ? "text-[#a39583]" : "text-[#0d6738]"} />}</dl>
   </Link>;

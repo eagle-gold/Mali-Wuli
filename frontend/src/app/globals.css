@@ -28,6 +28,17 @@
 }
 
 @layer components {
+  /* Typographie des titres — référence : page profil (ProfilMembre).
+     Titre de section ou de carte (h2). */
+  .titre-section {
+    @apply font-display text-2xl font-bold leading-tight text-[#292119] sm:text-3xl;
+  }
+
+  /* Titre d’élément dans une section (h3 : employeur, poste, carte…). */
+  .titre-element {
+    @apply font-display text-lg font-bold leading-snug text-[#292119] sm:text-xl;
+  }
+
   .btn-primary {
     @apply bg-vert text-white px-4 py-2 rounded-lg font-medium hover:bg-vert-500 transition-colors;
   }

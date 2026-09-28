@@ -5,7 +5,7 @@ export default function LiensSociauxProfil({ liens }: { liens: ReseauxSociaux })
   const reseaux = liensSociauxAffichables(liens);
   if (!reseaux.length) return null;
   return <section className="min-w-0 rounded-2xl border border-[#e4d2b3] bg-[#fffbf5] p-5 sm:p-7" aria-label="Réseaux sociaux">
-    <h2 className="font-display text-2xl font-bold leading-tight text-[#2e261f] sm:text-3xl">Réseaux sociaux</h2>
+    <h2 className="titre-section">Réseaux sociaux</h2>
     <ul className="mt-4 flex flex-wrap gap-3">
       {reseaux.map(({ cle, nom, href }) => {
         const Logo = LOGOS_RESEAUX[cle];

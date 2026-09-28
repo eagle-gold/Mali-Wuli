@@ -98,23 +98,23 @@ export default function StepAssociations({ onBack, onNext, enregistrementEnCours
   return <section className="mx-auto max-w-[1040px] space-y-6 text-[#2e261f]">
     <header>
       <p className="text-sm font-semibold uppercase tracking-wide text-[#c65327]">Étape facultative</p>
-      <h1 className="mt-2 font-display text-3xl font-semibold sm:text-4xl">Vos associations</h1>
+      <h1 className="mt-2 font-display text-3xl font-semibold text-[#292119] sm:text-4xl">Vos associations</h1>
       <p className="mt-3 max-w-3xl leading-relaxed text-[#695c4b]">Retrouvez les associations dont vous êtes membre. Le responsable validera votre affiliation avant qu’elle soit visible sur votre profil. Vous pouvez continuer sans en ajouter.</p>
     </header>
 
     <section className="rounded-2xl border border-[#e4d2b3] bg-[#fffbf5] p-5 sm:p-7" aria-labelledby="mes-associations-inscription">
-      <h2 id="mes-associations-inscription" className="text-lg font-semibold">Mes affiliations et demandes</h2>
+      <h2 id="mes-associations-inscription" className="titre-section">Mes affiliations et demandes</h2>
       {chargementAffiliations ? <p className="mt-4" role="status">Chargement de vos affiliations…</p> : erreurAffiliations ? <div className="mt-4"><p role="alert">{erreurAffiliations}</p><button type="button" className={bouton + " mt-3"} onClick={() => void chargerAffiliations()}>Réessayer</button></div> : affiliations.length ? <ul className="mt-4 divide-y divide-[#ead8bd]">
-        {affiliations.map((association) => <li key={association.id} className="py-4 first:pt-0"><h3 className="break-words font-semibold">{association.nom}</h3><p className="mt-1 text-sm text-[#695c4b]">{[association.ville, association.pays].filter(Boolean).join(" · ")}</p>{actions(association)}</li>)}
+        {affiliations.map((association) => <li key={association.id} className="py-4 first:pt-0"><h3 className="titre-element break-words">{association.nom}</h3><p className="mt-1 text-sm text-[#695c4b]">{[association.ville, association.pays].filter(Boolean).join(" · ")}</p>{actions(association)}</li>)}
       </ul> : <p className="mt-4 text-[#695c4b]">Vous n’avez pas encore ajouté d’association.</p>}
     </section>
 
     <section className="rounded-2xl border border-[#e4d2b3] bg-[#fffbf5] p-5 sm:p-7" aria-labelledby="recherche-associations-inscription">
-      <h2 id="recherche-associations-inscription" className="text-lg font-semibold">Rechercher une association</h2>
+      <h2 id="recherche-associations-inscription" className="titre-section">Rechercher une association</h2>
       <label className="mt-4 block text-sm font-medium" htmlFor="association-inscription-q">Nom, ville ou vocation</label>
       <input id="association-inscription-q" type="search" maxLength={100} value={recherche} onChange={(event) => { setRecherche(event.target.value); setPage(1); }} placeholder="Ex. étudiants, culture, Bamako…" className="mt-2 w-full rounded-xl border border-[#dfc9a8] bg-white px-4 py-3 outline-none focus:ring-2 focus:ring-[#0d6738]" />
       {chargement ? <p className="mt-5" role="status">Recherche en cours…</p> : erreurRecherche ? <div className="mt-5"><p role="alert">{erreurRecherche}</p><button type="button" className={bouton + " mt-3"} onClick={() => setEssai((value) => value + 1)}>Réessayer</button></div> : resultats?.associations.length ? <>
-        <ul className="mt-5 grid gap-4 sm:grid-cols-2">{resultats.associations.map((association) => <li key={association.id} className="min-w-0 rounded-xl border border-[#ead8bd] bg-white p-4"><h3 className="break-words font-semibold">{association.nom}</h3><p className="mt-1 text-sm text-[#695c4b]">{[association.ville, association.pays].filter(Boolean).join(" · ")}</p>{association.vocation && <p className="mt-2 break-words text-sm">{association.vocation}</p>}{actions(association)}</li>)}</ul>
+        <ul className="mt-5 grid gap-4 sm:grid-cols-2">{resultats.associations.map((association) => <li key={association.id} className="min-w-0 rounded-xl border border-[#ead8bd] bg-white p-4"><h3 className="titre-element break-words">{association.nom}</h3><p className="mt-1 text-sm text-[#695c4b]">{[association.ville, association.pays].filter(Boolean).join(" · ")}</p>{association.vocation && <p className="mt-2 break-words text-sm">{association.vocation}</p>}{actions(association)}</li>)}</ul>
         {resultats.totalPages > 1 && <nav className="mt-5 flex flex-wrap items-center justify-between gap-3" aria-label="Pages des associations"><button type="button" className={bouton} disabled={page <= 1} onClick={() => setPage((value) => value - 1)}>Précédent</button><span className="text-sm">Page {page} sur {resultats.totalPages}</span><button type="button" className={bouton} disabled={page >= resultats.totalPages} onClick={() => setPage((value) => value + 1)}>Suivant</button></nav>}
       </> : <p className="mt-5 text-[#695c4b]">Aucune association ne correspond à votre recherche.</p>}
       <div className="mt-6"><ProposerAssociation apiBase={BASE} onBusyChange={setPropositionEnCours} /></div>

@@ -220,7 +220,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
       noValidate
       className="rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-6 shadow-sm sm:p-9 lg:p-12"
     >
-      <h1 className="mb-3 font-display text-3xl font-bold text-[#2e261f] sm:text-[36px]">
+      <h1 className="mb-3 font-display text-3xl font-bold text-[#292119] sm:text-[36px]">
         Vos informations personnelles
       </h1>
       <p className="mb-9 max-w-[1120px] text-base leading-relaxed text-[#2e261f] sm:text-lg">

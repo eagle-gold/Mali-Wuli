@@ -419,7 +419,7 @@ function TitreCarte({
 }) {
   return (
     <div className="mb-6 flex flex-wrap items-center justify-between gap-4">
-      <h2 className="font-display text-2xl font-bold leading-tight text-[#292119] sm:text-3xl">
+      <h2 className="titre-section">
         {titre}
       </h2>
       {href && (
@@ -444,7 +444,7 @@ function Experiences({ experiences, modifiable = true }: { experiences: Experien
           {experiences.map((experience, index) => (
             <li key={experience.id || String(index)} className="relative pb-7 last:pb-0">
               <span className="absolute -left-[35px] top-1.5 h-3.5 w-3.5 rounded-full bg-[#ac6139] ring-4 ring-[#fdfaf4]" />
-              <h3 className="break-words font-display text-lg font-bold leading-snug text-[#292119] sm:text-xl">
+              <h3 className="break-words titre-element">
                 {experience.poste || "Poste non renseigné"}
                 {experience.structure ? ", " + experience.structure : ""}
               </h3>
@@ -496,7 +496,7 @@ function Formations({ formations, modifiable = true }: { formations: FormationPr
             return (
               <li key={formation.id || String(index)} className="relative pb-7 last:pb-0">
                 <span className="absolute -left-[35px] top-1.5 h-3.5 w-3.5 rounded-full bg-[#2a5b37] ring-4 ring-[#fdfaf4]" />
-                <h3 className="break-words font-display text-lg font-bold leading-snug text-[#292119] sm:text-xl">
+                <h3 className="break-words titre-element">
                   {formation.etablissement || "Établissement non renseigné"}
                 </h3>
                 {estScolaire && formation.systemeEducatifCode && (
@@ -1028,7 +1028,7 @@ function ProfilProprietaire() {
             <Formations formations={formations} />
             <AssociationsProfil statutCompte={utilisateur?.statut} peutAdministrerAssociations={aPermission(utilisateur, "ASSOCIATIONS_GERER")} />
             <section className={CLASSE_CARTE + " p-5 sm:p-8"}>
-              <h2 className="font-display text-2xl font-bold leading-tight text-[#292119] sm:text-3xl">
+              <h2 className="titre-section">
                 En ce moment sur le réseau
               </h2>
               <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -1045,7 +1045,7 @@ function ProfilProprietaire() {
           <aside className="space-y-6">
             <LiensSociauxProfil liens={informations} />
             <section className={CLASSE_CARTE + " p-5 sm:p-7"}>
-              <h2 className="mb-5 font-display text-2xl font-bold leading-tight text-[#292119] sm:text-3xl">
+              <h2 className="mb-5 titre-section">
                 Dans le réseau
               </h2>
               <div className="grid grid-cols-2 gap-3">
@@ -1065,7 +1065,7 @@ function ProfilProprietaire() {
                 </Link>
               </div>
 
-              <h3 className="mb-3 mt-7 font-display text-lg font-bold leading-snug text-[#292119] sm:text-xl">Mes contributions</h3>
+              <h3 className="mb-3 mt-7 titre-element">Mes contributions</h3>
               <ul className="space-y-2 text-sm leading-relaxed text-[#695c4b] sm:text-base">
                 <li>{avisPublies} avis de formation publié{avisPublies === 1 ? "" : "s"}</li>
                 <li>{stats.nbPublications || 0} publication{stats.nbPublications === 1 ? "" : "s"} dans le fil</li>
@@ -1081,7 +1081,7 @@ function ProfilProprietaire() {
         <section className={CLASSE_CARTE + " mt-6 p-5 sm:p-8"}>
           <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <h2 className="font-display text-2xl font-bold sm:text-3xl">Synergies possibles pour vous</h2>
+              <h2 className="titre-section">Synergies possibles pour vous</h2>
               <p className="mt-1 text-sm text-[#7b654e] sm:text-base">
                 Des membres dont le parcours croise le vôtre : même filière, même ville ou besoin complémentaire.
               </p>
@@ -1445,7 +1445,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
             <Formations formations={formations} modifiable={false} />
             {associations.length > 0 && (
               <section className={CLASSE_CARTE + " p-5 sm:p-8"} aria-labelledby="associations-membre-titre">
-                <h2 id="associations-membre-titre" className="mb-6 font-display text-2xl font-bold leading-tight text-[#292119] sm:text-3xl">
+                <h2 id="associations-membre-titre" className="mb-6 titre-section">
                   Associations
                 </h2>
                 <ul className="grid gap-3 sm:grid-cols-2">
@@ -1478,7 +1478,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
             <LiensSociauxProfil liens={informations} />
             {(membre.email || membre.telephone) && (
               <section className={CLASSE_CARTE + " p-5 sm:p-7"}>
-                <h2 className="font-display text-2xl font-bold leading-tight text-[#292119] sm:text-3xl">Coordonnées</h2>
+                <h2 className="titre-section">Coordonnées</h2>
                 <p className="mt-1 text-sm text-[#7b654e]">Informations rendues visibles par ce membre.</p>
                 <ul className="mt-4 space-y-3">
                   {membre.email && (
@@ -1501,7 +1501,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
               </section>
             )}
             <section className={CLASSE_CARTE + " p-5 sm:p-7"}>
-              <h2 className="mb-5 font-display text-2xl font-bold leading-tight text-[#292119] sm:text-3xl">
+              <h2 className="mb-5 titre-section">
                 Dans le réseau
               </h2>
               <ul className="space-y-2 text-sm leading-relaxed text-[#695c4b] sm:text-base">

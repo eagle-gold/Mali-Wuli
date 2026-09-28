@@ -100,7 +100,7 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
           </svg>
         </div>
 
-        <h1 className="text-center font-display text-4xl font-bold leading-tight text-[#735133] sm:text-5xl">
+        <h1 className="text-center font-display text-4xl font-bold leading-tight text-[#292119] sm:text-5xl">
           Bienvenue sur Mali Wuli !
         </h1>
         <p className="mx-auto mt-4 max-w-[730px] text-center text-base font-semibold leading-relaxed text-[#17120f] sm:text-lg">
@@ -108,7 +108,7 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
         </p>
 
         <div className="mt-8 rounded-[16px] bg-[#f6efe3] px-4 py-6 sm:px-7">
-          <h2 className="text-center text-2xl font-bold text-[#2e261f]">Invitez vos proches</h2>
+          <h2 className="titre-section text-center">Invitez vos proches</h2>
           <p className="mt-1 text-center text-base text-[#a44d28] sm:text-lg">
             Partagez votre lien d’invitation et agrandissez la communauté !
           </p>
@@ -312,7 +312,7 @@ export default function OnboardingPage() {
               ].map((s) => (
                 <article key={s.num} className="min-h-[200px] rounded-[18px] border border-[#ead8bd] bg-[#fffbf5] p-5 lg:min-h-[210px]">
                   <p className="mb-2 text-sm font-bold text-[#c65327] sm:text-base">{s.num}</p>
-                  <h2 className="mb-2 font-sans text-lg font-bold text-[#2e261f]">{s.titre}</h2>
+                  <h2 className="mb-2 titre-element">{s.titre}</h2>
                   <p className="text-[15px] leading-[1.55] text-[#2e261f] lg:text-base">{s.desc}</p>
                 </article>
               ))}

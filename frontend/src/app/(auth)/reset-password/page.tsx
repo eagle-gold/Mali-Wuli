@@ -103,7 +103,7 @@ export default function ResetPasswordPage() {
           <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#e2efe8] text-2xl font-bold text-[#0d6738]">
             ✓
           </div>
-          <h1 className="font-display text-3xl font-bold text-[#2e261f] mb-3">
+          <h1 className="font-display text-3xl font-bold text-[#292119] mb-3">
             Mot de passe modifié
           </h1>
           <p className="mb-8 text-sm leading-relaxed text-[#776b5e]">
@@ -123,7 +123,7 @@ export default function ResetPasswordPage() {
   return (
     <main className="min-h-screen bg-[var(--color-page)] flex items-center justify-center px-4 py-10">
       <section className="bg-[#fffbf5] rounded-2xl shadow-sm border border-[#e4d2b3] w-full max-w-md p-8">
-        <h1 className="font-display text-3xl font-bold text-[#2e261f] mb-3">
+        <h1 className="font-display text-3xl font-bold text-[#292119] mb-3">
           Choisissez un nouveau mot de passe
         </h1>
         <p className="text-sm leading-relaxed text-[#776b5e] mb-7">

@@ -121,7 +121,7 @@ function EnteteEtapeMentorat({ numero, titre, instruction, terminee, active, inf
       >
         {numero}
       </span>
-      <h2 className="font-sans text-lg font-bold text-[#2e261f]">{titre}</h2>
+      <h2 className="titre-section">{titre}</h2>
       <button
         type="button"
         aria-label={`Afficher l’aide de l’étape ${numero} : ${instruction}`}
@@ -370,7 +370,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
             ["Gratuit, toujours", "Le mentorat ne se monnaie pas sur Mali Wuli. C’est la charte."],
           ].map(([titre, texte]) => (
             <article key={titre} className="rounded-[16px] bg-white/10 px-5 py-5">
-              <h2 className="mb-2 font-sans text-base font-bold">{titre}</h2>
+              <h2 className="mb-2 titre-element text-[#fffaf4]">{titre}</h2>
               <p className="text-sm leading-relaxed text-[#fffaf4]">{texte}</p>
             </article>
           ))}
@@ -448,7 +448,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
                   ×
                 </button>
               </div>
-              <h3 id="titre-modal-etape-mentorat" className="mb-3 font-display text-2xl font-bold text-[#2e261f]">
+              <h3 id="titre-modal-etape-mentorat" className="mb-3 titre-section">
                 {etapeInfoAffichee.libelle}
               </h3>
               <p className="text-base leading-relaxed text-[#2e261f]">{etapeInfoAffichee.instruction}</p>
@@ -477,7 +477,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
               />
               <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
                 <div>
-                  <h2 className="font-sans text-lg font-bold text-[#2e261f]">Sur quoi pouvez-vous aider ?</h2>
+                  <h2 className="titre-section">Sur quoi pouvez-vous aider ?</h2>
                   <p className="text-sm text-[#2e261f]">Deux ou trois suffisent : ce sont les sujets affichés sur votre profil.</p>
                 </div>
                 <span className="rounded-full bg-[#f6efe3] px-3 py-1 text-xs font-semibold text-[#2e261f]">{sujets.length}/3 sujet(s)</span>
@@ -512,7 +512,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
                   infoOuverte={etapeInfoOuverte === 3}
                   onOpenInfo={() => setEtapeInfoOuverte(3)}
                 />
-                <h3 className="mb-1 font-sans text-base font-bold text-[#2e261f]">Précisez pour chaque sujet</h3>
+                <h3 className="mb-1 titre-element">Précisez pour chaque sujet</h3>
                 <p className="mb-4 text-sm text-[#2e261f]">Soyez concret : la personne comprend immédiatement ce qu’elle peut vous demander.</p>
                 <div className="space-y-4">
                   {sujets.map((sujet) => {
@@ -598,7 +598,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
               />
               <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                 <div>
-                  <h3 className="font-sans text-lg font-bold text-[#2e261f]">Vos disponibilités</h3>
+                  <h3 className="titre-element">Vos disponibilités</h3>
                   <p className="text-sm text-[#2e261f]">Ouvrez les jours qui vous vont et réglez les heures précisément.</p>
                 </div>
                 <span className="rounded-full bg-[#e3f0e9] px-4 py-2 text-sm font-semibold text-[#0d6738]">{joursOuverts.length} jour(s), {totalCreneaux} créneau(x)</span>

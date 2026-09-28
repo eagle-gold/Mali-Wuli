@@ -41,7 +41,7 @@ export default function ForgotPasswordPage() {
   return (
     <main className="min-h-screen bg-[var(--color-page)] flex items-center justify-center px-4 py-10">
       <section className="bg-[#fffbf5] rounded-2xl shadow-sm border border-[#e4d2b3] w-full max-w-md p-8">
-        <h1 className="font-display text-3xl font-bold text-[#2e261f] mb-3">
+        <h1 className="font-display text-3xl font-bold text-[#292119] mb-3">
           Mot de passe oublié
         </h1>
         <p className="text-sm leading-relaxed text-[#776b5e] mb-8">

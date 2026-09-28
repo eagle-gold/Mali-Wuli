@@ -109,7 +109,7 @@ export default function RegisterDetailsPage() {
             <span className="h-2 w-9 rounded-full bg-[#0d6738]" />
             <span className="h-2 w-9 rounded-full bg-[#0d6738]" />
           </div>
-          <h1 className="font-display text-3xl font-bold text-[#2e261f] mb-2">
+          <h1 className="font-display text-3xl font-bold text-[#292119] mb-2">
             Finalisez votre compte
           </h1>
           <p className="text-sm leading-relaxed text-[#776b5e]">

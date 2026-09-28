@@ -172,7 +172,7 @@ export default function AgendaPage() {
     <div className="mx-auto min-w-0 max-w-6xl [overflow-wrap:anywhere] space-y-6 p-4 sm:p-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-terre">Mon agenda</h1>
+          <h1 className="font-display text-2xl font-bold text-[#292119]">Mon agenda</h1>
           <p className="mt-1 text-sm text-terre-300">
             Vos rendez-vous de mentorat et événements, au même endroit.
           </p>
@@ -233,7 +233,7 @@ export default function AgendaPage() {
         <div className="space-y-8">
           {donnees?.rendezVous.length ? (
             <section className="space-y-4">
-              <h2 className="font-sans text-lg font-bold text-terre">
+              <h2 className="titre-section">
                 Rendez-vous de mentorat
               </h2>
               {donnees.rendezVous.map((item) => {
@@ -258,7 +258,7 @@ export default function AgendaPage() {
                               ? "Vous accompagnez"
                               : "Votre volontaire"}
                           </p>
-                          <h2 className="font-sans text-lg font-bold text-terre">
+                          <h2 className="titre-element">
                             {nom}
                           </h2>
                           <p className="text-sm text-terre-300">
@@ -340,7 +340,7 @@ export default function AgendaPage() {
           {evenements.length ? (
             <section className="space-y-4">
               <div className="flex items-center justify-between gap-3">
-                <h2 className="font-sans text-lg font-bold text-terre">
+                <h2 className="titre-section">
                   Événements du réseau
                 </h2>
                 <Link
@@ -365,7 +365,7 @@ export default function AgendaPage() {
                           : "Inscrit"}
                       </span>
                     </div>
-                    <h3 className="mt-3 font-sans text-lg font-bold text-terre">
+                    <h3 className="mt-3 titre-element">
                       {evenement.titre}
                     </h3>
                     <p className="mt-2 flex items-center gap-2 text-sm text-terre-300">
