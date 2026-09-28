@@ -60,18 +60,22 @@ async function enregistrerLot(lot: LigneImportee[], sourceId: string) {
   const unique = [...new Map(lot.map((item) => [item.id, item])).values()];
   if (!unique.length) return;
   const valeurs = Prisma.join(unique.map((item) => Prisma.sql`(
-    ${item.id}, ${item.nom}, ${item.nomNormalise}, ${item.type}::"TypeEtablissement", 'CA'::char(2),
-    ${item.ville}, ${item.villeNormalisee}, ${StatutEtablissement.INCONNU}::"StatutEtablissement",
-    ${item.latitude}::numeric, ${item.longitude}::numeric, true, NOW(), NOW()
+    ${item.id}, ${item.nom}, ${item.nomNormalise}, ${item.type}, ${"CA"}, ${"CA"},
+    ${item.ville}, ${item.villeNormalisee}, ${StatutEtablissement.INCONNU},
+    ${item.latitude}, ${item.longitude}, true, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3)
   )`));
   await prisma.$executeRaw(Prisma.sql`
-    INSERT INTO "Etablissement"
-      (id, nom, "nomNormalise", type, "paysCode", ville, "villeNormalisee", statut, latitude, longitude, valide, "createdAt", "updatedAt")
+    INSERT INTO Etablissement
+      (id, nom, nomNormalise, type, paysCode, systemeEducatifCode,
+       ville, villeNormalisee, statut, latitude, longitude,
+       valide, createdAt, updatedAt)
     VALUES ${valeurs}
-    ON CONFLICT (id) DO UPDATE SET
-      nom=EXCLUDED.nom, "nomNormalise"=EXCLUDED."nomNormalise", type=EXCLUDED.type,
-      ville=EXCLUDED.ville, "villeNormalisee"=EXCLUDED."villeNormalisee",
-      latitude=EXCLUDED.latitude, longitude=EXCLUDED.longitude, valide=true, "updatedAt"=NOW()
+    ON DUPLICATE KEY UPDATE
+      nom=VALUES(nom), nomNormalise=VALUES(nomNormalise), type=VALUES(type),
+      systemeEducatifCode=VALUES(systemeEducatifCode),
+      ville=VALUES(ville), villeNormalisee=VALUES(villeNormalisee),
+      latitude=VALUES(latitude), longitude=VALUES(longitude), valide=true,
+      updatedAt=CURRENT_TIMESTAMP(3)
   `);
   await prisma.etablissementNiveau.createMany({
     data: unique.flatMap((item) => item.niveaux.map((niveau) => ({ etablissementId: item.id, niveau }))),
@@ -98,8 +102,11 @@ async function enregistrerLot(lot: LigneImportee[], sourceId: string) {
 async function importer() {
   const source = await prisma.sourceEducative.findUniqueOrThrow({ where: { code: "statcan-odef" } });
   const importation = await prisma.importEducation.create({ data: { sourceId: source.id, paysCode: "CA" } });
-  const existantes = await prisma.etablissementSource.findMany({ where: { sourceId: source.id }, select: { identifiantExterne: true } });
-  const dejaConnus = new Set(existantes.map(({ identifiantExterne }) => identifiantExterne));
+  const existantes = await prisma.etablissementSource.findMany({
+    where: { sourceId: source.id },
+    select: { identifiantExterne: true, etablissementId: true },
+  });
+  const idParIdentifiant = new Map(existantes.map(({ identifiantExterne, etablissementId }) => [identifiantExterne, etablissementId]));
   let recus = 0;
   let ajoutes = 0;
   let modifies = 0;
@@ -123,10 +130,13 @@ async function importer() {
       }
       const classification = classifier(ligne);
       const ville = ligne.Ville?.trim() || null;
-      if (dejaConnus.has(identifiant)) modifies += 1;
+      const idExistant = idParIdentifiant.get(identifiant);
+      if (idExistant) modifies += 1;
       else ajoutes += 1;
       lot.push({
-        id: `ca-statcan-${identifiant}`,
+        // Une source peut avoir été rattachée à un canonique par la déduplication.
+        // Réutiliser ce lien évite de recréer l'ancien doublon lors d'un nouvel import.
+        id: idExistant || `ca-statcan-${identifiant}`,
         identifiant,
         nom,
         nomNormalise: normaliser(nom),

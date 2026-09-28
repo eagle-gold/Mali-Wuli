@@ -71,29 +71,32 @@ async function enregistrerLot(lot: EtablissementImporte[], sourceId: string) {
   if (!lot.length) return;
   // Le jeu officiel peut contenir plusieurs lignes pour un même UAI (multi-UAI,
   // rattachements). La dernière ligne du lot enrichit la précédente sans jamais
-  // tenter deux UPSERT du même identifiant dans une seule requête PostgreSQL.
+  // tenter deux UPSERT du même identifiant dans une seule requête MySQL.
   const lotUnique = [...new Map(lot.map((item) => [item.id, item])).values()];
   const etablissementsSql = Prisma.join(lotUnique.map((item) => Prisma.sql`(
-    ${item.id}, ${item.nom}, ${item.nomNormalise}, ${item.type}::"TypeEtablissement",
-    'FR'::char(2), ${item.ville}, ${item.villeNormalisee}, ${item.statut}::"StatutEtablissement",
-    ${item.siteWeb}, ${item.latitude}::numeric, ${item.longitude}::numeric, true, NOW(), NOW()
+    ${item.id}, ${item.nom}, ${item.nomNormalise}, ${item.type},
+    ${"FR"}, ${"FR"}, ${item.ville}, ${item.villeNormalisee}, ${item.statut},
+    ${item.siteWeb}, ${item.latitude}, ${item.longitude}, true, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3)
   )`));
   await prisma.$executeRaw(Prisma.sql`
-    INSERT INTO "Etablissement"
-      (id, nom, "nomNormalise", type, "paysCode", ville, "villeNormalisee", statut, "siteWeb", latitude, longitude, valide, "createdAt", "updatedAt")
+    INSERT INTO Etablissement
+      (id, nom, nomNormalise, type, paysCode, systemeEducatifCode,
+       ville, villeNormalisee, statut, siteWeb, latitude, longitude,
+       valide, createdAt, updatedAt)
     VALUES ${etablissementsSql}
-    ON CONFLICT (id) DO UPDATE SET
-      nom = EXCLUDED.nom,
-      "nomNormalise" = EXCLUDED."nomNormalise",
-      type = EXCLUDED.type,
-      ville = EXCLUDED.ville,
-      "villeNormalisee" = EXCLUDED."villeNormalisee",
-      statut = EXCLUDED.statut,
-      "siteWeb" = COALESCE(EXCLUDED."siteWeb", "Etablissement"."siteWeb"),
-      latitude = COALESCE(EXCLUDED.latitude, "Etablissement".latitude),
-      longitude = COALESCE(EXCLUDED.longitude, "Etablissement".longitude),
+    ON DUPLICATE KEY UPDATE
+      nom = VALUES(nom),
+      nomNormalise = VALUES(nomNormalise),
+      type = VALUES(type),
+      systemeEducatifCode = VALUES(systemeEducatifCode),
+      ville = VALUES(ville),
+      villeNormalisee = VALUES(villeNormalisee),
+      statut = VALUES(statut),
+      siteWeb = COALESCE(VALUES(siteWeb), siteWeb),
+      latitude = COALESCE(VALUES(latitude), latitude),
+      longitude = COALESCE(VALUES(longitude), longitude),
       valide = true,
-      "updatedAt" = NOW()
+      updatedAt = CURRENT_TIMESTAMP(3)
   `);
 
   const niveaux = lotUnique.flatMap((item) => item.niveaux.map((niveau) => ({ id: item.id, niveau })));

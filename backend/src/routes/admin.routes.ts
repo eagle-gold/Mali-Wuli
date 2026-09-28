@@ -1,35 +1,158 @@
-import { StatutSuggestionCatalogue } from "@prisma/client";
+import { Prisma, StatutSuggestionCatalogue } from "@prisma/client";
 import { Router } from "express";
 import { z } from "zod";
 import { publierSuggestion } from "../education/catalog-suggestion-service";
 import { prismaEducation } from "../education/catalog-service";
-import { authenticate, requireRole, type AuthRequest } from "../middlewares/auth.middleware";
+import { prisma } from "../lib/prisma";
+import { authenticate, requireRole, requirePermission, type AuthRequest } from "../middlewares/auth.middleware";
+import { revoquerSocketsUtilisateur } from "../realtime/socket";
+import { envoyerEmail } from "../services/email.service";
+import { EMAIL_ADMIN_PRINCIPAL, roleEffectif, droitsUtilisateur } from "../lib/roles";
+import { creerServiceGestionMembres, ErreurGestionMembres, filtresMembres, changementRolesSchema, changementStatutSchema, type ServiceGestionMembres } from "../services/admin-membres.service";
 
+const gestionProduction = creerServiceGestionMembres(prisma, {
+  revoquerSockets: revoquerSocketsUtilisateur,
+  notifierInscription: async (user, valide, raison) => {
+    const texte = valide ? "Votre profil Mali Wuli est validé. Vous pouvez maintenant accéder à toute la communauté." : raison || "Votre profil ne peut pas encore être validé. Contactez l’équipe si vous souhaitez plus d’informations.";
+    return envoyerEmail({ destinataire: user.email, sujet: valide ? "Votre profil Mali Wuli est validé" : "Mise à jour de votre inscription Mali Wuli", texte, html: `<h1>Mali Wuli</h1><p>${texte.replace(/[<>&]/g, "")}</p>` });
+  },
+});
+export function creerRouteurAdmin(gestion: ServiceGestionMembres = gestionProduction) {
 const router = Router();
+function traiter(fn: (req: AuthRequest, res: import("express").Response) => Promise<unknown>) {
+  return async (req: AuthRequest, res: import("express").Response) => {
+    try { return await fn(req, res); }
+    catch (e) {
+      if (e instanceof ErreurGestionMembres) return res.status(e.statut).json({ message: e.message });
+      if (e instanceof z.ZodError) return res.status(400).json({ message: "Informations invalides.", erreurs: e.flatten().fieldErrors });
+      if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === "P2034") return res.status(409).json({ message: "Ce compte a changé. Actualisez puis réessayez." });
+      console.error("[admin] Traitement impossible.");
+      return res.status(500).json({ message: "Impossible de traiter cette demande." });
+    }
+  };
+}
 
-const isAdmin = [authenticate, requireRole("ADMIN", "MODERATEUR")];
+const adminOnly = [authenticate, requireRole("ADMIN")];
+const membresManagers = [authenticate, (req: AuthRequest, res: import("express").Response, next: import("express").NextFunction) => {
+  if (!req.permissions?.some(permission => permission === "MEMBRES_GERER" || permission === "ROLES_GERER")) return res.status(403).json({ message: "La gestion des membres ne fait pas partie de vos autorisations." });
+  next();
+}];
+const inscriptionsModerators = [authenticate, requirePermission("INSCRIPTIONS_GERER")];
+const catalogueModerators = [authenticate, requirePermission("CATALOGUE_GERER")];
+const signalementsModerators = [authenticate, requirePermission("SIGNALEMENTS_CONSULTER")];
 
-router.get("/inscriptions", ...isAdmin, async (_req, res) => {
-  res.json({ message: "Inscriptions en attente — à implémenter" });
+router.get("/inscriptions", ...inscriptionsModerators, async (req: AuthRequest, res) => {
+  const query = z.object({
+    statut: z.enum(["EN_ATTENTE", "VALIDE", "REFUSE", "SUSPENDU"]).default("EN_ATTENTE"),
+    page: z.coerce.number().int().min(1).default(1),
+    limite: z.coerce.number().int().min(1).max(100).default(30),
+  }).safeParse(req.query);
+  if (!query.success) return res.status(400).json({ message: "Filtres invalides." });
+  const { statut, page, limite } = query.data;
+  if (req.userRole !== "ADMIN" && statut !== "EN_ATTENTE") return res.status(403).json({ message: "Un modérateur consulte uniquement les inscriptions en attente." });
+  try {
+    const where = { statut, ...(req.userRole !== "ADMIN" ? { id: { not: req.userId }, email: { not: EMAIL_ADMIN_PRINCIPAL }, role: { notIn: ["ADMIN" as const, "MODERATEUR" as const] }, rolesDelegues: { none: {} } } : {}) };
+    const [inscriptions, total] = await Promise.all([
+      prisma.user.findMany({
+        where,
+        orderBy: { createdAt: "asc" },
+        skip: (page - 1) * limite,
+        take: limite,
+        select: {
+          id: true,
+          prenom: true,
+          nom: true,
+          email: true,
+          emailVerifie: true,
+          role: true,
+          statut: true,
+          createdAt: true,
+          profil: {
+            select: {
+              id: true,
+              pays: true,
+              ville: true,
+              titre: true,
+              onboardingFini: true,
+              estVolontaire: true,
+              _count: { select: { formations: true, experiences: true } },
+            },
+          },
+        },
+      }),
+      prisma.user.count({ where }),
+    ]);
+    return res.json({ inscriptions: inscriptions.map(u => ({ ...u, role: roleEffectif(u) })), total, page, limite, totalPages: Math.ceil(total / limite) });
+  } catch (error) {
+    console.error("[GET /admin/inscriptions]", error);
+    return res.status(500).json({ message: "Impossible de charger les inscriptions." });
+  }
 });
 
-router.put("/inscriptions/:id/valider", ...isAdmin, async (_req, res) => {
-  res.json({ message: "Valider inscription — à implémenter" });
+router.get("/roles", ...membresManagers, traiter(async (req, res) => res.json(await gestion.roles(req.userId!))));
+router.get("/membres", ...membresManagers, traiter(async (req, res) => res.json(await gestion.liste(req.userId!, filtresMembres.parse(req.query)))));
+router.patch("/membres/:id/role", ...adminOnly, (_req, res) => res.status(409).json({ message: "Utilisez la nouvelle gestion des rôles cumulables." }));
+router.patch("/membres/:id/roles", ...adminOnly, traiter(async (req, res) => {
+  const id = z.string().trim().min(1).max(191).parse(req.params.id);
+  return res.json(await gestion.modifierRoles(req.userId!, id, changementRolesSchema.parse(req.body)));
+}));
+router.patch("/membres/:id/statut", ...membresManagers, traiter(async (req, res) => {
+  const id = z.string().trim().min(1).max(191).parse(req.params.id);
+  return res.json(await gestion.modifierStatut(req.userId!, id, changementStatutSchema.parse(req.body)));
+}));
+router.put("/inscriptions/:id/valider", ...inscriptionsModerators, traiter(async (req, res) => {
+  const id = z.string().trim().min(1).max(191).parse(req.params.id);
+  return res.json(await gestion.deciderInscription(req.userId!, id, true));
+}));
+router.put("/inscriptions/:id/refuser", ...inscriptionsModerators, traiter(async (req, res) => {
+  const id = z.string().trim().min(1).max(191).parse(req.params.id);
+  const { raison } = z.object({ raison: z.string().trim().max(500).optional() }).strict().parse(req.body);
+  return res.json(await gestion.deciderInscription(req.userId!, id, false, raison));
+}));
+
+// Le modérateur global traite le contenu et le catalogue. Les rôles et statistiques restent réservés au propriétaire.
+router.get("/signalements", ...signalementsModerators, async (_req, res) => {
+  try {
+    const signalements = await prisma.signalement.findMany({
+      orderBy: { createdAt: "desc" },
+      take: 200,
+      select: {
+        id: true,
+        cibleType: true,
+        cibleId: true,
+        motif: true,
+        createdAt: true,
+        signaleur: {
+          select: { id: true, user: { select: { prenom: true, nom: true } } },
+        },
+      },
+    });
+    return res.json({ signalements });
+  } catch (error) {
+    console.error("[GET /admin/signalements]", error);
+    return res.status(500).json({ message: "Impossible de charger les signalements." });
+  }
 });
 
-router.put("/inscriptions/:id/refuser", ...isAdmin, async (_req, res) => {
-  res.json({ message: "Refuser inscription — à implémenter" });
+router.get("/stats", ...adminOnly, async (_req, res) => {
+  try {
+    const [membres, enAttente, publications, commentaires, messages, synergies, rendezVous] = await Promise.all([
+      prisma.user.count({ where: { statut: "VALIDE" } }),
+      prisma.user.count({ where: { statut: "EN_ATTENTE" } }),
+      prisma.publication.count({ where: { visible: true } }),
+      prisma.commentairePublication.count(),
+      prisma.message.count(),
+      prisma.synergie.count({ where: { statut: "ACCEPTE" } }),
+      prisma.rendezVous.count(),
+    ]);
+    return res.json({ membres, enAttente, publications, commentaires, messages, synergies, rendezVous });
+  } catch (error) {
+    console.error("[GET /admin/stats]", error);
+    return res.status(500).json({ message: "Impossible de charger les statistiques." });
+  }
 });
 
-router.get("/signalements", ...isAdmin, async (_req, res) => {
-  res.json({ message: "Signalements — à implémenter" });
-});
-
-router.get("/stats", ...isAdmin, async (_req, res) => {
-  res.json({ message: "Statistiques — à implémenter" });
-});
-
-router.get("/notifications", ...isAdmin, async (_req, res) => {
+router.get("/notifications", ...catalogueModerators, async (_req, res) => {
   try {
     const notifications = await prismaEducation.notificationAdmin.findMany({
       where: { traitee: false },
@@ -78,7 +201,7 @@ router.get("/notifications", ...isAdmin, async (_req, res) => {
   }
 });
 
-router.get("/catalogue/suggestions", ...isAdmin, async (req, res) => {
+router.get("/catalogue/suggestions", ...catalogueModerators, async (req, res) => {
   const statut = z.nativeEnum(StatutSuggestionCatalogue).safeParse(req.query.statut);
   try {
     const suggestions = await prismaEducation.suggestionCatalogue.findMany({
@@ -96,7 +219,7 @@ router.get("/catalogue/suggestions", ...isAdmin, async (req, res) => {
 
 router.put(
   "/catalogue/suggestions/:id/accepter",
-  ...isAdmin,
+  ...catalogueModerators,
   async (req: AuthRequest, res) => {
     const body = z.object({ fusionnerAvecId: z.string().trim().min(1).optional() }).safeParse(req.body);
     if (!body.success || !req.userId) {
@@ -119,7 +242,7 @@ router.put(
 
 router.put(
   "/catalogue/suggestions/:id/refuser",
-  ...isAdmin,
+  ...catalogueModerators,
   async (req: AuthRequest, res) => {
     if (!req.userId) {
       res.status(401).json({ message: "Identification requise." });
@@ -154,7 +277,7 @@ router.put(
   },
 );
 
-router.put("/notifications/:id/lire", ...isAdmin, async (req, res) => {
+router.put("/notifications/:id/lire", ...catalogueModerators, async (req, res) => {
   try {
     await prismaEducation.notificationAdmin.update({
       where: { id: String(req.params.id) },
@@ -166,4 +289,6 @@ router.put("/notifications/:id/lire", ...isAdmin, async (req, res) => {
   }
 });
 
-export default router;
+return router;
+}
+export default creerRouteurAdmin();

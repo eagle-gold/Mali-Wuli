@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -42,8 +42,10 @@ model User {
   motDePasse    String?
   dateNaissance DateTime?
   role          Role              @default(MEMBRE)
+  rolesDelegues UserRoleGrant[]
   statut        StatutInscription @default(EN_ATTENTE)
   emailVerifie  Boolean           @default(false)
+  tokenVersion  Int               @default(0)
   codeVerif     String?
   codeExpire    DateTime?
   cguAccepteLe  DateTime?
@@ -65,37 +67,83 @@ model EmailVerification {
   updatedAt  DateTime  @updatedAt
 }
 
+model PasswordResetCode {
+  id         String    @id @default(cuid())
+  email      String    @unique
+  codeHash   String
+  expireLe   DateTime
+  tentatives Int       @default(0)
+  utiliseLe  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([expireLe])
+}
+
+/// Code de connexion sans mot de passe. Seul le hash du code est conservé ;
+/// chaque nouvelle demande remplace et invalide la précédente pour l'adresse.
+model LoginOtpCode {
+  id         String    @id @default(cuid())
+  email      String    @unique
+  codeHash   String
+  expireLe   DateTime
+  tentatives Int       @default(0)
+  utiliseLe  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([expireLe])
+}
+
 model Profil {
-  id                String                 @id @default(cuid())
-  userId            String                 @unique
-  user              User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  telephone         String?
-  pays              String?
-  ville             String?
-  situation         SituationActuelle?
-  titre             String?
-  bio               String?
-  photo             String?
-  linkedin          String?
-  emailVisible      Boolean                @default(false)
-  telephoneVisible  Boolean                @default(false)
-  estVolontaire     Boolean                @default(false)
-  onboardingEtape   Int                    @default(0)
-  onboardingFini    Boolean                @default(false)
-  formations        Formation[]
-  experiences       Experience[]
-  synergiesEnvoyees Synergie[]             @relation("Demandeur")
-  synergiesRecues   Synergie[]             @relation("Recepteur")
-  conversations     ConversationMembre[]
-  messages          Message[]
-  rdvDemandes       RendezVous[]           @relation("Demandeur")
-  volontaire        Volontaire?
-  cerclesMembres    CercleMembre[]
-  associations      AssociationMembre[]
-  evenements        EvenementParticipant[]
-  offres            Offre[]
-  signalements      Signalement[]
-  createdAt         DateTime               @default(now())
+  id                  String                   @id @default(cuid())
+  userId              String                   @unique
+  user                User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  telephone           String?
+  pays                String?
+  ville               String?
+  situation           SituationActuelle?
+  titre               String?
+  bio                 String?                  @db.Text
+  photo               String?                  @db.Text
+  photoCouverture     String?                  @db.Text
+  linkedin            String?                  @db.VarChar(500)
+  facebook            String?                  @db.VarChar(500)
+  instagram           String?                  @db.VarChar(500)
+  tiktok              String?                  @db.VarChar(500)
+  emailVisible        Boolean                  @default(false)
+  telephoneVisible    Boolean                  @default(false)
+  estVolontaire       Boolean                  @default(false)
+  onboardingEtape     Int                      @default(0)
+  onboardingFini      Boolean                  @default(false)
+  // Copie structurée du questionnaire. Les tables relationnelles restent la
+  // source des fonctionnalités du réseau, tandis que ce snapshot conserve les
+  // champs purement éditoriaux du formulaire (indicatif, choix « autre »,
+  // précisions) afin de pouvoir reprendre l'édition sur un autre appareil.
+  onboardingDonnees   Json?
+  formations          Formation[]
+  experiences         Experience[]
+  synergiesEnvoyees   Synergie[]               @relation("Demandeur")
+  synergiesRecues     Synergie[]               @relation("Recepteur")
+  conversations       ConversationMembre[]
+  messages            Message[]
+  rdvDemandes         RendezVous[]             @relation("Demandeur")
+  volontaire          Volontaire?
+  cerclesMembres      CercleMembre[]
+  associations        AssociationMembre[]
+  associationsProposees AssociationSuggestion[]
+  evenements          EvenementParticipant[]
+  photosEvenements EvenementPhoto[]
+  offres              Offre[]
+  offresEnregistrees   OffreEnregistrement[]
+  candidaturesOffres   CandidatureOffre[]
+  publications        Publication[]
+  reactionsPub        ReactionPublication[]
+  commentairesPub     CommentairePublication[]
+  notificationsRecues Notification[]           @relation("NotificationDestinataire")
+  notificationsEmises Notification[]           @relation("NotificationActeur")
+  signalements        Signalement[]
+  createdAt           DateTime                 @default(now())
 }
 
 // =============================================
@@ -139,6 +187,27 @@ enum StatutDiplomeFormation {
   EN_COURS
   NON_OBTENU
   NON_DIPLOMANTE
+}
+
+enum DemarcheApresFormation {
+  RECHERCHE_EMPLOI
+  POURSUITE_ETUDES
+  AUTRE_PROJET
+}
+
+enum DelaiPremierEmploi {
+  MOINS_3_MOIS
+  DE_3_A_6_MOIS
+  DE_7_A_12_MOIS
+  PLUS_12_MOIS
+  MOINS_DE_12_MOIS_DEPUIS_FIN
+  PAS_ENCORE
+}
+
+enum LienEmploiFormation {
+  DIRECT
+  PARTIEL
+  AUCUN
 }
 
 enum ModeUtilisationSource {
@@ -476,32 +545,41 @@ model NotificationAdmin {
 }
 
 model Formation {
-  id                   String                 @id @default(cuid())
-  profilId             String
-  profil               Profil                 @relation(fields: [profilId], references: [id], onDelete: Cascade)
-  type                 String
-  etablissementId      String?
-  etablissement        Etablissement?         @relation(fields: [etablissementId], references: [id])
-  programmeReferenceId String?
-  programmeReference   ProgrammeEducation?    @relation("FormationProgramme", fields: [programmeReferenceId], references: [id])
-  parcoursReferenceId  String?
-  parcoursReference    ProgrammeEducation?    @relation("FormationParcours", fields: [parcoursReferenceId], references: [id])
-  diplomeReferenceId   String?
-  diplomeReference     DiplomeEducation?      @relation(fields: [diplomeReferenceId], references: [id])
-  autreEtablissement   String?
-  moisDebut            Int?
-  anneeDebut           Int?
-  moisFin              Int?
-  anneeFin             Int?
-  diplome              String?
-  mention              String?
-  filiere              String?
-  specialite           String?
-  serie                String?
-  statutDiplome        StatutDiplomeFormation @default(OBTENU)
+  id                     String                  @id @default(cuid())
+  profilId               String
+  profil                 Profil                  @relation(fields: [profilId], references: [id], onDelete: Cascade)
+  type                   String
+  etablissementId        String?
+  etablissement          Etablissement?          @relation(fields: [etablissementId], references: [id])
+  programmeReferenceId   String?
+  programmeReference     ProgrammeEducation?     @relation("FormationProgramme", fields: [programmeReferenceId], references: [id])
+  parcoursReferenceId    String?
+  parcoursReference      ProgrammeEducation?     @relation("FormationParcours", fields: [parcoursReferenceId], references: [id])
+  diplomeReferenceId     String?
+  diplomeReference       DiplomeEducation?       @relation(fields: [diplomeReferenceId], references: [id])
+  autreEtablissement     String?
+  moisDebut              Int?
+  anneeDebut             Int?
+  moisFin                Int?
+  anneeFin               Int?
+  diplome                String?
+  systemeEducatifCode     String?                 @db.VarChar(5)
+  diplomesScolaires       Json?
+  mention                String?
+  filiere                String?
+  specialite             String?
+  serie                  String?
+  statutDiplome          StatutDiplomeFormation  @default(OBTENU)
+  // Le taux à 12 mois porte sur les membres qui déclarent avoir recherché un
+  // emploi. Les poursuites d'études, autres projets et suivis encore trop
+  // récents sont exclus du dénominateur.
+  demarcheApresFormation DemarcheApresFormation?
+  delaiPremierEmploi     DelaiPremierEmploi?
+  emploiDansLes12Mois    Boolean?
+  lienEmploiFormation    LienEmploiFormation?
   // Conservé pendant la transition des anciennes données.
-  enCours              Boolean                @default(false)
-  avis                 AvisEtablissement?
+  enCours                Boolean                 @default(false)
+  avis                   AvisEtablissement?
 
   @@index([programmeReferenceId])
   @@index([parcoursReferenceId])
@@ -515,6 +593,7 @@ model AvisEtablissement {
   etablissementId     String
   etablissement       Etablissement @relation(fields: [etablissementId], references: [id])
   noteEnseignement    Int?
+  noteContenu         Int?
   noteInfrastructures Int?
   noteInsertion       Int?
   noteAmbiance        Int?
@@ -532,6 +611,7 @@ model Experience {
   ville       String?
   pays        String?
   secteur     String?
+  typeContrat String?
   dateDebut   DateTime
   dateFin     DateTime?
   estActuel   Boolean   @default(false)
@@ -550,6 +630,7 @@ enum StatutSynergie {
 
 model Synergie {
   id          String         @id @default(cuid())
+  clePaire    String         @unique
   demandeurId String
   demandeur   Profil         @relation("Demandeur", fields: [demandeurId], references: [id])
   recepteurId String
@@ -566,12 +647,16 @@ model Synergie {
 // =============================================
 
 model Conversation {
-  id           String               @id @default(cuid())
-  titre        String?
-  estGroupe    Boolean              @default(false)
-  participants ConversationMembre[]
-  messages     Message[]
-  createdAt    DateTime             @default(now())
+  id               String               @id @default(cuid())
+  titre            String?
+  estGroupe        Boolean              @default(false)
+  cleDirecte       String?              @unique
+  dernierMessageLe DateTime?
+  participants     ConversationMembre[]
+  messages         Message[]
+  createdAt        DateTime             @default(now())
+
+  @@index([dernierMessageLe])
 }
 
 model ConversationMembre {
@@ -580,6 +665,7 @@ model ConversationMembre {
   profilId       String
   profil         Profil       @relation(fields: [profilId], references: [id])
   rejointLe      DateTime     @default(now())
+  dernierLuLe    DateTime?
 
   @@id([conversationId, profilId])
 }
@@ -590,7 +676,7 @@ model Message {
   conversation   Conversation @relation(fields: [conversationId], references: [id])
   auteurId       String
   auteur         Profil       @relation(fields: [auteurId], references: [id])
-  contenu        String
+  contenu        String       @db.Text
   lu             Boolean      @default(false)
   createdAt      DateTime     @default(now())
 }
@@ -600,15 +686,22 @@ model Message {
 // =============================================
 
 model Volontaire {
-  id           String       @id @default(cuid())
-  profilId     String       @unique
-  profil       Profil       @relation(fields: [profilId], references: [id], onDelete: Cascade)
-  specialite   String
-  disponible   Boolean      @default(true)
-  fuseau       String       @default("Africa/Bamako")
-  dureeCreneau Int          @default(30)
-  delaiMinResa Int          @default(24)
-  rdvs         RendezVous[]
+  id               String       @id @default(cuid())
+  profilId         String       @unique
+  profil           Profil       @relation(fields: [profilId], references: [id], onDelete: Cascade)
+  specialite       String
+  sujets           Json?
+  precisionsSujets Json?
+  disponible       Boolean      @default(true)
+  fuseau           String       @default("Africa/Bamako")
+  dureeCreneau     Int          @default(30)
+  format           String?
+  dateDebut        DateTime?
+  dateFin          DateTime?
+  disponibilites   Json?
+  maxRdvMois       Int?
+  delaiMinResa     Int          @default(24)
+  rdvs             RendezVous[]
 }
 
 enum StatutRDV {
@@ -619,17 +712,22 @@ enum StatutRDV {
 }
 
 model RendezVous {
-  id           String     @id @default(cuid())
-  volontaireId String
-  volontaire   Volontaire @relation(fields: [volontaireId], references: [id])
-  demandeurId  String
-  demandeur    Profil     @relation("Demandeur", fields: [demandeurId], references: [id])
-  debut        DateTime
-  fin          DateTime
-  motif        String
-  statut       StatutRDV  @default(EN_ATTENTE)
-  lienAppel    String?
-  createdAt    DateTime   @default(now())
+  id             String     @id @default(cuid())
+  cleReservation String?    @unique
+  volontaireId   String
+  volontaire     Volontaire @relation(fields: [volontaireId], references: [id])
+  demandeurId    String
+  demandeur      Profil     @relation("Demandeur", fields: [demandeurId], references: [id])
+  debut          DateTime
+  fin            DateTime
+  motif          String     @db.Text
+  statut         StatutRDV  @default(EN_ATTENTE)
+  lienAppel      String?
+  createdAt      DateTime   @default(now())
+
+  @@index([volontaireId, debut])
+  @@index([demandeurId, debut])
+  @@index([statut, debut])
 }
 
 // =============================================
@@ -640,7 +738,7 @@ model Cercle {
   id          String           @id @default(cuid())
   nom         String
   theme       String
-  description String?
+  description String?          @db.Text
   presidentId String
   actif       Boolean          @default(true)
   membres     CercleMembre[]
@@ -648,6 +746,9 @@ model Cercle {
   reunions    CercleReunion[]
   messages    CercleMessage[]
   createdAt   DateTime         @default(now())
+
+  @@index([actif, theme])
+  @@index([presidentId])
 }
 
 enum StatutMembreCercle {
@@ -666,6 +767,8 @@ model CercleMembre {
   rejointLe  DateTime?
 
   @@id([cercleId, profilId])
+  @@index([profilId, statut])
+  @@index([cercleId, statut])
 }
 
 model CercleDocument {
@@ -728,21 +831,32 @@ model ForumReponse {
 // =============================================
 
 model Association {
-  id            String              @id @default(cuid())
-  nom           String
-  description   String?
-  pays          String
-  site          String?
-  responsableId String?
-  valide        Boolean             @default(true)
-  membres       AssociationMembre[]
-  createdAt     DateTime            @default(now())
+  id               String                  @id @default(cuid())
+  nom              String
+  description      String?                 @db.Text
+  pays             String
+  ville            String?
+  vocation         String?
+  site             String?                 @db.Text
+  emailContact     String?
+  photo            String?                 @db.Text
+  photoCouverture  String?                 @db.Text
+  dateCreation     DateTime?                @db.Date
+  // Identifiant Profil.id contrôlé par le service ; historique sans FK conservé.
+  responsableId    String?
+  valide           Boolean                 @default(true)
+  membres          AssociationMembre[]
+  createdAt        DateTime                @default(now())
+
+  @@index([valide, pays, ville])
+  @@index([responsableId])
 }
 
 enum StatutAffiliation {
   EN_ATTENTE
   VERIFIE
   DECLARE
+  REFUSE
 }
 
 model AssociationMembre {
@@ -754,6 +868,31 @@ model AssociationMembre {
   rejointLe     DateTime?
 
   @@id([associationId, profilId])
+  @@index([profilId, statut])
+  @@index([associationId, statut])
+}
+
+enum StatutSuggestionAssociation {
+  EN_ATTENTE
+  TRAITEE
+  REFUSEE
+}
+
+model AssociationSuggestion {
+  id          String                       @id @default(cuid())
+  nom         String
+  pays        String
+  ville       String?
+  vocation    String?
+  message     String?                      @db.Text
+  proposeurId String
+  proposeur   Profil                       @relation(fields: [proposeurId], references: [id], onDelete: Cascade)
+  statut      StatutSuggestionAssociation   @default(EN_ATTENTE)
+  createdAt   DateTime                     @default(now())
+  updatedAt   DateTime                     @updatedAt
+
+  @@index([statut, createdAt])
+  @@index([proposeurId, createdAt])
 }
 
 // =============================================
@@ -763,17 +902,30 @@ model AssociationMembre {
 model Evenement {
   id             String                 @id @default(cuid())
   titre          String
-  description    String
+  description    String                 @db.Text
   type           String
   lieu           String?
-  lienVideo      String?
+  lienVideo      String?                @db.Text
   dateDebut      DateTime
   dateFin        DateTime?
   capacite       Int?
   organisateurId String
   valide         Boolean                @default(false)
+  pays             String?
+  ville            String?
+  fuseauHoraire    String?
+  photoCouverture  String? @db.Text
+  programme        Json?
+  resume           String? @db.Text
+  refuse           Boolean @default(false)
+  photos           EvenementPhoto[]
   participants   EvenementParticipant[]
   createdAt      DateTime               @default(now())
+
+  @@index([valide, dateDebut])
+  @@index([organisateurId])
+  @@index([valide, refuse, dateDebut])
+  @@index([pays, ville])
 }
 
 model EvenementParticipant {
@@ -784,6 +936,7 @@ model EvenementParticipant {
   inscritLe   DateTime  @default(now())
 
   @@id([evenementId, profilId])
+  @@index([profilId, inscritLe])
 }
 
 // =============================================
@@ -799,14 +952,145 @@ model Offre {
   pays            String
   ville           String?
   teletravail     Boolean   @default(false)
-  description     String
-  lienCandidature String?
+  description     String    @db.Text
+  lienCandidature String?   @db.Text
   emailContact    String?
   dateExpiration  DateTime?
   publieurId      String
   publieur        Profil    @relation(fields: [publieurId], references: [id])
   valide          Boolean   @default(false)
+  statutModeration StatutModerationOffre @default(EN_ATTENTE)
+  modeTravail      ModeTravailOffre @default(SUR_SITE)
+  modeCandidature  ModeCandidatureOffre @default(MALI_WULI)
+  salaire         String?
+  profilRecherche String? @db.Text
+  recommandationPossible Boolean @default(false)
+  enregistrements OffreEnregistrement[]
+  candidatures    CandidatureOffre[]
   createdAt       DateTime  @default(now())
+
+  @@index([valide, dateExpiration, createdAt])
+  @@index([publieurId, createdAt])
+  @@index([type, secteur, pays])
+  @@index([statutModeration, dateExpiration, createdAt])
+  @@index([modeTravail, pays, ville])
+}
+
+// =============================================
+// FIL D'ACTUALITE
+// =============================================
+
+enum IntentionPublication {
+  OFFRE
+  DEMANDE
+}
+
+enum TypePublication {
+  TEXTE
+  PHOTO
+  LIEN
+  EVENEMENT
+}
+
+enum TypeReaction {
+  LIKE
+  BRAVO
+  SOUTIEN
+  INSTRUCTIF
+  INSPIRANT
+}
+
+model Publication {
+  id           String                   @id @default(cuid())
+  auteurId     String
+  auteur       Profil                   @relation(fields: [auteurId], references: [id], onDelete: Cascade)
+  intention    IntentionPublication
+  thematique   String
+  type         TypePublication          @default(TEXTE)
+  contenu      String                   @db.Text
+  photoUrl     String?                  @db.Text
+  lienUrl      String?                  @db.Text
+  lienTitre    String?
+  lienImage    String?                  @db.Text
+  epingle      Boolean                  @default(false)
+  visible      Boolean                  @default(true)
+  reactions    ReactionPublication[]
+  commentaires CommentairePublication[]
+  createdAt    DateTime                 @default(now())
+  updatedAt    DateTime                 @updatedAt
+
+  @@index([auteurId, createdAt])
+  @@index([intention, thematique, createdAt])
+  @@index([visible, createdAt])
+}
+
+model ReactionPublication {
+  id            String       @id @default(cuid())
+  publicationId String
+  publication   Publication  @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  auteurId      String
+  auteur        Profil       @relation(fields: [auteurId], references: [id], onDelete: Cascade)
+  type          TypeReaction @default(LIKE)
+  createdAt     DateTime     @default(now())
+
+  @@unique([publicationId, auteurId])
+  @@index([publicationId])
+  @@index([auteurId])
+}
+
+model CommentairePublication {
+  id            String                   @id @default(cuid())
+  publicationId String
+  publication   Publication              @relation(fields: [publicationId], references: [id], onDelete: Cascade)
+  auteurId      String
+  auteur        Profil                   @relation(fields: [auteurId], references: [id], onDelete: Cascade)
+  contenu       String                   @db.Text
+  parentId      String?
+  parent        CommentairePublication?  @relation("ReponsesCommentaire", fields: [parentId], references: [id], onDelete: Cascade)
+  reponses      CommentairePublication[] @relation("ReponsesCommentaire")
+  createdAt     DateTime                 @default(now())
+
+  @@index([publicationId, createdAt])
+  @@index([auteurId])
+  @@index([parentId])
+}
+
+// =============================================
+// NOTIFICATIONS MEMBRES
+// =============================================
+
+enum TypeNotification {
+  NOUVEAU_MESSAGE
+  DEMANDE_SYNERGIE
+  SYNERGIE_ACCEPTEE
+  SYNERGIE_REFUSEE
+  NOUVELLE_PUBLICATION
+  NOUVEAU_COMMENTAIRE
+  NOUVELLE_REPONSE
+  NOUVELLE_REACTION
+  RENDEZ_VOUS
+  EVENEMENT
+  OFFRE
+  CERCLE
+}
+
+model Notification {
+  id             String           @id @default(cuid())
+  destinataireId String
+  destinataire   Profil           @relation("NotificationDestinataire", fields: [destinataireId], references: [id], onDelete: Cascade)
+  acteurId       String?
+  acteur         Profil?          @relation("NotificationActeur", fields: [acteurId], references: [id], onDelete: SetNull)
+  type           TypeNotification
+  titre          String
+  detail         String?          @db.Text
+  href           String?          @db.Text
+  payload        Json?
+  lue            Boolean          @default(false)
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([destinataireId, lue, createdAt])
+  @@index([acteurId])
 }
 
 // =============================================
@@ -836,4 +1120,83 @@ model Annonce {
   epingle   Boolean  @default(false)
   auteurId  String
   createdAt DateTime @default(now())
+}
+
+model EvenementPhoto {
+  id          String   @id @default(cuid())
+  evenementId String
+  evenement   Evenement @relation(fields: [evenementId], references: [id], onDelete: Cascade)
+  auteurId    String
+  auteur      Profil   @relation(fields: [auteurId], references: [id])
+  url         String   @db.Text
+  legende     String?  @db.VarChar(300)
+  createdAt   DateTime @default(now())
+
+  @@index([evenementId, createdAt])
+  @@index([auteurId])
+}
+
+// Suivi des candidatures : la réservation unique précède tout effet externe.
+enum StatutModerationOffre {
+  EN_ATTENTE
+  PUBLIEE
+  REFUSEE
+}
+enum ModeTravailOffre {
+  SUR_SITE
+  HYBRIDE
+  TELETRAVAIL
+}
+enum ModeCandidatureOffre {
+  MALI_WULI
+  EMAIL
+  LIEN_EXTERNE
+}
+enum StatutCandidatureOffre {
+  EN_COURS
+  ENVOYEE
+  ECHEC
+}
+model OffreEnregistrement {
+  offreId String
+  offre Offre @relation(fields: [offreId], references: [id], onDelete: Cascade)
+  profilId String
+  profil Profil @relation(fields: [profilId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@id([offreId, profilId])
+  @@index([profilId, createdAt])
+}
+model CandidatureOffre {
+  id String @id @default(cuid())
+  offreId String
+  offre Offre @relation(fields: [offreId], references: [id], onDelete: Cascade)
+  profilId String
+  profil Profil @relation(fields: [profilId], references: [id], onDelete: Cascade)
+  modeCandidature ModeCandidatureOffre
+  statut StatutCandidatureOffre @default(EN_COURS)
+  message String? @db.Text
+  conversationId String?
+  messageId String?
+  tentativeId String @unique
+  tentatives Int @default(1)
+  erreurCode String?
+  envoyeeAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([offreId, profilId])
+  @@index([profilId, createdAt])
+  @@index([offreId, statut])
+}
+
+// Droits de domaines cumulables ; codes contrôlés par le registre serveur.
+model UserRoleGrant {
+  userId String
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  code String
+  createdAt DateTime @default(now())
+
+  @@id([userId, code])
+  @@index([code])
 }

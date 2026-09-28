@@ -2,9 +2,13 @@
   "name": "mali-wuli-backend",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=22",
+    "npm": ">=10"
+  },
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
+    "build": "prisma generate && tsc",
     "start": "node dist/index.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
@@ -19,21 +23,34 @@
     "education:import:canada": "tsx src/scripts/import-canada-education.ts",
     "education:import:maroc": "tsx src/scripts/import-maroc-education.ts",
     "education:import:mali-osm": "tsx src/scripts/import-mali-osm-education.ts",
-    "education:reconcile:mali": "tsx src/scripts/reconcile-mali-education-duplicates.ts"
+    "education:import:mali-registries": "tsx src/scripts/import-mali-school-registries.ts",
+    "education:import:mali-overture": "tsx src/scripts/import-mali-overture-education.ts",
+    "education:import:mali-campus": "tsx src/scripts/import-mali-campus-programmes.ts",
+    "education:reconcile:mali": "tsx src/scripts/reconcile-mali-education-duplicates.ts",
+    "education:reconcile:mali-registries": "tsx src/scripts/reconcile-mali-school-registries.ts",
+    "education:normalize:mali-cities": "tsx src/scripts/normalize-mali-establishment-cities.ts",
+    "education:test:cities": "tsx --test src/education/normalisation-localisations.test.ts",
+    "education:test:mali-registries": "tsx --test src/education/mali-school-registries.test.ts",
+    "community:smoke": "tsx src/scripts/smoke-community.ts",
+    "social:smoke": "tsx src/scripts/smoke-social.ts",
+    "auth:otp:smoke": "NODE_ENV=test MAIL_DISABLED=true tsx src/scripts/smoke-login-otp.ts"
   },
   "dependencies": {
     "@countrystatecity/countries": "^1.0.9",
     "@prisma/client": "5.21.1",
-    "adm-zip": "^0.5.16",
+    "adm-zip": "0.6.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
-    "csv-parse": "^6.1.0",
+    "csv-parse": "7.0.2",
     "dotenv": "^16.4.5",
     "exceljs": "^4.4.0",
     "express": "^4.21.0",
+    "express-rate-limit": "8.7.0",
+    "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.2",
-    "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.15",
+    "multer": "2.4.0",
+    "nodemailer": "10.0.10",
+    "pdfkit": "0.20.2",
     "socket.io": "^4.8.0",
     "zod": "^3.23.8"
   },
@@ -43,12 +60,16 @@
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7",
-    "@types/multer": "^1.4.12",
+    "@types/multer": "2.2.0",
     "@types/node": "^22.7.4",
-    "@types/nodemailer": "^6.4.16",
+    "@types/nodemailer": "8.0.2",
+    "@types/pdfkit": "0.17.6",
     "prisma": "5.21.1",
     "ts-node-dev": "^2.0.0",
     "tsx": "^4.20.5",
     "typescript": "^5.6.2"
+  },
+  "overrides": {
+    "uuid": "^11.1.1"
   }
 }

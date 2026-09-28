@@ -23,6 +23,8 @@ import {
   type InstitutionSeed,
   type ProgrammeSeed,
 } from "../education/catalog-data";
+import { fusionnerEtablissements } from "../education/deduplication-etablissements";
+import { villeNormaliseePourPays } from "../education/normalisation-localisations";
 
 const prisma = new PrismaClient();
 
@@ -159,17 +161,29 @@ async function semerProgrammes() {
   const pays = await prisma.paysEducation.findMany({ select: { code: true } });
   for (const { code } of pays) {
     const series = SERIES_PAR_PAYS[code] || SERIES_GENERIQUES;
-    for (const [index, nom] of series.entries()) {
+    const prefixe = `serie-${code.toLowerCase()}-`;
+    const idsActifs: string[] = [];
+    for (const nom of series) {
+      const key = `${prefixe}${identifiantStable("", nom).slice(1, 17)}`;
+      idsActifs.push(key);
       await semerProgramme({
-        key: `serie-${code.toLowerCase()}-${index}-${identifiantStable("", nom).slice(1, 9)}`,
+        key,
         nom,
         paysCode: code,
         type: TypeProgrammeEducation.SERIE,
         niveau: NiveauEducation.SECONDAIRE,
-        sourceCode: "unesco-isced",
+        sourceCode: code === "ML" ? "campus-mali-api" : "unesco-isced",
       });
       total += 1;
     }
+    await prisma.programmeEducation.updateMany({
+      where: {
+        paysCode: code,
+        type: TypeProgrammeEducation.SERIE,
+        id: { startsWith: prefixe, notIn: idsActifs },
+      },
+      data: { actif: false },
+    });
   }
   return total;
 }
@@ -211,7 +225,7 @@ async function semerSeriesEtablissements(institutions: Map<string, string>) {
 
 async function semerInstitution(item: InstitutionSeed, paysCode: string) {
   const nomNormalise = normaliser(item.nom);
-  const villeNormalisee = normaliser(item.ville || "");
+  const localisation = villeNormaliseePourPays(paysCode, item.ville);
   const etablissement = await prisma.etablissement.upsert({
     where: { id: item.key },
     create: {
@@ -222,8 +236,8 @@ async function semerInstitution(item: InstitutionSeed, paysCode: string) {
       type: item.type,
       paysCode,
       systemeEducatifCode: item.systemeEducatifCode || paysCode,
-      ville: item.ville || null,
-      villeNormalisee,
+      ville: localisation.ville,
+      villeNormalisee: localisation.villeNormalisee,
       statut: item.statut,
       description: item.description || null,
       siteWeb: item.siteWeb || null,
@@ -235,8 +249,8 @@ async function semerInstitution(item: InstitutionSeed, paysCode: string) {
       type: item.type,
       paysCode,
       systemeEducatifCode: item.systemeEducatifCode || paysCode,
-      ville: item.ville || null,
-      villeNormalisee,
+      ville: localisation.ville,
+      villeNormalisee: localisation.villeNormalisee,
       statut: item.statut,
       description: item.description || null,
       siteWeb: item.siteWeb || null,
@@ -446,6 +460,45 @@ async function reconcilierSuccessionsFrancaises() {
   return { anciensNomsRattaches };
 }
 
+/**
+ * Les quatre objets OSM historiques désignent les campus actuels de Korofina
+ * et Badalabougou. Ils sont fusionnés par identifiant afin de conserver les
+ * formations et les sources sans afficher plusieurs variantes du même campus.
+ */
+async function reconcilierAnciensCollegesHorizon() {
+  const correspondances = [
+    {
+      canoniqueId: "ml-maarif-korofina",
+      doublonIds: [
+        "ml-osm-75c238ff3dac85909546169c",
+        "ml-osm-f18d19810f67ff4c1b553195",
+      ],
+    },
+    {
+      canoniqueId: "ml-maarif-badalabougou",
+      doublonIds: [
+        "ml-osm-d3bc4adf394b879c5618e836",
+        "ml-osm-dc9f4984ccbc9cc733ffa878",
+      ],
+    },
+  ];
+  let anciensNomsRattaches = 0;
+  for (const { canoniqueId, doublonIds } of correspondances) {
+    const canonique = await prisma.etablissement.findUnique({ where: { id: canoniqueId }, select: { id: true } });
+    if (!canonique) continue;
+    for (const doublonId of doublonIds) {
+      const doublon = await prisma.etablissement.findUnique({
+        where: { id: doublonId },
+        select: { id: true, valide: true },
+      });
+      if (!doublon?.valide) continue;
+      await fusionnerEtablissements(prisma, canoniqueId, doublonId);
+      anciensNomsRattaches += 1;
+    }
+  }
+  return { anciensNomsRattaches };
+}
+
 async function semerOffres(institutions: Map<string, string>) {
   let total = 0;
   for (const offre of OFFRES_SPECIFIQUES) {
@@ -509,8 +562,8 @@ async function importerHipo() {
         where: { sourceId_identifiantExterne: { sourceId: source.id, identifiantExterne: externe } },
       });
       const nomNormalise = normaliser(universite.name);
-      const ville = universite["state-province"] || null;
-      const villeNormalisee = normaliser(ville || "");
+      const localisation = villeNormaliseePourPays(paysCode, universite["state-province"] || null);
+      const { ville, villeNormalisee } = localisation;
       let etablissement = referenceExistante
         ? await prisma.etablissement.findUnique({ where: { id: referenceExistante.etablissementId } })
         : await prisma.etablissement.findFirst({
@@ -575,11 +628,12 @@ async function main() {
   const institutions = await semerInstitutionsReferencees();
   const seriesEtablissements = await semerSeriesEtablissements(institutions);
   const reconciliationParis = await reconcilierParisCite();
+  const reconciliationHorizon = await reconcilierAnciensCollegesHorizon();
   const offres = await semerOffres(institutions);
   const hipo = importerHipoDemande ? await importerHipo() : null;
   const successionsFrancaises = await reconcilierSuccessionsFrancaises();
 
-  console.log(JSON.stringify({ pays, sources, diplomes, programmes, institutionsReferencees: institutions.size, seriesEtablissements, reconciliationParis, successionsFrancaises, offres, hipo }, null, 2));
+  console.log(JSON.stringify({ pays, sources, diplomes, programmes, institutionsReferencees: institutions.size, seriesEtablissements, reconciliationParis, reconciliationHorizon, successionsFrancaises, offres, hipo }, null, 2));
 }
 
 main()

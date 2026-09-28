@@ -53,6 +53,18 @@ const domaine = (valeur?: string | null) => {
 const identifiantStable = (prefixe: string, valeur: string) =>
   `${prefixe}-${createHash("sha1").update(valeur).digest("hex").slice(0, 24)}`;
 
+// Les colonnes d'identifiants de provenance sont en VARCHAR(191). La base
+// Hostinger n'active pas le mode SQL strict et tronque donc silencieusement les
+// valeurs plus longues, ce qui peut transformer deux parcours distincts en une
+// même clé unique. On conserve le préfixe (utile aux imports incrémentaux) et
+// on remplace uniquement la fin par une empreinte stable.
+const identifiantExterneStable = (valeur: string) => {
+  const longueurMax = 191;
+  if (valeur.length <= longueurMax) return valeur;
+  const empreinte = createHash("sha1").update(valeur).digest("hex");
+  return `${valeur.slice(0, longueurMax - empreinte.length - 1)}:${empreinte}`;
+};
+
 const phrase = (valeur: string) => {
   const propre = valeur.trim().replace(/\s+/g, " ");
   if (!propre || propre !== propre.toUpperCase()) return propre;
@@ -62,7 +74,12 @@ const phrase = (valeur: string) => {
 
 const tableau = (valeur: string[] | string | null | undefined) => {
   if (Array.isArray(valeur)) return valeur.map(phrase).filter(Boolean);
-  return valeur ? [phrase(valeur)] : [];
+  // Dans l'export CSV ODS, les éléments d'une liste sont accolés avec une
+  // virgule sans espace, tandis qu'une virgule faisant partie d'un intitulé
+  // français est normalement suivie d'une espace (ex. « Langues, littératures »).
+  // Cette distinction évite d'afficher plusieurs formations concaténées dans
+  // un seul bouton sans casser les intitulés contenant de la ponctuation.
+  return valeur ? valeur.split(/,(?=\S)/).map(phrase).filter(Boolean) : [];
 };
 
 type ReponseOds<T> = { total_count?: number; results?: T[] };
@@ -243,7 +260,15 @@ async function desactiverAnciennesOffres(
     },
     select: { identifiantExterne: true, offreId: true, offre: { select: { programmeId: true } } },
   });
-  const obsoletes = anciennesSources.filter(({ identifiantExterne }) => !clesActuelles.has(identifiantExterne));
+  const offresActuelles = new Set(
+    anciennesSources
+      .filter(({ identifiantExterne }) => clesActuelles.has(identifiantExterne))
+      .map(({ offreId }) => offreId),
+  );
+  // Un premier import effectué avec une ancienne clé tronquée peut coexister
+  // avec la clé stable actuelle sur la même offre. Cette offre reste active.
+  const obsoletes = anciennesSources.filter(({ identifiantExterne, offreId }) =>
+    !clesActuelles.has(identifiantExterne) && !offresActuelles.has(offreId));
   if (!obsoletes.length) return 0;
   await prisma.etablissementProgramme.updateMany({
     where: { id: { in: obsoletes.map(({ offreId }) => offreId) } },
@@ -262,6 +287,7 @@ async function enregistrerProgramme(
   programme: ProgrammeImporte,
 ) {
   const programmeId = identifiantStable("fr-programme", programme.cle);
+  const cleProgrammeSource = identifiantExterneStable(programme.cle);
   const parent = await prisma.programmeEducation.upsert({
     where: { id: programmeId },
     create: {
@@ -281,11 +307,11 @@ async function enregistrerProgramme(
     },
   });
   await prisma.programmeSource.upsert({
-    where: { sourceId_identifiantExterne: { sourceId, identifiantExterne: programme.cle } },
+    where: { sourceId_identifiantExterne: { sourceId, identifiantExterne: cleProgrammeSource } },
     create: {
       programmeId: parent.id,
       sourceId,
-      identifiantExterne: programme.cle,
+      identifiantExterne: cleProgrammeSource,
       urlSource: programme.urlSource,
       confiance: 0.99,
     },
@@ -294,6 +320,7 @@ async function enregistrerProgramme(
 
   for (const parcours of programme.parcours) {
     const cleParcours = `${programme.cle}:parcours:${normaliser(parcours)}`;
+    const cleParcoursSource = identifiantExterneStable(cleParcours);
     const parcoursId = identifiantStable("fr-parcours", cleParcours);
     await prisma.programmeEducation.upsert({
       where: { id: parcoursId },
@@ -309,8 +336,8 @@ async function enregistrerProgramme(
       update: { parentId: parent.id, nom: parcours, nomNormalise: normaliser(parcours), actif: true },
     });
     await prisma.programmeSource.upsert({
-      where: { sourceId_identifiantExterne: { sourceId, identifiantExterne: cleParcours } },
-      create: { programmeId: parcoursId, sourceId, identifiantExterne: cleParcours, urlSource: programme.urlSource, confiance: 0.99 },
+      where: { sourceId_identifiantExterne: { sourceId, identifiantExterne: cleParcoursSource } },
+      create: { programmeId: parcoursId, sourceId, identifiantExterne: cleParcoursSource, urlSource: programme.urlSource, confiance: 0.99 },
       update: { programmeId: parcoursId, urlSource: programme.urlSource, confiance: 0.99, vuLe: new Date() },
     });
   }
@@ -334,8 +361,8 @@ async function enregistrerProgramme(
     update: { diplomeId: diplome?.id || null, actif: true },
   });
   await prisma.offreFormationSource.upsert({
-    where: { sourceId_identifiantExterne: { sourceId, identifiantExterne: programme.cle } },
-    create: { offreId: offre.id, sourceId, identifiantExterne: programme.cle, urlSource: programme.urlSource, confiance: 0.99 },
+    where: { sourceId_identifiantExterne: { sourceId, identifiantExterne: cleProgrammeSource } },
+    create: { offreId: offre.id, sourceId, identifiantExterne: cleProgrammeSource, urlSource: programme.urlSource, confiance: 0.99 },
     update: { offreId: offre.id, urlSource: programme.urlSource, confiance: 0.99, vuLe: new Date() },
   });
 }
@@ -398,12 +425,21 @@ async function lireCataloguesUniversites() {
   }
   for (const ligne of parcoursup) {
     const uai = ligne.etab_uai?.trim().toUpperCase();
-    if (!uai) continue;
-    const catalogue = catalogues.get(uai);
-    if (!catalogue) continue;
+    if (!uai || !/^[0-9]{7}[A-Z]$/.test(uai)) continue;
+    // La majorité des établissements présents dans Parcoursup ne proposent
+    // pas de master. Ils ne figurent donc pas dans l'export Mon Master et
+    // étaient auparavant ignorés par le mode --all-universities.
+    const catalogue = catalogues.get(uai) || {
+      uai,
+      nom: phrase(ligne.etab_nom || uai),
+      villes: new Set<string>(),
+      urls: new Set<string>(),
+      programmes: new Map<string, ProgrammeImporte>(),
+    };
     if (ligne.commune?.trim()) catalogue.villes.add(phrase(ligne.commune));
     if (ligne.etab_url?.trim()) catalogue.urls.add(ligne.etab_url.trim());
     ajouterParcoursup(catalogue.programmes, uai, ligne);
+    catalogues.set(uai, catalogue);
   }
   return [...catalogues.values()];
 }
@@ -466,6 +502,7 @@ async function rattacherEtablissement(
   sourceId: string,
   index: Awaited<ReturnType<typeof preparerResolutionEtablissements>>,
 ) {
+  const urlCatalogue = catalogue.programmes.values().next().value?.urlSource || URL_MON_MASTER;
   const parDomaine = [...catalogue.urls]
     .map((url) => index.parDomaine.get(domaine(url)))
     .find((item): item is EtablissementCandidat => Boolean(item));
@@ -549,13 +586,13 @@ async function rattacherEtablissement(
       etablissementId: candidat.id,
       sourceId,
       identifiantExterne: catalogue.uai,
-      urlSource: URL_MON_MASTER,
+      urlSource: urlCatalogue,
       confiance: 0.99,
       donneesBrutes: { nomOfficiel: catalogue.nom, villes: [...catalogue.villes], urls: [...catalogue.urls] },
     },
     update: {
       etablissementId: candidat.id,
-      urlSource: URL_MON_MASTER,
+      urlSource: urlCatalogue,
       confiance: 0.99,
       vuLe: new Date(),
       donneesBrutes: { nomOfficiel: catalogue.nom, villes: [...catalogue.villes], urls: [...catalogue.urls] },
@@ -646,7 +683,7 @@ async function importerToutesLesUniversites(sourceId: string) {
       etablissementId,
       sourceId,
       [...rattachement.uais, etablissementId],
-      new Set(programmes.map(({ cle }) => cle)),
+      new Set(programmes.map(({ cle }) => identifiantExterneStable(cle))),
     );
     for (const ancienId of rattachement.anciensRattachements) {
       totalObsoletes += await desactiverAnciennesOffres(
@@ -718,7 +755,7 @@ async function importer() {
       etablissement.id,
       source.id,
       [uai, etablissement.id],
-      new Set(programmes.map(({ cle }) => cle)),
+      new Set(programmes.map(({ cle }) => identifiantExterneStable(cle))),
     );
     await prisma.importEducation.update({
       where: { id: importation.id },

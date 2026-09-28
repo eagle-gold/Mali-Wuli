@@ -11,6 +11,7 @@ import {
 } from "@prisma/client";
 import { demanderDecisionOpenRouter, type CandidatDeduplication } from "./openrouter-deduplication";
 import { normaliserEducation, prismaEducation } from "./catalog-service";
+import { villeNormaliseePourPays } from "./normalisation-localisations";
 
 export type SuggestionCatalogueInput = {
   clientKey: string;
@@ -49,6 +50,7 @@ async function correspondanceCanonique(input: SuggestionCatalogueInput) {
   if (input.type === TypeSuggestionCatalogue.ETABLISSEMENT) {
     const exact = await prismaEducation.etablissement.findFirst({
       where: {
+        valide: true,
         paysCode: input.paysCode,
         ...(villeNormalisee ? { villeNormalisee } : {}),
         OR: [{ nomNormalise }, { alias: { some: { nomNormalise } } }],
@@ -90,7 +92,7 @@ async function candidatsCanoniques(input: SuggestionCatalogueInput): Promise<Can
   const villeNormalisee = normaliserEducation(input.ville || "");
   if (input.type === TypeSuggestionCatalogue.ETABLISSEMENT) {
     const lignes = await prismaEducation.etablissement.findMany({
-      where: { paysCode: input.paysCode, ...(villeNormalisee ? { villeNormalisee } : {}) },
+      where: { valide: true, paysCode: input.paysCode, ...(villeNormalisee ? { villeNormalisee } : {}) },
       select: {
         id: true,
         nom: true,
@@ -299,8 +301,8 @@ export async function soumettreSuggestion(input: SuggestionCatalogueInput, contr
   const libelle = input.libelle.trim().slice(0, 180);
   const libelleNormalise = normaliserEducation(libelle);
   const paysCode = input.paysCode.toUpperCase();
-  const ville = input.ville?.trim().slice(0, 120) || null;
-  const villeNormalisee = normaliserEducation(ville || "");
+  const localisation = villeNormaliseePourPays(paysCode, input.ville?.trim().slice(0, 120));
+  const { ville, villeNormalisee } = localisation;
   const contexteCle = normaliserEducation(input.contexteCle || "");
   const contexte = input.contexte || {};
   const canonique = await correspondanceCanonique({ ...input, libelle, paysCode, ville: ville || undefined });
@@ -466,7 +468,7 @@ export async function publierSuggestion(id: string, validateurId: string, fusion
   if (fusionnerAvecId) {
     const cible = suggestion.type === TypeSuggestionCatalogue.ETABLISSEMENT
       ? await prismaEducation.etablissement.findFirst({
-          where: { id: fusionnerAvecId, paysCode: suggestion.paysCode },
+          where: { id: fusionnerAvecId, paysCode: suggestion.paysCode, valide: true },
           select: { id: true },
         })
       : suggestion.type === TypeSuggestionCatalogue.DIPLOME
@@ -509,7 +511,7 @@ export async function publierSuggestion(id: string, validateurId: string, fusion
       });
     } else {
       const existant = await prismaEducation.etablissement.findFirst({
-        where: { paysCode: suggestion.paysCode, nomNormalise: suggestion.libelleNormalise, villeNormalisee: suggestion.villeNormalisee },
+        where: { valide: true, paysCode: suggestion.paysCode, nomNormalise: suggestion.libelleNormalise, villeNormalisee: suggestion.villeNormalisee },
       });
       const etablissement = existant || await prismaEducation.etablissement.create({
         data: {

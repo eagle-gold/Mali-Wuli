@@ -76,17 +76,19 @@ async function enregistrerLot(lot: LigneMaroc[], sourceId: string) {
   const unique = [...new Map(lot.map((item) => [item.id, item])).values()];
   if (!unique.length) return;
   const valeurs = Prisma.join(unique.map((item) => Prisma.sql`(
-    ${item.id}, ${item.nom}, ${item.nomNormalise}, ${item.type}::"TypeEtablissement", 'MA'::char(2),
-    ${item.ville}, ${item.villeNormalisee}, ${item.statut}::"StatutEtablissement", true, NOW(), NOW()
+    ${item.id}, ${item.nom}, ${item.nomNormalise}, ${item.type}, ${"MA"}, ${"MA"},
+    ${item.ville}, ${item.villeNormalisee}, ${item.statut}, true, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3)
   )`));
   await prisma.$executeRaw(Prisma.sql`
-    INSERT INTO "Etablissement"
-      (id, nom, "nomNormalise", type, "paysCode", ville, "villeNormalisee", statut, valide, "createdAt", "updatedAt")
+    INSERT INTO Etablissement
+      (id, nom, nomNormalise, type, paysCode, systemeEducatifCode,
+       ville, villeNormalisee, statut, valide, createdAt, updatedAt)
     VALUES ${valeurs}
-    ON CONFLICT (id) DO UPDATE SET
-      nom=EXCLUDED.nom, "nomNormalise"=EXCLUDED."nomNormalise", type=EXCLUDED.type,
-      ville=EXCLUDED.ville, "villeNormalisee"=EXCLUDED."villeNormalisee", statut=EXCLUDED.statut,
-      valide=true, "updatedAt"=NOW()
+    ON DUPLICATE KEY UPDATE
+      nom=VALUES(nom), nomNormalise=VALUES(nomNormalise), type=VALUES(type),
+      systemeEducatifCode=VALUES(systemeEducatifCode),
+      ville=VALUES(ville), villeNormalisee=VALUES(villeNormalisee), statut=VALUES(statut),
+      valide=true, updatedAt=CURRENT_TIMESTAMP(3)
   `);
   await prisma.etablissementNiveau.createMany({
     data: unique.flatMap((item) => item.niveaux.map((niveau) => ({ etablissementId: item.id, niveau }))),
@@ -119,8 +121,11 @@ async function enregistrerLot(lot: LigneMaroc[], sourceId: string) {
 async function importer() {
   const source = await prisma.sourceEducative.findUniqueOrThrow({ where: { code: "menps-maroc" } });
   const importation = await prisma.importEducation.create({ data: { sourceId: source.id, paysCode: "MA" } });
-  const references = await prisma.etablissementSource.findMany({ where: { sourceId: source.id }, select: { identifiantExterne: true } });
-  const dejaConnus = new Set(references.map(({ identifiantExterne }) => identifiantExterne));
+  const references = await prisma.etablissementSource.findMany({
+    where: { sourceId: source.id },
+    select: { identifiantExterne: true, etablissementId: true },
+  });
+  const idParIdentifiant = new Map(references.map(({ identifiantExterne, etablissementId }) => [identifiantExterne, etablissementId]));
   let recus = 0;
   let ajoutes = 0;
   let modifies = 0;
@@ -153,8 +158,9 @@ async function importer() {
           continue;
         }
         const identifiant = `${ressource.cle}:${empreinte(`${normaliser(nom)}|${normaliser(nomArabe || "")}|${normaliser(ville || "")}|${normaliser(province || "")}`)}`;
-        const id = `ma-menps-${empreinte(identifiant)}`;
-        if (dejaConnus.has(identifiant)) modifies += 1;
+        const idExistant = idParIdentifiant.get(identifiant);
+        const id = idExistant || `ma-menps-${empreinte(identifiant)}`;
+        if (idExistant) modifies += 1;
         else ajoutes += 1;
         repartition[ressource.cle] = (repartition[ressource.cle] || 0) + 1;
         lot.push({

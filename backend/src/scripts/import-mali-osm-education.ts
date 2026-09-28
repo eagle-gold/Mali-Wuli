@@ -9,9 +9,18 @@ import {
   TypeEtablissement,
 } from "@prisma/client";
 import {
-  cleRapprochementEtablissement,
+  nomRapprochementEtablissement,
   villeRapprochementMali,
 } from "../education/deduplication-etablissements";
+import {
+  ajouterCandidat,
+  agregerLignesParId,
+  centroideGeometrie,
+  dedupliquerLignesOsm,
+  groupeTypeRapprochement,
+  resoudreCandidats,
+} from "../education/import-mali-osm-utils";
+import { villeCanoniqueMali } from "../education/normalisation-localisations";
 
 const prisma = new PrismaClient();
 const ARCHIVE = "https://production-raw-data-api.s3.amazonaws.com/ISO3/MLI/education_facilities/hotosm_mli_education_facilities_osm_geojson.zip";
@@ -30,9 +39,16 @@ type Proprietes = {
   addr_full?: string | null;
   addr_city?: string | null;
   source?: string | null;
+  adm0_name?: string | null;
+  adm0_pcode?: string | number | null;
   adm1_name?: string | null;
+  adm1_pcode?: string | number | null;
   adm2_name?: string | null;
+  adm2_pcode?: string | number | null;
   adm3_name?: string | null;
+  adm3_pcode?: string | number | null;
+  adm4_name?: string | null;
+  adm4_pcode?: string | number | null;
 };
 
 type Feature = {
@@ -51,6 +67,9 @@ type LigneImportee = {
   niveaux: NiveauEducation[];
   ville: string | null;
   villeNormalisee: string;
+  admin3Pcode: string;
+  admin3NomNormalise: string;
+  localiteNormalisee: string;
   latitude: number | null;
   longitude: number | null;
   existant: boolean;
@@ -65,6 +84,8 @@ const normaliser = (valeur: string) => valeur
   .trim();
 
 const empreinte = (valeur: string) => createHash("sha1").update(valeur).digest("hex").slice(0, 24);
+
+const pcode = (valeur?: string | number | null) => String(valeur ?? "").trim().toLocaleUpperCase("fr");
 
 function classifier(proprietes: Proprietes, nom: string) {
   const categorie = normaliser(`${proprietes.amenity || ""} ${proprietes.building || ""} ${nom}`);
@@ -86,60 +107,116 @@ const statut = (valeur?: string | null) => {
   return StatutEtablissement.INCONNU;
 };
 
-const point = (geometry?: Feature["geometry"]) => {
-  if (geometry?.type !== "Point" || !Array.isArray(geometry.coordinates)) return { longitude: null, latitude: null };
-  const [longitude, latitude] = geometry.coordinates;
-  return {
-    longitude: typeof longitude === "number" ? longitude : null,
-    latitude: typeof latitude === "number" ? latitude : null,
-  };
-};
-
 async function enregistrerLot(lot: LigneImportee[], sourceId: string) {
-  const nouvelles = [...new Map(lot.filter(({ existant }) => !existant).map((item) => [item.id, item])).values()];
+  const etablissements = agregerLignesParId(lot);
+  const nouvelles = etablissements.filter(({ existant }) => !existant);
   if (nouvelles.length) {
     const valeurs = Prisma.join(nouvelles.map((item) => Prisma.sql`(
-      ${item.id}, ${item.nom}, ${item.nomNormalise}, ${item.type}::"TypeEtablissement", 'ML'::char(2),
-      ${item.ville}, ${item.villeNormalisee}, ${item.statut}::"StatutEtablissement",
-      ${item.latitude}::numeric, ${item.longitude}::numeric, true, NOW(), NOW()
+      ${item.id}, ${item.nom}, ${item.nomNormalise}, ${item.type}, ${"ML"}, ${"ML"},
+      ${item.ville}, ${item.villeNormalisee}, ${item.statut},
+      ${item.latitude}, ${item.longitude}, true, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3)
     )`));
     await prisma.$executeRaw(Prisma.sql`
-      INSERT INTO "Etablissement"
-        (id, nom, "nomNormalise", type, "paysCode", ville, "villeNormalisee", statut, latitude, longitude, valide, "createdAt", "updatedAt")
+      INSERT INTO Etablissement
+        (id, nom, nomNormalise, type, paysCode, systemeEducatifCode,
+         ville, villeNormalisee, statut, latitude, longitude,
+         valide, createdAt, updatedAt)
       VALUES ${valeurs}
-      ON CONFLICT (id) DO UPDATE SET
-        nom=EXCLUDED.nom, "nomNormalise"=EXCLUDED."nomNormalise", type=EXCLUDED.type,
-        ville=EXCLUDED.ville, "villeNormalisee"=EXCLUDED."villeNormalisee", statut=EXCLUDED.statut,
-        latitude=COALESCE(EXCLUDED.latitude, "Etablissement".latitude),
-        longitude=COALESCE(EXCLUDED.longitude, "Etablissement".longitude), valide=true, "updatedAt"=NOW()
+      ON DUPLICATE KEY UPDATE
+        nom=VALUES(nom), nomNormalise=VALUES(nomNormalise), type=VALUES(type),
+        systemeEducatifCode=VALUES(systemeEducatifCode),
+        ville=VALUES(ville), villeNormalisee=VALUES(villeNormalisee), statut=VALUES(statut),
+        latitude=COALESCE(VALUES(latitude), latitude),
+        longitude=COALESCE(VALUES(longitude), longitude), valide=true,
+        updatedAt=CURRENT_TIMESTAMP(3)
     `);
+  }
+  const niveaux = etablissements.flatMap((item) => (
+    item.niveaux.map((niveau) => ({ etablissementId: item.id, niveau }))
+  ));
+  if (niveaux.length) {
     await prisma.etablissementNiveau.createMany({
-      data: nouvelles.flatMap((item) => item.niveaux.map((niveau) => ({ etablissementId: item.id, niveau }))),
-      skipDuplicates: true,
-    });
-    await prisma.etablissementAlias.createMany({
-      data: nouvelles.flatMap((item) => item.aliases.map((alias) => ({ etablissementId: item.id, nom: alias, nomNormalise: normaliser(alias) }))),
+      data: niveaux,
       skipDuplicates: true,
     });
   }
-  const uniques = [...new Map(lot.map((item) => [item.osmId, item])).values()];
-  await prisma.etablissementSource.createMany({
-    data: uniques.map((item) => ({
-      id: `source-osm-${empreinte(item.osmId)}`,
-      etablissementId: item.id,
-      sourceId,
-      identifiantExterne: item.osmId,
-      urlSource: `https://www.openstreetmap.org/${item.osmId}`,
-      confiance: 0.72,
-      donneesBrutes: item.donneesBrutes,
-    })),
-    skipDuplicates: true,
-  });
-  await prisma.etablissementSource.updateMany({
-    where: { sourceId, identifiantExterne: { in: uniques.map(({ osmId }) => osmId) } },
-    data: { vuLe: new Date(), confiance: 0.72 },
-  });
+  const aliases = etablissements.flatMap((item) => item.aliases.map((alias) => ({
+    etablissementId: item.id,
+    nom: alias,
+    nomNormalise: normaliser(alias),
+  })));
+  if (aliases.length) {
+    await prisma.etablissementAlias.createMany({
+      data: aliases,
+      skipDuplicates: true,
+    });
+  }
+  const idsBamako = [...new Set(lot
+    .filter(({ villeNormalisee }) => villeNormalisee === "bamako")
+    .map(({ id }) => id))];
+  if (idsBamako.length) {
+    // Les références OSM déjà connues ne passent pas dans l'upsert ci-dessus.
+    // La ville canonique doit néanmoins rester corrigée lors de chaque réimport.
+    await prisma.etablissement.updateMany({
+      where: { id: { in: idsBamako }, paysCode: "ML" },
+      data: { ville: "Bamako", villeNormalisee: "bamako" },
+    });
+  }
+  const uniquesParOsm = new Map<string, LigneImportee>();
+  for (const item of [...lot].sort((a, b) => a.osmId.localeCompare(b.osmId, "fr"))) {
+    if (!uniquesParOsm.has(item.osmId)) uniquesParOsm.set(item.osmId, item);
+  }
+  const uniques = [...uniquesParOsm.values()];
+  if (uniques.length) {
+    const valeursSources = Prisma.join(uniques.map((item) => Prisma.sql`(
+      ${`source-osm-${empreinte(item.osmId)}`}, ${item.id}, ${sourceId}, ${item.osmId},
+      ${`https://www.openstreetmap.org/${item.osmId}`}, ${0.72}, CURRENT_TIMESTAMP(3),
+      ${JSON.stringify(item.donneesBrutes)}
+    )`));
+    // L'upsert met aussi à jour le JSON brut : les pcodes ajoutés au schéma
+    // HOT/HDX ne seraient sinon conservés qu'au tout premier import.
+    await prisma.$executeRaw(Prisma.sql`
+      INSERT INTO EtablissementSource
+        (id, etablissementId, sourceId, identifiantExterne, urlSource,
+         confiance, vuLe, donneesBrutes)
+      VALUES ${valeursSources}
+      ON DUPLICATE KEY UPDATE
+        etablissementId=VALUES(etablissementId),
+        urlSource=VALUES(urlSource),
+        confiance=VALUES(confiance),
+        vuLe=VALUES(vuLe),
+        donneesBrutes=VALUES(donneesBrutes)
+    `);
+  }
 }
+
+const cleCanoniqueExacte = (type: TypeEtablissement, ville: string, nom: string) => (
+  `${groupeTypeRapprochement(type)}|${ville}|${nom}`
+);
+
+const cleCanoniqueRapprochee = (type: TypeEtablissement, ville: string, nom: string) => (
+  `${groupeTypeRapprochement(type)}|${ville}|${nomRapprochementEtablissement(nom)}`
+);
+
+const lotsSansSeparerIdentifiant = (lignes: LigneImportee[], tailleMaximale: number) => {
+  const groupes = new Map<string, LigneImportee[]>();
+  for (const ligne of lignes) {
+    const groupe = groupes.get(ligne.id) || [];
+    groupe.push(ligne);
+    groupes.set(ligne.id, groupe);
+  }
+  const lots: LigneImportee[][] = [];
+  let lot: LigneImportee[] = [];
+  for (const groupe of groupes.values()) {
+    if (lot.length && lot.length + groupe.length > tailleMaximale) {
+      lots.push(lot);
+      lot = [];
+    }
+    lot.push(...groupe);
+  }
+  if (lot.length) lots.push(lot);
+  return lots;
+};
 
 async function importer() {
   const source = await prisma.sourceEducative.findUniqueOrThrow({ where: { code: "hotosm-mali-education" } });
@@ -150,23 +227,36 @@ async function importer() {
     where: { paysCode: "ML", valide: true, sources: { none: { sourceId: source.id } } },
     include: { alias: true },
   });
-  const canoniqueExact = new Map<string, string>();
-  const canoniqueRapproche = new Map<string, string>();
+  const canoniqueExact = new Map<string, Set<string>>();
+  const canoniqueRapproche = new Map<string, Set<string>>();
   for (const item of existantsMali) {
     for (const nom of [item.nomNormalise, ...item.alias.map(({ nomNormalise }) => nomNormalise)]) {
       if (!nom) continue;
       const villeRapprochee = villeRapprochementMali(item.villeNormalisee);
-      canoniqueExact.set(`${item.type}|${villeRapprochee}|${nom}`, item.id);
-      const cle = cleRapprochementEtablissement({ nom, type: item.type, villeNormalisee: villeRapprochee });
-      if (cle.slice(cle.lastIndexOf("|") + 1).length >= 4) canoniqueRapproche.set(cle, item.id);
+      ajouterCandidat(canoniqueExact, cleCanoniqueExacte(item.type, villeRapprochee, nom), item.id);
+      const nomRapproche = nomRapprochementEtablissement(nom);
+      if (nomRapproche.length >= 4) {
+        ajouterCandidat(
+          canoniqueRapproche,
+          cleCanoniqueRapprochee(item.type, villeRapprochee, nom),
+          item.id,
+        );
+      }
     }
   }
   let recus = 0;
   let ajoutes = 0;
   let modifies = 0;
   let ignores = 0;
-  let rattaches = 0;
-  let lot: LigneImportee[] = [];
+  let rattachesCanoniques = 0;
+  let ambiguitesCanoniques = 0;
+  const exemplesAmbiguitesCanoniques: Array<{
+    osmId: string;
+    nom: string;
+    ville: string;
+    candidats: string[];
+  }> = [];
+  const lignesImportees: LigneImportee[] = [];
   try {
     const response = await fetch(ARCHIVE, { headers: { "User-Agent": "MaliWuli-Education-Catalog/0.1" } });
     if (!response.ok) throw new Error(`HOT/HDX Mali ${response.status}`);
@@ -184,24 +274,54 @@ async function importer() {
       }
       const nomNormalise = normaliser(nom);
       const classification = classifier(feature.properties, nom);
-      const ville = feature.properties.addr_city || feature.properties.adm3_name || feature.properties.adm2_name || feature.properties.adm1_name || null;
-      const villeNormalisee = normaliser(ville || "");
+      const villeSource = feature.properties.addr_city
+        || feature.properties.adm4_name
+        || feature.properties.adm3_name
+        || feature.properties.adm2_name
+        || feature.properties.adm1_name
+        || null;
+      const { ville, villeNormalisee } = villeCanoniqueMali(villeSource, {
+        region: feature.properties.adm1_name,
+        cercle: feature.properties.adm2_name,
+        commune: feature.properties.adm3_name,
+      });
       const referenceId = idParOsm.get(osmId);
       const villeRapprochee = villeRapprochementMali(villeNormalisee);
-      const cleExacte = `${classification.type}|${villeRapprochee}|${nomNormalise}`;
-      const cleRapprochee = cleRapprochementEtablissement({ nom, type: classification.type, villeNormalisee: villeRapprochee });
-      const canoniqueId = canoniqueExact.get(cleExacte) || canoniqueRapproche.get(cleRapprochee);
+      const cleExacte = cleCanoniqueExacte(classification.type, villeRapprochee, nomNormalise);
+      const nomRapproche = nomRapprochementEtablissement(nom);
+      const cleRapprochee = cleCanoniqueRapprochee(classification.type, villeRapprochee, nom);
+      const resolution = referenceId || !villeRapprochee
+        ? { id: null, candidats: [], ambigu: false }
+        : resoudreCandidats(
+          canoniqueExact.get(cleExacte),
+          nomRapproche.length >= 4 ? canoniqueRapproche.get(cleRapprochee) : undefined,
+        );
+      if (resolution.ambigu) {
+        ambiguitesCanoniques += 1;
+        if (exemplesAmbiguitesCanoniques.length < 25) {
+          exemplesAmbiguitesCanoniques.push({
+            osmId,
+            nom,
+            ville: villeRapprochee,
+            candidats: resolution.candidats,
+          });
+        }
+      }
+      const canoniqueId = resolution.id;
       const id = referenceId || canoniqueId || `ml-osm-${empreinte(osmId)}`;
       const estExistant = Boolean(referenceId || canoniqueId);
       if (referenceId) modifies += 1;
-      else if (canoniqueId) rattaches += 1;
-      else ajoutes += 1;
-      const coordonnees = point(feature.geometry);
+      else if (canoniqueId) rattachesCanoniques += 1;
+      const coordonnees = centroideGeometrie(feature.geometry);
       const aliases = [...new Set([feature.properties.name, feature.properties.name_fr, feature.properties.name_en, feature.properties.name_latin]
         .map((item) => item?.trim())
         .filter((item): item is string => Boolean(item))
         .filter((item) => normaliser(item) !== nomNormalise))];
-      lot.push({
+      const admin3NomNormalise = normaliser(feature.properties.adm3_name || "");
+      const localiteNormalisee = normaliser(
+        feature.properties.addr_city || feature.properties.adm4_name || villeNormalisee,
+      );
+      lignesImportees.push({
         id,
         osmId,
         nom,
@@ -212,6 +332,9 @@ async function importer() {
         niveaux: classification.niveaux,
         ville,
         villeNormalisee,
+        admin3Pcode: pcode(feature.properties.adm3_pcode),
+        admin3NomNormalise,
+        localiteNormalisee,
         latitude: coordonnees.latitude,
         longitude: coordonnees.longitude,
         existant: estExistant,
@@ -221,18 +344,31 @@ async function importer() {
           operatorType: feature.properties.operator_type || null,
           adresse: feature.properties.addr_full || null,
           sourceOsm: feature.properties.source || null,
+          pays: feature.properties.adm0_name || null,
+          paysPcode: feature.properties.adm0_pcode ?? null,
           region: feature.properties.adm1_name || null,
+          regionPcode: feature.properties.adm1_pcode ?? null,
           cercle: feature.properties.adm2_name || null,
+          cerclePcode: feature.properties.adm2_pcode ?? null,
           commune: feature.properties.adm3_name || null,
+          communePcode: feature.properties.adm3_pcode ?? null,
+          localite: feature.properties.adm4_name || null,
+          localitePcode: feature.properties.adm4_pcode ?? null,
+          villeSource,
           geometrie: feature.geometry?.type || null,
+          centroide: coordonnees,
+          sourceCatalogue: PAGE_SOURCE,
         },
       });
-      if (lot.length >= TAILLE_LOT) {
-        await enregistrerLot(lot, source.id);
-        lot = [];
-      }
     }
-    await enregistrerLot(lot, source.id);
+    const deduplication = dedupliquerLignesOsm(lignesImportees);
+    const etablissementsFinaux = agregerLignesParId(deduplication.lignes);
+    ajoutes = etablissementsFinaux.filter(({ existant }) => !existant).length;
+    const rattaches = rattachesCanoniques
+      + deduplication.statistiques.lignesRattacheesAExistant;
+    for (const lot of lotsSansSeparerIdentifiant(deduplication.lignes, TAILLE_LOT)) {
+      await enregistrerLot(lot, source.id);
+    }
     await prisma.importEducation.update({
       where: { id: importation.id },
       data: {
@@ -241,10 +377,28 @@ async function importer() {
         modifies,
         ignores,
         termineLe: new Date(),
-        detail: { recus, rattaches, source: ARCHIVE, licence: "ODbL-1.0", avertissement: "OpenStreetMap n'est pas exhaustif" },
+        detail: {
+          recus,
+          rattaches,
+          source: ARCHIVE,
+          licence: "ODbL-1.0",
+          avertissement: "OpenStreetMap n'est pas exhaustif",
+          ambiguitesCanoniques,
+          exemplesAmbiguitesCanoniques,
+          deduplicationIntraFichier: deduplication.statistiques,
+          exemplesAmbiguitesIntraFichier: deduplication.ambiguites.slice(0, 25),
+        },
       },
     });
-    console.log(JSON.stringify({ recus, ajoutes, modifies, rattaches, ignores }, null, 2));
+    console.log(JSON.stringify({
+      recus,
+      ajoutes,
+      modifies,
+      rattaches,
+      ignores,
+      ambiguitesCanoniques,
+      deduplicationIntraFichier: deduplication.statistiques,
+    }, null, 2));
   } catch (error) {
     await prisma.importEducation.update({
       where: { id: importation.id },

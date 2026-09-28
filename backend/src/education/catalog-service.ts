@@ -1,14 +1,16 @@
 import {
   NiveauEducation,
   Prisma,
-  PrismaClient,
   StatutEtablissement,
   TypeEtablissement,
+  TypeProgrammeEducation,
 } from "@prisma/client";
+import { prisma } from "../lib/prisma";
+import { villeNormaliseePourPays } from "./normalisation-localisations";
 
 export type TypeRechercheEtablissement = "ecole" | "lycee" | "universite";
 
-export const prismaEducation = new PrismaClient();
+export const prismaEducation = prisma;
 
 export const normaliserEducation = (valeur: string) =>
   valeur
@@ -58,6 +60,39 @@ const statutPublic = (statut: StatutEtablissement) =>
       ? "Privé"
       : undefined;
 
+const variantesVille = (paysCode: string, ville: string) => {
+  if (paysCode !== "ML") return [ville];
+  if (ville === "tombouctou" || ville === "timbuktu") return ["tombouctou", "timbuktu"];
+  if (ville === "bamako") {
+    return [
+      "bamako",
+      "district de bamako",
+      "district bamako",
+      "commune i",
+      "commune ii",
+      "commune iii",
+      "commune iv",
+      "commune v",
+      "commune vi",
+      "commune 1",
+      "commune 2",
+      "commune 3",
+      "commune 4",
+      "commune 5",
+      "commune 6",
+      "aci",
+      "aci 2000",
+      "bamako aci 2000",
+      "bamako coura k13",
+      "bamako hipp",
+      "hamdallaye aci 2000",
+      "kalabancoro",
+      "kalaban coro",
+    ];
+  }
+  return [ville];
+};
+
 export async function chercherEtablissements(params: {
   paysCode: string;
   type: TypeRechercheEtablissement;
@@ -68,13 +103,14 @@ export async function chercherEtablissements(params: {
   const recherche = normaliserEducation(params.recherche || "");
   const termesRecherche = recherche.split(" ").filter(Boolean);
   const ville = normaliserEducation(params.ville || "");
+  const villes = variantesVille(params.paysCode, ville);
   const etablissements = await prismaEducation.etablissement.findMany({
     where: {
       paysCode: params.paysCode,
       valide: true,
       AND: [
         filtreType(params.type),
-        ...(ville ? [{ villeNormalisee: { contains: ville } }] : []),
+        ...(ville ? [{ villeNormalisee: { in: villes } }] : []),
         ...termesRecherche.map((terme) => ({
           OR: [
             { nomNormalise: { contains: terme } },
@@ -237,8 +273,8 @@ export async function hydraterDepuisWikidata(
     const identifiantExterne = entite.id;
     const itemUrl = `https://www.wikidata.org/wiki/${identifiantExterne}`;
     const nomNormalise = normaliserEducation(nom);
-    const ville = libelleEntite(lies[idClaim(entite, "P131") || ""])?.trim() || null;
-    const villeNormalisee = normaliserEducation(ville || "");
+    const villeSource = libelleEntite(lies[idClaim(entite, "P131") || ""])?.trim() || null;
+    const { ville, villeNormalisee } = villeNormaliseePourPays(paysCode, villeSource);
     let etablissement = reference
       ? await prismaEducation.etablissement.findUnique({ where: { id: reference.etablissementId } })
       : await prismaEducation.etablissement.findFirst({
@@ -327,7 +363,12 @@ export async function chercherProgrammes(params: {
   const recherche = normaliserEducation(params.recherche || "");
   if (params.parentId) {
     const enfants = await prismaEducation.programmeEducation.findMany({
-      where: { parentId: params.parentId, actif: true, ...(recherche ? { nomNormalise: { contains: recherche } } : {}) },
+      where: {
+        parentId: params.parentId,
+        actif: true,
+        type: { not: TypeProgrammeEducation.SERIE },
+        ...(recherche ? { nomNormalise: { contains: recherche } } : {}),
+      },
       orderBy: { nom: "asc" },
     });
     return enfants.map((item) => ({ id: item.id, label: nomAvecSigle(item), specialites: [] as string[] }));
@@ -335,8 +376,25 @@ export async function chercherProgrammes(params: {
 
   const offres = params.etablissementId
     ? await prismaEducation.etablissementProgramme.findMany({
-        where: { etablissementId: params.etablissementId, actif: true },
-        include: { programme: { include: { enfants: { where: { actif: true }, orderBy: { nom: "asc" } } } }, diplome: true },
+        where: {
+          etablissementId: params.etablissementId,
+          actif: true,
+          programme: {
+            actif: true,
+            type: { not: TypeProgrammeEducation.SERIE },
+          },
+        },
+        include: {
+          programme: {
+            include: {
+              enfants: {
+                where: { actif: true, type: { not: TypeProgrammeEducation.SERIE } },
+                orderBy: { nom: "asc" },
+              },
+            },
+          },
+          diplome: true,
+        },
         orderBy: { programme: { nom: "asc" } },
       })
     : [];
@@ -374,14 +432,25 @@ export async function chercherProgrammes(params: {
     where: {
       parentId: null,
       actif: true,
+      type: { not: TypeProgrammeEducation.SERIE },
+      // Ne jamais utiliser les formations propres à un autre établissement
+      // comme solution de repli quand celui demandé n'a pas encore de catalogue.
+      ...(params.etablissementId ? { paysCode: null } : {}),
       AND: [
-        { OR: [{ paysCode: params.paysCode }, { paysCode: null }] },
+        ...(!params.etablissementId
+          ? [{ OR: [{ paysCode: params.paysCode }, { paysCode: null }] }]
+          : []),
         ...(recherche
           ? [{ OR: [{ nomNormalise: { contains: recherche } }, { enfants: { some: { nomNormalise: { contains: recherche } } } }] }]
           : []),
       ],
     },
-    include: { enfants: { where: { actif: true }, orderBy: { nom: "asc" } } },
+    include: {
+      enfants: {
+        where: { actif: true, type: { not: TypeProgrammeEducation.SERIE } },
+        orderBy: { nom: "asc" },
+      },
+    },
     orderBy: [{ paysCode: "desc" }, { nom: "asc" }],
     take: 150,
   });
@@ -397,19 +466,19 @@ export async function chercherReferences(
   paysCode: string,
   type: TypeRechercheEtablissement,
   etablissementId?: string,
+  systemeEducatifCode?: string,
 ) {
-  const niveaux = type === "ecole"
-    ? [NiveauEducation.PRIMAIRE, NiveauEducation.FONDAMENTAL]
-    : type === "lycee"
-      ? [NiveauEducation.SECONDAIRE, NiveauEducation.PROFESSIONNEL]
-      : [NiveauEducation.SUPERIEUR, NiveauEducation.FORMATION_CONTINUE];
+  const estScolaire = type !== "universite";
+  const niveaux = estScolaire
+    ? [NiveauEducation.PRIMAIRE, NiveauEducation.FONDAMENTAL, NiveauEducation.SECONDAIRE, NiveauEducation.PROFESSIONNEL]
+    : [NiveauEducation.SUPERIEUR, NiveauEducation.FORMATION_CONTINUE];
   const etablissement = etablissementId
     ? await prismaEducation.etablissement.findUnique({
         where: { id: etablissementId },
         select: { paysCode: true, systemeEducatifCode: true },
       })
     : null;
-  const seriesEtablissement = type === "lycee" && etablissementId
+  const seriesEtablissement = estScolaire && etablissementId
     ? await prismaEducation.etablissementProgramme.findMany({
         where: {
           etablissementId,
@@ -420,15 +489,19 @@ export async function chercherReferences(
         orderBy: { programme: { nom: "asc" } },
       })
     : [];
-  const paysReferentiel = etablissement?.systemeEducatifCode !== "AUTRE"
+  if (systemeEducatifCode === "AUTRE") {
+    return { series: [], diplomes: [], programmes: [] };
+  }
+  const paysReferentiel = systemeEducatifCode || (etablissement?.systemeEducatifCode !== "AUTRE"
     ? etablissement?.systemeEducatifCode
-    : undefined;
+    : undefined);
   const paysCatalogue = paysReferentiel
     || seriesEtablissement[0]?.programme.paysCode
     || etablissement?.paysCode
     || paysCode;
+  const seriesDuProgramme = seriesEtablissement.filter(({ programme }) => !programme.paysCode || programme.paysCode === paysCatalogue);
   const [seriesPays, diplomes, programmes] = await Promise.all([
-    type === "lycee" && !seriesEtablissement.length
+    estScolaire && !seriesDuProgramme.length
       ? prismaEducation.programmeEducation.findMany({
           where: { paysCode: paysCatalogue, type: "SERIE", actif: true },
           orderBy: { nom: "asc" },
@@ -438,10 +511,12 @@ export async function chercherReferences(
       where: { paysCode: paysCatalogue, niveau: { in: niveaux }, actif: true },
       orderBy: { nom: "asc" },
     }),
-    type === "universite" ? chercherProgrammes({ paysCode }) : Promise.resolve([]),
+    type === "universite"
+      ? chercherProgrammes({ paysCode: paysCatalogue, etablissementId })
+      : Promise.resolve([]),
   ]);
-  const series = seriesEtablissement.length
-    ? seriesEtablissement.map(({ programme }) => programme)
+  const series = seriesDuProgramme.length
+    ? seriesDuProgramme.map(({ programme }) => programme)
     : seriesPays;
   return {
     series: series.map(nomAvecSigle),

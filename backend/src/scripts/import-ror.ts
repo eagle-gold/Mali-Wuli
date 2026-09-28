@@ -8,6 +8,7 @@ import {
   StatutImportEducation,
   TypeEtablissement,
 } from "@prisma/client";
+import { villeNormaliseePourPays } from "../education/normalisation-localisations";
 
 const prisma = new PrismaClient();
 const ZENODO_ROR = "https://zenodo.org/api/records/6347574";
@@ -206,7 +207,7 @@ async function importer() {
       ])].filter((alias) => normaliser(alias) !== normaliser(nom));
       const wikidataIds = valeursSeparees(ligne["external_ids.type.wikidata.all"]);
       const siteWeb = valeursSeparees(ligne["links.type.website"])[0];
-      const ville = ligne["locations.geonames_details.name"]?.trim() || null;
+      const villeSource = ligne["locations.geonames_details.name"]?.trim() || null;
       const reference = await prisma.etablissementSource.findUnique({
         where: { sourceId_identifiantExterne: { sourceId: source.id, identifiantExterne: rorId } },
         include: { etablissement: true },
@@ -238,12 +239,13 @@ async function importer() {
       });
 
       if (etablissement) {
+        const localisation = villeNormaliseePourPays(paysCode, etablissement.ville || villeSource);
         etablissement = await prisma.etablissement.update({
           where: { id: etablissement.id },
           data: {
             nomNormalise: normaliser(etablissement.nom),
-            ville: etablissement.ville || ville,
-            villeNormalisee: normaliser(etablissement.ville || ville || ""),
+            ville: localisation.ville,
+            villeNormalisee: localisation.villeNormalisee,
             siteWeb: etablissement.siteWeb || siteWeb || null,
             latitude: etablissement.latitude || (ligne["locations.geonames_details.lat"] || null),
             longitude: etablissement.longitude || (ligne["locations.geonames_details.lng"] || null),
@@ -252,6 +254,7 @@ async function importer() {
         });
         modifies += 1;
       } else {
+        const localisation = villeNormaliseePourPays(paysCode, villeSource);
         etablissement = await prisma.etablissement.create({
           data: {
             id: `ror-${rorId}`,
@@ -261,8 +264,8 @@ async function importer() {
             type: typeEtablissement(nom),
             paysCode,
             systemeEducatifCode: paysCode,
-            ville,
-            villeNormalisee: normaliser(ville || ""),
+            ville: localisation.ville,
+            villeNormalisee: localisation.villeNormalisee,
             statut: StatutEtablissement.INCONNU,
             siteWeb: siteWeb || null,
             latitude: ligne["locations.geonames_details.lat"] || null,

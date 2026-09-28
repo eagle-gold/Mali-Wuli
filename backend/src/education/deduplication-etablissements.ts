@@ -1,9 +1,9 @@
 import type { PrismaClient, TypeEtablissement } from "@prisma/client";
 import { normaliserEducation } from "./catalog-service";
+import { villeCanoniqueMali } from "./normalisation-localisations";
 
 const PREFIXE_GENERIQUE = /^(?:(?:ecole|ecoles)(?: fondamentale?s?| privee?s?| publique?s?| maternelle?s?| primaire?s?)?|groupes? scolaires?|complexes? scolaires?|etablissements? scolaires?)\s+/;
 const ARTICLE_INITIAL = /^(?:le|la|les|l)\s+/;
-const COMMUNE_BAMAKO = /^commune\s+(?:[1-6]|i{1,3}|iv|v|vi)$/;
 
 /**
  * Nom utilisé uniquement pour rapprocher deux sources. Le libellé affiché reste
@@ -17,8 +17,7 @@ export const nomRapprochementEtablissement = (nom: string) =>
 
 /** Les six communes du district sont toutes des localisations de Bamako. */
 export const villeRapprochementMali = (ville: string) => {
-  const villeNormalisee = normaliserEducation(ville);
-  return COMMUNE_BAMAKO.test(villeNormalisee) ? "bamako" : villeNormalisee;
+  return villeCanoniqueMali(ville).villeNormalisee;
 };
 
 export const cleRapprochementEtablissement = (params: {
@@ -42,7 +41,10 @@ export async function fusionnerEtablissements(
       include: { alias: true, niveaux: true, programmes: true },
     }),
   ]);
-  if (canonique.paysCode !== doublon.paysCode || canonique.type !== doublon.type) {
+  const typesScolaires = new Set<TypeEtablissement>(["FONDAMENTALE", "LYCEE"]);
+  const typesCompatibles = canonique.type === doublon.type
+    || (typesScolaires.has(canonique.type) && typesScolaires.has(doublon.type));
+  if (canonique.paysCode !== doublon.paysCode || !typesCompatibles) {
     throw new Error("Fusion refusée : pays ou type d’établissement incompatibles.");
   }
 
