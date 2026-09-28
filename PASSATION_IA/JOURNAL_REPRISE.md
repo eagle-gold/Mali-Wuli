@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session terminée : Claude cloud, 2026-09-28 20:50 UTC (contrôles typo+perf ; publication à faire depuis le poste local).
+INCIDENT — Claude, 2026-09-28 21:50 UTC : dossier du domaine backend supprimé sur Hostinger, API hors service. Publication typo+perf suspendue.
 
 ## Modèle d'entrée
 
@@ -29,6 +29,16 @@ LIBRE — dernière session terminée : Claude cloud, 2026-09-28 20:50 UTC (cont
 ```
 
 ## Entrées
+
+### 2026-09-28 21:50 UTC — Claude — INCIDENT : backend supprimé sur Hostinger
+- Statut : INTERROMPU (décision utilisateur attendue)
+- Demande de l'utilisateur : publier les lots typo+perf de Codex et réparer la plateforme bloquée sur « vérification de session ».
+- Constat (lecture seule) : `https://floralwhite-ram-987223.hostingersite.com/api/*` renvoie une réponse vide (HTTP/2 PROTOCOL_ERROR). Sur le serveur, `/home/u668963025/domains/floralwhite-ram-987223.hostingersite.com/` **n'existe plus** (dossier `domains/` modifié à 19:28 UTC). Aucune commande rm/mv correspondante dans `.bash_history` → suppression probable depuis hPanel (site ou domaine temporaire). Un processus `lsnode` (PID 2641321, démarré ~18:54 UTC) tourne encore dans `versions/20260928-liens-sociaux/nodejs (deleted)` ; ses variables d'environnement contiennent DATABASE_URL et JWT_SECRET (noms seuls relevés).
+- Intact : frontend `mali-wuli.com` (current `versions/20260928-liens-sociaux`, build `MF940TX4N8sLGFRsT_gyN`) ; sauvegardes SQL `~/private-backups/20260928-*/before.sql.gz` (dernière 18:48 UTC, 31,5 Mo).
+- Perdus côté serveur (sauf sauvegarde Hostinger) : toutes les versions backend, le `.env` backend, les uploads (photos, couvertures, photos d'événements).
+- Actions à effet externe : aucune. Copie de sauvegarde des variables du processus refusée par le contrôle de permissions (identifiants) ; rien n'a été copié.
+- Arrêté à : diagnostic ; publication typo+perf NON commencée.
+- Prochaine action : utilisateur → hPanel (état du site, restauration des fichiers depuis les sauvegardes Hostinger, base MySQL toujours présente ?) ; puis redéploiement du backend (main) sur le domaine rétabli.
 
 ### 2026-09-28 20:27 UTC — Claude cloud — Contrôles avant publication typo+perf
 - Statut : INTERROMPU (publication à faire depuis le poste local)
