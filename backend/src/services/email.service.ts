@@ -11,7 +11,7 @@ type MessageEmail = {
   messageId?: string;
 };
 
-const adresseExpediteur = process.env.MAIL_FROM || "Mali Wuli <no-reply@maliwuli.com>";
+const adresseExpediteur = process.env.MAIL_FROM || "Mali Wuli <no-reply@mali-wuli.com>";
 
 function creerTransporteur() {
   if (process.env.SMTP_HOST) {
