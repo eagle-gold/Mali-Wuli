@@ -33,11 +33,14 @@ import type {
 
 const LIENS_MEMBRE = [
   { label: "Accueil", href: "/dashboard", Icone: Home },
-  { label: "Le réseau", href: "/annuaire", Icone: UsersRound },
+  { label: "Annuaire", href: "/annuaire", Icone: UsersRound },
   { label: "Événements", href: "/evenements", Icone: CalendarDays },
   { label: "Offres", href: "/offres", Icone: BriefcaseBusiness },
-  { label: "Parcours", href: "/education", Icone: GraduationCap },
+  { label: "Établissements", href: "/education", Icone: GraduationCap },
 ];
+
+/** Rubriques déjà présentes dans la barre du bas (mobile et tablette). */
+const HREFS_BARRE_MOBILE = new Set(["/dashboard", "/offres"]);
 
 function PastilleCompteur({ valeur, variante }: { valeur: number; variante: "orange" | "jaune" }) {
   if (valeur < 1) return null;
@@ -84,7 +87,7 @@ export function PublicHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#84684d] bg-[#664c33] text-[#f4eee1] shadow-sm">
       <div className="mx-auto flex h-[76px] w-full max-w-[1600px] items-center gap-5 px-4 sm:h-[96px] sm:px-6 lg:h-[112px] lg:gap-10 lg:px-10">
-        <Link href="/" aria-label="Accueil Mali Wuli" className="shrink-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f4b400]">
+        <Link href="/" aria-label="Accueil Mali Wuli" className="shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400]">
           <LogoMaliWuli />
         </Link>
 
@@ -93,7 +96,7 @@ export function PublicHeader() {
             <>
               <Link
                 href="/dashboard"
-                className="rounded-full bg-[#0d6738] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#f4b400] lg:text-base"
+                className="rounded-full bg-[#0d6738] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:text-base"
               >
                 Mon espace
               </Link>
@@ -101,7 +104,7 @@ export function PublicHeader() {
                 href="/profil"
                 aria-label="Ouvrir mon profil"
                 title="Mon profil"
-                className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/25 bg-[#f4eee1] text-[#0d6738] transition hover:border-[#f4b400] focus:outline-none focus:ring-2 focus:ring-[#f4b400]"
+                className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/25 bg-[#f4eee1] text-[#0d6738] transition hover:border-[#f4b400] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400]"
               >
                 <UserRound aria-hidden="true" size={24} />
               </Link>
@@ -110,13 +113,13 @@ export function PublicHeader() {
             <>
               <Link
                 href="/register"
-                className="rounded-full border-2 border-[#9a826b] px-5 py-3 text-sm font-semibold text-[#fffaf4] transition hover:border-[#fffaf4] hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#f4b400] lg:px-7 lg:text-base"
+                className="rounded-full border-2 border-[#9a826b] px-5 py-3 text-sm font-semibold text-[#fffaf4] transition hover:border-[#fffaf4] hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:px-7 lg:text-base"
               >
                 Créer un compte
               </Link>
               <Link
                 href="/login"
-                className="rounded-full bg-[#0d6738] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#f4b400] lg:px-7 lg:text-base"
+                className="rounded-full bg-[#0d6738] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:px-7 lg:text-base"
               >
                 Se connecter
               </Link>
@@ -131,7 +134,7 @@ export function PublicHeader() {
           aria-label={menuOuvert ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={menuOuvert}
           onClick={() => setMenuOuvert((ouvert) => !ouvert)}
-          className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-[#fffaf4] transition hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-[#f4b400] xl:hidden"
+          className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-[#fffaf4] transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] xl:hidden"
         >
           {menuOuvert ? <X size={23} /> : <Menu size={24} />}
         </button>
@@ -167,6 +170,19 @@ export function PublicHeader() {
   );
 }
 
+function profilAffiche(data: CompteSession) {
+  const utilisateur = data.user || data;
+  const profil = data.profil || utilisateur.profil;
+  const prenom = utilisateur.prenom?.trim() || "";
+  const nom = utilisateur.nom?.trim() || "";
+  return {
+    utilisateur,
+    nom: [prenom, nom].filter(Boolean).join(" ") || "Mon profil",
+    initiales: `${prenom.charAt(0)}${nom.charAt(0)}`.toLocaleUpperCase("fr"),
+    photo: urlMediaBackend(profil?.photo),
+  };
+}
+
 export function MemberHeader() {
   const pathname = usePathname();
   const router = useRouter();
@@ -176,23 +192,20 @@ export function MemberHeader() {
   const [recherche, setRecherche] = useState("");
   const [menuOuvert, setMenuOuvert] = useState(false);
   const [messagesNonLus, setMessagesNonLus] = useState(0);
-  const [nomProfil, setNomProfil] = useState("Mon profil");
-  const [initialesProfil, setInitialesProfil] = useState("MW");
-  const [autorisations, setAutorisations] = useState<AutorisationsUtilisateur | null>(null);
-  const [photoProfil, setPhotoProfil] = useState<string | null>(null);
+  // Partir du compte déjà vérifié par le garde : pas d'initiales par défaut au premier rendu.
+  const profilInitial = sessionMembre ? profilAffiche(sessionMembre.compte) : null;
+  const [nomProfil, setNomProfil] = useState(profilInitial?.nom ?? "Mon profil");
+  const [initialesProfil, setInitialesProfil] = useState(profilInitial?.initiales ?? "");
+  const [autorisations, setAutorisations] = useState<AutorisationsUtilisateur | null>(profilInitial?.utilisateur ?? null);
+  const [photoProfil, setPhotoProfil] = useState<string | null>(profilInitial?.photo ?? null);
   const messagesConnus = useRef(new Set<string>());
 
   const appliquerProfil = useCallback((data: CompteSession) => {
-      const utilisateur = data.user || data;
-      const profil = data.profil || utilisateur.profil;
-      const prenom = utilisateur.prenom?.trim() || "";
-      const nom = utilisateur.nom?.trim() || "";
-      const nomComplet = [prenom, nom].filter(Boolean).join(" ") || "Mon profil";
-      const initiales = `${prenom.charAt(0)}${nom.charAt(0)}`.toLocaleUpperCase("fr") || "MW";
-      setAutorisations(utilisateur);
-      setNomProfil(nomComplet);
-      setInitialesProfil(initiales);
-      setPhotoProfil(urlMediaBackend(profil?.photo));
+      const affiche = profilAffiche(data);
+      setAutorisations(affiche.utilisateur);
+      setNomProfil(affiche.nom);
+      setInitialesProfil(affiche.initiales);
+      setPhotoProfil(affiche.photo);
   }, []);
 
   useEffect(() => {
@@ -294,7 +307,7 @@ export function MemberHeader() {
   return (
     <header className="sticky top-0 z-50 border-b border-[#84684d] bg-[#664c33] text-[#e5ddcf] shadow-sm">
       <div className="mx-auto flex h-[76px] w-full max-w-[1800px] items-center gap-3 px-3 sm:h-[96px] sm:px-5 lg:h-[112px] lg:gap-5 lg:px-8">
-        <Link href="/dashboard" aria-label="Accueil Mali Wuli" className="shrink-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#f4b400]">
+        <Link href="/dashboard" aria-label="Accueil Mali Wuli" className="shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400]">
           <LogoMaliWuli compact />
         </Link>
 
@@ -306,11 +319,11 @@ export function MemberHeader() {
             onChange={(event) => setRecherche(event.target.value)}
             placeholder="Rechercher sur Mali Wuli"
             aria-label="Rechercher sur Mali Wuli"
-            className="h-14 w-full rounded-full border border-white/10 bg-[#7a624c] py-3 pl-14 pr-5 text-sm text-white outline-none placeholder:text-[#d7cab7] focus:border-[#f4b400] focus:ring-2 focus:ring-[#f4b400]/30 2xl:text-base"
+            className="h-14 w-full rounded-full border border-white/10 bg-[#7a624c] py-3 pl-14 pr-5 text-sm text-white outline-none placeholder:text-[#d7cab7] focus:border-[#f4b400] focus-visible:ring-2 focus-visible:ring-[#f4b400]/30 2xl:text-base"
           />
         </form>
 
-        <nav aria-label="Navigation membre" className="hidden h-full min-w-0 flex-1 items-stretch justify-evenly md:flex">
+        <nav aria-label="Navigation membre" className="hidden h-full min-w-0 flex-1 items-stretch justify-evenly lg:flex">
           {liensMembre.map(({ label, href, Icone }) => {
             const actif = estActif(href);
             return (
@@ -320,7 +333,7 @@ export function MemberHeader() {
                 title={label}
                 aria-label={label}
                 aria-current={actif ? "page" : undefined}
-                className={`relative flex min-w-[48px] flex-1 items-center justify-center transition focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#f4b400] ${
+                className={`relative flex min-w-[48px] flex-1 items-center justify-center transition focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#f4b400] ${
                   actif ? "text-[#f4b400]" : "text-[#e5ddcf] hover:bg-white/5 hover:text-white"
                 }`}
               >
@@ -331,11 +344,11 @@ export function MemberHeader() {
           })}
         </nav>
 
-        <div className="ml-auto flex h-full shrink-0 items-center gap-2 sm:gap-3 md:ml-0">
+        <div className="ml-auto flex h-full shrink-0 items-center gap-2 sm:gap-3 lg:ml-0">
           <Link
             href="/messages"
             aria-label={messagesNonLus > 0 ? `${messagesNonLus} messages non lus` : "Messages"}
-            className="relative flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-[#e5ddcf] transition hover:bg-white/15 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#f4b400] sm:h-12 sm:w-12"
+            className="relative hidden h-11 w-11 items-center justify-center rounded-full bg-white/10 text-[#e5ddcf] transition hover:bg-white/15 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] sm:h-12 sm:w-12 lg:flex"
           >
             <MessageCircle aria-hidden="true" size={24} />
             <PastilleCompteur valeur={messagesNonLus} variante="orange" />
@@ -345,7 +358,7 @@ export function MemberHeader() {
             href="/profil"
             aria-label={`Ouvrir le profil de ${nomProfil}`}
             aria-current={estActif("/profil") ? "page" : undefined}
-            className={`hidden h-12 w-12 items-center justify-center overflow-hidden rounded-full border-2 bg-[#f4eee1] font-bold text-[#0d6738] transition hover:border-[#f4b400] focus:outline-none focus:ring-2 focus:ring-[#f4b400] sm:flex ${estActif("/profil") ? "border-[#f4b400] ring-2 ring-[#f4b400]/30" : "border-white/25"}`}
+            className={`hidden h-12 w-12 items-center justify-center overflow-hidden rounded-full border-2 bg-[#f4eee1] font-bold text-[#0d6738] transition hover:border-[#f4b400] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:flex ${estActif("/profil") ? "border-[#f4b400] ring-2 ring-[#f4b400]/30" : "border-white/25"}`}
           >
             {photoProfil ? (
               <Image
@@ -363,7 +376,7 @@ export function MemberHeader() {
             onClick={deconnecter}
             title="Se déconnecter"
             aria-label="Se déconnecter"
-            className="hidden h-11 w-11 items-center justify-center rounded-full text-[#e5ddcf] transition hover:bg-white/10 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#f4b400] md:flex"
+            className="hidden h-11 w-11 items-center justify-center rounded-full text-[#e5ddcf] transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:flex"
           >
             <LogOut aria-hidden="true" size={22} />
           </button>
@@ -372,7 +385,7 @@ export function MemberHeader() {
             aria-label={menuOuvert ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={menuOuvert}
             onClick={() => setMenuOuvert((ouvert) => !ouvert)}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-[#e5ddcf] focus:outline-none focus:ring-2 focus:ring-[#f4b400] md:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-[#e5ddcf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:hidden"
           >
             {menuOuvert ? <X size={22} /> : <Menu size={23} />}
           </button>
@@ -380,14 +393,14 @@ export function MemberHeader() {
       </div>
 
       {menuOuvert && (
-        <nav aria-label="Navigation membre mobile" className="grid max-h-[calc(100dvh-76px)] grid-cols-2 gap-2 overflow-y-auto border-t border-white/15 bg-[#664c33] p-3 sm:max-h-[calc(100dvh-96px)] md:hidden">
+        <nav aria-label="Navigation membre mobile" className="grid max-h-[calc(100dvh-76px)] grid-cols-2 gap-2 overflow-y-auto border-t border-white/15 bg-[#664c33] p-3 sm:max-h-[calc(100dvh-96px)] lg:hidden">
           <form onSubmit={rechercher} role="search" className="relative col-span-2 mb-2">
             <Search aria-hidden="true" size={20} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#d7cab7]" />
             <input type="search" value={recherche} onChange={(event) => setRecherche(event.target.value)}
               placeholder="Rechercher sur Mali Wuli" aria-label="Rechercher sur Mali Wuli"
               className="h-12 w-full min-w-0 rounded-full border border-white/20 bg-[#7a624c] py-3 pl-11 pr-4 text-base text-white outline-none placeholder:text-sm placeholder:text-[#d7cab7] focus:border-[#f4b400]" />
           </form>
-          {liensMembre.map(({ label, href, Icone }) => {
+          {liensMembre.filter(({ href }) => !HREFS_BARRE_MOBILE.has(href)).map(({ label, href, Icone }) => {
             const actif = estActif(href);
             return (
               <Link
@@ -402,10 +415,6 @@ export function MemberHeader() {
               </Link>
             );
           })}
-          <Link href="/profil" onClick={() => setMenuOuvert(false)} aria-current={estActif("/profil") ? "page" : undefined} className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold ${estActif("/profil") ? "bg-white/10 text-[#f4b400]" : "text-[#f4eee1] hover:bg-white/5"}`}>
-            <UserRound aria-hidden="true" size={20} />
-            Mon profil
-          </Link>
           <button type="button" onClick={deconnecter} className="flex items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-semibold text-[#f4eee1] hover:bg-white/5">
             <LogOut aria-hidden="true" size={20} />
             Se déconnecter

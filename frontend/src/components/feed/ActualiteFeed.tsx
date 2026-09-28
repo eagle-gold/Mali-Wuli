@@ -4,24 +4,31 @@ import Link from "next/link";
 import {
   ArrowRight,
   Check,
+  LoaderCircle,
   MessageCircle,
+  MoreHorizontal,
+  Pencil,
   Plus,
   Search,
   Send,
   ThumbsUp,
+  Trash2,
   X,
 } from "lucide-react";
 import {
   FormEvent,
   useCallback,
   useEffect,
+  useId,
   useRef,
   useState,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type RefObject,
 } from "react";
 
 import { useSocket } from "@/hooks/useSocket";
 import api from "@/lib/api";
-import SupprimerContenu, { type ResultatSuppression } from "@/components/community/SupprimerContenu";
+import type { ResultatSuppression } from "@/components/community/SupprimerContenu";
 import { urlMediaBackend } from "@/lib/media";
 import type {
   CommentairePublicationApi,
@@ -42,6 +49,9 @@ type TypePublication = "Offre" | "Demande";
 type Publication = {
   id: string;
   peutSupprimer: boolean;
+  peutModifier: boolean;
+  /** Une publication avec photo ou lien peut garder un texte vide (règle serveur). */
+  aMedia: boolean;
   auteur: string;
   initiales: string;
   fonction: string;
@@ -59,6 +69,9 @@ type Publication = {
 };
 
 type ReponsePublicationApi = PublicationApi | { publication: PublicationApi };
+/** Champs renvoyés par l’API mais pas encore déclarés dans les types partagés. */
+type PublicationAvecDroits = PublicationApi & { peutModifier?: boolean; lienUrl?: string | null };
+type CommentaireAvecDroits = CommentairePublicationApi & { peutModifier?: boolean };
 type ReponseCommentaireApi =
   | CommentairePublicationApi
   | { commentaire: CommentairePublicationApi };
@@ -189,6 +202,8 @@ function adapterPublication(publication: PublicationApi): Publication {
   return {
     id: publication.id,
     peutSupprimer: publication.peutSupprimer === true,
+    peutModifier: (publication as PublicationAvecDroits).peutModifier === true,
+    aMedia: Boolean(publication.photoUrl || (publication as PublicationAvecDroits).lienUrl),
     auteur,
     initiales,
     fonction: publication.auteur?.titre?.trim() || "Membre du réseau",
@@ -236,6 +251,20 @@ function compterCommentaires(commentaires: CommentairePublicationApi[]): number 
       total + 1 + compterCommentaires(commentaire.reponses || []),
     0,
   );
+}
+
+function remplacerContenuCommentaire(
+  commentaires: CommentairePublicationApi[],
+  commentaireId: string,
+  contenu: string,
+): CommentairePublicationApi[] {
+  return commentaires.map((commentaire) => ({
+    ...commentaire,
+    contenu: commentaire.id === commentaireId ? contenu : commentaire.contenu,
+    reponses: commentaire.reponses
+      ? remplacerContenuCommentaire(commentaire.reponses, commentaireId, contenu)
+      : undefined,
+  }));
 }
 
 function retirerCommentaires(commentaires: CommentairePublicationApi[], retires: Set<string>): CommentairePublicationApi[] {
@@ -551,10 +580,339 @@ function ModaleSoutiens({
   );
 }
 
+/**
+ * Menu « ⋯ » des actions sur un contenu. Les droits viennent de l’API :
+ * sans droit, le bouton n’est pas rendu du tout.
+ */
+function MenuActions({
+  libelle,
+  peutModifier,
+  peutSupprimer,
+  onModifier,
+  onSupprimer,
+  declencheurRef,
+  compact = false,
+}: {
+  libelle: string;
+  peutModifier: boolean;
+  peutSupprimer: boolean;
+  onModifier: () => void;
+  onSupprimer: () => void;
+  declencheurRef: RefObject<HTMLButtonElement>;
+  compact?: boolean;
+}) {
+  const [ouvert, setOuvert] = useState(false);
+  const conteneur = useRef<HTMLDivElement>(null);
+  const menu = useRef<HTMLDivElement>(null);
+  const menuId = useId();
+
+  const fermer = useCallback((rendreFocus: boolean) => {
+    setOuvert(false);
+    if (rendreFocus) declencheurRef.current?.focus();
+  }, [declencheurRef]);
+
+  useEffect(() => {
+    if (!ouvert) return;
+    menu.current?.querySelector<HTMLButtonElement>('[role="menuitem"]')?.focus();
+    const clicExterieur = (event: PointerEvent) => {
+      if (!conteneur.current?.contains(event.target as Node)) fermer(false);
+    };
+    const echap = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        fermer(true);
+      }
+    };
+    document.addEventListener("pointerdown", clicExterieur);
+    document.addEventListener("keydown", echap);
+    return () => {
+      document.removeEventListener("pointerdown", clicExterieur);
+      document.removeEventListener("keydown", echap);
+    };
+  }, [fermer, ouvert]);
+
+  if (!peutModifier && !peutSupprimer) return null;
+
+  const naviguer = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    const elements = Array.from(
+      menu.current?.querySelectorAll<HTMLButtonElement>('[role="menuitem"]') || [],
+    );
+    if (!elements.length) return;
+    const index = elements.indexOf(document.activeElement as HTMLButtonElement);
+    let cible: number | null = null;
+    if (event.key === "ArrowDown") cible = (index + 1) % elements.length;
+    else if (event.key === "ArrowUp") cible = (index - 1 + elements.length) % elements.length;
+    else if (event.key === "Home") cible = 0;
+    else if (event.key === "End") cible = elements.length - 1;
+    else if (event.key === "Tab") fermer(false);
+    if (cible !== null) {
+      event.preventDefault();
+      elements[cible]?.focus();
+    }
+  };
+
+  const choisir = (action: () => void) => {
+    setOuvert(false);
+    action();
+  };
+
+  return (
+    <div ref={conteneur} className="relative shrink-0">
+      <button
+        ref={declencheurRef}
+        type="button"
+        aria-label={libelle}
+        aria-haspopup="menu"
+        aria-expanded={ouvert}
+        aria-controls={ouvert ? menuId : undefined}
+        onClick={() => setOuvert((valeur) => !valeur)}
+        onKeyDown={(event) => {
+          if (event.key === "ArrowDown" && !ouvert) {
+            event.preventDefault();
+            setOuvert(true);
+          }
+        }}
+        className={`inline-flex items-center justify-center rounded-full text-[#806f5e] transition hover:bg-[#f5ecdf] hover:text-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738] ${
+          compact ? "h-8 w-8" : "h-10 w-10"
+        } ${ouvert ? "bg-[#f5ecdf] text-[#0d6738]" : ""}`}
+      >
+        <MoreHorizontal aria-hidden="true" size={compact ? 18 : 20} />
+      </button>
+      {ouvert && (
+        <div
+          ref={menu}
+          id={menuId}
+          role="menu"
+          aria-label={libelle}
+          onKeyDown={naviguer}
+          className="absolute right-0 top-full z-30 mt-1 min-w-[10rem] overflow-hidden rounded-xl border border-[#e4d2b3] bg-[#fffbf5] py-1 shadow-[0_8px_24px_rgba(79,55,33,0.14)]"
+        >
+          {peutModifier && (
+            <button
+              type="button"
+              role="menuitem"
+              tabIndex={-1}
+              onClick={() => choisir(onModifier)}
+              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-semibold text-[#342a22] hover:bg-[#f5ecdf] focus:bg-[#e2efe7] focus:text-[#0d6738] focus:outline-none"
+            >
+              <Pencil aria-hidden="true" size={15} />
+              Modifier
+            </button>
+          )}
+          {peutSupprimer && (
+            <button
+              type="button"
+              role="menuitem"
+              tabIndex={-1}
+              onClick={() => choisir(onSupprimer)}
+              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-semibold text-[#a3321f] hover:bg-[#fbeae4] focus:bg-[#fbeae4] focus:outline-none"
+            >
+              <Trash2 aria-hidden="true" size={15} />
+              Supprimer
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/** Confirmation explicite avant toute suppression (même règles que SupprimerContenu). */
+function ConfirmationSuppression({
+  endpoint,
+  titre,
+  consequences,
+  onSupprime,
+  onAnnuler,
+}: {
+  endpoint: string;
+  titre: string;
+  consequences: string;
+  onSupprime: (resultat?: ResultatSuppression) => void;
+  onAnnuler: () => void;
+}) {
+  const [enCours, setEnCours] = useState(false);
+  const [erreur, setErreur] = useState("");
+  const verrou = useRef(false);
+  const titreId = useId();
+
+  const supprimer = async () => {
+    if (verrou.current) return;
+    verrou.current = true;
+    setEnCours(true);
+    setErreur("");
+    let retire = false;
+    let resultat: ResultatSuppression | undefined;
+    try {
+      const { data } = await api.delete<ResultatSuppression>(endpoint);
+      resultat = data;
+      retire = true;
+    } catch (error) {
+      // Le résultat voulu est déjà acquis lorsque le contenu a été retiré entre-temps.
+      if ((error as { response?: { status?: number } })?.response?.status === 404) retire = true;
+      else
+        setErreur(
+          lireMessageErreur(
+            error,
+            "La suppression n’a pas pu être confirmée. Le contenu est conservé ; vous pouvez réessayer.",
+          ),
+        );
+    } finally {
+      verrou.current = retire;
+      setEnCours(false);
+    }
+    if (retire) onSupprime(resultat);
+  };
+
+  return (
+    <section
+      aria-labelledby={titreId}
+      role="alertdialog"
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && !enCours) {
+          event.preventDefault();
+          event.stopPropagation();
+          onAnnuler();
+        }
+      }}
+      className="mt-3 rounded-xl border border-[#e4d2b3] bg-[#fffbf5] p-3"
+    >
+      <h3 id={titreId} className="text-sm font-bold text-[#2f261e]">{titre}</h3>
+      <p className="mt-1 text-sm text-[#4f4339]">{consequences}</p>
+      <p className="mt-1 text-sm font-semibold text-[#a3321f]">Cette action est définitive.</p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        <button
+          type="button"
+          autoFocus
+          disabled={enCours}
+          onClick={onAnnuler}
+          className="min-h-9 rounded-lg border border-[#e4d2b3] bg-white px-3 text-sm font-semibold text-[#4f4339] hover:bg-[#f5ecdf] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:opacity-60"
+        >
+          Annuler
+        </button>
+        <button
+          type="button"
+          disabled={enCours}
+          onClick={() => void supprimer()}
+          className="inline-flex min-h-9 items-center gap-2 rounded-lg bg-[#a3321f] px-3 text-sm font-bold text-white hover:bg-[#8a2918] focus:outline-none focus:ring-2 focus:ring-[#a3321f] focus:ring-offset-2 disabled:cursor-wait disabled:opacity-70"
+        >
+          {enCours && <LoaderCircle aria-hidden="true" size={15} className="animate-spin" />}
+          {enCours ? "Suppression…" : "Confirmer la suppression"}
+        </button>
+      </div>
+      {erreur && <p className="mt-2 text-sm text-[#a3321f]" role="alert">{erreur}</p>}
+    </section>
+  );
+}
+
+/** Édition inline d’un texte : Entrée ne soumet pas (textarea), Échap annule. */
+function EditionInline({
+  valeurInitiale,
+  longueurMax,
+  autoriserVide = false,
+  libelle,
+  onEnregistrer,
+  onAnnuler,
+  compact = false,
+}: {
+  valeurInitiale: string;
+  longueurMax: number;
+  autoriserVide?: boolean;
+  libelle: string;
+  onEnregistrer: (contenu: string) => Promise<void>;
+  onAnnuler: () => void;
+  compact?: boolean;
+}) {
+  const [valeur, setValeur] = useState(valeurInitiale);
+  const [enCours, setEnCours] = useState(false);
+  const [erreur, setErreur] = useState("");
+  const zone = useRef<HTMLTextAreaElement>(null);
+  const champId = useId();
+
+  useEffect(() => {
+    const element = zone.current;
+    if (!element) return;
+    element.focus();
+    element.setSelectionRange(element.value.length, element.value.length);
+  }, []);
+
+  const contenu = valeur.trim();
+  const invalide = (!contenu && !autoriserVide) || contenu.length > longueurMax;
+  const inchange = contenu === valeurInitiale.trim();
+
+  const enregistrer = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (enCours || invalide) return;
+    if (inchange) {
+      onAnnuler();
+      return;
+    }
+    setEnCours(true);
+    setErreur("");
+    try {
+      await onEnregistrer(contenu);
+    } catch (error) {
+      setErreur(lireMessageErreur(error, "La modification n’a pas pu être enregistrée."));
+      setEnCours(false);
+    }
+  };
+
+  return (
+    <form
+      onSubmit={(event) => void enregistrer(event)}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && !enCours) {
+          event.preventDefault();
+          event.stopPropagation();
+          onAnnuler();
+        }
+      }}
+      className={compact ? "mt-1" : "mt-4"}
+    >
+      <label htmlFor={champId} className="sr-only">{libelle}</label>
+      <textarea
+        ref={zone}
+        id={champId}
+        value={valeur}
+        maxLength={longueurMax}
+        rows={compact ? 2 : 4}
+        disabled={enCours}
+        onChange={(event) => setValeur(event.target.value)}
+        className={`w-full resize-y rounded-xl border border-[#e4d2b3] bg-[#fffbf5] px-3 py-2 text-[#342a22] outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/25 disabled:opacity-70 ${
+          compact ? "text-sm leading-6" : "text-[15px] leading-7 sm:text-[17px]"
+        }`}
+      />
+      <div className="mt-2 flex flex-wrap items-center justify-end gap-2">
+        <span className="mr-auto text-xs text-[#8b7b69]" aria-live="polite">
+          {valeur.length}/{longueurMax}
+        </span>
+        <button
+          type="button"
+          disabled={enCours}
+          onClick={onAnnuler}
+          className="min-h-9 rounded-lg border border-[#e4d2b3] bg-white px-3 text-sm font-semibold text-[#4f4339] hover:bg-[#f5ecdf] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:opacity-60"
+        >
+          Annuler
+        </button>
+        <button
+          type="submit"
+          disabled={enCours || invalide}
+          className="inline-flex min-h-9 items-center gap-2 rounded-lg bg-[#0d6738] px-3 text-sm font-bold text-white hover:bg-[#0a552e] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {enCours && <LoaderCircle aria-hidden="true" size={15} className="animate-spin" />}
+          {enCours ? "Enregistrement…" : "Enregistrer"}
+        </button>
+      </div>
+      {erreur && <p className="mt-2 text-sm text-[#a3321f]" role="alert">{erreur}</p>}
+    </form>
+  );
+}
+
 function CommentaireFil({
   commentaire,
   publicationId,
   onSupprime,
+  onModifie,
   niveau = 0,
   commentaireRacineId,
   repondre,
@@ -562,10 +920,25 @@ function CommentaireFil({
   commentaire: CommentairePublicationApi;
   publicationId: string;
   onSupprime: (commentaire: CommentairePublicationApi, resultat?: ResultatSuppression) => void;
+  onModifie: (commentaireId: string, contenu: string) => void;
   niveau?: number;
   commentaireRacineId?: string;
   repondre: (parentId: string, auteur: string) => void;
 }) {
+  const [mode, setMode] = useState<"lecture" | "edition" | "suppression">("lecture");
+  const declencheurMenu = useRef<HTMLButtonElement>(null);
+  const peutModifier = (commentaire as CommentaireAvecDroits).peutModifier === true;
+  const peutSupprimer = commentaire.peutSupprimer === true;
+  const endpoint = `/publications/${encodeURIComponent(publicationId)}/commentaires/${encodeURIComponent(commentaire.id)}`;
+  const revenirALaLecture = () => {
+    setMode("lecture");
+    requestAnimationFrame(() => declencheurMenu.current?.focus());
+  };
+  const enregistrer = async (contenu: string) => {
+    const { data } = await api.patch<ReponseCommentaireApi>(endpoint, { contenu });
+    onModifie(commentaire.id, extraireCommentaire(data).contenu ?? contenu);
+    revenirALaLecture();
+  };
   const auteur = nomMembre(commentaire.auteur);
   const racineId = commentaireRacineId || commentaire.id;
   const initiales = initialesDe(
@@ -583,23 +956,57 @@ function CommentaireFil({
           photo={urlMediaBackend(commentaire.auteur?.photo)}
         />
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-bold text-[#2f261e]">
-            {auteur}
-            <span className="ml-2 font-normal text-[#8b7b69]">
-              {dateRelative(commentaire.createdAt)}
-            </span>
-          </p>
-          <p className="mt-1 whitespace-pre-wrap text-sm leading-6 text-[#4f4339]">
-            {commentaire.contenu}
-          </p>
-          <button
-            type="button"
-            onClick={() => repondre(racineId, auteur)}
-            className="mt-1 rounded px-1 py-0.5 text-xs font-bold text-[#0d6738] hover:underline focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
-          >
-            Répondre
-          </button>
-          {commentaire.peutSupprimer && <SupprimerContenu autorise={commentaire.peutSupprimer === true} endpoint={`/publications/${encodeURIComponent(publicationId)}/commentaires/${encodeURIComponent(commentaire.id)}`} libelle="Supprimer le commentaire" titre="Supprimer ce commentaire ?" consequences={commentaire.reponses?.length ? "Le commentaire et ses réponses seront retirés de la publication." : "Le commentaire sera retiré de la publication."} onSupprime={(resultat) => onSupprime(commentaire, resultat)} />}
+          <div className="flex items-start gap-2">
+            <p className="min-w-0 flex-1 text-sm font-bold text-[#2f261e]">
+              {auteur}
+              <span className="ml-2 font-normal text-[#8b7b69]">
+                {dateRelative(commentaire.createdAt)}
+              </span>
+            </p>
+            {mode === "lecture" && (
+              <MenuActions
+                compact
+                libelle={`Actions sur le commentaire de ${auteur}`}
+                peutModifier={peutModifier}
+                peutSupprimer={peutSupprimer}
+                onModifier={() => setMode("edition")}
+                onSupprimer={() => setMode("suppression")}
+                declencheurRef={declencheurMenu}
+              />
+            )}
+          </div>
+          {mode === "edition" ? (
+            <EditionInline
+              compact
+              valeurInitiale={commentaire.contenu}
+              longueurMax={1000}
+              libelle="Modifier le commentaire"
+              onEnregistrer={enregistrer}
+              onAnnuler={revenirALaLecture}
+            />
+          ) : (
+            <>
+              <p className="mt-1 whitespace-pre-wrap text-sm leading-6 text-[#4f4339]">
+                {commentaire.contenu}
+              </p>
+              <button
+                type="button"
+                onClick={() => repondre(racineId, auteur)}
+                className="mt-1 rounded px-1 py-0.5 text-xs font-bold text-[#0d6738] hover:underline focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
+              >
+                Répondre
+              </button>
+            </>
+          )}
+          {mode === "suppression" && peutSupprimer && (
+            <ConfirmationSuppression
+              endpoint={endpoint}
+              titre="Supprimer ce commentaire ?"
+              consequences={commentaire.reponses?.length ? "Le commentaire et ses réponses seront retirés de la publication." : "Le commentaire sera retiré de la publication."}
+              onSupprime={(resultat) => onSupprime(commentaire, resultat)}
+              onAnnuler={revenirALaLecture}
+            />
+          )}
         </div>
       </div>
       {commentaire.reponses?.length ? (
@@ -610,6 +1017,7 @@ function CommentaireFil({
               commentaire={reponse}
               publicationId={publicationId}
               onSupprime={onSupprime}
+              onModifie={onModifie}
               niveau={niveau + 1}
               commentaireRacineId={racineId}
               repondre={repondre}
@@ -624,6 +1032,9 @@ function CommentaireFil({
 function CartePublication({ publication, onSupprime, actualiser }: { publication: Publication; onSupprime: (id: string) => void; actualiser: () => void }) {
   const commentairesSupprimes = useRef(new Set<string>());
   const [annonceSuppression, setAnnonceSuppression] = useState("");
+  const [modeCarte, setModeCarte] = useState<"lecture" | "edition" | "suppression">("lecture");
+  const [texte, setTexte] = useState(publication.texte);
+  const declencheurMenuPublication = useRef<HTMLButtonElement>(null);
   const [maReaction, setMaReaction] = useState<ReactionPublication | null>(
     publication.maReaction,
   );
@@ -663,6 +1074,31 @@ function CartePublication({ publication, onSupprime, actualiser }: { publication
   const [erreurCommentaires, setErreurCommentaires] = useState("");
 
   const soutenu = maReaction === "SOUTIEN";
+
+  useEffect(() => {
+    setTexte(publication.texte);
+  }, [publication.texte]);
+
+  const revenirALaLecturePublication = () => {
+    setModeCarte("lecture");
+    requestAnimationFrame(() => declencheurMenuPublication.current?.focus());
+  };
+
+  const enregistrerPublication = async (contenu: string) => {
+    const { data } = await api.patch<ReponsePublicationApi>(
+      `/publications/${encodeURIComponent(publication.id)}`,
+      { contenu },
+    );
+    setTexte(extrairePublication(data).contenu ?? contenu);
+    setAnnonceSuppression("La publication a été modifiée.");
+    revenirALaLecturePublication();
+    actualiser();
+  };
+
+  const modifierCommentaire = (commentaireId: string, contenu: string) => {
+    setCommentaires((actuels) => remplacerContenuCommentaire(actuels, commentaireId, contenu));
+    setAnnonceSuppression("Le commentaire a été modifié.");
+  };
 
   useEffect(() => {
     setMaReaction(publication.maReaction);
@@ -943,13 +1379,42 @@ function CartePublication({ publication, onSupprime, actualiser }: { publication
             )}
           </div>
         </div>
+        {modeCarte === "lecture" && (
+          <MenuActions
+            libelle="Actions sur la publication"
+            peutModifier={publication.peutModifier}
+            peutSupprimer={publication.peutSupprimer}
+            onModifier={() => setModeCarte("edition")}
+            onSupprimer={() => setModeCarte("suppression")}
+            declencheurRef={declencheurMenuPublication}
+          />
+        )}
       </header>
-      {publication.peutSupprimer && <SupprimerContenu autorise={publication.peutSupprimer} endpoint={`/publications/${encodeURIComponent(publication.id)}`} libelle="Supprimer la publication" titre="Supprimer cette publication ?" consequences="La publication, ses commentaires et ses réactions seront retirés du fil." onSupprime={() => onSupprime(publication.id)} />}
+      {modeCarte === "suppression" && publication.peutSupprimer && (
+        <ConfirmationSuppression
+          endpoint={`/publications/${encodeURIComponent(publication.id)}`}
+          titre="Supprimer cette publication ?"
+          consequences="La publication, ses commentaires et ses réactions seront retirés du fil."
+          onSupprime={() => onSupprime(publication.id)}
+          onAnnuler={revenirALaLecturePublication}
+        />
+      )}
       {annonceSuppression && <p className="mt-3 text-sm text-[#0d6738]" role="status">{annonceSuppression}</p>}
 
-      <p className="mt-4 text-[15px] leading-7 text-[#342a22] sm:text-[17px] sm:leading-8">
-        {publication.texte}
-      </p>
+      {modeCarte === "edition" ? (
+        <EditionInline
+          valeurInitiale={texte}
+          longueurMax={1200}
+          autoriserVide={publication.aMedia}
+          libelle="Modifier le texte de la publication"
+          onEnregistrer={enregistrerPublication}
+          onAnnuler={revenirALaLecturePublication}
+        />
+      ) : (
+        <p className="mt-4 whitespace-pre-wrap text-[15px] leading-7 text-[#342a22] sm:text-[17px] sm:leading-8">
+          {texte}
+        </p>
+      )}
 
       <div className="mt-4 flex flex-wrap items-center gap-1 border-t border-[#eee1cf] pt-3">
         <div className="inline-flex min-h-11 items-center rounded-lg transition hover:bg-[#f5ecdf]">
@@ -1001,6 +1466,7 @@ function CartePublication({ publication, onSupprime, actualiser }: { publication
                   commentaire={commentaire}
                   publicationId={publication.id}
                   onSupprime={retirerCommentaire}
+                  onModifie={modifierCommentaire}
                   repondre={preparerReponse}
                 />
               ))
@@ -1574,6 +2040,8 @@ export default function ActualiteFeed() {
       "publication:created",
       "publication:commentCreated",
       "publication:reactionUpdated",
+      "publication:updated",
+      "publication:commentUpdated",
     ];
 
     const suppressionRecue = (payload: unknown) => {

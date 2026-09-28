@@ -1,7 +1,7 @@
 "use client";
 
 import { Search, X } from "lucide-react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
 export type SearchOption = {
   id: string;
@@ -25,6 +25,14 @@ type SearchComboboxProps = {
   emptyMessage?: string;
   otherLabel?: string;
   onOther?: () => void;
+  /** Personnalisation facultative pour intégrer le champ dans d'autres formulaires. */
+  className?: string;
+  labelClassName?: string;
+  inputClassName?: string;
+  showIcon?: boolean;
+  invalid?: boolean;
+  describedBy?: string;
+  children?: ReactNode;
 };
 
 const INPUT_CLASS =
@@ -64,6 +72,13 @@ export default function SearchCombobox({
   emptyMessage = "Aucun résultat trouvé.",
   otherLabel,
   onOther,
+  className = "min-w-0",
+  labelClassName = "mb-2 block text-base font-semibold text-[#2e261f]",
+  inputClassName = INPUT_CLASS,
+  showIcon = true,
+  invalid,
+  describedBy,
+  children,
 }: SearchComboboxProps) {
   const [ouvert, setOuvert] = useState(false);
   const [actif, setActif] = useState(-1);
@@ -110,12 +125,12 @@ export default function SearchCombobox({
   };
 
   return (
-    <div className="min-w-0">
-      <label htmlFor={id} className="mb-2 block text-base font-semibold text-[#2e261f]">
+    <div className={className}>
+      <label htmlFor={id} className={labelClassName}>
         {label} {required && <span className="text-[#c65327]">*</span>}
       </label>
       <div className="relative">
-        <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#8b7a68]" />
+        {showIcon && <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#8b7a68]" />}
         <input
           ref={inputRef}
           id={id}
@@ -126,6 +141,8 @@ export default function SearchCombobox({
           aria-expanded={peutAfficher}
           aria-activedescendant={actif >= 0 ? `${id}-option-${actif}` : undefined}
           aria-busy={loading}
+          aria-invalid={invalid || undefined}
+          aria-describedby={describedBy}
           autoComplete="off"
           disabled={disabled}
           value={value}
@@ -138,7 +155,7 @@ export default function SearchCombobox({
             setActif(-1);
           }}
           onKeyDown={handleKeyDown}
-          className={INPUT_CLASS}
+          className={inputClassName}
         />
         {loading ? (
           <span
@@ -235,6 +252,7 @@ export default function SearchCombobox({
         {loading ? "Recherche en cours" : peutAfficher ? `${optionsTriees.length} résultats disponibles` : ""}
       </span>
       {helperText && <p className="mt-2 text-xs text-[#74685c]">{helperText}</p>}
+      {children}
     </div>
   );
 }

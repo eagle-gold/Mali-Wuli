@@ -66,3 +66,11 @@
 .empty h2 { font-family: var(--font-playfair), Georgia, serif; font-weight: 500; color: #382e24; }
 @media (max-width: 900px) { .layout { grid-template-columns: minmax(0, 1fr); } .preview { position: static; } .preview .panel { max-width: none; } }
 @media (max-width: 520px) { .page { padding: 22px 14px 54px; } .header { flex-direction: column; gap: 13px; } .panel { padding: 19px 16px; } .grid, .details { grid-template-columns: minmax(0, 1fr); } .full { grid-column: auto; } .actions > * { flex: 1 1 auto; } .pagination { gap: 9px; flex-wrap: wrap; } .pagination .secondary { padding: 9px 12px; } }
+
+/* Champs de même hauteur (sélecteurs pays/ville, salaire structuré). */
+.field input:not([type="checkbox"]):not([type="radio"]), .field select { min-height: 48px; }
+.field input[role="combobox"] { padding-right: 44px; }
+.optionalInline { font-weight: 400; color: #796a58; }
+.salaryRow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, .9fr) minmax(0, 1fr); gap: 10px; align-items: end; }
+.salaryFallback { display: flex; flex-direction: column; gap: 5px; }
+@media (max-width: 640px) { .salaryRow { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

@@ -6,3 +6,4 @@
 /* Keep long user-entered names and locations inside their responsive tracks. */
 .page{min-width:0;overflow-wrap:anywhere}
 @media(max-width:380px){.formats{grid-template-columns:minmax(0,1fr)}.format,.formatSelected{justify-content:flex-start;padding:12px}.sectionHeading{flex-wrap:wrap}}
+.comboLabel{display:block}.control{display:block;width:100%;min-width:0;max-width:100%;margin-top:7px;border:1px solid #e4d8c5;border-radius:11px;background:#fff;color:#29241e;font:inherit;font-size:15px;font-weight:400;letter-spacing:normal;padding:13px 44px 13px 14px;outline:none;min-height:50px}.control:focus{border-color:#12603b;box-shadow:0 0 0 3px #12603b22}.control:disabled{background:#f5f0e7;color:#8f8474;cursor:not-allowed}select.control{padding-right:14px}

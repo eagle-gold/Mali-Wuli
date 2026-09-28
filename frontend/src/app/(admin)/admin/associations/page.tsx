@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import api from "@/lib/api";
+import ChampsPaysVille from "@/components/localisation/ChampsPaysVille";
 import { aPermission, type AutorisationsUtilisateur } from "@/lib/autorisations";
 import type { AssociationApi, AssociationsPersonnellesResponseApi, ResponsableAssociationApi, SuggestionAssociationApi, SuggestionsAssociationsResponseApi } from "@/types/associations";
 
@@ -151,8 +152,7 @@ export default function AdminAssociationsPage() {
           <div className="grid gap-5 sm:grid-cols-2">
             <label className="block text-sm font-medium">Nom de l’association <span aria-hidden="true">*</span><input required minLength={2} maxLength={191} className={input} value={formulaire.nom} onChange={(e) => setFormulaire((f) => ({ ...f, nom: e.target.value }))} /></label>
             <label className="block text-sm font-medium">Vocation <span aria-hidden="true">*</span><input required={!editionId} maxLength={191} className={input} placeholder="Culture, entraide, éducation…" value={formulaire.vocation} onChange={(e) => setFormulaire((f) => ({ ...f, vocation: e.target.value }))} /></label>
-            <label className="block text-sm font-medium">Pays <span aria-hidden="true">*</span><input required minLength={2} maxLength={191} className={input} value={formulaire.pays} onChange={(e) => setFormulaire((f) => ({ ...f, pays: e.target.value }))} /></label>
-            <label className="block text-sm font-medium">Ville <span aria-hidden="true">*</span><input required={!editionId} maxLength={191} className={input} value={formulaire.ville} onChange={(e) => setFormulaire((f) => ({ ...f, ville: e.target.value }))} /></label>
+            <ChampsPaysVille idPrefixe="admin-association" pays={formulaire.pays} ville={formulaire.ville} paysRequis villeRequise={!editionId} libellePays={<>Pays <span aria-hidden="true">*</span></>} libelleVille="Ville" classes={{ champ: "block min-w-0 text-sm font-medium", libelle: "block", controle: input + " pr-11 disabled:cursor-not-allowed disabled:bg-[#f2eadf]" }} onChange={({ pays, ville }) => setFormulaire((f) => ({ ...f, pays, ville }))} />
             <label className="block text-sm font-medium">Date de création de l’association<input type="date" className={input} value={formulaire.dateCreation} onChange={(e) => setFormulaire((f) => ({ ...f, dateCreation: e.target.value }))} /></label>
             <label className="block text-sm font-medium">Site internet <span className="font-normal text-[#695c4b]">(facultatif)</span><input type="url" maxLength={2000} placeholder="https://…" className={input} value={formulaire.site} onChange={(e) => setFormulaire((f) => ({ ...f, site: e.target.value }))} /></label>
             <label className="block text-sm font-medium sm:col-span-2">E-mail de contact public <span className="font-normal text-[#695c4b]">(facultatif)</span><input type="email" maxLength={191} className={input} value={formulaire.emailContact} onChange={(e) => setFormulaire((f) => ({ ...f, emailContact: e.target.value }))} /></label>

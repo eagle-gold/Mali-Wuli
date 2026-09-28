@@ -6,7 +6,8 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import api from "@/lib/api";
 import { messageErreur } from "@/lib/community";
 import { dateLimiteOffre, lienExterneSur, MODES_CANDIDATURE, MODES_TRAVAIL, SECTEURS_OFFRES, TYPES_OFFRE } from "@/lib/offres";
-import { useCountries } from "@/hooks/useCountries";
+import ChampsPaysVille from "@/components/localisation/ChampsPaysVille";
+import { analyserSalaire, composerSalaire, DEVISES_SALAIRE, PERIODES_SALAIRE, SALAIRE_VIDE, type Periode, type SalaireStructure } from "@/lib/salaire-offre";
 import type { ModeCandidature, ModeTravail, OffreApi, TypeOffre } from "@/types/offres";
 import styles from "./OffresEdition.module.css";
 
@@ -68,7 +69,7 @@ export default function FormulaireOffre({ offreId }: { offreId?: string }) {
   const verrou = useRef(false);
   const termine = useRef(false);
   const retour = useRef<HTMLDivElement>(null);
-  const paysDisponibles = useCountries();
+  const [salaire, setSalaire] = useState<SalaireStructure>(SALAIRE_VIDE);
 
   useEffect(() => {
     let actif = true;
@@ -85,6 +86,7 @@ export default function FormulaireOffre({ offreId }: { offreId?: string }) {
           const o = detail.data.offre;
           if (!o.peutModifier) throw new Error("Vous ne pouvez pas modifier cette offre.");
           setInitial(o);
+          setSalaire(analyserSalaire(o.salaire));
           setFormulaire({ titre: o.titre, entreprise: o.entreprise, secteur: o.secteur, type: o.type, modeTravail: o.modeTravail || (o.teletravail ? "TELETRAVAIL" : "SUR_SITE"), salaire: o.salaire || "", pays: o.pays, ville: o.ville || "", description: o.description, profilRecherche: o.profilRecherche || "", modeCandidature: o.modeCandidature || (o.lienCandidature ? "LIEN_EXTERNE" : "EMAIL"), emailContact: o.emailContact || "", lienCandidature: o.lienCandidature || "", dateExpiration: o.dateExpiration?.slice(0, 10) || "", recommandationPossible: o.recommandationPossible || false });
         } else setFormulaire((f) => ({ ...f, emailContact: compte.email || "" }));
       } catch (e) { if (actif) setErreurChargement(messageErreur(e, "Impossible de charger le formulaire.")); }
@@ -98,10 +100,18 @@ export default function FormulaireOffre({ offreId }: { offreId?: string }) {
     setFormulaire((f) => ({ ...f, [cle]: valeur }));
     setErreurs((e) => ({ ...e, [cle]: undefined }));
   };
+  const changerSalaire = (modification: Partial<SalaireStructure>) => {
+    const suivant = { ...salaire, ...modification };
+    setSalaire(suivant);
+    changer("salaire", composerSalaire(suivant).valeur || "");
+  };
   const envoyer = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (verrou.current || termine.current) return;
     const { erreurs: nouvellesErreurs, donnees } = preparerOffre(formulaire, initial);
+    const salaireCompose = composerSalaire(salaire);
+    if (salaireCompose.erreur) nouvellesErreurs.salaire = salaireCompose.erreur;
+    if (!formulaire.pays.trim()) nouvellesErreurs.pays = "Choisissez le pays du poste.";
     setErreurs(nouvellesErreurs); setErreur("");
     if (Object.keys(nouvellesErreurs).length) { setErreur("Vérifiez les champs indiqués avant d’envoyer votre offre."); return; }
     verrou.current = true; setEnvoi(true);
@@ -130,11 +140,29 @@ export default function FormulaireOffre({ offreId }: { offreId?: string }) {
           <label className={styles.field} htmlFor="offre-secteur">Secteur d’activité *<select {...attributs("secteur")} value={formulaire.secteur} onChange={(e) => changer("secteur", e.target.value)} required><option value="">Choisir un secteur</option>{optionSecteur && <option value={formulaire.secteur}>{formulaire.secteur}</option>}{SECTEURS_OFFRES.map((s) => <option key={s} value={s}>{s}</option>)}</select>{erreurChamp("secteur")}</label>
           <label className={styles.field} htmlFor="offre-type">Type de contrat *<select id="offre-type" value={formulaire.type} onChange={(e) => changer("type", e.target.value as TypeOffre)}>{TYPES_OFFRE.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></label>
           <label className={styles.field} htmlFor="offre-modeTravail">Mode de travail *<select id="offre-modeTravail" value={formulaire.modeTravail} onChange={(e) => changer("modeTravail", e.target.value as ModeTravail)}>{MODES_TRAVAIL.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}</select></label>
-          <label className={`${styles.field} ${styles.full}`} htmlFor="offre-salaire">Salaire proposé <span className={styles.note}>Facultatif · indiquez la devise et la période.</span><input {...attributs("salaire")} value={formulaire.salaire} onChange={(e) => changer("salaire", e.target.value)} maxLength={190} placeholder="Ex. 400 000 à 550 000 FCFA par mois" />{erreurChamp("salaire")}</label>
+          <div className={`${styles.field} ${styles.full}`} role="group" aria-labelledby="offre-salaire-titre" aria-describedby={erreurs.salaire ? "erreur-salaire" : undefined}>
+            <span id="offre-salaire-titre">Salaire proposé <span className={styles.optionalInline}>(facultatif)</span></span>
+            <div className={styles.salaryRow}>
+              <input id="offre-salaire" aria-label="Montant minimum" aria-invalid={Boolean(erreurs.salaire)} type="number" inputMode="decimal" min={0} step="any" value={salaire.minimum} onChange={(e) => changerSalaire({ minimum: e.target.value })} placeholder="Minimum" />
+              <input aria-label="Montant maximum (facultatif)" aria-invalid={Boolean(erreurs.salaire)} type="number" inputMode="decimal" min={0} step="any" value={salaire.maximum} onChange={(e) => changerSalaire({ maximum: e.target.value })} placeholder="Maximum (facultatif)" />
+              <select aria-label="Devise" value={salaire.devise} onChange={(e) => changerSalaire({ devise: e.target.value })}>{DEVISES_SALAIRE.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}</select>
+              <select aria-label="Période" value={salaire.periode} onChange={(e) => changerSalaire({ periode: e.target.value as Periode })}>{PERIODES_SALAIRE.map((p) => <option key={p.value} value={p.value}>{p.label}</option>)}</select>
+            </div>
+            {salaire.repli && <label className={styles.salaryFallback} htmlFor="offre-salaire-repli"><span className={styles.note}>Valeur actuelle, conservée si vous ne saisissez pas de montant :</span><input id="offre-salaire-repli" value={salaire.repli} onChange={(e) => changerSalaire({ repli: e.target.value })} maxLength={190} /></label>}
+            {formulaire.salaire && !erreurs.salaire && <span className={styles.note}>Affiché : {formulaire.salaire}</span>}
+            {erreurChamp("salaire")}
+          </div>
         </div></fieldset>
         <fieldset disabled={envoi} className={styles.section}><legend className={styles.legend}>Localisation</legend><div className={styles.grid}>
-          <label className={styles.field} htmlFor="offre-pays">Pays *<input {...attributs("pays")} list="offre-pays-disponibles" value={formulaire.pays} onChange={(e) => changer("pays", e.target.value)} maxLength={100} required autoComplete="country-name" /><datalist id="offre-pays-disponibles">{paysDisponibles.map((p) => <option key={p.code} value={p.nom} />)}</datalist>{erreurChamp("pays")}</label>
-          <label className={styles.field} htmlFor="offre-ville">Ville <span className={styles.note}>Facultatif</span><input {...attributs("ville")} value={formulaire.ville} onChange={(e) => changer("ville", e.target.value)} maxLength={100} autoComplete="address-level2" />{erreurChamp("ville")}</label>
+          <ChampsPaysVille
+            idPrefixe="offre" pays={formulaire.pays} ville={formulaire.ville} paysRequis
+            libellePays="Pays *" libelleVille="Ville (facultatif)"
+            classes={{ champ: styles.field }}
+            onChange={({ pays, ville }) => { changer("pays", pays); changer("ville", ville); }}
+            paysInvalide={Boolean(erreurs.pays)} villeInvalide={Boolean(erreurs.ville)}
+            erreurPays={erreurs.pays ? <span id="erreur-offre-pays" className={styles.fieldError}>{erreurs.pays}</span> : null}
+            erreurVille={erreurs.ville ? <span id="erreur-offre-ville" className={styles.fieldError}>{erreurs.ville}</span> : null}
+          />
         </div></fieldset>
         <fieldset disabled={envoi} className={styles.section}><legend className={styles.legend}>L’offre en détail</legend><div className={styles.grid}>
           <label className={`${styles.field} ${styles.full}`} htmlFor="offre-description">Description du poste *<textarea {...attributs("description")} value={formulaire.description} onChange={(e) => changer("description", e.target.value)} required minLength={20} maxLength={10000} rows={7} placeholder="Présentez les missions, l’équipe et les conditions du poste." />{erreurChamp("description")}</label>

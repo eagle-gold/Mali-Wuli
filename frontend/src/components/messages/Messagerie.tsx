@@ -116,6 +116,8 @@ function Avatar({ personne, grand = false }: { personne: Interlocuteur; grand?: 
   );
 }
 
+const LONGUEUR_MIN_RECHERCHE = 2;
+
 const normaliser = (valeur: string) =>
   valeur.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("fr");
 
@@ -205,6 +207,7 @@ export default function Messagerie() {
   const [nouveauMessage, setNouveauMessage] = useState(false);
   const [rechercheContact, setRechercheContact] = useState("");
   const [contacts, setContacts] = useState<Interlocuteur[]>([]);
+  const [rechercheContactFaite, setRechercheContactFaite] = useState(false);
   const [contenu, setContenu] = useState("");
   const [conversationMobile, setConversationMobile] = useState(false);
   const [chargementConversations, setChargementConversations] = useState(true);
@@ -316,28 +319,61 @@ export default function Messagerie() {
     if (conversationActiveId) void chargerDetail(conversationActiveId);
   }, [chargerDetail, conversationActiveId]);
 
+  const termeContact = rechercheContact.trim();
+  const rechercheContactActive = termeContact.length >= LONGUEUR_MIN_RECHERCHE;
+
   useEffect(() => {
     if (!nouveauMessage) return;
     const numero = ++sequenceRecherche.current;
-    const temporisateur = window.setTimeout(async () => {
-      setChargementContacts(true);
+    if (!rechercheContactActive) {
+      setContacts([]);
       setErreurContacts("");
+      setChargementContacts(false);
+      setRechercheContactFaite(false);
+      return;
+    }
+    const mots = normaliser(termeContact).split(/\s+/).filter(Boolean);
+    // Le backend cherche un seul terme dans le prénom OU le nom : on envoie le mot le plus long
+    // puis on vérifie côté client que tous les mots saisis correspondent au prénom/nom.
+    const motPrincipal = termeContact.split(/\s+/).filter(Boolean).sort((a, b) => b.length - a.length)[0] || termeContact;
+    setChargementContacts(true);
+    setErreurContacts("");
+    const temporisateur = window.setTimeout(async () => {
       try {
         const { data } = await api.get<MembresRechercheResponseApi>("/messages/membres/recherche", {
-          params: rechercheContact.trim() ? { q: rechercheContact.trim() } : undefined,
+          params: { q: motPrincipal },
         });
         if (numero !== sequenceRecherche.current) return;
-        setContacts((Array.isArray(data.membres) ? data.membres : []).map(membreVersInterlocuteur));
+        const membres = (Array.isArray(data.membres) ? data.membres : []).filter((membre) => {
+          const nomComplet = normaliser([membre.prenom, membre.nom].filter(Boolean).join(" "));
+          return mots.every((mot) => nomComplet.includes(mot));
+        });
+        setContacts(membres.map(membreVersInterlocuteur));
       } catch (erreur) {
         if (numero !== sequenceRecherche.current) return;
         setContacts([]);
         setErreurContacts(texteErreur(erreur, "Impossible de rechercher les membres."));
       } finally {
-        if (numero === sequenceRecherche.current) setChargementContacts(false);
+        if (numero === sequenceRecherche.current) {
+          setChargementContacts(false);
+          setRechercheContactFaite(true);
+        }
       }
     }, 250);
     return () => window.clearTimeout(temporisateur);
-  }, [nouveauMessage, rechercheContact]);
+  }, [nouveauMessage, rechercheContactActive, termeContact]);
+
+  // Suggestions sans saisie : les membres avec qui une conversation individuelle existe déjà.
+  const contactsSuggeres = useMemo(() => {
+    const vus = new Set<string>();
+    return conversations
+      .filter(({ id, interlocuteur }) => interlocuteur.id !== id)
+      .map(({ interlocuteur }) => interlocuteur)
+      .filter(({ id }) => (vus.has(id) ? false : (vus.add(id), true)))
+      .slice(0, 6);
+  }, [conversations]);
+
+  const contactsAffiches = rechercheContactActive ? contacts : contactsSuggeres;
 
   const conversationActive = conversations.find(({ id }) => id === conversationActiveId);
 
@@ -519,7 +555,7 @@ export default function Messagerie() {
                   autoFocus
                   value={rechercheContact}
                   onChange={(event) => setRechercheContact(event.target.value)}
-                  placeholder="Nom ou métier"
+                  placeholder="Nom ou prénom d’un membre"
                   className="h-14 w-full rounded-full border border-[#eee3d0] bg-[#f4ecdc] px-5 text-base text-[#2d241d] outline-none placeholder:text-[#8f8b86] focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 sm:text-lg"
                 />
               </label>
@@ -528,8 +564,12 @@ export default function Messagerie() {
                   <p className="px-3 py-8 text-center text-sm text-[#887764]">Recherche des membres…</p>
                 ) : erreurContacts ? (
                   <p className="px-3 py-8 text-center text-sm font-medium text-[#bd592d]" role="alert">{erreurContacts}</p>
-                ) : contacts.length ? (
-                  contacts.map((contact) => (
+                ) : contactsAffiches.length ? (
+                  <>
+                    {!rechercheContactActive ? (
+                      <p className="px-2 pb-1 pt-2 text-xs font-semibold uppercase tracking-wide text-[#978775] sm:px-3">Vos contacts récents</p>
+                    ) : null}
+                    {contactsAffiches.map((contact) => (
                     <button
                       key={contact.id}
                       type="button"
@@ -543,9 +583,12 @@ export default function Messagerie() {
                         <span className="block truncate text-sm text-[#887764] sm:text-base">{contact.fonction} · {contact.ville}</span>
                       </span>
                     </button>
-                  ))
-                ) : (
+                    ))}
+                  </>
+                ) : rechercheContactActive && rechercheContactFaite ? (
                   <p className="px-3 py-8 text-center text-sm text-[#887764]">Aucun membre trouvé.</p>
+                ) : (
+                  <p className="px-3 py-8 text-center text-sm text-[#887764]">Tapez au moins 2 lettres du nom.</p>
                 )}
               </div>
             </section>

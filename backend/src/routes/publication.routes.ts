@@ -106,6 +106,14 @@ const creerSchema = z.object({
   lienTitre: z.string().trim().max(191).optional(),
 });
 
+const modificationPublicationSchema = z.object({
+  contenu: z.string().trim().max(1200),
+});
+
+const modificationCommentaireSchema = z.object({
+  contenu: z.string().trim().min(1).max(1000),
+});
+
 const reactionSchema = z.object({
   type: z.enum(["LIKE", "BRAVO", "SOUTIEN", "INSTRUCTIF", "INSPIRANT"]).default("SOUTIEN"),
 });
@@ -141,10 +149,12 @@ function construireArbreCommentaires(commentaires: CommentairePlat[]): Commentai
 }
 
 type CommentairePourAffichage = CommentairePlat & { reponses?: CommentairePourAffichage[] };
-type CommentaireAvecDroits = CommentairePlat & { peutSupprimer: boolean; reponses: CommentaireAvecDroits[] };
+type CommentaireAvecDroits = CommentairePlat & { peutSupprimer: boolean; peutModifier: boolean; reponses: CommentaireAvecDroits[] };
 function formaterCommentaires(commentaires: CommentairePourAffichage[], auteurPublicationId: string, acteur: ActeurPublication): CommentaireAvecDroits[] {
   return commentaires.map((commentaire) => ({
     ...commentaire, peutSupprimer: peutSupprimerCommentaire(commentaire.auteur.id, auteurPublicationId, acteur),
+    // La modification reste réservée à l'auteur : un modérateur retire, il ne réécrit pas.
+    peutModifier: Boolean(acteur.profilId) && commentaire.auteur.id === acteur.profilId,
     reponses: formaterCommentaires(commentaire.reponses || [], auteurPublicationId, acteur),
   }));
 }
@@ -159,6 +169,7 @@ function formaterPublication(publication: PublicationComplete, monProfilId: stri
   return {
     ...reste,
     peutSupprimer: peutSupprimerPublication(publication.auteur.id, { profilId: monProfilId, permissions }),
+    peutModifier: Boolean(monProfilId) && publication.auteur.id === monProfilId,
     commentaires: formaterCommentaires(publication.commentaires, publication.auteur.id, { profilId: monProfilId, permissions }),
     nbReactions: reactions.length,
     decompteReactions,
@@ -356,6 +367,39 @@ router.delete("/:id", authenticate, async (req: AuthRequest, res: Response) => {
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") return res.status(404).json({ message: "Publication introuvable." });
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2034") return res.status(409).json({ message: "La publication a changé. Actualisez avant de réessayer." });
     console.error("[DELETE /publications/:id]", error);
+    return res.status(500).json({ message: "Erreur serveur." });
+  }
+});
+
+router.patch("/:id", authenticate, async (req: AuthRequest, res: Response) => {
+  const id = z.string().trim().min(1).max(191).safeParse(req.params.id);
+  const donnees = modificationPublicationSchema.safeParse(req.body);
+  if (!id.success || !donnees.success) return res.status(400).json({ message: "Contenu invalide." });
+  try {
+    const profil = await profilDe(req.userId);
+    if (!profil) return res.status(404).json({ message: "Profil introuvable." });
+    const publication = await db.publication.findFirst({
+      where: { id: id.data, visible: true },
+      select: { id: true, auteurId: true, photoUrl: true, lienUrl: true },
+    });
+    if (!publication) return res.status(404).json({ message: "Publication introuvable." });
+    if (publication.auteurId !== profil.id) return res.status(403).json({ message: "Vous ne pouvez pas modifier cette publication." });
+    // Même règle qu'à la création : une publication sans photo ni lien doit garder un texte.
+    if (!donnees.data.contenu && !publication.photoUrl && !publication.lienUrl) {
+      return res.status(400).json({ message: "Le texte de la publication ne peut pas être vide." });
+    }
+    const miseAJour = await db.publication.update({
+      where: { id: publication.id },
+      data: { contenu: donnees.data.contenu },
+      select: PUBLICATION_SELECT,
+    });
+    try {
+      socket()?.emit("publication:updated", { publicationId: publication.id });
+    } catch { console.error("[publications] Diffusion de la modification différée."); }
+    return res.json(formaterPublication(miseAJour, profil.id, req.permissions));
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") return res.status(404).json({ message: "Publication introuvable." });
+    console.error("[PATCH /publications/:id]", error);
     return res.status(500).json({ message: "Erreur serveur." });
   }
 });
@@ -594,6 +638,38 @@ router.post("/:id/commentaires", authenticate, async (req: AuthRequest, res: Res
     return res.status(201).json(formaterCommentaires([commentaire], publication.auteurId, { profilId: profil.id, permissions: req.permissions || [] })[0]);
   } catch (error) {
     console.error("[POST /publications/:id/commentaires]", error);
+    return res.status(500).json({ message: "Erreur serveur." });
+  }
+});
+
+router.patch("/:id/commentaires/:commentaireId", authenticate, async (req: AuthRequest, res: Response) => {
+  const params = z.object({
+    id: z.string().trim().min(1).max(191),
+    commentaireId: z.string().trim().min(1).max(191),
+  }).safeParse(req.params);
+  const donnees = modificationCommentaireSchema.safeParse(req.body);
+  if (!params.success || !donnees.success) return res.status(400).json({ message: "Commentaire invalide." });
+  try {
+    const profil = await profilDe(req.userId);
+    if (!profil) return res.status(404).json({ message: "Profil introuvable." });
+    const commentaire = await db.commentairePublication.findFirst({
+      where: { id: params.data.commentaireId, publicationId: params.data.id },
+      select: { id: true, auteurId: true, publication: { select: { auteurId: true } } },
+    });
+    if (!commentaire) return res.status(404).json({ message: "Commentaire introuvable." });
+    if (commentaire.auteurId !== profil.id) return res.status(403).json({ message: "Vous ne pouvez pas modifier ce commentaire." });
+    const miseAJour = await db.commentairePublication.update({
+      where: { id: commentaire.id },
+      data: { contenu: donnees.data.contenu },
+      select: COMMENTAIRE_SELECT,
+    });
+    try {
+      socket()?.emit("publication:commentUpdated", { publicationId: params.data.id, commentaireId: commentaire.id });
+    } catch { console.error("[publications] Diffusion de la modification du commentaire différée."); }
+    return res.json(formaterCommentaires([miseAJour], commentaire.publication.auteurId, { profilId: profil.id, permissions: req.permissions || [] })[0]);
+  } catch (error) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") return res.status(404).json({ message: "Commentaire introuvable." });
+    console.error("[PATCH /publications/:id/commentaires/:commentaireId]", error);
     return res.status(500).json({ message: "Erreur serveur." });
   }
 });

@@ -121,7 +121,11 @@ export async function GET(request: NextRequest) {
             return a.nom.localeCompare(b.nom, "fr", { sensitivity: "base" });
           })
           .slice(0, limite)
-      : [];
+      : // Sans recherche, `all=1` renvoie les premières villes par ordre
+        // alphabétique : utile pour proposer une liste dès l'ouverture.
+        request.nextUrl.searchParams.get("all") === "1"
+        ? toutesLesVilles.slice(0, limite)
+        : [];
 
     return NextResponse.json({
       villes,

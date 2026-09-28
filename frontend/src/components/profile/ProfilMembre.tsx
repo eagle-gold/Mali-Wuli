@@ -4,6 +4,7 @@ import Link from "next/link";
 import AssociationsProfil from "@/components/profile/AssociationsProfil";
 import LiensSociauxProfil from "@/components/profile/LiensSociauxProfil";
 import { useSessionMembre } from "@/components/auth/SessionMembreContext";
+import type { MembrePublic } from "@/components/directory/types";
 import type { ReseauxSociaux } from "@/lib/reseaux-sociaux";
 import {
   ArrowLeft,
@@ -12,10 +13,14 @@ import {
   ChevronRight,
   HeartHandshake,
   LoaderCircle,
+  Mail,
+  MessageCircle,
   Pencil,
+  Phone,
   RefreshCw,
 } from "lucide-react";
-import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import api from "@/lib/api";
 import { aPermission } from "@/lib/autorisations";
 import { formaterMoisAnnee, trierParDateDebut } from "@/lib/periode";
@@ -288,7 +293,10 @@ function disponibilitesMentorat(valeur: unknown): DisponibiliteMentorat[] {
   });
 }
 
-function adapterProfil(utilisateur: UtilisateurProfilApi): DonneesProfil {
+function adapterProfil(
+  utilisateur: Pick<UtilisateurProfilApi, "prenom" | "nom" | "profil">,
+  ordreFormations: "croissant" | "decroissant" = "decroissant",
+): DonneesProfil {
   const profil = utilisateur.profil;
   const volontaire = profil.volontaire;
   const sujets = sujetsMentorat(volontaire?.sujets, volontaire?.specialite);
@@ -305,7 +313,7 @@ function adapterProfil(utilisateur: UtilisateurProfilApi): DonneesProfil {
       instagram: profil.instagram,
       tiktok: profil.tiktok,
     },
-    formations: trierParDateDebut((profil.formations || []).map(adapterFormation)),
+    formations: trierParDateDebut((profil.formations || []).map(adapterFormation), ordreFormations),
     experiences: trierParDateDebut((profil.experiences || []).map(adapterExperience)),
     mentorat: {
       estVolontaire: profil.estVolontaire === true && volontaire?.disponible !== false,
@@ -427,10 +435,10 @@ function TitreCarte({
   );
 }
 
-function Experiences({ experiences }: { experiences: ExperienceProfil[] }) {
+function Experiences({ experiences, modifiable = true }: { experiences: ExperienceProfil[]; modifiable?: boolean }) {
   return (
     <section className={CLASSE_CARTE + " p-5 sm:p-8"}>
-      <TitreCarte titre="Expériences" href="/onboarding?etape=experiences" />
+      <TitreCarte titre="Expériences" href={modifiable ? "/onboarding?etape=experiences" : undefined} />
       {experiences.length ? (
         <ol className="relative ml-2 border-l-2 border-[#eadbc6] pl-7">
           {experiences.map((experience, index) => (
@@ -463,10 +471,10 @@ function Experiences({ experiences }: { experiences: ExperienceProfil[] }) {
   );
 }
 
-function Formations({ formations }: { formations: FormationProfil[] }) {
+function Formations({ formations, modifiable = true }: { formations: FormationProfil[]; modifiable?: boolean }) {
   return (
     <section className={CLASSE_CARTE + " p-5 sm:p-8"}>
-      <TitreCarte titre="Formations" href="/onboarding?etape=formations" />
+      <TitreCarte titre="Formations" href={modifiable ? "/onboarding?etape=formations" : undefined} />
       {formations.length ? (
         <ol className="relative ml-2 border-l-2 border-[#d8e5dc] pl-7">
           {formations.map((formation, index) => {
@@ -540,7 +548,7 @@ function Formations({ formations }: { formations: FormationProfil[] }) {
   );
 }
 
-function Mentorat({ mentorat }: { mentorat?: MentoratProfil }) {
+function Mentorat({ mentorat, modifiable = true }: { mentorat?: MentoratProfil; modifiable?: boolean }) {
   const creneaux = (mentorat?.disponibilites || []).filter(
     (jour) => Boolean(jour.ouvert) && Array.isArray(jour.plages) && jour.plages.length > 0,
   );
@@ -551,7 +559,10 @@ function Mentorat({ mentorat }: { mentorat?: MentoratProfil }) {
 
   return (
     <section className={CLASSE_CARTE + " p-5 sm:p-7"}>
-      <TitreCarte titre="Mon mentorat" href="/onboarding?etape=mentorat" />
+      <TitreCarte
+        titre={modifiable ? "Mon mentorat" : "Mentorat"}
+        href={modifiable ? "/onboarding?etape=mentorat" : undefined}
+      />
       <div className="mb-4 flex flex-wrap gap-2">
         {actif && sujets.length ? (
           sujets.map((sujet) => (
@@ -576,7 +587,9 @@ function Mentorat({ mentorat }: { mentorat?: MentoratProfil }) {
                   ? String(mentorat.maxRdvMois) + " rendez-vous par mois"
                   : "",
             ].filter(Boolean).join(" · ") || "Paramètres de mentorat à compléter")
-          : "Ouvrez des créneaux quand vous le souhaitez depuis votre profil."}
+          : modifiable
+            ? "Ouvrez des créneaux quand vous le souhaitez depuis votre profil."
+            : "Ce membre ne propose pas de mentorat pour le moment."}
       </p>
       {actif && creneaux.length > 0 && (
         <div className="space-y-2">
@@ -595,14 +608,90 @@ function Mentorat({ mentorat }: { mentorat?: MentoratProfil }) {
           ))}
         </div>
       )}
-      <Link href="/onboarding?etape=mentorat" className={CLASSE_BOUTON_PRIMAIRE + " mt-5 w-full"}>
-        Modifier mes créneaux
-      </Link>
+      {modifiable ? (
+        <Link href="/onboarding?etape=mentorat" className={CLASSE_BOUTON_PRIMAIRE + " mt-5 w-full"}>
+          Modifier mes créneaux
+        </Link>
+      ) : actif && (
+        <Link href="/volontaires" className={CLASSE_BOUTON_SECONDAIRE + " mt-5 w-full"}>
+          Voir les volontaires
+        </Link>
+      )}
     </section>
   );
 }
 
-export default function ProfilMembre() {
+const FOND_COUVERTURE_PAR_DEFAUT =
+  "radial-gradient(circle at 72% 112%, transparent 0 15%, rgba(224,179,63,.22) 15.5% 20%, transparent 20.5% 28%, rgba(255,255,255,.12) 28.5% 34%, transparent 34.5% 43%, rgba(102,76,51,.24) 43.5% 51%, transparent 51.5%), linear-gradient(115deg, #0d6738 0%, #1f7b4b 48%, #664c33 100%)";
+
+/** En-tête commun (couverture, photo, identité) : les contrôles d’édition sont injectés par le propriétaire. */
+function EnTeteProfil({
+  nomComplet,
+  initiales,
+  photo,
+  photoCouverture,
+  sousTitre,
+  meta,
+  actions,
+  controleCouverture,
+  controlePhoto,
+  apres,
+}: {
+  nomComplet: string;
+  initiales: string;
+  photo?: string | null;
+  photoCouverture?: string | null;
+  sousTitre: ReactNode;
+  meta?: ReactNode;
+  actions?: ReactNode;
+  controleCouverture?: ReactNode;
+  controlePhoto?: ReactNode;
+  apres?: ReactNode;
+}) {
+  return (
+    <section className={CLASSE_CARTE + " overflow-hidden"}>
+      <div
+        className="relative h-32 border-b-2 border-[#ac6139] bg-cover bg-center"
+        style={{
+          backgroundColor: "#176b3b",
+          backgroundImage: photoCouverture
+            ? `linear-gradient(rgba(13, 103, 56, .25), rgba(102, 76, 51, .2)), url("${photoCouverture.replace(/["\\\n\r]/g, "")}")`
+            : FOND_COUVERTURE_PAR_DEFAUT,
+        }}
+      >
+        {controleCouverture}
+      </div>
+      <div className="relative px-5 pb-7 pt-16 sm:px-8 sm:pb-8 sm:pt-5 sm:pl-[190px]">
+        <div className="absolute -top-14 left-5 sm:-top-14 sm:left-10">
+          <div className="relative rounded-full border-4 border-[#fdfaf4] bg-[#e5efe8] shadow-sm">
+            {photo ? (
+              <img
+                src={photo}
+                alt={"Photo de " + nomComplet}
+                className="h-24 w-24 rounded-full object-cover sm:h-32 sm:w-32"
+              />
+            ) : (
+              <AvatarInitiales initiales={initiales} ton="vert" grand />
+            )}
+            {controlePhoto}
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+          <div className="min-w-0">
+            <h1 className="break-words font-display text-2xl font-semibold leading-tight sm:text-3xl">{nomComplet}</h1>
+            <p className="mt-1 text-base text-[#695c4b] sm:text-lg">{sousTitre}</p>
+            {meta}
+          </div>
+          {actions}
+        </div>
+        {apres}
+      </div>
+    </section>
+  );
+}
+
+function ProfilProprietaire() {
   const sessionMembre = useSessionMembre();
   const [utilisateur, setUtilisateur] = useState<UtilisateurProfilApi | null>(null);
   const [suggestionsApi, setSuggestionsApi] = useState<SuggestionSynergieApi[]>([]);
@@ -847,16 +936,18 @@ export default function ProfilMembre() {
           Retour à l’accueil
         </Link>
 
-        <section className={CLASSE_CARTE + " overflow-hidden"}>
-          <div
-            className="relative h-32 border-b-2 border-[#ac6139] bg-cover bg-center"
-            style={{
-              backgroundColor: "#176b3b",
-              backgroundImage: photoCouverture
-                ? `linear-gradient(rgba(13, 103, 56, .25), rgba(102, 76, 51, .2)), url("${photoCouverture.replace(/["\\\n\r]/g, "")}")`
-                : "radial-gradient(circle at 72% 112%, transparent 0 15%, rgba(224,179,63,.22) 15.5% 20%, transparent 20.5% 28%, rgba(255,255,255,.12) 28.5% 34%, transparent 34.5% 43%, rgba(102,76,51,.24) 43.5% 51%, transparent 51.5%), linear-gradient(115deg, #0d6738 0%, #1f7b4b 48%, #664c33 100%)",
-            }}
-          >
+        <EnTeteProfil
+          nomComplet={nomComplet}
+          initiales={initiales}
+          photo={photo}
+          photoCouverture={photoCouverture}
+          sousTitre={<>
+            {utilisateur.profil.titre || experienceActuelle?.poste || "Membre du réseau"}
+            {experienceActuelle?.structure ? " · " + experienceActuelle.structure : ""}
+            {" · "}
+            {localisationProfil}
+          </>}
+          controleCouverture={<>
             <button
               type="button"
               onClick={() => fichierCouverture.current?.click()}
@@ -879,87 +970,57 @@ export default function ProfilMembre() {
               className="hidden"
             />
             <span id="aide-photo-couverture" className="sr-only">Image JPEG, PNG ou WebP, jusqu’à 10 Mo.</span>
-          </div>
-          <div className="relative px-5 pb-7 pt-16 sm:px-8 sm:pb-8 sm:pt-5 sm:pl-[190px]">
-            <div className="absolute -top-14 left-5 sm:-top-14 sm:left-10">
-              <div className="relative rounded-full border-4 border-[#fdfaf4] bg-[#e5efe8] shadow-sm">
-                {photo ? (
-                  <img
-                    src={photo}
-                    alt={"Photo de " + nomComplet}
-                    className="h-24 w-24 rounded-full object-cover sm:h-32 sm:w-32"
-                  />
-                ) : (
-                  <AvatarInitiales initiales={initiales} ton="vert" grand />
-                )}
-                <button
-                  type="button"
-                  onClick={() => fichierPhoto.current?.click()}
-                  disabled={photoEnCours}
-                  aria-label="Ajouter ou modifier ma photo"
-                  className="absolute bottom-0 right-0 flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#fdfaf4] bg-[#2a5b37] text-white transition hover:bg-[#214a2c] focus:outline-none focus:ring-2 focus:ring-[#e0b33f] disabled:cursor-wait disabled:opacity-70"
-                >
-                  {photoEnCours
-                    ? <LoaderCircle aria-hidden="true" className="animate-spin" size={18} />
-                    : <Camera aria-hidden="true" size={18} />}
-                </button>
-              </div>
-              <input
-                ref={fichierPhoto}
-                type="file"
-                accept="image/*"
-                onChange={choisirPhoto}
-                className="sr-only"
-              />
-            </div>
-
-            <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
-              <div className="min-w-0">
-                <h1 className="break-words font-display text-2xl font-semibold leading-tight sm:text-3xl">{nomComplet}</h1>
-                <p className="mt-1 text-base text-[#695c4b] sm:text-lg">
-                  {utilisateur.profil.titre || experienceActuelle?.poste || "Membre du réseau"}
-                  {experienceActuelle?.structure ? " · " + experienceActuelle.structure : ""}
-                  {" · "}
-                  {localisationProfil}
-                </p>
-                <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm sm:text-base">
-                  <Link href="/synergies" className="font-bold text-[#2a5b37] hover:underline">
-                    {stats.nbSynergies || 0} synergie{stats.nbSynergies === 1 ? "" : "s"}
-                  </Link>
-                  <span aria-hidden="true" className="text-[#a6927d]">·</span>
-                  <span className="text-[#7b654e]">
-                    {stats.nbContributions || 0} contribution{stats.nbContributions === 1 ? "" : "s"} au réseau
-                  </span>
-                  <span aria-hidden="true" className="text-[#a6927d]">·</span>
-                  <button
-                    type="button"
-                    onClick={() => fichierPhoto.current?.click()}
-                    disabled={photoEnCours}
-                    className="font-bold text-[#2a5b37] hover:underline focus:outline-none focus:ring-2 focus:ring-[#2a5b37]"
-                  >
-                    {photoEnCours ? "Enregistrement…" : photo ? "Changer votre photo" : "Ajoutez votre photo"}
-                  </button>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => setAnnonce(statut.detail)}
-                  className={`mt-4 rounded-full px-4 py-2 text-xs font-extrabold uppercase tracking-[0.04em] focus:outline-none focus:ring-2 focus:ring-[#ac6139] ${statut.classe}`}
-                >
-                  {statut.libelle}
-                </button>
-              </div>
-              <Link href="/onboarding?etape=informations" className={CLASSE_BOUTON_SECONDAIRE + " shrink-0"}>
-                <Pencil aria-hidden="true" size={17} />
-                Modifier mes infos
+          </>}
+          controlePhoto={<>
+            <button
+              type="button"
+              onClick={() => fichierPhoto.current?.click()}
+              disabled={photoEnCours}
+              aria-label="Ajouter ou modifier ma photo"
+              className="absolute bottom-0 right-0 flex h-9 w-9 items-center justify-center rounded-full border-2 border-[#fdfaf4] bg-[#2a5b37] text-white transition hover:bg-[#214a2c] focus:outline-none focus:ring-2 focus:ring-[#e0b33f] disabled:cursor-wait disabled:opacity-70"
+            >
+              {photoEnCours
+                ? <LoaderCircle aria-hidden="true" className="animate-spin" size={18} />
+                : <Camera aria-hidden="true" size={18} />}
+            </button>
+            <input
+              ref={fichierPhoto}
+              type="file"
+              accept="image/*"
+              onChange={choisirPhoto}
+              className="sr-only"
+            />
+          </>}
+          meta={<>
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm sm:text-base">
+              <Link href="/synergies" className="font-bold text-[#2a5b37] hover:underline">
+                {stats.nbSynergies || 0} synergie{stats.nbSynergies === 1 ? "" : "s"}
               </Link>
+              <span aria-hidden="true" className="text-[#a6927d]">·</span>
+              <span className="text-[#7b654e]">
+                {stats.nbContributions || 0} contribution{stats.nbContributions === 1 ? "" : "s"} au réseau
+              </span>
             </div>
-            {erreurCouverture && (
-              <p id="erreur-photo-couverture" role="alert" className="mt-4 rounded-xl border border-[#e4b6a5] bg-[#fff1eb] px-4 py-3 text-sm text-[#8a3423]">
-                {erreurCouverture}
-              </p>
-            )}
-          </div>
-        </section>
+            <button
+              type="button"
+              onClick={() => setAnnonce(statut.detail)}
+              className={`mt-4 rounded-full px-4 py-2 text-xs font-extrabold uppercase tracking-[0.04em] focus:outline-none focus:ring-2 focus:ring-[#ac6139] ${statut.classe}`}
+            >
+              {statut.libelle}
+            </button>
+          </>}
+          actions={
+            <Link href="/onboarding?etape=informations" className={CLASSE_BOUTON_SECONDAIRE + " shrink-0"}>
+              <Pencil aria-hidden="true" size={17} />
+              Modifier mes infos
+            </Link>
+          }
+          apres={erreurCouverture && (
+            <p id="erreur-photo-couverture" role="alert" className="mt-4 rounded-xl border border-[#e4b6a5] bg-[#fff1eb] px-4 py-3 text-sm text-[#8a3423]">
+              {erreurCouverture}
+            </p>
+          )}
+        />
 
         <div className="mt-6 grid items-start gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(320px,.85fr)]">
           <div className="space-y-6">
@@ -1081,7 +1142,7 @@ export default function ProfilMembre() {
                       <span>{enCours ? "Enregistrement…" : demandee ? "Demande envoyée" : "Proposer une synergie"}</span>
                     </button>
                     <Link
-                      href={"/annuaire?recherche=" + encodeURIComponent(membre.nom)}
+                      href={"/membres/" + encodeURIComponent(membre.id)}
                       className={CLASSE_BOUTON_SECONDAIRE}
                     >
                       Profil
@@ -1106,4 +1167,371 @@ export default function ProfilMembre() {
       </div>
     </div>
   );
+}
+
+const SITUATIONS: Record<string, string> = {
+  ETUDIANT: "Étudiant",
+  PROFESSIONNEL: "Professionnel",
+  ENTREPRENEUR: "Entrepreneur",
+  EN_RECHERCHE: "En recherche d’opportunités",
+};
+
+function statutHttp(erreur: unknown) {
+  if (!estObjet(erreur) || !estObjet(erreur.response)) return undefined;
+  return typeof erreur.response.status === "number" ? erreur.response.status : undefined;
+}
+
+function dateMembreDepuis(valeur?: string) {
+  if (!valeur) return "";
+  const date = new Date(valeur);
+  return Number.isNaN(date.getTime())
+    ? ""
+    : date.toLocaleDateString("fr-FR", { month: "long", year: "numeric", timeZone: "UTC" });
+}
+
+function EcranProfil({ children }: { children: ReactNode }) {
+  return (
+    <div className="flex min-h-[65vh] items-center justify-center bg-[var(--color-page)] px-4 text-[#292119]">
+      {children}
+    </div>
+  );
+}
+
+/** Vue en lecture seule du profil d’un autre membre (GET /users/:id, profils validés uniquement). */
+function ProfilVisiteur({ membreId }: { membreId: string }) {
+  const router = useRouter();
+  const sessionMembre = useSessionMembre();
+  const compte = sessionMembre?.compte;
+  const monProfilId = compte?.profil?.id || compte?.user?.profil?.id;
+  const monUserId = compte?.id || compte?.user?.id;
+  const estMoiSession = Boolean(membreId && (membreId === monProfilId || membreId === monUserId));
+
+  const [membre, setMembre] = useState<MembrePublic | null>(null);
+  const [chargement, setChargement] = useState(true);
+  const [erreur, setErreur] = useState<{ texte: string; introuvable: boolean } | null>(null);
+  const [revision, setRevision] = useState(0);
+  const [synergie, setSynergie] = useState<MembrePublic["synergie"]>(null);
+  const [action, setAction] = useState<"message" | "synergie" | null>(null);
+  const [annonce, setAnnonce] = useState("");
+
+  useEffect(() => {
+    if (estMoiSession) {
+      router.replace("/profil");
+      return;
+    }
+    const abort = new AbortController();
+    setChargement(true);
+    setErreur(null);
+    void api.get<MembrePublic>(`/users/${encodeURIComponent(membreId)}`, { signal: abort.signal })
+      .then(({ data }) => {
+        if (abort.signal.aborted) return;
+        if (data.estMoi) {
+          router.replace("/profil");
+          return;
+        }
+        setMembre(data);
+        setSynergie(data.synergie || null);
+      })
+      .catch((e) => {
+        if (abort.signal.aborted) return;
+        const statut = statutHttp(e);
+        const introuvable = statut === 404 || statut === 400;
+        setErreur({
+          introuvable,
+          texte: introuvable
+            ? "Ce profil n’existe pas ou n’est pas encore validé par l’équipe Mali Wuli."
+            : messageErreurApi(e, "Impossible de charger ce profil pour le moment."),
+        });
+      })
+      .finally(() => {
+        if (!abort.signal.aborted) setChargement(false);
+      });
+    return () => abort.abort();
+  }, [membreId, estMoiSession, router, revision]);
+
+  useEffect(() => {
+    if (!annonce) return;
+    const temporisateur = window.setTimeout(() => setAnnonce(""), 4_000);
+    return () => window.clearTimeout(temporisateur);
+  }, [annonce]);
+
+  const profil = useMemo<DonneesProfil>(() => membre ? adapterProfil({
+    prenom: membre.prenom,
+    nom: membre.nom,
+    profil: {
+      id: membre.id,
+      pays: membre.pays,
+      ville: membre.ville,
+      linkedin: membre.linkedin,
+      facebook: membre.facebook,
+      instagram: membre.instagram,
+      tiktok: membre.tiktok,
+      estVolontaire: membre.estVolontaire,
+      formations: membre.formations,
+      experiences: membre.experiences,
+      volontaire: membre.volontaire,
+    },
+  }) : {}, [membre]);
+
+  const envoyerMessage = async () => {
+    if (!membre || action) return;
+    setAction("message");
+    try {
+      const { data } = await api.post<{ conversationId: string }>("/messages/conversations", { destinataireId: membre.id });
+      router.push(`/messages?conversation=${encodeURIComponent(data.conversationId)}`);
+    } catch (e) {
+      setAnnonce(messageErreurApi(e, "Impossible d’ouvrir la conversation."));
+      setAction(null);
+    }
+  };
+
+  const proposerSynergie = async () => {
+    if (!membre || action || synergie) return;
+    setAction("synergie");
+    try {
+      const { data } = await api.post<CreationSynergieResponseApi>("/synergies", { recepteurProfilId: membre.id });
+      setSynergie({ id: data.synergie.id, statut: "EN_ATTENTE", demandeurId: "", recepteurId: membre.id });
+      setAnnonce(data.message || "Votre demande de synergie a été envoyée.");
+    } catch (e) {
+      setAnnonce(messageErreurApi(e, "La demande de synergie n’a pas pu être envoyée."));
+    } finally {
+      setAction(null);
+    }
+  };
+
+  if (estMoiSession || chargement || (!membre && !erreur)) {
+    return (
+      <EcranProfil>
+        <div className={CLASSE_CARTE + " flex items-center gap-3 px-6 py-5 font-semibold text-[#695c4b]"} role="status">
+          <LoaderCircle aria-hidden="true" className="animate-spin text-[#2a5b37]" size={24} />
+          Chargement du profil…
+        </div>
+      </EcranProfil>
+    );
+  }
+
+  if (!membre) {
+    return (
+      <EcranProfil>
+        <section className={CLASSE_CARTE + " max-w-lg p-7 text-center"} role="alert">
+          <h1 className="font-display text-2xl font-bold">
+            {erreur?.introuvable ? "Profil introuvable" : "Ce profil n’est pas disponible"}
+          </h1>
+          <p className="mt-3 text-[#695c4b]">{erreur?.texte}</p>
+          <div className="mt-5 flex flex-wrap justify-center gap-3">
+            {!erreur?.introuvable && (
+              <button type="button" onClick={() => setRevision((r) => r + 1)} className={CLASSE_BOUTON_PRIMAIRE}>
+                <RefreshCw aria-hidden="true" size={17} />
+                Réessayer
+              </button>
+            )}
+            <Link href="/annuaire" className={CLASSE_BOUTON_SECONDAIRE}>Retour à l’annuaire</Link>
+          </div>
+        </section>
+      </EcranProfil>
+    );
+  }
+
+  const informations = profil.informations || {};
+  const formations = profil.formations || [];
+  const experiences = profil.experiences || [];
+  const experienceActuelle = experiences.find((experience) => experience.posteActuel)
+    || experiences.find((experience) => experience.anneeDebut)
+    || experiences[0];
+  const prenom = informations.prenom?.trim() || "";
+  const nomFamille = informations.nom?.trim() || "";
+  const nomComplet = [prenom, nomFamille].filter(Boolean).join(" ") || "Membre Mali Wuli";
+  const stats = membre.stats || {};
+  const membreDepuis = dateMembreDepuis(membre.membreDepuis);
+  const fonction = membre.titre?.trim()
+    || experienceActuelle?.poste
+    || (membre.situation ? SITUATIONS[membre.situation] : "")
+    || "Membre du réseau";
+  const associations = membre.associations || [];
+
+  // Demande reçue de ce membre : on renvoie vers /synergies pour répondre.
+  const demandeRecue = synergie?.statut === "EN_ATTENTE" && synergie.demandeurId === membre.id;
+  const boutonSynergie = !synergie ? (
+    <button
+      type="button"
+      disabled={Boolean(action)}
+      onClick={() => void proposerSynergie()}
+      className={CLASSE_BOUTON_SECONDAIRE + " disabled:cursor-wait disabled:opacity-65"}
+    >
+      {action === "synergie"
+        ? <LoaderCircle aria-hidden="true" className="animate-spin" size={17} />
+        : <HeartHandshake aria-hidden="true" size={17} />}
+      {action === "synergie" ? "Envoi…" : "Proposer une synergie"}
+    </button>
+  ) : demandeRecue ? (
+    <Link href="/synergies" className={CLASSE_BOUTON_SECONDAIRE}>
+      <HeartHandshake aria-hidden="true" size={17} />
+      Répondre à sa demande
+    </Link>
+  ) : synergie.statut === "EN_ATTENTE" || synergie.statut === "ACCEPTE" ? (
+    <span className={CLASSE_BOUTON_SECONDAIRE + " cursor-default border-[#cee0d4] bg-[#f2f7f3] text-[#2a5b37] hover:text-[#2a5b37]"}>
+      <Check aria-hidden="true" size={17} />
+      {synergie.statut === "ACCEPTE" ? "En synergie" : "Demande envoyée"}
+    </span>
+  ) : null;
+
+  return (
+    <div className="min-h-full min-w-0 [overflow-wrap:anywhere] bg-[var(--color-page)] px-4 py-6 text-[#292119] sm:px-6 sm:py-8">
+      <div className="mx-auto w-full max-w-[1600px]">
+        <Link
+          href="/annuaire"
+          className="mb-5 inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-[#695c4b] transition hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] sm:text-base"
+        >
+          <ArrowLeft aria-hidden="true" size={18} />
+          Retour à l’annuaire
+        </Link>
+
+        <EnTeteProfil
+          nomComplet={nomComplet}
+          initiales={initialesDe(prenom, nomFamille)}
+          photo={urlMediaBackend(membre.photo)}
+          photoCouverture={urlMediaBackend(membre.photoCouverture)}
+          sousTitre={<>
+            {fonction}
+            {experienceActuelle?.structure ? " · " + experienceActuelle.structure : ""}
+            {" · "}
+            {lieuDe(informations.ville || experienceActuelle?.ville, informations.pays || experienceActuelle?.pays)}
+          </>}
+          meta={
+            <div className="mt-3 flex flex-wrap items-center gap-2 text-sm sm:text-base">
+              <span className="font-bold text-[#2a5b37]">
+                {stats.nbSynergies || 0} synergie{stats.nbSynergies === 1 ? "" : "s"}
+              </span>
+              {membreDepuis && (
+                <>
+                  <span aria-hidden="true" className="text-[#a6927d]">·</span>
+                  <span className="text-[#7b654e]">Membre depuis {membreDepuis}</span>
+                </>
+              )}
+              {membre.estVolontaire && (
+                <span className="ml-1 rounded-full bg-[#f3e4d8] px-3 py-1 text-xs font-extrabold uppercase tracking-[0.04em] text-[#ac6139]">
+                  Volontaire
+                </span>
+              )}
+            </div>
+          }
+          actions={
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+              <button
+                type="button"
+                disabled={Boolean(action)}
+                onClick={() => void envoyerMessage()}
+                className={CLASSE_BOUTON_PRIMAIRE + " disabled:cursor-wait disabled:opacity-65"}
+              >
+                {action === "message"
+                  ? <LoaderCircle aria-hidden="true" className="animate-spin" size={17} />
+                  : <MessageCircle aria-hidden="true" size={17} />}
+                {action === "message" ? "Ouverture…" : "Envoyer un message"}
+              </button>
+              {boutonSynergie}
+            </div>
+          }
+        />
+
+        <div className="mt-6 grid items-start gap-6 xl:grid-cols-[minmax(0,2fr)_minmax(320px,.85fr)]">
+          <div className="space-y-6">
+            {membre.bio?.trim() && (
+              <section className={CLASSE_CARTE + " p-5 sm:p-8"}>
+                <TitreCarte titre="À propos" />
+                <p className="whitespace-pre-line leading-relaxed text-[#695c4b]">{membre.bio}</p>
+              </section>
+            )}
+            <Experiences experiences={experiences} modifiable={false} />
+            <Formations formations={formations} modifiable={false} />
+            {associations.length > 0 && (
+              <section className={CLASSE_CARTE + " p-5 sm:p-8"} aria-labelledby="associations-membre-titre">
+                <h2 id="associations-membre-titre" className="mb-6 font-display text-2xl font-bold leading-tight text-[#292119] sm:text-3xl">
+                  Associations
+                </h2>
+                <ul className="grid gap-3 sm:grid-cols-2">
+                  {associations.map((association) => (
+                    <li key={association.id} className="flex min-w-0 items-start gap-3 rounded-xl border border-[#eae3d4] p-4">
+                      {association.photo && (
+                        <img src={urlMediaBackend(association.photo) || undefined} alt="" className="h-11 w-11 shrink-0 rounded-xl object-cover" />
+                      )}
+                      <div className="min-w-0">
+                        <h3 className="break-words font-semibold">
+                          <Link
+                            href={`/associations/${encodeURIComponent(association.id)}`}
+                            className="text-[#2a5b37] hover:underline focus:outline-none focus:ring-2 focus:ring-[#2a5b37]"
+                          >
+                            {association.nom}
+                          </Link>
+                        </h3>
+                        <p className="mt-1 text-sm text-[#695c4b]">
+                          {[association.vocation, association.ville, association.pays].filter(Boolean).join(" · ")}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+          </div>
+
+          <aside className="space-y-6">
+            <LiensSociauxProfil liens={informations} />
+            {(membre.email || membre.telephone) && (
+              <section className={CLASSE_CARTE + " p-5 sm:p-7"}>
+                <h2 className="font-display text-2xl font-bold leading-tight text-[#292119] sm:text-3xl">Coordonnées</h2>
+                <p className="mt-1 text-sm text-[#7b654e]">Informations rendues visibles par ce membre.</p>
+                <ul className="mt-4 space-y-3">
+                  {membre.email && (
+                    <li>
+                      <a href={`mailto:${membre.email}`} className="inline-flex items-center gap-2 font-semibold text-[#2a5b37] hover:underline">
+                        <Mail aria-hidden="true" size={16} />
+                        {membre.email}
+                      </a>
+                    </li>
+                  )}
+                  {membre.telephone && (
+                    <li>
+                      <a href={`tel:${membre.telephone.replace(/[^+\d]/g, "")}`} className="inline-flex items-center gap-2 font-semibold text-[#2a5b37] hover:underline">
+                        <Phone aria-hidden="true" size={16} />
+                        {membre.telephone}
+                      </a>
+                    </li>
+                  )}
+                </ul>
+              </section>
+            )}
+            <section className={CLASSE_CARTE + " p-5 sm:p-7"}>
+              <h2 className="mb-5 font-display text-2xl font-bold leading-tight text-[#292119] sm:text-3xl">
+                Dans le réseau
+              </h2>
+              <ul className="space-y-2 text-sm leading-relaxed text-[#695c4b] sm:text-base">
+                <li>{stats.nbSynergies || 0} mise{stats.nbSynergies === 1 ? "" : "s"} en relation acceptée{stats.nbSynergies === 1 ? "" : "s"}</li>
+                <li>{stats.nbPublications || 0} publication{stats.nbPublications === 1 ? "" : "s"} dans le fil</li>
+                <li>{stats.nbCommentaires || 0} commentaire{stats.nbCommentaires === 1 ? "" : "s"} publié{stats.nbCommentaires === 1 ? "" : "s"}</li>
+              </ul>
+            </section>
+            {profil.mentorat?.estVolontaire && <Mentorat mentorat={profil.mentorat} modifiable={false} />}
+          </aside>
+        </div>
+
+        <p className="sr-only" role="status" aria-live="polite">{annonce}</p>
+        {annonce && (
+          <div
+            role="status"
+            className="fixed bottom-24 left-1/2 z-40 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-xl bg-[#292119] px-5 py-4 text-center text-sm font-semibold text-white shadow-xl md:bottom-6"
+          >
+            {annonce}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Sans `membreId` : profil du membre connecté (éditable).
+ * Avec `membreId` : profil d’un autre membre en lecture seule (redirige vers /profil si c’est soi).
+ */
+export default function ProfilMembre({ membreId }: { membreId?: string } = {}) {
+  return membreId ? <ProfilVisiteur membreId={membreId} /> : <ProfilProprietaire />;
 }
