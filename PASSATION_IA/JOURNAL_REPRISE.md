@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session terminée : Claude, 2026-09-28 (sauvegarde GitHub privé).
+EN COURS — Claude cloud, 2026-09-28 20:27 UTC, contrôles avant publication typo+perf
 
 ## Modèle d'entrée
 
@@ -29,6 +29,19 @@ LIBRE — dernière session terminée : Claude, 2026-09-28 (sauvegarde GitHub pr
 ```
 
 ## Entrées
+
+### 2026-09-28 20:27 UTC — Claude cloud — Contrôles avant publication typo+perf
+- Statut : EN COURS
+- Demande de l'utilisateur : depuis une session cloud sans accès SSH, contrôler le code de main (npm ci, TypeScript, tests ciblés des lots typographie et performance), comparer la version publiée `versions/20260928-liens-sociaux` avec main et préparer la publication locale (PUBLICATION_LOCALE.md). Aucune action sur la production ni sur une base.
+- État Git au début : branche `main`, HEAD `06bd669`, 0 modifié / 0 non suivi (clone frais de `Alienmap/mali-wuli`).
+- Fichiers touchés : journal ; preuves à venir dans `PASSATION_IA/output/2026-09-28-typo-perf/`.
+- Fait et vérifié : lecture passation et journal en cours.
+- Fait mais non vérifié : —
+- Actions à effet externe : aucune (session cloud sans SSH ni base).
+- Décisions de l'utilisateur prises pendant la session : publication faite plus tard depuis le poste local par une autre session.
+- Arrêté à : début de session.
+- Prochaine action : contrôles étape a.
+- Preuves : `output/2026-09-28-typo-perf/`
 
 ### 2026-09-28 — Claude — Sauvegarde sur GitHub privé
 - Statut : TERMINÉ
