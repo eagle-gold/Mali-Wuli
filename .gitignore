@@ -52,11 +52,6 @@ Thumbs.db
 *.swo
 
 # ========================
-# PRISMA
-# ========================
-backend/prisma/migrations/
-
-# ========================
 # UPLOADS
 # ========================
 backend/uploads/

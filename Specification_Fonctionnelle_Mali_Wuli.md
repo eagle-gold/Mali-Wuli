@@ -81,7 +81,7 @@ L'email et le téléphone ne sont **jamais affichés par défaut**. Chaque membr
 Tout contenu (profil, message, question, réponse, photo, avis d'établissement, événement, offre) peut être **signalé** en deux clics avec un motif. Les signalements arrivent dans une file de modération traitée par l'équipe ; le signaleur est informé du traitement.
 
 ### 4.5 Consentements et données personnelles
-Date de naissance obligatoire à l'inscription ; acceptation horodatée des CGU et de la politique de confidentialité ; principe de minimisation (on ne demande que ce qui sert la mission). Les droits d'accès, de rectification et d'effacement s'exercent auprès de l'équipe (une interface dédiée en libre-service est prévue en V2).
+La date de naissance n'est pas demandée à l'inscription ; acceptation horodatée des CGU et de la politique de confidentialité ; principe de minimisation (on ne demande que ce qui sert la mission). Les droits d'accès, de rectification et d'effacement s'exercent auprès de l'équipe (une interface dédiée en libre-service est prévue en V2).
 
 ---
 

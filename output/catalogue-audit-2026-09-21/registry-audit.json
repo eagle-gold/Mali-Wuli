@@ -1,0 +1,5083 @@
+{
+  "mode": "SIMULATION",
+  "commandeApplication": "npm run education:reconcile:mali-registries -- --apply",
+  "paysCode": "ML",
+  "fichesAnalysees": 20157,
+  "aretesRetenues": 103,
+  "groupesRetenus": 103,
+  "fusionsPrevues": 103,
+  "fusionsEffectuees": 0,
+  "exclusionsParRaison": {
+    "administration-incompatible": 2128,
+    "branche-distincte": 23,
+    "clusters-2023-concurrents": 475,
+    "coordonnees-manquantes": 63,
+    "cycles-non-complementaires": 16,
+    "distance-superieure-100m": 29,
+    "nom-generique": 3
+  },
+  "plans": [
+    {
+      "ids": [
+        "ml-osm-0b83c700051cdf0aec912831",
+        "ml-osm-ddca7f204af575091781112e"
+      ],
+      "canoniqueId": "ml-osm-0b83c700051cdf0aec912831",
+      "doublonIds": [
+        "ml-osm-ddca7f204af575091781112e"
+      ],
+      "criteres": [
+        "cycles-complementaires-2013"
+      ],
+      "raisonCanonique": "ancienne-id-stable",
+      "canonique": {
+        "id": "ml-osm-0b83c700051cdf0aec912831",
+        "nom": "NANGOLA [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-ddca7f204af575091781112e",
+          "nom": "NANGOLA [2ème C]",
+          "sources": [
+            "hotosm-mali-education",
+            "unicef-men-mali-schools-2013"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-30d0282263c7ae247f22a112",
+        "ml-osm-e958e6651ca7bd7f2906d8e9"
+      ],
+      "canoniqueId": "ml-osm-e958e6651ca7bd7f2906d8e9",
+      "doublonIds": [
+        "ml-osm-30d0282263c7ae247f22a112"
+      ],
+      "criteres": [
+        "cycles-complementaires-2013"
+      ],
+      "raisonCanonique": "ancienne-id-stable",
+      "canonique": {
+        "id": "ml-osm-e958e6651ca7bd7f2906d8e9",
+        "nom": "MADERSA TOUL COURAN WAL HADISS DIONCOULANE II [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-30d0282263c7ae247f22a112",
+          "nom": "MADERSA TOUL COURAN WAL HADISS DIONCOULANE II [1er C]",
+          "sources": [
+            "hotosm-mali-education",
+            "unicef-men-mali-schools-2013"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-35cd6a47965df4379cb6425c",
+        "ml-osm-8aa0d24d8aca7bdeae75161e"
+      ],
+      "canoniqueId": "ml-osm-35cd6a47965df4379cb6425c",
+      "doublonIds": [
+        "ml-osm-8aa0d24d8aca7bdeae75161e"
+      ],
+      "criteres": [
+        "cycles-complementaires-2013"
+      ],
+      "raisonCanonique": "fiche-plus-riche",
+      "canonique": {
+        "id": "ml-osm-35cd6a47965df4379cb6425c",
+        "nom": "N'GOLOBOUGOU [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-8aa0d24d8aca7bdeae75161e",
+          "nom": "N'GOLOBOUGOU [1er C]",
+          "sources": [
+            "hotosm-mali-education",
+            "unicef-men-mali-schools-2013"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-504a10483a14edb11ed6aeb4",
+        "ml-osm-e6bdcaa9886ad176123a4a53"
+      ],
+      "canoniqueId": "ml-osm-504a10483a14edb11ed6aeb4",
+      "doublonIds": [
+        "ml-osm-e6bdcaa9886ad176123a4a53"
+      ],
+      "criteres": [
+        "cycles-complementaires-2013"
+      ],
+      "raisonCanonique": "ancienne-id-stable",
+      "canonique": {
+        "id": "ml-osm-504a10483a14edb11ed6aeb4",
+        "nom": "SABIL EL HIDAYATE [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-e6bdcaa9886ad176123a4a53",
+          "nom": "SABIL EL HIDAYATE [2ème C]",
+          "sources": [
+            "hotosm-mali-education",
+            "unicef-men-mali-schools-2013"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-56ec8f05ebe53feeb0173f11",
+        "ml-osm-f33313dadca142e5ee208f7c"
+      ],
+      "canoniqueId": "ml-osm-56ec8f05ebe53feeb0173f11",
+      "doublonIds": [
+        "ml-osm-f33313dadca142e5ee208f7c"
+      ],
+      "criteres": [
+        "cycles-complementaires-2013"
+      ],
+      "raisonCanonique": "ancienne-id-stable",
+      "canonique": {
+        "id": "ml-osm-56ec8f05ebe53feeb0173f11",
+        "nom": "N'TOBOUGOU [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-f33313dadca142e5ee208f7c",
+          "nom": "N'TOBOUGOU [2ème C]",
+          "sources": [
+            "hotosm-mali-education",
+            "unicef-men-mali-schools-2013"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-7171ef316000003f0549eb45",
+        "ml-osm-7435368a5f9bec26c3ef2197"
+      ],
+      "canoniqueId": "ml-osm-7171ef316000003f0549eb45",
+      "doublonIds": [
+        "ml-osm-7435368a5f9bec26c3ef2197"
+      ],
+      "criteres": [
+        "cycles-complementaires-2013"
+      ],
+      "raisonCanonique": "fiche-plus-riche",
+      "canonique": {
+        "id": "ml-osm-7171ef316000003f0549eb45",
+        "nom": "Dioïla A [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-7435368a5f9bec26c3ef2197",
+          "nom": "Dioïla ''A'' [1er C]",
+          "sources": [
+            "hotosm-mali-education",
+            "unicef-men-mali-schools-2013"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-7448b78fdf4d21fbefd0521a",
+        "ml-osm-79208326f3042e0783f31041"
+      ],
+      "canoniqueId": "ml-osm-7448b78fdf4d21fbefd0521a",
+      "doublonIds": [
+        "ml-osm-79208326f3042e0783f31041"
+      ],
+      "criteres": [
+        "cycles-complementaires-2013"
+      ],
+      "raisonCanonique": "ancienne-id-stable",
+      "canonique": {
+        "id": "ml-osm-7448b78fdf4d21fbefd0521a",
+        "nom": "TOMBOUCTOU",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-79208326f3042e0783f31041",
+          "nom": "TOMBOUCTOU",
+          "sources": [
+            "hotosm-mali-education",
+            "unicef-men-mali-schools-2013"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-7c4d483457cfb9034a1a2cba",
+        "ml-osm-ec0ad3307cee71e5e8e79143"
+      ],
+      "canoniqueId": "ml-osm-7c4d483457cfb9034a1a2cba",
+      "doublonIds": [
+        "ml-osm-ec0ad3307cee71e5e8e79143"
+      ],
+      "criteres": [
+        "cycles-complementaires-2013"
+      ],
+      "raisonCanonique": "ancienne-id-stable",
+      "canonique": {
+        "id": "ml-osm-7c4d483457cfb9034a1a2cba",
+        "nom": "Sabil Salam[1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-ec0ad3307cee71e5e8e79143",
+          "nom": "SABIL SALAM [2ème C]",
+          "sources": [
+            "hotosm-mali-education",
+            "ocha-men-mali-schools-2023",
+            "unicef-men-mali-schools-2013"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-95d6b640693ab5505dc8e388",
+        "ml-osm-f3f78d5ac04f912959388dea"
+      ],
+      "canoniqueId": "ml-osm-95d6b640693ab5505dc8e388",
+      "doublonIds": [
+        "ml-osm-f3f78d5ac04f912959388dea"
+      ],
+      "criteres": [
+        "cycles-complementaires-2013"
+      ],
+      "raisonCanonique": "fiche-plus-riche",
+      "canonique": {
+        "id": "ml-osm-95d6b640693ab5505dc8e388",
+        "nom": "TOUNTO [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-f3f78d5ac04f912959388dea",
+          "nom": "Tounto",
+          "sources": [
+            "hotosm-mali-education",
+            "unicef-men-mali-schools-2013"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-003742b7a6f593f068c05d44",
+        "ml-osm-71a536c65821a361ddc9633a"
+      ],
+      "canoniqueId": "ml-osm-71a536c65821a361ddc9633a",
+      "doublonIds": [
+        "ml-osm-003742b7a6f593f068c05d44"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-71a536c65821a361ddc9633a",
+        "nom": "DANDERESSO [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-003742b7a6f593f068c05d44",
+          "nom": "DANDERESSO [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-02d5563e5802a6260c928916",
+        "ml-osm-fcbc1a5ad70d886dbd45cdb8"
+      ],
+      "canoniqueId": "ml-osm-fcbc1a5ad70d886dbd45cdb8",
+      "doublonIds": [
+        "ml-osm-02d5563e5802a6260c928916"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-fcbc1a5ad70d886dbd45cdb8",
+        "nom": "TEGUE [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-02d5563e5802a6260c928916",
+          "nom": "TEGUE [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-033b4f9db9a2f6633598304c",
+        "ml-osm-584245dea63e6d261e208e2d"
+      ],
+      "canoniqueId": "ml-osm-033b4f9db9a2f6633598304c",
+      "doublonIds": [
+        "ml-osm-584245dea63e6d261e208e2d"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-033b4f9db9a2f6633598304c",
+        "nom": "DIENA [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-584245dea63e6d261e208e2d",
+          "nom": "DIENA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-04425b6e9bc5f464a0fb1203",
+        "ml-osm-9672c830d7879451e086442d"
+      ],
+      "canoniqueId": "ml-osm-9672c830d7879451e086442d",
+      "doublonIds": [
+        "ml-osm-04425b6e9bc5f464a0fb1203"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-9672c830d7879451e086442d",
+        "nom": "MATOMO [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-04425b6e9bc5f464a0fb1203",
+          "nom": "MATOMO [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-04b8f5340e43f8d4619802c6",
+        "ml-osm-49adbc16045c0b5f0412d7ed"
+      ],
+      "canoniqueId": "ml-osm-04b8f5340e43f8d4619802c6",
+      "doublonIds": [
+        "ml-osm-49adbc16045c0b5f0412d7ed"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-04b8f5340e43f8d4619802c6",
+        "nom": "MEDINE [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-49adbc16045c0b5f0412d7ed",
+          "nom": "MEDINE [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-0536b9711067af966ec6d320",
+        "ml-osm-bf692f3d2a4e96e8dfaad24d"
+      ],
+      "canoniqueId": "ml-osm-bf692f3d2a4e96e8dfaad24d",
+      "doublonIds": [
+        "ml-osm-0536b9711067af966ec6d320"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-bf692f3d2a4e96e8dfaad24d",
+        "nom": "SANANKOUROUNI",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-0536b9711067af966ec6d320",
+          "nom": "SANANKOUROUNI [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-061c5afef7ca978895138747",
+        "ml-osm-29509fff814e54f8a98ac88e"
+      ],
+      "canoniqueId": "ml-osm-29509fff814e54f8a98ac88e",
+      "doublonIds": [
+        "ml-osm-061c5afef7ca978895138747"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-29509fff814e54f8a98ac88e",
+        "nom": "BENDIELY",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-061c5afef7ca978895138747",
+          "nom": "BENDIELY [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-508c1d632a1c32f1b08254f5",
+        "ml-registre-394f883e1862a24975eebd88"
+      ],
+      "canoniqueId": "ml-registre-394f883e1862a24975eebd88",
+      "doublonIds": [
+        "ml-osm-508c1d632a1c32f1b08254f5"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-394f883e1862a24975eebd88",
+        "nom": "HAMDALLAYE",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-508c1d632a1c32f1b08254f5",
+          "nom": "HAMDALLAYE [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-0780b4aef2ac59901de1fde5",
+        "ml-osm-1c68b8173a88cbd7993df657"
+      ],
+      "canoniqueId": "ml-osm-1c68b8173a88cbd7993df657",
+      "doublonIds": [
+        "ml-osm-0780b4aef2ac59901de1fde5"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-1c68b8173a88cbd7993df657",
+        "nom": "MANDELA [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-0780b4aef2ac59901de1fde5",
+          "nom": "MANDELA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-08337c6934eecde9005088f3",
+        "ml-osm-71d1c5cfa331e2e2d82b0e61"
+      ],
+      "canoniqueId": "ml-osm-08337c6934eecde9005088f3",
+      "doublonIds": [
+        "ml-osm-71d1c5cfa331e2e2d82b0e61"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-08337c6934eecde9005088f3",
+        "nom": "TOFOLA [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-71d1c5cfa331e2e2d82b0e61",
+          "nom": "TOFOLA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-09dab1f721fb53f6b16fb97b",
+        "ml-osm-e79d68203281262dfb2762c7"
+      ],
+      "canoniqueId": "ml-osm-09dab1f721fb53f6b16fb97b",
+      "doublonIds": [
+        "ml-osm-e79d68203281262dfb2762c7"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-09dab1f721fb53f6b16fb97b",
+        "nom": "BOUGOUDALE [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-e79d68203281262dfb2762c7",
+          "nom": "BOUGOUDALE [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-0a01c6225d63576855155107",
+        "ml-osm-c697b816dc2d4d4436b8b7f3"
+      ],
+      "canoniqueId": "ml-osm-0a01c6225d63576855155107",
+      "doublonIds": [
+        "ml-osm-c697b816dc2d4d4436b8b7f3"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-0a01c6225d63576855155107",
+        "nom": "SEREKENI",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-c697b816dc2d4d4436b8b7f3",
+          "nom": "SEREKENI [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-115cb1da7696d6589626a9f5",
+        "ml-osm-4294c873aa3062d18d8621f7"
+      ],
+      "canoniqueId": "ml-osm-4294c873aa3062d18d8621f7",
+      "doublonIds": [
+        "ml-osm-115cb1da7696d6589626a9f5"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-4294c873aa3062d18d8621f7",
+        "nom": "KREMIS [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-115cb1da7696d6589626a9f5",
+          "nom": "KREMIS [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-1171cc8381aa265b30026a72",
+        "ml-osm-a6496bccfa6462c30002ce79"
+      ],
+      "canoniqueId": "ml-osm-a6496bccfa6462c30002ce79",
+      "doublonIds": [
+        "ml-osm-1171cc8381aa265b30026a72"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-a6496bccfa6462c30002ce79",
+        "nom": "DINDANKO",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-1171cc8381aa265b30026a72",
+          "nom": "DINDANKO [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-12106e6e182e3993eb647a4f",
+        "ml-osm-c555b6ab47d003fcccd7efd7"
+      ],
+      "canoniqueId": "ml-osm-c555b6ab47d003fcccd7efd7",
+      "doublonIds": [
+        "ml-osm-12106e6e182e3993eb647a4f"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-c555b6ab47d003fcccd7efd7",
+        "nom": "SONINKOURA [1er C]/B",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-12106e6e182e3993eb647a4f",
+          "nom": "SONINKOURA [2ème C]ycle B",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-248150cadb3f73a429b9c7a8",
+        "ml-osm-c55e8b55cdf814402811b830"
+      ],
+      "canoniqueId": "ml-osm-248150cadb3f73a429b9c7a8",
+      "doublonIds": [
+        "ml-osm-c55e8b55cdf814402811b830"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-248150cadb3f73a429b9c7a8",
+        "nom": "KOLA",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-c55e8b55cdf814402811b830",
+          "nom": "KOLA [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-1423aefb5cd3b11402a25b1d",
+        "ml-osm-4d43bd1cb92fb471c87f5a17"
+      ],
+      "canoniqueId": "ml-osm-4d43bd1cb92fb471c87f5a17",
+      "doublonIds": [
+        "ml-osm-1423aefb5cd3b11402a25b1d"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-4d43bd1cb92fb471c87f5a17",
+        "nom": "Yiringasso [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-1423aefb5cd3b11402a25b1d",
+          "nom": "Yiringasso [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-15e0f56ccd71bc0a44e6a945",
+        "ml-registre-106b0a852c0c1fb0176cafcd"
+      ],
+      "canoniqueId": "ml-registre-106b0a852c0c1fb0176cafcd",
+      "doublonIds": [
+        "ml-osm-15e0f56ccd71bc0a44e6a945"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-106b0a852c0c1fb0176cafcd",
+        "nom": "Ouatialy",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-15e0f56ccd71bc0a44e6a945",
+          "nom": "OUATIALY [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-15fa1d7665db28f546901bc6",
+        "ml-osm-362bc9e956a378fea47bb2c6"
+      ],
+      "canoniqueId": "ml-osm-362bc9e956a378fea47bb2c6",
+      "doublonIds": [
+        "ml-osm-15fa1d7665db28f546901bc6"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-362bc9e956a378fea47bb2c6",
+        "nom": "Lofine (1er cycle)",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-15fa1d7665db28f546901bc6",
+          "nom": "LOFINE [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-1643bacb6f22c97f8c7fbc15",
+        "ml-registre-6b232467dca71b22cab149e2"
+      ],
+      "canoniqueId": "ml-registre-6b232467dca71b22cab149e2",
+      "doublonIds": [
+        "ml-osm-1643bacb6f22c97f8c7fbc15"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-6b232467dca71b22cab149e2",
+        "nom": "AÏTE",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-1643bacb6f22c97f8c7fbc15",
+          "nom": "AÏTE [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-178b26d13e5bc57082da935c",
+        "ml-registre-a7de823d485059b9c1db34b5"
+      ],
+      "canoniqueId": "ml-registre-a7de823d485059b9c1db34b5",
+      "doublonIds": [
+        "ml-osm-178b26d13e5bc57082da935c"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-a7de823d485059b9c1db34b5",
+        "nom": "Médine I",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-178b26d13e5bc57082da935c",
+          "nom": "MEDINE [2ème C]ycle I",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-199a1f13a2af6a24d313df93",
+        "ml-registre-0b57463bcac366ab84c5ebcc"
+      ],
+      "canoniqueId": "ml-registre-0b57463bcac366ab84c5ebcc",
+      "doublonIds": [
+        "ml-osm-199a1f13a2af6a24d313df93"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-0b57463bcac366ab84c5ebcc",
+        "nom": "Koumbia 2è C",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-199a1f13a2af6a24d313df93",
+          "nom": "KOUMBIA [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-6702b988b051838af4f5b56b",
+        "ml-osm-7d5784387df9df2b813abdf4"
+      ],
+      "canoniqueId": "ml-osm-6702b988b051838af4f5b56b",
+      "doublonIds": [
+        "ml-osm-7d5784387df9df2b813abdf4"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-6702b988b051838af4f5b56b",
+        "nom": "BANZANA",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-7d5784387df9df2b813abdf4",
+          "nom": "BANZANA [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-1c9010927763dbf2c95e800d",
+        "ml-registre-f64c8e5532507e9640b7b927"
+      ],
+      "canoniqueId": "ml-registre-f64c8e5532507e9640b7b927",
+      "doublonIds": [
+        "ml-osm-1c9010927763dbf2c95e800d"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-f64c8e5532507e9640b7b927",
+        "nom": "Loutana",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-1c9010927763dbf2c95e800d",
+          "nom": "LOUTANA [1er C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-1d7b52e5338d3396638f91a2",
+        "ml-osm-639ef7c33f3e79b1d3611cd0"
+      ],
+      "canoniqueId": "ml-osm-639ef7c33f3e79b1d3611cd0",
+      "doublonIds": [
+        "ml-osm-1d7b52e5338d3396638f91a2"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-639ef7c33f3e79b1d3611cd0",
+        "nom": "BANGA",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-1d7b52e5338d3396638f91a2",
+          "nom": "BANGA [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-1e04750c36b0dc7a21690af2",
+        "ml-osm-a42d99c754468af20ac78416"
+      ],
+      "canoniqueId": "ml-osm-1e04750c36b0dc7a21690af2",
+      "doublonIds": [
+        "ml-osm-a42d99c754468af20ac78416"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-1e04750c36b0dc7a21690af2",
+        "nom": "MAFELENI [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-a42d99c754468af20ac78416",
+          "nom": "MAFELENI [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-1e6cb4e46323b14f712251cb",
+        "ml-osm-98301548f039090678b84f9b"
+      ],
+      "canoniqueId": "ml-osm-1e6cb4e46323b14f712251cb",
+      "doublonIds": [
+        "ml-osm-98301548f039090678b84f9b"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-1e6cb4e46323b14f712251cb",
+        "nom": "SANSANKIDE",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-98301548f039090678b84f9b",
+          "nom": "SANSANKIDE [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-1f1ee24a163c4c99d9fce040",
+        "ml-osm-eeec84ec1ad1775dae5ed86e"
+      ],
+      "canoniqueId": "ml-osm-1f1ee24a163c4c99d9fce040",
+      "doublonIds": [
+        "ml-osm-eeec84ec1ad1775dae5ed86e"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-1f1ee24a163c4c99d9fce040",
+        "nom": "FIGUIRA - CORO [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-eeec84ec1ad1775dae5ed86e",
+          "nom": "FIGUIRA-CORO [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-25f9ee81f089ea516aa47405",
+        "ml-registre-707c1bab3218eb899b305203"
+      ],
+      "canoniqueId": "ml-registre-707c1bab3218eb899b305203",
+      "doublonIds": [
+        "ml-osm-25f9ee81f089ea516aa47405"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-707c1bab3218eb899b305203",
+        "nom": "BÔ SANGARE A",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-25f9ee81f089ea516aa47405",
+          "nom": "BÔ SANGARE [1er C]ycle A",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-7fc8fd69bbbd49da1994610d",
+        "ml-registre-7c27e12fe4274acbe21d94fd"
+      ],
+      "canoniqueId": "ml-registre-7c27e12fe4274acbe21d94fd",
+      "doublonIds": [
+        "ml-osm-7fc8fd69bbbd49da1994610d"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-7c27e12fe4274acbe21d94fd",
+        "nom": "MAKANA",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-7fc8fd69bbbd49da1994610d",
+          "nom": "MAKANA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-27f9f0909cfd61d016d78743",
+        "ml-registre-873250fb7502e5a84efebe31"
+      ],
+      "canoniqueId": "ml-registre-873250fb7502e5a84efebe31",
+      "doublonIds": [
+        "ml-osm-27f9f0909cfd61d016d78743"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-873250fb7502e5a84efebe31",
+        "nom": "Guénéba",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-27f9f0909cfd61d016d78743",
+          "nom": "GUENEBA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-29f01e6cd79608cca348e17a",
+        "ml-osm-db3b4a5b09a5eac06ae47608"
+      ],
+      "canoniqueId": "ml-osm-29f01e6cd79608cca348e17a",
+      "doublonIds": [
+        "ml-osm-db3b4a5b09a5eac06ae47608"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-29f01e6cd79608cca348e17a",
+        "nom": "DOSSOLA [2ème C] MANSA BOURAMA",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-db3b4a5b09a5eac06ae47608",
+          "nom": "DOSSOLA [1er C]ycle (MANSA BOURAMA)",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-2a0f95c3ced3f27d46e2c569",
+        "ml-osm-b4c0c79a7b8bee2e6431c25b"
+      ],
+      "canoniqueId": "ml-osm-2a0f95c3ced3f27d46e2c569",
+      "doublonIds": [
+        "ml-osm-b4c0c79a7b8bee2e6431c25b"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-2a0f95c3ced3f27d46e2c569",
+        "nom": "SELOFARA",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-b4c0c79a7b8bee2e6431c25b",
+          "nom": "SELOFARA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-2be034e35ec9b0f46cdfa191",
+        "ml-registre-29331ba7ec5b3acd4fe5fd62"
+      ],
+      "canoniqueId": "ml-registre-29331ba7ec5b3acd4fe5fd62",
+      "doublonIds": [
+        "ml-osm-2be034e35ec9b0f46cdfa191"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-29331ba7ec5b3acd4fe5fd62",
+        "nom": "Lobougoula III",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-2be034e35ec9b0f46cdfa191",
+          "nom": "LOBOUGOULA [2ème C]YCLE III",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-2c9cf353c0cbc4bd97028d93",
+        "ml-registre-4bac1ec5951e995dbc0e3ec0"
+      ],
+      "canoniqueId": "ml-registre-4bac1ec5951e995dbc0e3ec0",
+      "doublonIds": [
+        "ml-osm-2c9cf353c0cbc4bd97028d93"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-4bac1ec5951e995dbc0e3ec0",
+        "nom": "Médine B",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-2c9cf353c0cbc4bd97028d93",
+          "nom": "MEDINE [1er C]ycle B",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-2cacf693fa820a43d5dce78f",
+        "ml-osm-70074e195a7dd0ec79d853f6"
+      ],
+      "canoniqueId": "ml-osm-2cacf693fa820a43d5dce78f",
+      "doublonIds": [
+        "ml-osm-70074e195a7dd0ec79d853f6"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-2cacf693fa820a43d5dce78f",
+        "nom": "SOUBALA [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-70074e195a7dd0ec79d853f6",
+          "nom": "SOUBALA [1er C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-2cc1529a8650f1e6f4e78116",
+        "ml-registre-e433c563760f30241bca3eb2"
+      ],
+      "canoniqueId": "ml-registre-e433c563760f30241bca3eb2",
+      "doublonIds": [
+        "ml-osm-2cc1529a8650f1e6f4e78116"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-e433c563760f30241bca3eb2",
+        "nom": "DIABOUGOU",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-2cc1529a8650f1e6f4e78116",
+          "nom": "DIABOUGOU [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-2e494739f723323446579b4f",
+        "ml-registre-df50a0f4c0f8448df5864651"
+      ],
+      "canoniqueId": "ml-registre-df50a0f4c0f8448df5864651",
+      "doublonIds": [
+        "ml-osm-2e494739f723323446579b4f"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-df50a0f4c0f8448df5864651",
+        "nom": "KONOBOUGOU",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-2e494739f723323446579b4f",
+          "nom": "KONOBOUGOU [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-2eecae55883db65bfd46e363",
+        "ml-registre-7a68989cbf3624d006af7c10"
+      ],
+      "canoniqueId": "ml-registre-7a68989cbf3624d006af7c10",
+      "doublonIds": [
+        "ml-osm-2eecae55883db65bfd46e363"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-7a68989cbf3624d006af7c10",
+        "nom": "MED SALLAH",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-2eecae55883db65bfd46e363",
+          "nom": "MED SALLAH [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-31e3b639a28cff7a44268355",
+        "ml-osm-8b3c0aa48c8ba3a3118dee48"
+      ],
+      "canoniqueId": "ml-osm-8b3c0aa48c8ba3a3118dee48",
+      "doublonIds": [
+        "ml-osm-31e3b639a28cff7a44268355"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-8b3c0aa48c8ba3a3118dee48",
+        "nom": "SALAMALE",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-31e3b639a28cff7a44268355",
+          "nom": "SALAMALE [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-331481c7323dfbf93a56477e",
+        "ml-osm-f426cd19f1e5b5f7a4085f60"
+      ],
+      "canoniqueId": "ml-osm-f426cd19f1e5b5f7a4085f60",
+      "doublonIds": [
+        "ml-osm-331481c7323dfbf93a56477e"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-f426cd19f1e5b5f7a4085f60",
+        "nom": "FOUH",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-331481c7323dfbf93a56477e",
+          "nom": "FOUH [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-339dc7e5709f943de6c054e7",
+        "ml-osm-43e7ceeeb0665614f2b51458"
+      ],
+      "canoniqueId": "ml-osm-43e7ceeeb0665614f2b51458",
+      "doublonIds": [
+        "ml-osm-339dc7e5709f943de6c054e7"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-43e7ceeeb0665614f2b51458",
+        "nom": "BEGNOUMA-HAÏRE",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-339dc7e5709f943de6c054e7",
+          "nom": "BEGNOUMA-HAIRE [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-3423366a70ce817cfbd256ff",
+        "ml-osm-75fb2582a674612aed25e6df"
+      ],
+      "canoniqueId": "ml-osm-3423366a70ce817cfbd256ff",
+      "doublonIds": [
+        "ml-osm-75fb2582a674612aed25e6df"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-3423366a70ce817cfbd256ff",
+        "nom": "KOLONDIEBA [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-75fb2582a674612aed25e6df",
+          "nom": "KOLONDIEBA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-388b4576af2b0bcbcaf9d7ff",
+        "ml-osm-98dfe1afef6ccb6abb82d5e7"
+      ],
+      "canoniqueId": "ml-osm-98dfe1afef6ccb6abb82d5e7",
+      "doublonIds": [
+        "ml-osm-388b4576af2b0bcbcaf9d7ff"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-98dfe1afef6ccb6abb82d5e7",
+        "nom": "DEGUELA",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-388b4576af2b0bcbcaf9d7ff",
+          "nom": "DEGUELA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-3aa9698c001b5f44ddf9263e",
+        "ml-osm-e4b31594b2e0644ea0bac54c"
+      ],
+      "canoniqueId": "ml-osm-e4b31594b2e0644ea0bac54c",
+      "doublonIds": [
+        "ml-osm-3aa9698c001b5f44ddf9263e"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-e4b31594b2e0644ea0bac54c",
+        "nom": "SENOSSA",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-3aa9698c001b5f44ddf9263e",
+          "nom": "SENOSSA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-3ba70ce064dd5fab14eed22d",
+        "ml-osm-dcae773af25d80a66c6e8a47"
+      ],
+      "canoniqueId": "ml-osm-3ba70ce064dd5fab14eed22d",
+      "doublonIds": [
+        "ml-osm-dcae773af25d80a66c6e8a47"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-3ba70ce064dd5fab14eed22d",
+        "nom": "KOLOKOBA",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-dcae773af25d80a66c6e8a47",
+          "nom": "KOLOKOBA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-3ff6eeec813e2bac6510978f",
+        "ml-registre-fce50c24191e21bcd6da0fd1"
+      ],
+      "canoniqueId": "ml-registre-fce50c24191e21bcd6da0fd1",
+      "doublonIds": [
+        "ml-osm-3ff6eeec813e2bac6510978f"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-fce50c24191e21bcd6da0fd1",
+        "nom": "BENNA",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-3ff6eeec813e2bac6510978f",
+          "nom": "BENNA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-4c1b296e29a6f7bdb01f44c2",
+        "ml-osm-501620674415daf35c4d2d0c"
+      ],
+      "canoniqueId": "ml-osm-501620674415daf35c4d2d0c",
+      "doublonIds": [
+        "ml-osm-4c1b296e29a6f7bdb01f44c2"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-501620674415daf35c4d2d0c",
+        "nom": "SEGALA [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-4c1b296e29a6f7bdb01f44c2",
+          "nom": "SEGALA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-49d90acbd9d07db960312d0c",
+        "ml-osm-ce7df16e389d61bac6d31681"
+      ],
+      "canoniqueId": "ml-osm-ce7df16e389d61bac6d31681",
+      "doublonIds": [
+        "ml-osm-49d90acbd9d07db960312d0c"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-ce7df16e389d61bac6d31681",
+        "nom": "KOLONI [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-49d90acbd9d07db960312d0c",
+          "nom": "École fondamentale KOLONI [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-4bd9c6732a8b177774bc937f",
+        "ml-osm-c2a5f3da70e37cab44dc9453"
+      ],
+      "canoniqueId": "ml-osm-c2a5f3da70e37cab44dc9453",
+      "doublonIds": [
+        "ml-osm-4bd9c6732a8b177774bc937f"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-c2a5f3da70e37cab44dc9453",
+        "nom": "YIRA - BAYE [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-4bd9c6732a8b177774bc937f",
+          "nom": "YIRA BAYE [1er C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-4ef97679a93d2c4d149daa0a",
+        "ml-registre-0c0586de7373d447eddef71e"
+      ],
+      "canoniqueId": "ml-registre-0c0586de7373d447eddef71e",
+      "doublonIds": [
+        "ml-osm-4ef97679a93d2c4d149daa0a"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-0c0586de7373d447eddef71e",
+        "nom": "Sido-Soninkoura /A",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-4ef97679a93d2c4d149daa0a",
+          "nom": "SIDO-SONINKOURA [1er C]ycle A",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-536ebe466ba8f845b42e3d6d",
+        "ml-osm-a071bf430d60a3700409751f"
+      ],
+      "canoniqueId": "ml-osm-a071bf430d60a3700409751f",
+      "doublonIds": [
+        "ml-osm-536ebe466ba8f845b42e3d6d"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-a071bf430d60a3700409751f",
+        "nom": "KARAGOUANA MALLE [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-536ebe466ba8f845b42e3d6d",
+          "nom": "KARAGOUANA MALLE [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-583937bbd64c4929f183ca53",
+        "ml-osm-6e5139e17dd700047ff4c3c2"
+      ],
+      "canoniqueId": "ml-osm-6e5139e17dd700047ff4c3c2",
+      "doublonIds": [
+        "ml-osm-583937bbd64c4929f183ca53"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-6e5139e17dd700047ff4c3c2",
+        "nom": "BREHIMA OULALE [1er C]/B",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-583937bbd64c4929f183ca53",
+          "nom": "BREHIMA OULALE [2ème C]ycle /B",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-5e0136cff2052f8ebcbf3992",
+        "ml-osm-da7ef965e63ac32088beb244"
+      ],
+      "canoniqueId": "ml-osm-5e0136cff2052f8ebcbf3992",
+      "doublonIds": [
+        "ml-osm-da7ef965e63ac32088beb244"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-5e0136cff2052f8ebcbf3992",
+        "nom": "SONGORE [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-da7ef965e63ac32088beb244",
+          "nom": "SONGORE [1er C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-6104e69717584c24534e7eb5",
+        "ml-osm-7f4ea84d3e8ff3d825766663"
+      ],
+      "canoniqueId": "ml-osm-7f4ea84d3e8ff3d825766663",
+      "doublonIds": [
+        "ml-osm-6104e69717584c24534e7eb5"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-7f4ea84d3e8ff3d825766663",
+        "nom": "KELEKELE [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-6104e69717584c24534e7eb5",
+          "nom": "KELEKELE [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-63bbb24e8afe585d99c3bc61",
+        "ml-osm-ab614ecc651b3deb8a1c29d7"
+      ],
+      "canoniqueId": "ml-osm-ab614ecc651b3deb8a1c29d7",
+      "doublonIds": [
+        "ml-osm-63bbb24e8afe585d99c3bc61"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-ab614ecc651b3deb8a1c29d7",
+        "nom": "MANKOÏNA [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-63bbb24e8afe585d99c3bc61",
+          "nom": "MANKOÏNA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-65861bae9048bcf84b8433be",
+        "ml-osm-8ae373ef3c248b71d8be6c88"
+      ],
+      "canoniqueId": "ml-osm-65861bae9048bcf84b8433be",
+      "doublonIds": [
+        "ml-osm-8ae373ef3c248b71d8be6c88"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-65861bae9048bcf84b8433be",
+        "nom": "YELE [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-8ae373ef3c248b71d8be6c88",
+          "nom": "YELE [1er C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-a4c105659886bfe2c4704b93",
+        "ml-registre-dc9333004c413d9282707590"
+      ],
+      "canoniqueId": "ml-registre-dc9333004c413d9282707590",
+      "doublonIds": [
+        "ml-osm-a4c105659886bfe2c4704b93"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-dc9333004c413d9282707590",
+        "nom": "Dani",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-a4c105659886bfe2c4704b93",
+          "nom": "DANI [1er C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-690c2fa907d2a69b2858e4af",
+        "ml-osm-cea289a7db72f9393a9de1d6"
+      ],
+      "canoniqueId": "ml-osm-cea289a7db72f9393a9de1d6",
+      "doublonIds": [
+        "ml-osm-690c2fa907d2a69b2858e4af"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-cea289a7db72f9393a9de1d6",
+        "nom": "DOBOLO",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-690c2fa907d2a69b2858e4af",
+          "nom": "DOBOLO [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-6e22f727273f713ad85376a9",
+        "ml-osm-c5d4f9095af03e59bfaea5e5"
+      ],
+      "canoniqueId": "ml-osm-c5d4f9095af03e59bfaea5e5",
+      "doublonIds": [
+        "ml-osm-6e22f727273f713ad85376a9"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-c5d4f9095af03e59bfaea5e5",
+        "nom": "KIRANE [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-6e22f727273f713ad85376a9",
+          "nom": "KIRANE [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-6f0c36b40866b88031bf3193",
+        "ml-osm-d8d681d8b05074cc310dea19"
+      ],
+      "canoniqueId": "ml-osm-d8d681d8b05074cc310dea19",
+      "doublonIds": [
+        "ml-osm-6f0c36b40866b88031bf3193"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-d8d681d8b05074cc310dea19",
+        "nom": "SADIOLA MINE [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-6f0c36b40866b88031bf3193",
+          "nom": "SADIOLA MINE [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-73f3d61a097a15461ccce7be",
+        "ml-registre-c590304d14ab7d292ec37257"
+      ],
+      "canoniqueId": "ml-registre-c590304d14ab7d292ec37257",
+      "doublonIds": [
+        "ml-osm-73f3d61a097a15461ccce7be"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-c590304d14ab7d292ec37257",
+        "nom": "Bô SANGARE B",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-73f3d61a097a15461ccce7be",
+          "nom": "Bô SANGARE [1er C]ycle B",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-75c4a66bf73d9cb7ddf4037d",
+        "ml-osm-f371476cd2208ee737ad9bfe"
+      ],
+      "canoniqueId": "ml-osm-75c4a66bf73d9cb7ddf4037d",
+      "doublonIds": [
+        "ml-osm-f371476cd2208ee737ad9bfe"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-75c4a66bf73d9cb7ddf4037d",
+        "nom": "BANDIOUGOULA [2ème C].",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-f371476cd2208ee737ad9bfe",
+          "nom": "BANDIOUGOULA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-7aa2fc9f137ce0d745e0c5d9",
+        "ml-osm-b33389f6d567df04475c1560"
+      ],
+      "canoniqueId": "ml-osm-b33389f6d567df04475c1560",
+      "doublonIds": [
+        "ml-osm-7aa2fc9f137ce0d745e0c5d9"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-b33389f6d567df04475c1560",
+        "nom": "GOUNFAN [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-7aa2fc9f137ce0d745e0c5d9",
+          "nom": "GOUNFAN [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-a8c3d755a85ca1b8a5b34205",
+        "ml-osm-aaaf50ec72c11d94301e331f"
+      ],
+      "canoniqueId": "ml-osm-a8c3d755a85ca1b8a5b34205",
+      "doublonIds": [
+        "ml-osm-aaaf50ec72c11d94301e331f"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-a8c3d755a85ca1b8a5b34205",
+        "nom": "Sanso [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-aaaf50ec72c11d94301e331f",
+          "nom": "Sanso [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-7d59dd4b4a6d05789e345c38",
+        "ml-osm-9d1c42c57ad155d75db80056"
+      ],
+      "canoniqueId": "ml-osm-9d1c42c57ad155d75db80056",
+      "doublonIds": [
+        "ml-osm-7d59dd4b4a6d05789e345c38"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-9d1c42c57ad155d75db80056",
+        "nom": "BORKO [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-7d59dd4b4a6d05789e345c38",
+          "nom": "BORKO [1er C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-7ee74f9db81345462f4cfd75",
+        "ml-registre-616f48879b306a433d8bba4a"
+      ],
+      "canoniqueId": "ml-registre-616f48879b306a433d8bba4a",
+      "doublonIds": [
+        "ml-osm-7ee74f9db81345462f4cfd75"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-616f48879b306a433d8bba4a",
+        "nom": "Lobougoula B",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-7ee74f9db81345462f4cfd75",
+          "nom": "LOBOUGOULA [1er C]ycle ''B''",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-7f774f159fc6758811a34de0",
+        "ml-osm-bb2749d8c3c591efcf98627f"
+      ],
+      "canoniqueId": "ml-osm-7f774f159fc6758811a34de0",
+      "doublonIds": [
+        "ml-osm-bb2749d8c3c591efcf98627f"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-7f774f159fc6758811a34de0",
+        "nom": "TOUN [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-bb2749d8c3c591efcf98627f",
+          "nom": "TOUN [1er C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-8083fa7b4b8f9f9b115660fd",
+        "ml-registre-2772207f9927801967a80c14"
+      ],
+      "canoniqueId": "ml-registre-2772207f9927801967a80c14",
+      "doublonIds": [
+        "ml-osm-8083fa7b4b8f9f9b115660fd"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-2772207f9927801967a80c14",
+        "nom": "BANDIOUGOUFARA",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-8083fa7b4b8f9f9b115660fd",
+          "nom": "BANDIOUGOUFARA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-831e7b0e1d2ddfde18350401",
+        "ml-registre-33fa090f7f6adfaf17376282"
+      ],
+      "canoniqueId": "ml-registre-33fa090f7f6adfaf17376282",
+      "doublonIds": [
+        "ml-osm-831e7b0e1d2ddfde18350401"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-33fa090f7f6adfaf17376282",
+        "nom": "Médine A",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-831e7b0e1d2ddfde18350401",
+          "nom": "MEDINE[1er C]ycle A",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-8398bee8baf186f4714a4f7d",
+        "ml-osm-fc0a014dba073d4b866e7dcc"
+      ],
+      "canoniqueId": "ml-osm-8398bee8baf186f4714a4f7d",
+      "doublonIds": [
+        "ml-osm-fc0a014dba073d4b866e7dcc"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-8398bee8baf186f4714a4f7d",
+        "nom": "BANANCORO [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-fc0a014dba073d4b866e7dcc",
+          "nom": "BANANCORO [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-888f071e68465e8d94c5e993",
+        "ml-osm-cd0a4c111892e3ceef69080a"
+      ],
+      "canoniqueId": "ml-osm-888f071e68465e8d94c5e993",
+      "doublonIds": [
+        "ml-osm-cd0a4c111892e3ceef69080a"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-888f071e68465e8d94c5e993",
+        "nom": "DIOULAFOUNDOUBA [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-cd0a4c111892e3ceef69080a",
+          "nom": "DIOULAFOUNDOUBA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-8d9c0565e741af5f9fddf755",
+        "ml-registre-4e71671fddd82bb1b83a34e6"
+      ],
+      "canoniqueId": "ml-registre-4e71671fddd82bb1b83a34e6",
+      "doublonIds": [
+        "ml-osm-8d9c0565e741af5f9fddf755"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-4e71671fddd82bb1b83a34e6",
+        "nom": "Dologou",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-8d9c0565e741af5f9fddf755",
+          "nom": "DOLOGOU [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-94449226e9e6cc6800a37281",
+        "ml-osm-df562aa478ba5aa9929472a1"
+      ],
+      "canoniqueId": "ml-osm-94449226e9e6cc6800a37281",
+      "doublonIds": [
+        "ml-osm-df562aa478ba5aa9929472a1"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-94449226e9e6cc6800a37281",
+        "nom": "WOLA",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-df562aa478ba5aa9929472a1",
+          "nom": "WOLA [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-95a3dfd300cfd5d66ea91e15",
+        "ml-registre-888669f59159d4eea25ed232"
+      ],
+      "canoniqueId": "ml-registre-888669f59159d4eea25ed232",
+      "doublonIds": [
+        "ml-osm-95a3dfd300cfd5d66ea91e15"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-888669f59159d4eea25ed232",
+        "nom": "KIRANE C",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-95a3dfd300cfd5d66ea91e15",
+          "nom": "KIRANE [1er C]ycle C",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-9d6d2d9180bea1ff86cc7114",
+        "ml-osm-d11af1e4682c0a8f61bd2dc3"
+      ],
+      "canoniqueId": "ml-osm-d11af1e4682c0a8f61bd2dc3",
+      "doublonIds": [
+        "ml-osm-9d6d2d9180bea1ff86cc7114"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-d11af1e4682c0a8f61bd2dc3",
+        "nom": "OUARALA",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-9d6d2d9180bea1ff86cc7114",
+          "nom": "OUARALA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-a11f1ce7ccf9be4e906fd116",
+        "ml-registre-409fdd30c7e78321a796c9e4"
+      ],
+      "canoniqueId": "ml-registre-409fdd30c7e78321a796c9e4",
+      "doublonIds": [
+        "ml-osm-a11f1ce7ccf9be4e906fd116"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-409fdd30c7e78321a796c9e4",
+        "nom": "DIALANIKORO",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-a11f1ce7ccf9be4e906fd116",
+          "nom": "DIALANIKORO [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-a55a586c6d22f5d938a099c9",
+        "ml-registre-f64f816c2752391517bb8b8e"
+      ],
+      "canoniqueId": "ml-registre-f64f816c2752391517bb8b8e",
+      "doublonIds": [
+        "ml-osm-a55a586c6d22f5d938a099c9"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-f64f816c2752391517bb8b8e",
+        "nom": "SEKOU",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-a55a586c6d22f5d938a099c9",
+          "nom": "SEKOU [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-a5ecfd25d32ae621b2dc7a4d",
+        "ml-registre-e83d5624c134d3538cffcc62"
+      ],
+      "canoniqueId": "ml-registre-e83d5624c134d3538cffcc62",
+      "doublonIds": [
+        "ml-osm-a5ecfd25d32ae621b2dc7a4d"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-e83d5624c134d3538cffcc62",
+        "nom": "Lobougoula A",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-a5ecfd25d32ae621b2dc7a4d",
+          "nom": "LOBOUGOULA [1er C]ycle A",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-a7d8aa2818562fea53e02c68",
+        "ml-registre-ed0921831cb4b914f61b26d2"
+      ],
+      "canoniqueId": "ml-registre-ed0921831cb4b914f61b26d2",
+      "doublonIds": [
+        "ml-osm-a7d8aa2818562fea53e02c68"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-ed0921831cb4b914f61b26d2",
+        "nom": "BLADIE TIEMALA 2è Cycle",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-a7d8aa2818562fea53e02c68",
+          "nom": "BLADIE TIEMALA [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-ae299f496c048d7e2b436d17",
+        "ml-osm-ee1bfe405beb1f743114a66f"
+      ],
+      "canoniqueId": "ml-osm-ee1bfe405beb1f743114a66f",
+      "doublonIds": [
+        "ml-osm-ae299f496c048d7e2b436d17"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-ee1bfe405beb1f743114a66f",
+        "nom": "FARABALA COURA [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-ae299f496c048d7e2b436d17",
+          "nom": "FARABALA - COURA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-afd47fccea3b566249898216",
+        "ml-registre-37a78318e796e63da535c63c"
+      ],
+      "canoniqueId": "ml-registre-37a78318e796e63da535c63c",
+      "doublonIds": [
+        "ml-osm-afd47fccea3b566249898216"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-37a78318e796e63da535c63c",
+        "nom": "Bagadadji /B",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-afd47fccea3b566249898216",
+          "nom": "BAGADADJI [1er C]ycle B",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-bc4358987c3a11b2b4b55abd",
+        "ml-osm-e73feb9b8d12ca22d92ffbae"
+      ],
+      "canoniqueId": "ml-osm-bc4358987c3a11b2b4b55abd",
+      "doublonIds": [
+        "ml-osm-e73feb9b8d12ca22d92ffbae"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-bc4358987c3a11b2b4b55abd",
+        "nom": "AMANI",
+        "sources": [
+          "hotosm-mali-education",
+          "ocha-men-mali-schools-2023"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-e73feb9b8d12ca22d92ffbae",
+          "nom": "AMANI [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-bf573fd31624d607e7e5b123",
+        "ml-osm-c142196058070c0fdca29d0c"
+      ],
+      "canoniqueId": "ml-osm-c142196058070c0fdca29d0c",
+      "doublonIds": [
+        "ml-osm-bf573fd31624d607e7e5b123"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-c142196058070c0fdca29d0c",
+        "nom": "SERIBILA",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-bf573fd31624d607e7e5b123",
+          "nom": "SERIBILA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-c0ba16c611bf6c442977e6bc",
+        "ml-registre-2cdca89780a4e04c449d0325"
+      ],
+      "canoniqueId": "ml-registre-2cdca89780a4e04c449d0325",
+      "doublonIds": [
+        "ml-osm-c0ba16c611bf6c442977e6bc"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-2cdca89780a4e04c449d0325",
+        "nom": "BADOGO",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-c0ba16c611bf6c442977e6bc",
+          "nom": "BADOGO [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-c208fbaac1cbc0cdea4e449c",
+        "ml-osm-c27afd10520bdaf5e13b2df4"
+      ],
+      "canoniqueId": "ml-osm-c208fbaac1cbc0cdea4e449c",
+      "doublonIds": [
+        "ml-osm-c27afd10520bdaf5e13b2df4"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-c208fbaac1cbc0cdea4e449c",
+        "nom": "BALAN-COMANA [1er C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-c27afd10520bdaf5e13b2df4",
+          "nom": "BALAN-COMANA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-c2ba9c5b053fc297a631e8ee",
+        "ml-osm-dc5dde8c24b992a4bef9c003"
+      ],
+      "canoniqueId": "ml-osm-c2ba9c5b053fc297a631e8ee",
+      "doublonIds": [
+        "ml-osm-dc5dde8c24b992a4bef9c003"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-c2ba9c5b053fc297a631e8ee",
+        "nom": "TAMBACARA [2ème C]",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-dc5dde8c24b992a4bef9c003",
+          "nom": "TAMBACARA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-ca7afa680521fc5eece0152c",
+        "ml-registre-dae0351c2e12b606f2bdc71f"
+      ],
+      "canoniqueId": "ml-registre-dae0351c2e12b606f2bdc71f",
+      "doublonIds": [
+        "ml-osm-ca7afa680521fc5eece0152c"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-dae0351c2e12b606f2bdc71f",
+        "nom": "Zanadougou-Kolokoba",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-ca7afa680521fc5eece0152c",
+          "nom": "ZANADOUGOU-KOLOKOBA [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-d6b071ead18db389ec55dd2e",
+        "ml-registre-76bf958cb09f8c5bfe4a1f6f"
+      ],
+      "canoniqueId": "ml-registre-76bf958cb09f8c5bfe4a1f6f",
+      "doublonIds": [
+        "ml-osm-d6b071ead18db389ec55dd2e"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-76bf958cb09f8c5bfe4a1f6f",
+        "nom": "Koundougou",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-d6b071ead18db389ec55dd2e",
+          "nom": "KOUNDOUGOU [1er C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-dd7e16969e32fc09b258d4bc",
+        "ml-osm-ec41fd7cffad8d91544da245"
+      ],
+      "canoniqueId": "ml-osm-dd7e16969e32fc09b258d4bc",
+      "doublonIds": [
+        "ml-osm-ec41fd7cffad8d91544da245"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-osm-dd7e16969e32fc09b258d4bc",
+        "nom": "Balan - Mansala",
+        "sources": [
+          "hotosm-mali-education",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-ec41fd7cffad8d91544da245",
+          "nom": "BALAN MANSALA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-e4f6801facca419466dc9b9d",
+        "ml-registre-a4220828f7b4ee4cf3fb6e5a"
+      ],
+      "canoniqueId": "ml-registre-a4220828f7b4ee4cf3fb6e5a",
+      "doublonIds": [
+        "ml-osm-e4f6801facca419466dc9b9d"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-a4220828f7b4ee4cf3fb6e5a",
+        "nom": "Idiély-Na",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-e4f6801facca419466dc9b9d",
+          "nom": "IDIELY-NA [2ème C]YCLE",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-e6e7ccafb5df2943ced8a07c",
+        "ml-registre-37d0ec0acb6b96fc4ba32d63"
+      ],
+      "canoniqueId": "ml-registre-37d0ec0acb6b96fc4ba32d63",
+      "doublonIds": [
+        "ml-osm-e6e7ccafb5df2943ced8a07c"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-37d0ec0acb6b96fc4ba32d63",
+        "nom": "YANFOLILA A",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-e6e7ccafb5df2943ced8a07c",
+          "nom": "YANFOLILA [1er C]ycle A",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-ec419409554b89ecf407eda9",
+        "ml-registre-30a8517df8b554a25f61ad8f"
+      ],
+      "canoniqueId": "ml-registre-30a8517df8b554a25f61ad8f",
+      "doublonIds": [
+        "ml-osm-ec419409554b89ecf407eda9"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-30a8517df8b554a25f61ad8f",
+        "nom": "Mamassoni Ouest",
+        "sources": [
+          "ocha-men-mali-schools-2023",
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-ec419409554b89ecf407eda9",
+          "nom": "MAMASSONI OUEST [1er C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    },
+    {
+      "ids": [
+        "ml-osm-fae0a694c0a2c205f0ff5133",
+        "ml-registre-2f4c427c27d6b905c11d4d7f"
+      ],
+      "canoniqueId": "ml-registre-2f4c427c27d6b905c11d4d7f",
+      "doublonIds": [
+        "ml-osm-fae0a694c0a2c205f0ff5133"
+      ],
+      "criteres": [
+        "sources-croisees-geolocalisees"
+      ],
+      "raisonCanonique": "source-prioritaire",
+      "canonique": {
+        "id": "ml-registre-2f4c427c27d6b905c11d4d7f",
+        "nom": "YOURI 2è Cycle",
+        "sources": [
+          "unicef-men-mali-schools-2013"
+        ]
+      },
+      "doublons": [
+        {
+          "id": "ml-osm-fae0a694c0a2c205f0ff5133",
+          "nom": "YOURI [2ème C]ycle",
+          "sources": [
+            "hotosm-mali-education"
+          ]
+        }
+      ]
+    }
+  ],
+  "exemplesExclusions": [
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-osm-7c7fdec61801a4c778087bd2",
+        "ml-registre-df50a0f4c0f8448df5864651"
+      ],
+      "nomCampus": "konobougou",
+      "detail": "F1=0, F2=2, lignes=2",
+      "fiches": [
+        {
+          "id": "ml-osm-7c7fdec61801a4c778087bd2",
+          "nom": "KONOBOUGOU"
+        },
+        {
+          "id": "ml-registre-df50a0f4c0f8448df5864651",
+          "nom": "KONOBOUGOU"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-000110ca52ec3b6b7a4baa2c",
+        "ml-registre-5d29fafc38df608c17c9c2d9",
+        "ml-registre-716f80c7b751baf01d04e376",
+        "ml-registre-861fcb06acab3f945359daf0"
+      ],
+      "nomCampus": "le savoir",
+      "detail": "F1=2, F2=2, lignes=4",
+      "fiches": [
+        {
+          "id": "ml-registre-000110ca52ec3b6b7a4baa2c",
+          "nom": "LE SAVOIR"
+        },
+        {
+          "id": "ml-registre-5d29fafc38df608c17c9c2d9",
+          "nom": "LE SAVOIR"
+        },
+        {
+          "id": "ml-registre-716f80c7b751baf01d04e376",
+          "nom": "LE SAVOIR"
+        },
+        {
+          "id": "ml-registre-861fcb06acab3f945359daf0",
+          "nom": "LE SAVOIR"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-03dd7b08e8af764b07b30b3d",
+        "ml-registre-41cb1064bc9634f963cbfbdf",
+        "ml-registre-ea143c9100545d02f32e67ff"
+      ],
+      "nomCampus": "daroul hadis",
+      "detail": "F1=1, F2=2, lignes=3",
+      "fiches": [
+        {
+          "id": "ml-registre-03dd7b08e8af764b07b30b3d",
+          "nom": "DAROUL HADIS"
+        },
+        {
+          "id": "ml-registre-41cb1064bc9634f963cbfbdf",
+          "nom": "DAROUL HADIS"
+        },
+        {
+          "id": "ml-registre-ea143c9100545d02f32e67ff",
+          "nom": "DAROUL HADIS"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-1da323f9dd3f1763e4c641db",
+        "ml-registre-27fb9acfef9210f8d6ee985f",
+        "ml-registre-9e667cf33f7f0647899c0a5e",
+        "ml-registre-da615a08f05112ec4d0ac364"
+      ],
+      "nomCampus": "khaled ben walid",
+      "detail": "F1=2, F2=2, lignes=4",
+      "fiches": [
+        {
+          "id": "ml-registre-1da323f9dd3f1763e4c641db",
+          "nom": "KHALED BEN WALID"
+        },
+        {
+          "id": "ml-registre-27fb9acfef9210f8d6ee985f",
+          "nom": "KHALED BEN WALID"
+        },
+        {
+          "id": "ml-registre-9e667cf33f7f0647899c0a5e",
+          "nom": "Khaled BEN Walid"
+        },
+        {
+          "id": "ml-registre-da615a08f05112ec4d0ac364",
+          "nom": "Khaled BEN Walid"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-2404849632c6bc19fac0d7aa",
+        "ml-registre-5d72c9d5e54bc3c333c050ed",
+        "ml-registre-fde549571ccebb83fb20b371"
+      ],
+      "nomCampus": "la fine fleur",
+      "detail": "F1=3, F2=0, lignes=3",
+      "fiches": [
+        {
+          "id": "ml-registre-2404849632c6bc19fac0d7aa",
+          "nom": "LA FINE FLEUR"
+        },
+        {
+          "id": "ml-registre-5d72c9d5e54bc3c333c050ed",
+          "nom": "LA FINE FLEUR"
+        },
+        {
+          "id": "ml-registre-fde549571ccebb83fb20b371",
+          "nom": "LA FINE FLEUR"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-25c0135adfa1450a9b8ae1ed",
+        "ml-registre-592bc23fa6c66c4eeb6d8654",
+        "ml-registre-de3ad0e2d950cce174883595"
+      ],
+      "nomCampus": "tonthan ii",
+      "detail": "F1=2, F2=1, lignes=3",
+      "fiches": [
+        {
+          "id": "ml-registre-25c0135adfa1450a9b8ae1ed",
+          "nom": "TONTHAN II"
+        },
+        {
+          "id": "ml-registre-592bc23fa6c66c4eeb6d8654",
+          "nom": "TONTHAN II"
+        },
+        {
+          "id": "ml-registre-de3ad0e2d950cce174883595",
+          "nom": "TONTHAN II"
+        }
+      ]
+    },
+    {
+      "raison": "nom-generique",
+      "ids": [
+        "ml-registre-298aa705ed04bcb7427287ca",
+        "ml-registre-d3dfb734d0b341b54610e0c1"
+      ],
+      "nomCampus": "centre",
+      "fiches": [
+        {
+          "id": "ml-registre-298aa705ed04bcb7427287ca",
+          "nom": "CENTRE"
+        },
+        {
+          "id": "ml-registre-d3dfb734d0b341b54610e0c1",
+          "nom": "CENTRE"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-2a0057ba83ce7beb3698421e",
+        "ml-registre-4fa03dd6bf2badfa8508fc92"
+      ],
+      "nomCampus": "complexe scolaire synergie education",
+      "detail": "F1=2, F2=0, lignes=2",
+      "fiches": [
+        {
+          "id": "ml-registre-2a0057ba83ce7beb3698421e",
+          "nom": "COMPLEXE SCOLAIRE SYNERGIE EDUCATION"
+        },
+        {
+          "id": "ml-registre-4fa03dd6bf2badfa8508fc92",
+          "nom": "COMPLEXE SCOLAIRE SYNERGIE EDUCATION"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-496598f8858e38b383db52a6",
+        "ml-registre-bc648c18fc7ca2f3b71625cb"
+      ],
+      "nomCampus": "saoutoul couran",
+      "detail": "F1=2, F2=0, lignes=2",
+      "fiches": [
+        {
+          "id": "ml-registre-496598f8858e38b383db52a6",
+          "nom": "SAOUTOUL COURAN"
+        },
+        {
+          "id": "ml-registre-bc648c18fc7ca2f3b71625cb",
+          "nom": "SAOUTOUL COURAN"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-4e9cf460c83a92bd3e3f6666",
+        "ml-registre-94755d514287bed1fe920ec5",
+        "ml-registre-c3a6f562bb6f86f8afc883f8"
+      ],
+      "nomCampus": "le beledougou",
+      "detail": "F1=2, F2=1, lignes=3",
+      "fiches": [
+        {
+          "id": "ml-registre-4e9cf460c83a92bd3e3f6666",
+          "nom": "LE BELEDOUGOU"
+        },
+        {
+          "id": "ml-registre-94755d514287bed1fe920ec5",
+          "nom": "LE BELEDOUGOU"
+        },
+        {
+          "id": "ml-registre-c3a6f562bb6f86f8afc883f8",
+          "nom": "LE BELEDOUGOU"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-528e8345f154eae8ef88bd24",
+        "ml-registre-c605ef84871404d6ba4f5609"
+      ],
+      "nomCampus": "les chandelles",
+      "detail": "F1=2, F2=0, lignes=2",
+      "fiches": [
+        {
+          "id": "ml-registre-528e8345f154eae8ef88bd24",
+          "nom": "LES CHANDELLES"
+        },
+        {
+          "id": "ml-registre-c605ef84871404d6ba4f5609",
+          "nom": "LES CHANDELLES"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-54423d67c7c016dfa825f3cf",
+        "ml-registre-9183882e6aa76b05d68315dd",
+        "ml-registre-a680f1b7675a6685aca5c824"
+      ],
+      "nomCampus": "saint francois xavier",
+      "detail": "F1=1, F2=2, lignes=3",
+      "fiches": [
+        {
+          "id": "ml-registre-54423d67c7c016dfa825f3cf",
+          "nom": "SAINT FRANCOIS XAVIER"
+        },
+        {
+          "id": "ml-registre-9183882e6aa76b05d68315dd",
+          "nom": "SAINT FRANCOIS XAVIER"
+        },
+        {
+          "id": "ml-registre-a680f1b7675a6685aca5c824",
+          "nom": "SAINT FRANçOIS XAVIER"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-5bc9e63574f89488709bc5e9",
+        "ml-registre-a83dd58641b8abfdb4b231cf",
+        "ml-registre-b83fccc063b19a2c17b49ef9"
+      ],
+      "nomCampus": "kindiafing diawara",
+      "detail": "F1=2, F2=1, lignes=3",
+      "fiches": [
+        {
+          "id": "ml-registre-5bc9e63574f89488709bc5e9",
+          "nom": "KINDIAFING DIAWARA"
+        },
+        {
+          "id": "ml-registre-a83dd58641b8abfdb4b231cf",
+          "nom": "KINDIAFING DIAWARA"
+        },
+        {
+          "id": "ml-registre-b83fccc063b19a2c17b49ef9",
+          "nom": "KINDIAFING DIAWARA"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-5e4375dac8082f531650d69a",
+        "ml-registre-a6ab7e0d4378ce3cae7c0bd3"
+      ],
+      "nomCampus": "privee youssouf diarra",
+      "detail": "F1=2, F2=0, lignes=2",
+      "fiches": [
+        {
+          "id": "ml-registre-5e4375dac8082f531650d69a",
+          "nom": "PRIVEE YOUSSOUF DIARRA"
+        },
+        {
+          "id": "ml-registre-a6ab7e0d4378ce3cae7c0bd3",
+          "nom": "PRIVEE YOUSSOUF DIARRA"
+        }
+      ]
+    },
+    {
+      "raison": "nom-generique",
+      "ids": [
+        "ml-registre-62071efe08aee3a8cbd06481",
+        "ml-registre-788d32d0e33807c3a3189f5e"
+      ],
+      "nomCampus": "e p k",
+      "fiches": [
+        {
+          "id": "ml-registre-62071efe08aee3a8cbd06481",
+          "nom": "E.P.K"
+        },
+        {
+          "id": "ml-registre-788d32d0e33807c3a3189f5e",
+          "nom": "E.P.K"
+        }
+      ]
+    },
+    {
+      "raison": "nom-generique",
+      "ids": [
+        "ml-registre-68ecb46bca28a8a8de91d407",
+        "ml-registre-f9248aa3aaf1d581893b0694"
+      ],
+      "nomCampus": "i n a m",
+      "fiches": [
+        {
+          "id": "ml-registre-68ecb46bca28a8a8de91d407",
+          "nom": "I.N.A.M 2è Cycle"
+        },
+        {
+          "id": "ml-registre-f9248aa3aaf1d581893b0694",
+          "nom": "I.N.A.M"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-6dc17cfff0971824333e252e",
+        "ml-registre-ccd2fde2602539acf948302f"
+      ],
+      "nomCampus": "toua ag adass",
+      "detail": "F1=2, F2=0, lignes=2",
+      "fiches": [
+        {
+          "id": "ml-registre-6dc17cfff0971824333e252e",
+          "nom": "TOUA AG ADASS"
+        },
+        {
+          "id": "ml-registre-ccd2fde2602539acf948302f",
+          "nom": "TOUA AG ADASS"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-738192a4a43a8324ca1df5b5",
+        "ml-registre-80482ef85c59be5af6b3218e",
+        "ml-registre-be085a7a4446e4a4de6e8a07"
+      ],
+      "nomCampus": "nahar djoliba",
+      "detail": "F1=2, F2=1, lignes=3",
+      "fiches": [
+        {
+          "id": "ml-registre-738192a4a43a8324ca1df5b5",
+          "nom": "NAHAR DJOLIBA"
+        },
+        {
+          "id": "ml-registre-80482ef85c59be5af6b3218e",
+          "nom": "NAHAR DJOLIBA"
+        },
+        {
+          "id": "ml-registre-be085a7a4446e4a4de6e8a07",
+          "nom": "NAHAR DJOLIBA"
+        }
+      ]
+    },
+    {
+      "raison": "cycles-non-complementaires",
+      "ids": [
+        "ml-registre-ba098fbc722ee8425b5244d1",
+        "ml-registre-f20242f6afef4ab42563a62a"
+      ],
+      "nomCampus": "nour islamya",
+      "detail": "F1=2, F2=0, lignes=2",
+      "fiches": [
+        {
+          "id": "ml-registre-ba098fbc722ee8425b5244d1",
+          "nom": "NOUR ISLAMYA"
+        },
+        {
+          "id": "ml-registre-f20242f6afef4ab42563a62a",
+          "nom": "NOUR ISLAMYA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-angelots",
+        "ml-registre-4aeeae2733a694825b4fee22"
+      ],
+      "nomCampus": "les angelots",
+      "fiches": [
+        {
+          "id": "ml-angelots",
+          "nom": "Groupe scolaire Les Angelots"
+        },
+        {
+          "id": "ml-registre-4aeeae2733a694825b4fee22",
+          "nom": "Les Angelots"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-complexe-scolaire-mali-univers",
+        "ml-registre-3cf74d907f6665a6738beb73"
+      ],
+      "nomCampus": "complexe scolaire mali univers",
+      "fiches": [
+        {
+          "id": "ml-complexe-scolaire-mali-univers",
+          "nom": "Complexe Scolaire Mali Univers"
+        },
+        {
+          "id": "ml-registre-3cf74d907f6665a6738beb73",
+          "nom": "COMPLEXE SCOLAIRE MALI UNIVERS"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-maarif-korofina",
+        "ml-registre-814fc22b7369a8bad2ce7e87"
+      ],
+      "nomCampus": "college horizon",
+      "fiches": [
+        {
+          "id": "ml-maarif-korofina",
+          "nom": "École Maarif de Türkiye — Campus Korofina"
+        },
+        {
+          "id": "ml-registre-814fc22b7369a8bad2ce7e87",
+          "nom": "COLLEGE . HORIZON"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-000014c0cd24a03f0557d675",
+        "ml-registre-d2fc7b19d1f91259058b4699"
+      ],
+      "nomCampus": "fangadougou",
+      "fiches": [
+        {
+          "id": "ml-osm-000014c0cd24a03f0557d675",
+          "nom": "FANGADOUGOU"
+        },
+        {
+          "id": "ml-registre-d2fc7b19d1f91259058b4699",
+          "nom": "Fangadougou"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-0039c8f8c0f75fff1e83831c",
+        "ml-osm-f9af5d4a351ebbb4bb7ca2b0"
+      ],
+      "nomCampus": "gouele",
+      "fiches": [
+        {
+          "id": "ml-osm-0039c8f8c0f75fff1e83831c",
+          "nom": "GOUELE [2ème C]"
+        },
+        {
+          "id": "ml-osm-f9af5d4a351ebbb4bb7ca2b0",
+          "nom": "GOUELE"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-005806d66e4c5f293a22071d",
+        "ml-osm-e6316a92c92248582531673b"
+      ],
+      "nomCampus": "molobala",
+      "fiches": [
+        {
+          "id": "ml-osm-005806d66e4c5f293a22071d",
+          "nom": "MOLOBALA [1er C]"
+        },
+        {
+          "id": "ml-osm-e6316a92c92248582531673b",
+          "nom": "MOLOBALA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-005806d66e4c5f293a22071d",
+        "ml-registre-d224c7b27546955b5ec48928"
+      ],
+      "nomCampus": "molobala",
+      "fiches": [
+        {
+          "id": "ml-osm-005806d66e4c5f293a22071d",
+          "nom": "MOLOBALA [1er C]"
+        },
+        {
+          "id": "ml-registre-d224c7b27546955b5ec48928",
+          "nom": "MOLOBALA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-e6316a92c92248582531673b",
+        "ml-registre-d224c7b27546955b5ec48928"
+      ],
+      "nomCampus": "molobala",
+      "fiches": [
+        {
+          "id": "ml-osm-e6316a92c92248582531673b",
+          "nom": "MOLOBALA"
+        },
+        {
+          "id": "ml-registre-d224c7b27546955b5ec48928",
+          "nom": "MOLOBALA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-007f57eb51c97e90372f29ec",
+        "ml-registre-362bd9c5705c119eeaf1062f"
+      ],
+      "nomCampus": "lany tounka",
+      "fiches": [
+        {
+          "id": "ml-osm-007f57eb51c97e90372f29ec",
+          "nom": "LANY TOUNKA [1er C]"
+        },
+        {
+          "id": "ml-registre-362bd9c5705c119eeaf1062f",
+          "nom": "LANY TOUNKA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-aa8ba14d2a5462e5afbc01bf",
+        "ml-registre-362bd9c5705c119eeaf1062f"
+      ],
+      "nomCampus": "lany tounka",
+      "fiches": [
+        {
+          "id": "ml-osm-aa8ba14d2a5462e5afbc01bf",
+          "nom": "LANY TOUNKA [2ème C]"
+        },
+        {
+          "id": "ml-registre-362bd9c5705c119eeaf1062f",
+          "nom": "LANY TOUNKA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-007f72e6cf4590669c2cb171",
+        "ml-osm-96a2334836d6eded957a20b2"
+      ],
+      "nomCampus": "ninga",
+      "fiches": [
+        {
+          "id": "ml-osm-007f72e6cf4590669c2cb171",
+          "nom": "NINGA"
+        },
+        {
+          "id": "ml-osm-96a2334836d6eded957a20b2",
+          "nom": "NINGA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-007f72e6cf4590669c2cb171",
+        "ml-registre-1f0d95b53bc1aedc16ba64d0"
+      ],
+      "nomCampus": "ninga",
+      "fiches": [
+        {
+          "id": "ml-osm-007f72e6cf4590669c2cb171",
+          "nom": "NINGA"
+        },
+        {
+          "id": "ml-registre-1f0d95b53bc1aedc16ba64d0",
+          "nom": "Ninga"
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-96a2334836d6eded957a20b2",
+        "ml-registre-1f0d95b53bc1aedc16ba64d0"
+      ],
+      "nomCampus": "ninga",
+      "fiches": [
+        {
+          "id": "ml-osm-96a2334836d6eded957a20b2",
+          "nom": "NINGA"
+        },
+        {
+          "id": "ml-registre-1f0d95b53bc1aedc16ba64d0",
+          "nom": "Ninga"
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-00a141c679ce15cc292f4357",
+        "ml-registre-58917fe13cb5f3fd0678a992"
+      ],
+      "nomCampus": "hamdallaye c",
+      "fiches": [
+        {
+          "id": "ml-osm-00a141c679ce15cc292f4357",
+          "nom": "HAMDALLAYE C"
+        },
+        {
+          "id": "ml-registre-58917fe13cb5f3fd0678a992",
+          "nom": "Hamdallaye C"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-00ab80bd477f740020b9d503",
+        "ml-registre-5ee30d63ff273c0ecef4c687"
+      ],
+      "nomCampus": "mamoire",
+      "fiches": [
+        {
+          "id": "ml-osm-00ab80bd477f740020b9d503",
+          "nom": "MAMOIRE"
+        },
+        {
+          "id": "ml-registre-5ee30d63ff273c0ecef4c687",
+          "nom": "MAMOIRE"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-00d80f833698f11f35de39a6",
+        "ml-registre-4384c950388ebaa54c6985db"
+      ],
+      "nomCampus": "nieguin",
+      "fiches": [
+        {
+          "id": "ml-osm-00d80f833698f11f35de39a6",
+          "nom": "NIEGUIN"
+        },
+        {
+          "id": "ml-registre-4384c950388ebaa54c6985db",
+          "nom": "Nièguin"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-00e8477f22b95587672c7329",
+        "ml-osm-a3c952a79ae6d494358a6a6f"
+      ],
+      "nomCampus": "les savoirs",
+      "fiches": [
+        {
+          "id": "ml-osm-00e8477f22b95587672c7329",
+          "nom": "LES SAVOIRS"
+        },
+        {
+          "id": "ml-osm-a3c952a79ae6d494358a6a6f",
+          "nom": "LES SAVOIRS"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-010811b35d012588f6b705aa",
+        "ml-registre-f0a296cec615852895bd5619"
+      ],
+      "nomCampus": "fangoumba",
+      "fiches": [
+        {
+          "id": "ml-osm-010811b35d012588f6b705aa",
+          "nom": "FANGOUMBA"
+        },
+        {
+          "id": "ml-registre-f0a296cec615852895bd5619",
+          "nom": "FANGOUMBA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-01461573ff6c0f2a93434ca1",
+        "ml-registre-447af51c11b05791899b17e8"
+      ],
+      "nomCampus": "same plantation",
+      "fiches": [
+        {
+          "id": "ml-osm-01461573ff6c0f2a93434ca1",
+          "nom": "SAME PLANTATION [2ème C]"
+        },
+        {
+          "id": "ml-registre-447af51c11b05791899b17e8",
+          "nom": "SAME PLANTATION"
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-0150b1c7493c9bb3eeffa9e0",
+        "ml-registre-181563ad39a73a3537d5cf15"
+      ],
+      "nomCampus": "dogo",
+      "fiches": [
+        {
+          "id": "ml-osm-0150b1c7493c9bb3eeffa9e0",
+          "nom": "DOGO [2ème C]"
+        },
+        {
+          "id": "ml-registre-181563ad39a73a3537d5cf15",
+          "nom": "Dogo"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-0150b1c7493c9bb3eeffa9e0",
+        "ml-registre-24e4fc3c9f2ce32e25ba067f"
+      ],
+      "nomCampus": "dogo",
+      "fiches": [
+        {
+          "id": "ml-osm-0150b1c7493c9bb3eeffa9e0",
+          "nom": "DOGO [2ème C]"
+        },
+        {
+          "id": "ml-registre-24e4fc3c9f2ce32e25ba067f",
+          "nom": "DOGO"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-registre-181563ad39a73a3537d5cf15",
+        "ml-registre-24e4fc3c9f2ce32e25ba067f"
+      ],
+      "nomCampus": "dogo",
+      "fiches": [
+        {
+          "id": "ml-registre-181563ad39a73a3537d5cf15",
+          "nom": "Dogo"
+        },
+        {
+          "id": "ml-registre-24e4fc3c9f2ce32e25ba067f",
+          "nom": "DOGO"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-01900732d10ba1448a46013c",
+        "ml-registre-e51b0c342da2c6b36e0cbfe5"
+      ],
+      "nomCampus": "missira b",
+      "fiches": [
+        {
+          "id": "ml-osm-01900732d10ba1448a46013c",
+          "nom": "MISSIRA [1er C] B"
+        },
+        {
+          "id": "ml-registre-e51b0c342da2c6b36e0cbfe5",
+          "nom": "MISSIRA B"
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-019048b0f49bf437bdaf0c3e",
+        "ml-registre-f7540ce83eed1c0b24a9a010"
+      ],
+      "nomCampus": "finzankoro",
+      "fiches": [
+        {
+          "id": "ml-osm-019048b0f49bf437bdaf0c3e",
+          "nom": "FINZANKORO"
+        },
+        {
+          "id": "ml-registre-f7540ce83eed1c0b24a9a010",
+          "nom": "Finzankoro"
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-01a087dd03d0f81b60a47e9e",
+        "ml-registre-4b823f086a6b9d22b921e7f9"
+      ],
+      "nomCampus": "kapala",
+      "fiches": [
+        {
+          "id": "ml-osm-01a087dd03d0f81b60a47e9e",
+          "nom": "KAPALA [1er C]"
+        },
+        {
+          "id": "ml-registre-4b823f086a6b9d22b921e7f9",
+          "nom": "Kapala"
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-01cf718b75d351386cff240e",
+        "ml-osm-5e993d664a2b5216c12f0e32"
+      ],
+      "nomCampus": "zegoua b",
+      "fiches": [
+        {
+          "id": "ml-osm-01cf718b75d351386cff240e",
+          "nom": "ZEGOUA [2ème C]YCLE B"
+        },
+        {
+          "id": "ml-osm-5e993d664a2b5216c12f0e32",
+          "nom": "ZEGOUA B"
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-01cf718b75d351386cff240e",
+        "ml-registre-5149a311444bd9d4cc83f250"
+      ],
+      "nomCampus": "zegoua b",
+      "fiches": [
+        {
+          "id": "ml-osm-01cf718b75d351386cff240e",
+          "nom": "ZEGOUA [2ème C]YCLE B"
+        },
+        {
+          "id": "ml-registre-5149a311444bd9d4cc83f250",
+          "nom": "Zégoua . \"B\""
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-5e993d664a2b5216c12f0e32",
+        "ml-registre-5149a311444bd9d4cc83f250"
+      ],
+      "nomCampus": "zegoua b",
+      "fiches": [
+        {
+          "id": "ml-osm-5e993d664a2b5216c12f0e32",
+          "nom": "ZEGOUA B"
+        },
+        {
+          "id": "ml-registre-5149a311444bd9d4cc83f250",
+          "nom": "Zégoua . \"B\""
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-01e211592509087799d3f5ad",
+        "ml-registre-701ec63cc64f4816706bf09d"
+      ],
+      "nomCampus": "n tomikorobougou",
+      "fiches": [
+        {
+          "id": "ml-osm-01e211592509087799d3f5ad",
+          "nom": "N'TOMIKOROBOUGOU"
+        },
+        {
+          "id": "ml-registre-701ec63cc64f4816706bf09d",
+          "nom": "N'TOMIKOROBOUGOU"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-01e60804f779a536affc019d",
+        "ml-registre-eac11e9647340797f46971f4"
+      ],
+      "nomCampus": "mederssa de nima bellebougou",
+      "fiches": [
+        {
+          "id": "ml-osm-01e60804f779a536affc019d",
+          "nom": "MEDERSSA de NIMA BELLEBOUGOU"
+        },
+        {
+          "id": "ml-registre-eac11e9647340797f46971f4",
+          "nom": "MEDERSSA DE NIMA BELLEBOUGOU"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-01f9cfe89415a6face038047",
+        "ml-registre-718e5eefb8da02e56b7ea6f3"
+      ],
+      "nomCampus": "djiguiya",
+      "fiches": [
+        {
+          "id": "ml-osm-01f9cfe89415a6face038047",
+          "nom": "DJIGUIYA"
+        },
+        {
+          "id": "ml-registre-718e5eefb8da02e56b7ea6f3",
+          "nom": "Djiguiya"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-01f9cfe89415a6face038047",
+        "ml-registre-a76d1b61c8c037c2802ab2c1"
+      ],
+      "nomCampus": "djiguiya",
+      "fiches": [
+        {
+          "id": "ml-osm-01f9cfe89415a6face038047",
+          "nom": "DJIGUIYA"
+        },
+        {
+          "id": "ml-registre-a76d1b61c8c037c2802ab2c1",
+          "nom": "Djiguiya"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-b749e1b0812679e78223ddb9",
+        "ml-registre-718e5eefb8da02e56b7ea6f3"
+      ],
+      "nomCampus": "djiguiya",
+      "fiches": [
+        {
+          "id": "ml-osm-b749e1b0812679e78223ddb9",
+          "nom": "DJIGUIYA"
+        },
+        {
+          "id": "ml-registre-718e5eefb8da02e56b7ea6f3",
+          "nom": "Djiguiya"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-b749e1b0812679e78223ddb9",
+        "ml-registre-a76d1b61c8c037c2802ab2c1"
+      ],
+      "nomCampus": "djiguiya",
+      "fiches": [
+        {
+          "id": "ml-osm-b749e1b0812679e78223ddb9",
+          "nom": "DJIGUIYA"
+        },
+        {
+          "id": "ml-registre-a76d1b61c8c037c2802ab2c1",
+          "nom": "Djiguiya"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-023fd33b0349ddbaf2eed49b",
+        "ml-osm-87af8c1bc82177a14f3c0cc8"
+      ],
+      "nomCampus": "kona",
+      "fiches": [
+        {
+          "id": "ml-osm-023fd33b0349ddbaf2eed49b",
+          "nom": "KONA"
+        },
+        {
+          "id": "ml-osm-87af8c1bc82177a14f3c0cc8",
+          "nom": "KONA"
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-023fd33b0349ddbaf2eed49b",
+        "ml-registre-3f06336528eaeef8e5e3d9d2"
+      ],
+      "nomCampus": "kona",
+      "fiches": [
+        {
+          "id": "ml-osm-023fd33b0349ddbaf2eed49b",
+          "nom": "KONA"
+        },
+        {
+          "id": "ml-registre-3f06336528eaeef8e5e3d9d2",
+          "nom": "KONA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-87af8c1bc82177a14f3c0cc8",
+        "ml-registre-3f06336528eaeef8e5e3d9d2"
+      ],
+      "nomCampus": "kona",
+      "fiches": [
+        {
+          "id": "ml-osm-87af8c1bc82177a14f3c0cc8",
+          "nom": "KONA"
+        },
+        {
+          "id": "ml-registre-3f06336528eaeef8e5e3d9d2",
+          "nom": "KONA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-025b00d9dafec46a3a15dd75",
+        "ml-osm-14637bcdb4a20e6a4ab531b4"
+      ],
+      "nomCampus": "digan",
+      "fiches": [
+        {
+          "id": "ml-osm-025b00d9dafec46a3a15dd75",
+          "nom": "DIGAN"
+        },
+        {
+          "id": "ml-osm-14637bcdb4a20e6a4ab531b4",
+          "nom": "DIGAN [2ème C]"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-025b00d9dafec46a3a15dd75",
+        "ml-osm-8f5af212384f260004960e49"
+      ],
+      "nomCampus": "digan",
+      "fiches": [
+        {
+          "id": "ml-osm-025b00d9dafec46a3a15dd75",
+          "nom": "DIGAN"
+        },
+        {
+          "id": "ml-osm-8f5af212384f260004960e49",
+          "nom": "DIGAN"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-14637bcdb4a20e6a4ab531b4",
+        "ml-osm-8f5af212384f260004960e49"
+      ],
+      "nomCampus": "digan",
+      "fiches": [
+        {
+          "id": "ml-osm-14637bcdb4a20e6a4ab531b4",
+          "nom": "DIGAN [2ème C]"
+        },
+        {
+          "id": "ml-osm-8f5af212384f260004960e49",
+          "nom": "DIGAN"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-026be0ecdc3a3ddf559b971d",
+        "ml-osm-0bbfc7d8004f780a13fcd415"
+      ],
+      "nomCampus": "dialloube",
+      "fiches": [
+        {
+          "id": "ml-osm-026be0ecdc3a3ddf559b971d",
+          "nom": "DIALLOUBE"
+        },
+        {
+          "id": "ml-osm-0bbfc7d8004f780a13fcd415",
+          "nom": "DIALLOUBE"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-026be0ecdc3a3ddf559b971d",
+        "ml-registre-49be01fbd8d087dc5195b1b7"
+      ],
+      "nomCampus": "dialloube",
+      "fiches": [
+        {
+          "id": "ml-osm-026be0ecdc3a3ddf559b971d",
+          "nom": "DIALLOUBE"
+        },
+        {
+          "id": "ml-registre-49be01fbd8d087dc5195b1b7",
+          "nom": "Dialloubé"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-026be0ecdc3a3ddf559b971d",
+        "ml-registre-fd4f3738732feacecef06c67"
+      ],
+      "nomCampus": "dialloube",
+      "fiches": [
+        {
+          "id": "ml-osm-026be0ecdc3a3ddf559b971d",
+          "nom": "DIALLOUBE"
+        },
+        {
+          "id": "ml-registre-fd4f3738732feacecef06c67",
+          "nom": "Dialloubé"
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-0bbfc7d8004f780a13fcd415",
+        "ml-registre-49be01fbd8d087dc5195b1b7"
+      ],
+      "nomCampus": "dialloube",
+      "fiches": [
+        {
+          "id": "ml-osm-0bbfc7d8004f780a13fcd415",
+          "nom": "DIALLOUBE"
+        },
+        {
+          "id": "ml-registre-49be01fbd8d087dc5195b1b7",
+          "nom": "Dialloubé"
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-0bbfc7d8004f780a13fcd415",
+        "ml-registre-fd4f3738732feacecef06c67"
+      ],
+      "nomCampus": "dialloube",
+      "fiches": [
+        {
+          "id": "ml-osm-0bbfc7d8004f780a13fcd415",
+          "nom": "DIALLOUBE"
+        },
+        {
+          "id": "ml-registre-fd4f3738732feacecef06c67",
+          "nom": "Dialloubé"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-0278f81e63914f75bbccae10",
+        "ml-registre-03dd7b08e8af764b07b30b3d"
+      ],
+      "nomCampus": "daroul hadis",
+      "fiches": [
+        {
+          "id": "ml-osm-0278f81e63914f75bbccae10",
+          "nom": "DAROUL HADIS"
+        },
+        {
+          "id": "ml-registre-03dd7b08e8af764b07b30b3d",
+          "nom": "DAROUL HADIS"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-0278f81e63914f75bbccae10",
+        "ml-registre-05ee0bfccb070c35e1833985"
+      ],
+      "nomCampus": "daroul hadis",
+      "fiches": [
+        {
+          "id": "ml-osm-0278f81e63914f75bbccae10",
+          "nom": "DAROUL HADIS"
+        },
+        {
+          "id": "ml-registre-05ee0bfccb070c35e1833985",
+          "nom": "DAROUL HADIS"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-0278f81e63914f75bbccae10",
+        "ml-registre-41cb1064bc9634f963cbfbdf"
+      ],
+      "nomCampus": "daroul hadis",
+      "fiches": [
+        {
+          "id": "ml-osm-0278f81e63914f75bbccae10",
+          "nom": "DAROUL HADIS"
+        },
+        {
+          "id": "ml-registre-41cb1064bc9634f963cbfbdf",
+          "nom": "DAROUL HADIS"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-0278f81e63914f75bbccae10",
+        "ml-registre-ea143c9100545d02f32e67ff"
+      ],
+      "nomCampus": "daroul hadis",
+      "fiches": [
+        {
+          "id": "ml-osm-0278f81e63914f75bbccae10",
+          "nom": "DAROUL HADIS"
+        },
+        {
+          "id": "ml-registre-ea143c9100545d02f32e67ff",
+          "nom": "DAROUL HADIS"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-0286cef84e09abf1a26ffbba",
+        "ml-registre-6606a3d07cce740c43788546"
+      ],
+      "nomCampus": "boidie",
+      "fiches": [
+        {
+          "id": "ml-osm-0286cef84e09abf1a26ffbba",
+          "nom": "BOIDIE [1er C]"
+        },
+        {
+          "id": "ml-registre-6606a3d07cce740c43788546",
+          "nom": "Boidié"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-0286cef84e09abf1a26ffbba",
+        "ml-registre-adf8c27ad323411f30c08604"
+      ],
+      "nomCampus": "boidie",
+      "fiches": [
+        {
+          "id": "ml-osm-0286cef84e09abf1a26ffbba",
+          "nom": "BOIDIE [1er C]"
+        },
+        {
+          "id": "ml-registre-adf8c27ad323411f30c08604",
+          "nom": "BOIDIE"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-029479c878bf38a32e7adca7",
+        "ml-registre-3215694e8ffd820d834fb70b"
+      ],
+      "nomCampus": "kolobo",
+      "fiches": [
+        {
+          "id": "ml-osm-029479c878bf38a32e7adca7",
+          "nom": "KOLOBO"
+        },
+        {
+          "id": "ml-registre-3215694e8ffd820d834fb70b",
+          "nom": "Kolobo"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-029479c878bf38a32e7adca7",
+        "ml-registre-72df2574fbcb7fa978c6ec08"
+      ],
+      "nomCampus": "kolobo",
+      "fiches": [
+        {
+          "id": "ml-osm-029479c878bf38a32e7adca7",
+          "nom": "KOLOBO"
+        },
+        {
+          "id": "ml-registre-72df2574fbcb7fa978c6ec08",
+          "nom": "Kolobo"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-1708c43e7fabbea002a7b842",
+        "ml-registre-3215694e8ffd820d834fb70b"
+      ],
+      "nomCampus": "kolobo",
+      "fiches": [
+        {
+          "id": "ml-osm-1708c43e7fabbea002a7b842",
+          "nom": "KOLOBO"
+        },
+        {
+          "id": "ml-registre-3215694e8ffd820d834fb70b",
+          "nom": "Kolobo"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-1708c43e7fabbea002a7b842",
+        "ml-registre-72df2574fbcb7fa978c6ec08"
+      ],
+      "nomCampus": "kolobo",
+      "fiches": [
+        {
+          "id": "ml-osm-1708c43e7fabbea002a7b842",
+          "nom": "KOLOBO"
+        },
+        {
+          "id": "ml-registre-72df2574fbcb7fa978c6ec08",
+          "nom": "Kolobo"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-02a1a9d35327a5e338501ca9",
+        "ml-osm-4e334cedaf4c5f72c04d67a1"
+      ],
+      "nomCampus": "dioka",
+      "fiches": [
+        {
+          "id": "ml-osm-02a1a9d35327a5e338501ca9",
+          "nom": "DIOKA"
+        },
+        {
+          "id": "ml-osm-4e334cedaf4c5f72c04d67a1",
+          "nom": "DIOKA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-02d16260c80c8ac54557323e",
+        "ml-registre-94da0d089b91d267c4fe725c"
+      ],
+      "nomCampus": "teskaout",
+      "fiches": [
+        {
+          "id": "ml-osm-02d16260c80c8ac54557323e",
+          "nom": "TESKAOUT"
+        },
+        {
+          "id": "ml-registre-94da0d089b91d267c4fe725c",
+          "nom": "Teskaout"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-02d8851e6c385a8e581ed7c2",
+        "ml-registre-af7bd34246899a43471e3721"
+      ],
+      "nomCampus": "benda",
+      "fiches": [
+        {
+          "id": "ml-osm-02d8851e6c385a8e581ed7c2",
+          "nom": "BENDA"
+        },
+        {
+          "id": "ml-registre-af7bd34246899a43471e3721",
+          "nom": "BENDA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-02f3c56b621394300637ac57",
+        "ml-registre-3d60b8eb6954776fa725fa0d"
+      ],
+      "nomCampus": "flabougou",
+      "fiches": [
+        {
+          "id": "ml-osm-02f3c56b621394300637ac57",
+          "nom": "FLABOUGOU"
+        },
+        {
+          "id": "ml-registre-3d60b8eb6954776fa725fa0d",
+          "nom": "Flabougou"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-02f8ad0862af69cbfeb2fb00",
+        "ml-registre-8c0e9117807a5bb99758776d"
+      ],
+      "nomCampus": "toumoumba",
+      "fiches": [
+        {
+          "id": "ml-osm-02f8ad0862af69cbfeb2fb00",
+          "nom": "TOUMOUMBA"
+        },
+        {
+          "id": "ml-registre-8c0e9117807a5bb99758776d",
+          "nom": "TOUMOUMBA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-0323c03dbca7e9417ee4edd4",
+        "ml-osm-fdae70b446f2a081410e8baa"
+      ],
+      "nomCampus": "tiecourala",
+      "fiches": [
+        {
+          "id": "ml-osm-0323c03dbca7e9417ee4edd4",
+          "nom": "TIECOURALA"
+        },
+        {
+          "id": "ml-osm-fdae70b446f2a081410e8baa",
+          "nom": "Tiecourala"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-0328f4291f4f5ea61164a3d8",
+        "ml-registre-fad539abdaf56b0689fdaf35"
+      ],
+      "nomCampus": "sokoura b",
+      "fiches": [
+        {
+          "id": "ml-osm-0328f4291f4f5ea61164a3d8",
+          "nom": "SOKOURA B"
+        },
+        {
+          "id": "ml-registre-fad539abdaf56b0689fdaf35",
+          "nom": "SOKOURA \"B\""
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-0333eceb104b37e238ffb18b",
+        "ml-registre-7c4a185854eb38caa51d2b90"
+      ],
+      "nomCampus": "tahirou cisse b",
+      "fiches": [
+        {
+          "id": "ml-osm-0333eceb104b37e238ffb18b",
+          "nom": "TAHIROU CISSE B"
+        },
+        {
+          "id": "ml-registre-7c4a185854eb38caa51d2b90",
+          "nom": "Tahirou CISSE B"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-584245dea63e6d261e208e2d",
+        "ml-osm-9d5f6d671f5b63462d373e12"
+      ],
+      "nomCampus": "diena",
+      "fiches": [
+        {
+          "id": "ml-osm-584245dea63e6d261e208e2d",
+          "nom": "DIENA [1er C]ycle"
+        },
+        {
+          "id": "ml-osm-9d5f6d671f5b63462d373e12",
+          "nom": "DIENA [2ème C]"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-03497c2d5912eb8a27ef59d7",
+        "ml-osm-154c18003f585a7fac2e5a82"
+      ],
+      "nomCampus": "kalifabougou",
+      "fiches": [
+        {
+          "id": "ml-osm-03497c2d5912eb8a27ef59d7",
+          "nom": "KALIFABOUGOU"
+        },
+        {
+          "id": "ml-osm-154c18003f585a7fac2e5a82",
+          "nom": "KALIFABOUGOU"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-03497c2d5912eb8a27ef59d7",
+        "ml-osm-1a067f48890aaed2f43a39c6"
+      ],
+      "nomCampus": "kalifabougou",
+      "fiches": [
+        {
+          "id": "ml-osm-03497c2d5912eb8a27ef59d7",
+          "nom": "KALIFABOUGOU"
+        },
+        {
+          "id": "ml-osm-1a067f48890aaed2f43a39c6",
+          "nom": "KALIFABOUGOU"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-03497c2d5912eb8a27ef59d7",
+        "ml-osm-2be018cedbfd0f2f4820c08c"
+      ],
+      "nomCampus": "kalifabougou",
+      "fiches": [
+        {
+          "id": "ml-osm-03497c2d5912eb8a27ef59d7",
+          "nom": "KALIFABOUGOU"
+        },
+        {
+          "id": "ml-osm-2be018cedbfd0f2f4820c08c",
+          "nom": "KALIFABOUGOU [2ème C]"
+        }
+      ]
+    },
+    {
+      "raison": "clusters-2023-concurrents",
+      "ids": [
+        "ml-osm-03497c2d5912eb8a27ef59d7",
+        "ml-registre-1bd2c227ed0f1c9363022f64"
+      ],
+      "nomCampus": "kalifabougou",
+      "fiches": [
+        {
+          "id": "ml-osm-03497c2d5912eb8a27ef59d7",
+          "nom": "KALIFABOUGOU"
+        },
+        {
+          "id": "ml-registre-1bd2c227ed0f1c9363022f64",
+          "nom": "Kalifabougou"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-154c18003f585a7fac2e5a82",
+        "ml-osm-1a067f48890aaed2f43a39c6"
+      ],
+      "nomCampus": "kalifabougou",
+      "fiches": [
+        {
+          "id": "ml-osm-154c18003f585a7fac2e5a82",
+          "nom": "KALIFABOUGOU"
+        },
+        {
+          "id": "ml-osm-1a067f48890aaed2f43a39c6",
+          "nom": "KALIFABOUGOU"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-154c18003f585a7fac2e5a82",
+        "ml-osm-2be018cedbfd0f2f4820c08c"
+      ],
+      "nomCampus": "kalifabougou",
+      "fiches": [
+        {
+          "id": "ml-osm-154c18003f585a7fac2e5a82",
+          "nom": "KALIFABOUGOU"
+        },
+        {
+          "id": "ml-osm-2be018cedbfd0f2f4820c08c",
+          "nom": "KALIFABOUGOU [2ème C]"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-154c18003f585a7fac2e5a82",
+        "ml-registre-1bd2c227ed0f1c9363022f64"
+      ],
+      "nomCampus": "kalifabougou",
+      "fiches": [
+        {
+          "id": "ml-osm-154c18003f585a7fac2e5a82",
+          "nom": "KALIFABOUGOU"
+        },
+        {
+          "id": "ml-registre-1bd2c227ed0f1c9363022f64",
+          "nom": "Kalifabougou"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-1a067f48890aaed2f43a39c6",
+        "ml-registre-1bd2c227ed0f1c9363022f64"
+      ],
+      "nomCampus": "kalifabougou",
+      "fiches": [
+        {
+          "id": "ml-osm-1a067f48890aaed2f43a39c6",
+          "nom": "KALIFABOUGOU"
+        },
+        {
+          "id": "ml-registre-1bd2c227ed0f1c9363022f64",
+          "nom": "Kalifabougou"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-2be018cedbfd0f2f4820c08c",
+        "ml-registre-1bd2c227ed0f1c9363022f64"
+      ],
+      "nomCampus": "kalifabougou",
+      "fiches": [
+        {
+          "id": "ml-osm-2be018cedbfd0f2f4820c08c",
+          "nom": "KALIFABOUGOU [2ème C]"
+        },
+        {
+          "id": "ml-registre-1bd2c227ed0f1c9363022f64",
+          "nom": "Kalifabougou"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-0354458981ee47c892baabda",
+        "ml-osm-4c1bae118082d801d8734df7"
+      ],
+      "nomCampus": "samako",
+      "fiches": [
+        {
+          "id": "ml-osm-0354458981ee47c892baabda",
+          "nom": "SAMAKO"
+        },
+        {
+          "id": "ml-osm-4c1bae118082d801d8734df7",
+          "nom": "Samako[2e C]"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-03591b3a270cd55134b6b945",
+        "ml-osm-8baf424ffd3f526070be63c9"
+      ],
+      "nomCampus": "zambougou",
+      "fiches": [
+        {
+          "id": "ml-osm-03591b3a270cd55134b6b945",
+          "nom": "ZAMBOUGOU [1er C]"
+        },
+        {
+          "id": "ml-osm-8baf424ffd3f526070be63c9",
+          "nom": "ZAMBOUGOU"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-03591b3a270cd55134b6b945",
+        "ml-osm-ebde8810578874cb75be54ef"
+      ],
+      "nomCampus": "zambougou",
+      "fiches": [
+        {
+          "id": "ml-osm-03591b3a270cd55134b6b945",
+          "nom": "ZAMBOUGOU [1er C]"
+        },
+        {
+          "id": "ml-osm-ebde8810578874cb75be54ef",
+          "nom": "ZAMBOUGOU"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-03591b3a270cd55134b6b945",
+        "ml-registre-28a83242e427862b4826eb3d"
+      ],
+      "nomCampus": "zambougou",
+      "fiches": [
+        {
+          "id": "ml-osm-03591b3a270cd55134b6b945",
+          "nom": "ZAMBOUGOU [1er C]"
+        },
+        {
+          "id": "ml-registre-28a83242e427862b4826eb3d",
+          "nom": "Zambougou"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-8baf424ffd3f526070be63c9",
+        "ml-registre-28a83242e427862b4826eb3d"
+      ],
+      "nomCampus": "zambougou",
+      "fiches": [
+        {
+          "id": "ml-osm-8baf424ffd3f526070be63c9",
+          "nom": "ZAMBOUGOU"
+        },
+        {
+          "id": "ml-registre-28a83242e427862b4826eb3d",
+          "nom": "Zambougou"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-ebde8810578874cb75be54ef",
+        "ml-registre-28a83242e427862b4826eb3d"
+      ],
+      "nomCampus": "zambougou",
+      "fiches": [
+        {
+          "id": "ml-osm-ebde8810578874cb75be54ef",
+          "nom": "ZAMBOUGOU"
+        },
+        {
+          "id": "ml-registre-28a83242e427862b4826eb3d",
+          "nom": "Zambougou"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-035fa80a193bc179911b81be",
+        "ml-registre-0de064a2e1fd1071e4eb4adc"
+      ],
+      "nomCampus": "nouroul houda",
+      "fiches": [
+        {
+          "id": "ml-osm-035fa80a193bc179911b81be",
+          "nom": "NOUROUL HOUDA [2ème C]"
+        },
+        {
+          "id": "ml-registre-0de064a2e1fd1071e4eb4adc",
+          "nom": "NOUROUL HOUDA"
+        }
+      ]
+    },
+    {
+      "raison": "administration-incompatible",
+      "ids": [
+        "ml-osm-035fa80a193bc179911b81be",
+        "ml-registre-11a270e9ace42ca5347a1bf2"
+      ],
+      "nomCampus": "nouroul houda",
+      "fiches": [
+        {
+          "id": "ml-osm-035fa80a193bc179911b81be",
+          "nom": "NOUROUL HOUDA [2ème C]"
+        },
+        {
+          "id": "ml-registre-11a270e9ace42ca5347a1bf2",
+          "nom": "NOUROUL HOUDA"
+        }
+      ]
+    }
+  ],
+  "avertissement": "Aucune écriture effectuée. Contrôlez les plans avant de relancer avec --apply."
+}

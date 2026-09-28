@@ -15,8 +15,8 @@ Mali Wuli connecte les talents qui vivent au Mali et ceux de la diaspora (France
 
 ```
 mali-wuli/
-├── frontend/          → Next.js 14 + React + Tailwind CSS
-├── backend/           → Node.js + Express + Prisma + PostgreSQL
+├── frontend/          → Next.js 15 + React + Tailwind CSS
+├── backend/           → Node.js + Express + Prisma + MySQL
 ├── .gitignore
 └── README.md
 ```
@@ -27,9 +27,9 @@ mali-wuli/
 
 | Partie       | Technologie                        |
 |--------------|------------------------------------|
-| Frontend     | Next.js 14, React, Tailwind CSS    |
+| Frontend     | Next.js 15, React, Tailwind CSS    |
 | Backend      | Node.js, Express, TypeScript       |
-| Base de données | PostgreSQL + Prisma ORM         |
+| Base de données | MySQL + Prisma ORM              |
 | Auth         | JWT + Bcrypt                       |
 | Temps réel   | Socket.io                          |
 | Emails       | Nodemailer                         |
@@ -39,9 +39,9 @@ mali-wuli/
 ## ⚙️ Installation
 
 ### Prérequis
-- Node.js >= 18
-- PostgreSQL >= 14
-- npm >= 9
+- Node.js 22
+- MySQL 8
+- npm 10
 
 ### 1. Cloner le projet
 ```bash
@@ -53,8 +53,9 @@ cd mali-wuli
 ```bash
 cd backend
 cp .env.example .env
-npm install
-npx prisma migrate dev
+npm ci
+npx prisma migrate deploy
+npm run education:seed
 npm run dev
 ```
 
@@ -62,7 +63,7 @@ npm run dev
 ```bash
 cd frontend
 cp .env.local.example .env.local
-npm install
+npm ci
 npm run dev
 ```
 
@@ -100,7 +101,7 @@ npm run dev
 - 📅 **Agenda** — RDV, réunions, événements
 - 🎓 **Volontaires** — Mentorat réservable
 - 🔵 **Cercles** — Think tanks thématiques
-- 📚 **Éducation** — Forum, fiches établissements, associations
+- 📚 **Éducation** — Fiches établissements (forum et associations à venir)
 - 🎉 **Événements** — En présentiel et en ligne
 - 💼 **Offres d'emploi** — CDI, CDD, stage, freelance
 - 📸 **Albums photo**
@@ -110,6 +111,42 @@ npm run dev
 ## 📄 Documentation
 
 - [`Specification_Fonctionnelle_Mali_Wuli.md`](./Specification_Fonctionnelle_Mali_Wuli.md) — Spécification fonctionnelle complète
+- [`backend/SOCIAL_API.md`](./backend/SOCIAL_API.md) — fil, commentaires, messagerie, notifications et temps réel
+- [`backend/COMMUNITY_API.md`](./backend/COMMUNITY_API.md) — cercles, événements, offres et mentorat
+
+## Déploiement
+
+### Frontend
+
+Les variables `NEXT_PUBLIC_*` sont intégrées au JavaScript au moment du build.
+Définissez les URL publiques dans Hostinger avant de compiler ou redéployer :
+
+```bash
+NEXT_PUBLIC_API_URL=https://floralwhite-ram-987223.hostingersite.com/api \
+NEXT_PUBLIC_SOCKET_URL=https://floralwhite-ram-987223.hostingersite.com \
+npm run build --prefix frontend
+```
+
+N'incluez pas `frontend/.env.local` dans les archives de déploiement : ce fichier
+contient les adresses du développement local. Modifier les variables après le
+build ne corrige pas les bundles déjà générés. Le build refuse désormais les
+URL localhost/loopback et l'absence d'URL API publique. Pour tester volontairement
+un build de production sur une machine locale, utilisez
+`ALLOW_LOCAL_PRODUCTION_BUILD=true` ; cette exception ne doit pas être activée
+sur Hostinger.
+
+### Backend
+
+La production utilise exclusivement `prisma migrate deploy`. Ne lancez jamais
+`prisma migrate dev` ni `prisma db push` sur la base Hostinger. Sur une base
+historique qui possède déjà les tables de la migration initiale, marquez une
+seule fois la baseline comme appliquée avant de déployer les migrations
+additives :
+
+```bash
+npx prisma migrate resolve --applied 20260919000000_production_baseline
+npx prisma migrate deploy
+```
 
 ---
 
