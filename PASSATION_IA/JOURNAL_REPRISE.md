@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-INCIDENT — Claude, 2026-09-28 21:50 UTC : dossier du domaine backend supprimé sur Hostinger, API hors service. Publication typo+perf suspendue.
+LIBRE — dernière session : Claude, 2026-09-28 23:00 UTC (backend restauré après incident ; publication frontend typo+perf encore à faire).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,19 @@ INCIDENT — Claude, 2026-09-28 21:50 UTC : dossier du domaine backend supprimé
 ```
 
 ## Entrées
+
+### 2026-09-28 23:00 UTC — Claude — Rétablissement du backend
+- Statut : TERMINÉ
+- Cause de l'incident : l'utilisateur a supprimé le site `floralwhite-ram-987223.hostingersite.com` dans hPanel le 28/09 à 19:28:21 UTC (confirmé par le support).
+- Base : `u668963025_maliwuli` **jamais supprimée** (535 Mo, confirmé par le support) ; aucun import ni restauration de base effectué. Dump de secours conservé : `~/private-backups/20260928-liens-sociaux/before.sql.gz` (18:48 UTC).
+- Identifiants : variables d'environnement du processus survivant sauvées par l'utilisateur dans `~/private-backups/20260928-rescue-backend/env-process.env` (600). Le `.env` backend a été recréé à partir de DATABASE_URL, JWT_SECRET, FRONTEND_URL, NODE_ENV. **Pas de variables SMTP** : l'envoi d'e-mails repose sur le repli sendmail — à vérifier.
+- Espace/inodes : pour débloquer la recréation, l'utilisateur a supprimé la sauvegarde ai1wm de 65 Go, les anciens `hbuilds/sources` et `versions` de mali-wuli.com (gardées : `20260928-liens-sociaux` active et `20260928-home-session-r2`), les miniatures 50×50/100×100 de dianefashion, puis **tout le site dianefashion.com**. Sauvegarde dianefashion sur le Mac de l'utilisateur : base SQL OK (123 tables) ; archive fichiers du 28/09 06:34 **tronquée** (pas de plugins/thème/wp-core, uploads partiels) → demander à Hostinger une archive complète avant toute reconstruction.
+- Restauration Hostinger des fichiers du 27/09 06:22 UTC : n'a rendu que `public_html/.htaccess` (config Passenger) ; **`hbuilds/` n'est pas dans les sauvegardes Hostinger** → uploads backend (photos, couvertures, photos d'événements) perdus.
+- Redéploiement (commandes lancées par l'utilisateur) : `hbuilds/` recréé ; config `preload-timestamp.js` copiée de mali-wuli.com ; backend = arbre `db7ac8f` de main (lots liens-sociaux + perf backend) compilé sur le serveur Node 22 → `versions/20260929-restore` ; `current` → `versions/20260929-restore`. `prisma migrate status` impossible (EACCES sur schema-engine, exécution interdite) ; code = 15 migrations, identiques à la base.
+- Vérifié : `/api/health` OK + base OK ; `/users/me` et `/users/me/session` 401 sans jeton ; CORS mali-wuli.com OK ; socket.io 200 ; catalogue 143 458 établissements ; frontend `/login` et `/dashboard` 200 (build `MF940TX4N8sLGFRsT_gyN`).
+- Leçon : **les sauvegardes Hostinger n'incluent pas `hbuilds/`**. Il faut sauvegarder nous-mêmes les uploads et le `.env` hors du dossier du domaine (par ex. `~/private-backups/`), et à terme placer UPLOAD_DIR hors de `hbuilds/`.
+- Actions à effet externe : recréation du site + restauration des fichiers par le support ; build et activation du backend par l'utilisateur ; aucune écriture en base.
+- Prochaine action : test de connexion réel par l'utilisateur ; vérifier l'envoi d'e-mails ; déplacer les uploads hors de hbuilds ; publier le frontend typo+perf (procédure `output/2026-09-28-typo-perf/PUBLICATION_LOCALE.md`, remote `prive` et non `origin`).
 
 ### 2026-09-28 21:50 UTC — Claude — INCIDENT : backend supprimé sur Hostinger
 - Statut : INTERROMPU (décision utilisateur attendue)
