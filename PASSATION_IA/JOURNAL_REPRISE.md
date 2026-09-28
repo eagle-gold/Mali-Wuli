@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-09-28 23:40 UTC (frontend typo+perf publié ; backend rétabli).
+LIBRE — dernière session : Claude, 2026-09-29 (lot B publié).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,16 @@ LIBRE — dernière session : Claude, 2026-09-28 23:40 UTC (frontend typo+perf p
 ```
 
 ## Entrées
+
+### 2026-09-29 — Claude — Lot A (serveur) + lot B (interface) publiés
+- Statut : TERMINÉ
+- Copie de travail : `~/dev/mali-wuli` (clone de `Alienmap/mali-wuli`, remote `origin` = privé). L'ancienne copie dans `Documents/` est lente (iCloud) : ne plus l'utiliser.
+- Lot A (serveur backend) : `.env` complété avec `UPLOAD_DIR=/home/u668963025/domains/floralwhite-ram-987223.hostingersite.com/public_html/uploads` (hors hbuilds, inclus dans les sauvegardes Hostinger ; `.htaccess` Options -Indexes) et `MAIL_FROM="Mali Wuli <no-reply@mali-wuli.com>"`. Défaut du code corrigé (`ca94b69`) : `maliwuli.com` n'a aucun DNS, `mali-wuli.com` a un SPF Hostinger. **Toute nouvelle version backend doit recopier ce `.env`.**
+- Lot B (`cf60605`, arbres frontend `f82626f`, backend `e76d5e3`) : menu ⋯ Modifier/Supprimer sur publications et commentaires (PATCH `/api/publications/:id` et `/api/publications/:id/commentaires/:commentaireId`, auteur seul, tests 10/10) ; profil visiteur `/membres/[id]` + carte d'annuaire cliquable ; formations récentes en premier dans les deux vues ; barre du bas mobile/tablette (< lg) Accueil/Offres/Messages/Profil, menu mobile réduit à Événements/Annuaire/Établissements ; avatar d'en-tête initialisé depuis la session ; focus visible au clavier seulement ; logos de marque des réseaux ; favicon ; recherche de destinataire par nom ; pays/ville en listes (événements, offres, associations, admin associations) via `components/localisation/ChampsPaysVille.tsx` ; salaire structuré composé dans le champ texte `salaire` (`lib/salaire-offre.ts`).
+- Déploiement : backend `versions/20260929-restore` → `versions/20260929-lotb` ; frontend `versions/20260929-typo-perf` → `versions/20260929-lotb`, BUILD_ID `r-XSuFSG3sWcsYOqi_cFk` ; `.previous-target` écrits ; anciens processus arrêtés par PID après vérification du cwd. Build lancé par Claude ; bascules lancées par l'utilisateur (contrôle de permissions).
+- Vérifié publiquement : BUILD_ID servi, 12 pages en 200, favicon, PATCH sans jeton = 401, santé API + base OK. Non vérifié : QA visuelle en navigateur.
+- Décision : la modification d'une publication/d'un commentaire est réservée à l'auteur (les modérateurs peuvent seulement supprimer).
+- Reste (lot C, migrations) : couverture repositionnable, corbeille 30 jours, j'aime sur commentaires + liste, bouton « Ajouter un établissement » → admin, rôle responsable d'établissement, album photo établissement, signalements généralisés, espaces admin par rôle, fusion Agenda → Événements (proposée). Lot D : nettoyage catalogue (règles + IA + validation admin). Mesure de lenteur en navigateur connecté. Ville hors catalogue : option « Utiliser X » conservée (à retirer si strict).
 
 ### 2026-09-28 23:40 UTC — Claude — Publication frontend typo+perf (lots Codex)
 - Statut : TERMINÉ
