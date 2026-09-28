@@ -8,6 +8,7 @@ import {
   formaterMoisAnnee,
   normaliserAnnee,
   periodeEstValide,
+  trierParDateDebut,
 } from "@/lib/periode";
 
 export interface Experience {
@@ -399,7 +400,7 @@ export default function StepExperiences({ onNext, onBack, initialData }: StepExp
         Postes, missions, stages, engagements associatifs. C’est ce qui permet aux autres membres de savoir quoi vous demander, et à vous de recevoir les bonnes sollicitations.
       </p>
 
-      {experiences.map((experience) => (
+      {trierParDateDebut(experiences).map((experience) => (
         <ExperienceCard
           key={experience.id}
           experience={experience}
@@ -435,7 +436,7 @@ export default function StepExperiences({ onNext, onBack, initialData }: StepExp
         </button>
         <button
           type="button"
-          onClick={() => onNext(experiences)}
+          onClick={() => onNext(trierParDateDebut(experiences))}
           className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${experiences.length ? "bg-[#0d6738] hover:bg-[#09572f]" : "bg-[#aa997f] hover:bg-[#96866e]"}`}
         >
           {experiences.length ? "Continuer vers le mentorat" : "Passer cette étape"}

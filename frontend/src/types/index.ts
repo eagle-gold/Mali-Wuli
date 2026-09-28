@@ -24,8 +24,11 @@ export interface User {
   prenom: string;
   nom: string;
   email: string;
-  dateNaissance: string;
+  dateNaissance?: string | null;
   role: Role;
+  rolesDelegues?: string[];
+  permissions?: string[];
+  revisionDroits?: string;
   statut: StatutInscription;
   createdAt: string;
 }
@@ -40,7 +43,10 @@ export interface Profil {
   titre?: string;
   bio?: string;
   photo?: string;
-  linkedin?: string;
+  linkedin?: string | null;
+  facebook?: string | null;
+  instagram?: string | null;
+  tiktok?: string | null;
   emailVisible: boolean;
   telephoneVisible: boolean;
   estVolontaire: boolean;
@@ -57,6 +63,18 @@ export interface Formation {
   anneeFin?: number;
   diplome?: string;
   filiere?: string;
+  statutDiplome?: "OBTENU" | "EN_COURS" | "NON_OBTENU" | "NON_DIPLOMANTE";
+  demarcheApresFormation?: "RECHERCHE_EMPLOI" | "POURSUITE_ETUDES" | "AUTRE_PROJET" | null;
+  delaiPremierEmploi?:
+    | "MOINS_3_MOIS"
+    | "DE_3_A_6_MOIS"
+    | "DE_7_A_12_MOIS"
+    | "PLUS_12_MOIS"
+    | "MOINS_DE_12_MOIS_DEPUIS_FIN"
+    | "PAS_ENCORE"
+    | null;
+  emploiDansLes12Mois?: boolean | null;
+  lienEmploiFormation?: "DIRECT" | "PARTIEL" | "AUCUN" | null;
   enCours: boolean;
 }
 
@@ -111,17 +129,6 @@ export interface Conversation {
   participants: Profil[];
   dernierMessage?: Message;
   messagesNonLus: number;
-}
-
-export interface Cercle {
-  id: string;
-  nom: string;
-  theme: string;
-  description?: string;
-  presidentId: string;
-  president?: Profil;
-  nbMembres: number;
-  actif: boolean;
 }
 
 export interface Evenement {

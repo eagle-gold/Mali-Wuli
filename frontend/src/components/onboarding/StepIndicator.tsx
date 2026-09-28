@@ -13,7 +13,7 @@ interface StepIndicatorProps {
 export default function StepIndicator({ currentStep, steps }: StepIndicatorProps) {
   return (
     <nav aria-label="Progression du questionnaire">
-      <ol className="grid grid-cols-4 gap-2 sm:gap-4">
+      <ol className="grid gap-2 sm:gap-4" style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}>
         {steps.map((step) => {
           const isCompleted = currentStep > step.number;
           const isCurrent = currentStep === step.number;
@@ -58,7 +58,7 @@ export default function StepIndicator({ currentStep, steps }: StepIndicatorProps
                 </span>
 
                 <span
-                  className={`hidden min-w-0 truncate text-[11px] font-semibold transition-colors min-[420px]:block sm:text-base lg:text-lg ${
+                  className={`block min-w-0 break-words text-[10px] font-semibold leading-tight transition-colors sm:text-sm lg:text-base ${
                     isCurrent
                       ? "text-[#2e261f]"
                       : isCompleted

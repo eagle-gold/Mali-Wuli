@@ -4,14 +4,22 @@
 
 @layer base {
   :root {
+    --color-page: #f4ecdd;
     --color-sable: #c8863a;
     --color-terre: #6b3418;
     --color-vert: #2e7d32;
     --color-laterite: #c0392b;
   }
 
+  html {
+    min-height: 100%;
+    background: var(--color-page);
+  }
+
   body {
-    @apply bg-sable-50 text-terre font-sans;
+    @apply text-terre font-sans;
+    min-height: 100vh;
+    background: var(--color-page);
   }
 
   h1, h2, h3 {

@@ -14,16 +14,19 @@ const TYPES = new Set<FormationType>(["ecole", "lycee", "universite"]);
 
 export async function GET(request: NextRequest) {
   const paysCode = (request.nextUrl.searchParams.get("country") || "").toUpperCase();
+  const systemeEducatifCode = (request.nextUrl.searchParams.get("systemeEducatifCode") || "").toUpperCase();
   const type = request.nextUrl.searchParams.get("type") as FormationType;
   const institutionId = (request.nextUrl.searchParams.get("institutionId") || "").trim();
 
-  if (!/^[A-Z]{2}$/.test(paysCode) || !TYPES.has(type)) {
+  if (!/^[A-Z]{2}$/.test(paysCode) || !TYPES.has(type)
+    || (systemeEducatifCode && systemeEducatifCode !== "AUTRE" && !/^[A-Z]{2}$/.test(systemeEducatifCode))) {
     return NextResponse.json({ message: "Pays ou type de formation invalide." }, { status: 400 });
   }
 
   try {
     const parametres = new URLSearchParams({ country: paysCode, type });
     if (institutionId) parametres.set("institutionId", institutionId);
+    if (systemeEducatifCode) parametres.set("systemeEducatifCode", systemeEducatifCode);
     const reponse = await fetch(`${BACKEND_API}/education/catalogue/references?${parametres}`, {
       signal: AbortSignal.timeout(5_000),
       cache: "no-store",
@@ -46,8 +49,13 @@ export async function GET(request: NextRequest) {
   }
 
   return NextResponse.json({
-    series: type === "lycee" ? getSeries(paysCode, institutionId) : [],
-    diplomes: getDiplomes(paysCode, type, institutionId),
+    series: type !== "universite" ? getSeries(systemeEducatifCode || paysCode, systemeEducatifCode ? undefined : institutionId) : [],
+    diplomes: type === "universite"
+      ? getDiplomes(paysCode, type, institutionId)
+      : [...new Set([
+        ...getDiplomes(systemeEducatifCode || paysCode, "ecole", systemeEducatifCode ? undefined : institutionId),
+        ...getDiplomes(systemeEducatifCode || paysCode, "lycee", systemeEducatifCode ? undefined : institutionId),
+      ])],
     programmes: type === "universite" ? getProgrammes(paysCode) : [],
     sources: [
       "https://www.uis.unesco.org/en/methods-and-tools/isced",

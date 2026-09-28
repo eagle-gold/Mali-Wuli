@@ -28,6 +28,7 @@ export interface MentoratData {
 
 interface StepMentoratProps {
   onNext: (data: MentoratData) => void;
+  libelleSuivant?: string;
   onBack: () => void;
   initialData?: MentoratData;
 }
@@ -94,7 +95,7 @@ const nombreCreneaux = (plages: PlageMentorat[], duree: number) =>
 const BOUTON_CHOIX =
   "rounded-[16px] border px-5 py-5 text-left transition focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2";
 const PETIT_BOUTON =
-  "rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm font-semibold text-[#2e261f] transition hover:border-[#0d6738] hover:text-[#0d6738]";
+  "min-w-0 rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-2 py-3 text-sm font-semibold sm:px-4 text-[#2e261f] transition hover:border-[#0d6738] hover:text-[#0d6738]";
 
 interface EnteteEtapeMentoratProps {
   numero: number;
@@ -134,7 +135,7 @@ function EnteteEtapeMentorat({ numero, titre, instruction, terminee, active, inf
   );
 }
 
-export default function StepMentorat({ onNext, onBack, initialData }: StepMentoratProps) {
+export default function StepMentorat({ onNext, onBack, initialData, libelleSuivant = "Terminer mon inscription" }: StepMentoratProps) {
   const [estVolontaire, setEstVolontaire] = useState<boolean | null>(initialData?.estVolontaire ?? null);
   const [sujets, setSujets] = useState<string[]>(initialData?.sujets || []);
   const [precisionsSujets, setPrecisionsSujets] = useState<Record<string, string>>(initialData?.precisionsSujets || {});
@@ -414,7 +415,7 @@ export default function StepMentorat({ onNext, onBack, initialData }: StepMentor
         {estVolontaire === false && (
           <p className="mt-5 rounded-[14px] bg-[#f6efe3] px-5 py-4 text-sm leading-relaxed text-[#2e261f]">
             Aucun souci, vous pourrez ouvrir des créneaux à tout moment depuis votre profil. En attendant, vous
-            pouvez répondre au forum, rejoindre un cercle ou recommander une offre d’emploi.
+            pouvez répondre au forum ou recommander une offre d’emploi.
           </p>
         )}
 
@@ -570,7 +571,7 @@ export default function StepMentorat({ onNext, onBack, initialData }: StepMentor
                 infoOuverte={etapeInfoOuverte === 5}
                 onOpenInfo={() => setEtapeInfoOuverte(5)}
               />
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-1 gap-2 min-[400px]:grid-cols-3">
                 {FORMATS.map((valeur) => (
                   <button
                     key={valeur}
@@ -606,19 +607,19 @@ export default function StepMentorat({ onNext, onBack, initialData }: StepMentor
               <div className="mb-5 grid gap-4 md:grid-cols-3">
                 <div className="min-w-0">
                   <label htmlFor="fuseau-mentorat" className="mb-2 block text-sm font-semibold text-[#2e261f]">Votre fuseau horaire</label>
-                  <select id="fuseau-mentorat" value={fuseauHoraire} onChange={(event) => setFuseauHoraire(event.target.value)} className="w-full rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none focus:border-[#0d6738]">
+                  <select id="fuseau-mentorat" value={fuseauHoraire} onChange={(event) => setFuseauHoraire(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none focus:border-[#0d6738]">
                     {FUSEAUX.map((fuseau) => <option key={fuseau.value} value={fuseau.value}>{fuseau.label}</option>)}
                   </select>
                   <p className="mt-2 text-xs text-[#2e261f]">Les créneaux suivront ce fuseau, même en voyage.</p>
                 </div>
                 <div>
                   <label htmlFor="debut-mentorat" className="mb-2 block text-sm font-semibold text-[#2e261f]">Disponible à partir du</label>
-                  <input id="debut-mentorat" type="date" value={dateDebut} onChange={(event) => setDateDebut(event.target.value)} className="w-full rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none focus:border-[#0d6738]" />
+                  <input id="debut-mentorat" type="date" value={dateDebut} onChange={(event) => setDateDebut(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none focus:border-[#0d6738]" />
                   <p className="mt-2 text-xs text-[#2e261f]">Laissez vide pour être disponible dès maintenant.</p>
                 </div>
                 <div>
                   <label htmlFor="fin-mentorat" className="mb-2 block text-sm font-semibold text-[#2e261f]">Jusqu’au <span className="font-normal">(optionnel)</span></label>
-                  <input id="fin-mentorat" type="date" min={dateDebut || undefined} value={dateFin} disabled={sansDateFin} onChange={(event) => setDateFin(event.target.value)} className="w-full rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none disabled:bg-[#f1e4d1] disabled:text-[#2e261f] disabled:opacity-60 focus:border-[#0d6738]" />
+                  <input id="fin-mentorat" type="date" min={dateDebut || undefined} value={dateFin} disabled={sansDateFin} onChange={(event) => setDateFin(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none disabled:bg-[#f1e4d1] disabled:text-[#2e261f] disabled:opacity-60 focus:border-[#0d6738]" />
                   <label className="mt-2 flex items-center gap-2 text-xs text-[#2e261f]">
                     <input type="checkbox" checked={sansDateFin} onChange={(event) => setSansDateFin(event.target.checked)} className="h-4 w-4 accent-[#0d6738]" />
                     Sans date de fin
@@ -692,7 +693,7 @@ export default function StepMentorat({ onNext, onBack, initialData }: StepMentor
         <div className="mt-7 flex flex-col gap-3 border-t border-[#ead8bd] pt-6 sm:flex-row">
           <button type="button" onClick={onBack} className="rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-6 py-3 font-semibold text-[#2e261f] hover:bg-[#f6efe3]">Retour</button>
           <button type="button" onClick={continuerOuTerminer} className={`flex-1 rounded-full px-6 py-4 text-base font-semibold transition ${canContinue ? "bg-[#0d6738] text-white hover:bg-[#09572f]" : "bg-[#eee2d0] text-[#2e261f] hover:bg-[#e4d5bf]"}`}>
-            {canContinue ? "Terminer mon inscription" : `Continuer — étape ${prochaineEtape?.numero || 1} : ${prochaineEtape?.actionCourte || "choisir une réponse"}`}
+            {canContinue ? libelleSuivant : `Continuer — étape ${prochaineEtape?.numero || 1} : ${prochaineEtape?.actionCourte || "choisir une réponse"}`}
           </button>
         </div>
         {!canContinue && prochaineEtape && (

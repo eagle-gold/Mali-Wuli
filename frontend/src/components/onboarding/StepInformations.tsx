@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { erreurLienSocial, LONGUEUR_MAX_LIEN_SOCIAL, normaliserReseauxSociaux, RESEAUX_SOCIAUX, type ReseauSocial, type ReseauxSociaux } from "@/lib/reseaux-sociaux";
 
 interface StepInformationsProps {
   onNext: (data: InfoData) => void;
@@ -8,7 +9,7 @@ interface StepInformationsProps {
   initialData?: InfoData;
 }
 
-export interface InfoData {
+export interface InfoData extends ReseauxSociaux {
   prenom: string;
   nom: string;
   telephone: string;
@@ -54,12 +55,18 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
     pays: initialData?.pays || "Mali",
     paysCode: initialData?.paysCode || "ML",
     ville: initialData?.ville || "",
+    linkedin: initialData?.linkedin || "",
+    facebook: initialData?.facebook || "",
+    instagram: initialData?.instagram || "",
+    tiktok: initialData?.tiktok || "",
   }));
+  const [erreursLiens, setErreursLiens] = useState<Partial<Record<ReseauSocial, string>>>({});
   const [paysDisponibles, setPaysDisponibles] = useState<PaysOption[]>(PAYS_DE_SECOURS);
   const [paysTelephone, setPaysTelephone] = useState(initialData?.paysCode || "ML");
   const [villesDisponibles, setVillesDisponibles] = useState<VilleOption[]>([]);
   const [rechercheVilleOuverte, setRechercheVilleOuverte] = useState(false);
   const [rechercheVilleEnCours, setRechercheVilleEnCours] = useState(false);
+  const [erreurRechercheVille, setErreurRechercheVille] = useState(false);
   const [villeActive, setVilleActive] = useState(-1);
 
   useEffect(() => {
@@ -89,6 +96,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
     if (recherche.length < 2) {
       setVillesDisponibles([]);
       setRechercheVilleEnCours(false);
+      setErreurRechercheVille(false);
       setVilleActive(-1);
       return;
     }
@@ -96,6 +104,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
     let actif = true;
     const temporisateur = window.setTimeout(async () => {
       setRechercheVilleEnCours(true);
+      setErreurRechercheVille(false);
       try {
         const parametres = new URLSearchParams({
           country: form.paysCode,
@@ -112,6 +121,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
       } catch {
         if (actif) {
           setVillesDisponibles([]);
+          setErreurRechercheVille(true);
         }
       } finally {
         if (actif) setRechercheVilleEnCours(false);
@@ -126,6 +136,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
 
   const handleChange = (field: keyof InfoData, value: string) => {
     setForm((precedent) => ({ ...precedent, [field]: value }));
+    if (field in erreursLiens) setErreursLiens((precedent) => ({ ...precedent, [field]: undefined }));
   };
 
   const handlePaysChange = (codePays: string) => {
@@ -140,6 +151,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
     }));
     setVillesDisponibles([]);
     setRechercheVilleOuverte(false);
+    setErreurRechercheVille(false);
     setVilleActive(-1);
   };
 
@@ -191,12 +203,21 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (canContinue) onNext({ ...form, ville: form.ville.trim() });
+    const erreurs: Partial<Record<ReseauSocial, string>> = {};
+    for (const { cle, nom } of RESEAUX_SOCIAUX) {
+      const message = erreurLienSocial(form[cle], nom);
+      if (message) erreurs[cle] = message;
+    }
+    setErreursLiens(erreurs);
+    const premiereErreur = RESEAUX_SOCIAUX.find(({ cle }) => erreurs[cle]);
+    if (premiereErreur) { document.getElementById(`reseau-${premiereErreur.cle}`)?.focus(); return; }
+    if (canContinue) onNext({ ...form, ville: form.ville.trim(), ...normaliserReseauxSociaux(form) });
   };
 
   return (
     <form
       onSubmit={handleSubmit}
+      noValidate
       className="rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-6 shadow-sm sm:p-9 lg:p-12"
     >
       <h1 className="mb-3 font-display text-3xl font-bold text-[#2e261f] sm:text-[36px]">
@@ -321,7 +342,12 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
                 aria-label={`Villes de ${form.pays}`}
                 className="mt-2 max-h-60 overflow-y-auto rounded-[14px] border border-[#dfc9a8] bg-white p-2 shadow-lg"
               >
-                {villesDisponibles.length > 0 ? (
+                {erreurRechercheVille ? (
+                  <p className="px-4 py-3 text-sm text-[#74685c]" role="status">
+                    La recherche est momentanément indisponible. Saisissez le nom complet de votre
+                    ville pour continuer.
+                  </p>
+                ) : villesDisponibles.length > 0 ? (
                   villesDisponibles.map((ville, index) => (
                     <button
                       key={ville.id}
@@ -358,6 +384,18 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
           </p>
         </div>
       </div>
+
+      <fieldset className="mb-8 min-w-0 border-t border-[#e4d2b3] pt-6" aria-describedby="reseaux-sociaux-description">
+        <legend className="px-1 text-lg font-semibold text-[#2e261f]">Réseaux sociaux (facultatif)</legend>
+        <p id="reseaux-sociaux-description" className="mb-5 text-sm leading-relaxed text-[#695c4b]">Ces liens seront visibles sur votre profil. Vous pouvez les modifier ou les retirer à tout moment.</p>
+        <div className="grid min-w-0 grid-cols-1 gap-5 md:grid-cols-2">
+          {RESEAUX_SOCIAUX.map(({ cle, nom, exemple }) => <div key={cle} className="min-w-0">
+            <label htmlFor={`reseau-${cle}`} className="mb-2 block text-base font-semibold text-[#2e261f]">{nom}</label>
+            <input id={`reseau-${cle}`} name={cle} type="url" inputMode="url" autoComplete="off" autoCapitalize="none" spellCheck={false} maxLength={LONGUEUR_MAX_LIEN_SOCIAL} value={form[cle] || ""} onChange={(event) => handleChange(cle, event.target.value)} onBlur={() => { const message = erreurLienSocial(form[cle], nom); setErreursLiens((precedent) => ({ ...precedent, [cle]: message || undefined })); }} placeholder={exemple} aria-invalid={Boolean(erreursLiens[cle])} aria-describedby={erreursLiens[cle] ? `erreur-reseau-${cle}` : "reseaux-sociaux-description"} className={CHAMP_CLASS + " min-w-0"} />
+            {erreursLiens[cle] && <p id={`erreur-reseau-${cle}`} className="mt-2 text-sm text-[#8a3e27]" role="alert">{erreursLiens[cle]}</p>}
+          </div>)}
+        </div>
+      </fieldset>
 
       <div className="mb-9 rounded-[14px] bg-[#f6efe3] px-5 py-4 text-base text-[#2e261f] sm:text-lg">
         Vous apparaîtrez comme{" "}

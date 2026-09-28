@@ -2,11 +2,15 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 import StepIndicator from "@/components/onboarding/StepIndicator";
+import StepAssociations from "@/components/onboarding/StepAssociations";
 import StepInformations, { type InfoData } from "@/components/onboarding/StepInformations";
 import StepFormations, { type Formation } from "@/components/onboarding/StepFormations";
 import StepExperiences, { type Experience } from "@/components/onboarding/StepExperiences";
 import StepMentorat, { type MentoratData } from "@/components/onboarding/StepMentorat";
+import { avisEtablissementScolaireEstDisponible } from "@/lib/education/suivi";
+import api from "@/lib/api";
 
 
 const STEPS = [
@@ -14,6 +18,7 @@ const STEPS = [
   { number: 2, label: "Formations" },
   { number: 3, label: "Expériences" },
   { number: 4, label: "Mentorat" },
+  { number: 5, label: "Associations" },
 ];
 
 type OnboardingData = {
@@ -23,26 +28,56 @@ type OnboardingData = {
   mentorat?: MentoratData;
 };
 
+const PROFILE_STORAGE_KEY = "mali_wuli_onboarding_profile";
+
+const sauvegarderProfilLocal = (profil: OnboardingData) => {
+  try {
+    localStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(profil));
+  } catch {
+    // Le parcours reste utilisable lorsque le stockage du navigateur est bloqué.
+  }
+};
+
 function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () => void }) {
   const router = useRouter();
-  const [lienInvitation, setLienInvitation] = useState("https://maliwuli.com/invite/votre-code");
+  const [lienInvitation, setLienInvitation] = useState("");
   const [lienCopie, setLienCopie] = useState(false);
 
   useEffect(() => {
-    const codeExistant = localStorage.getItem("mali_wuli_invitation_code")?.trim();
-    const codeInvitation = codeExistant || `mw-${crypto.randomUUID().slice(0, 8)}`;
-    if (!codeExistant) localStorage.setItem("mali_wuli_invitation_code", codeInvitation);
-    setLienInvitation(`https://maliwuli.com/invite/${codeInvitation}`);
+    let actif = true;
+    const chargerLien = async () => {
+      try {
+        const { data: compte } = await api.get<{ id: string }>("/users/me");
+        if (actif) {
+          const origine = window.location.origin;
+          setLienInvitation(`${origine}/register?parrain=${encodeURIComponent(compte.id)}`);
+        }
+      } catch {
+        if (actif) setLienInvitation(`${window.location.origin}/register`);
+      }
+    };
+    void chargerLien();
+    return () => { actif = false; };
   }, []);
 
-  const formationsNotees = useMemo(() => (data.formations || []).filter((formation) => [
-    formation.noteEnseignants,
-    formation.noteContenu,
-    formation.noteCadre,
-    formation.noteInsertion,
-  ].some((note) => typeof note === "number" && note > 0)).length, [data.formations]);
+  const formationsNotees = useMemo(() => (data.formations || []).filter((formation) => {
+    const estEtablissementScolaire = formation.type === "ecole" || formation.type === "lycee";
+    if (estEtablissementScolaire && !avisEtablissementScolaireEstDisponible(
+      formation.statutDiplome,
+      formation.moisFin,
+      formation.anneeFin,
+      formation.anneePromo,
+    )) return false;
+
+    return [
+      formation.noteEnseignants,
+      formation.noteContenu,
+      formation.noteCadre,
+    ].some((note) => typeof note === "number" && note > 0);
+  }).length, [data.formations]);
 
   const copierLien = async () => {
+    if (!lienInvitation) return;
     try {
       await navigator.clipboard.writeText(lienInvitation);
       setLienCopie(true);
@@ -57,7 +92,7 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
     || "Non renseignée";
 
   return (
-    <main className="min-h-screen bg-[#f6efe3] px-4 py-6 sm:px-6 sm:py-10">
+    <main className="min-h-screen bg-[var(--color-page)] px-4 py-6 sm:px-6 sm:py-10">
       <section className="mx-auto w-full max-w-[984px] rounded-[20px] border border-[#e4d2b3] bg-[#fffbf5] px-5 py-8 shadow-sm sm:px-10 sm:py-10">
         <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#e3f0e9] text-[#0d6738] sm:h-[68px] sm:w-[68px]">
           <svg aria-hidden="true" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
@@ -82,12 +117,14 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
               aria-label="Lien d’invitation"
               readOnly
               value={lienInvitation}
+              placeholder="Préparation de votre lien…"
               className="min-w-0 flex-1 rounded-[11px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none sm:text-base"
             />
             <button
               type="button"
               onClick={copierLien}
-              className="rounded-[11px] bg-[#0d6738] px-6 py-3 font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2"
+              disabled={!lienInvitation}
+              className="rounded-[11px] bg-[#0d6738] px-6 py-3 font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 disabled:cursor-wait disabled:opacity-60"
             >
               {lienCopie ? "Copié !" : "Copier"}
             </button>
@@ -111,7 +148,10 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
 
         <button
           type="button"
-          onClick={() => router.push("/dashboard")}
+          onClick={() => {
+            sauvegarderProfilLocal(data);
+            router.replace("/profil");
+          }}
           className="mt-7 w-full rounded-[11px] bg-[#0d6738] px-6 py-4 text-base font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 sm:text-lg"
         >
           Découvrir votre profil en attendant
@@ -121,7 +161,7 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
           onClick={onBack}
           className="mx-auto mt-4 block px-4 py-1 text-base font-semibold text-[#2e261f] hover:text-[#0d6738]"
         >
-          ‹ Revenir au mentorat
+          ‹ Revenir aux associations
         </button>
       </section>
     </main>
@@ -130,13 +170,111 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
 
 
 export default function OnboardingPage() {
-  const [step, setStep] = useState<0 | 1 | 2 | 3 | 4 | 5>(0); // 0 = écran de bienvenue
+  const router = useRouter();
+  const [editionAssociations, setEditionAssociations] = useState(false);
+  const [step, setStep] = useState<0 | 1 | 2 | 3 | 4 | 5 | 6>(0); // 0 = écran de bienvenue
   const [data, setData] = useState<OnboardingData>({});
+  const [chargementInitial, setChargementInitial] = useState(true);
+  const [enregistrementEnCours, setEnregistrementEnCours] = useState(false);
+  const [erreurEnregistrement, setErreurEnregistrement] = useState("");
+
+  useEffect(() => {
+    let actif = true;
+    let profilLocal: OnboardingData = {};
+    try {
+      const profilExistant = localStorage.getItem(PROFILE_STORAGE_KEY);
+      if (profilExistant) {
+        profilLocal = JSON.parse(profilExistant) as OnboardingData;
+        setData(profilLocal);
+      }
+    } catch {
+      // Une ancienne valeur illisible ne doit jamais bloquer l'inscription.
+    }
+
+    const etapes: Record<string, 1 | 2 | 3 | 4 | 5> = {
+      informations: 1,
+      formations: 2,
+      experiences: 3,
+      mentorat: 4,
+      associations: 5,
+    };
+    const etapeDemandee = new URLSearchParams(window.location.search).get("etape");
+    setEditionAssociations(etapeDemandee === "associations");
+    if (etapeDemandee && etapes[etapeDemandee]) setStep(etapes[etapeDemandee]);
+
+    const chargerProfil = async () => {
+      try {
+        const reponse = await api.get<OnboardingData>("/onboarding");
+        if (!actif) return;
+        setData(reponse.data);
+        sauvegarderProfilLocal(reponse.data);
+      } catch {
+        // Le cache local permet de continuer temporairement hors connexion. La
+        // prochaine sauvegarde complète resynchronisera les données en base.
+        if (actif) setData(profilLocal);
+      } finally {
+        if (actif) setChargementInitial(false);
+      }
+    };
+    void chargerProfil();
+    return () => {
+      actif = false;
+    };
+  }, []);
+
+  const enregistrerEtContinuer = <Cle extends keyof OnboardingData,>(
+    cle: Cle,
+    valeur: NonNullable<OnboardingData[Cle]>,
+    prochaineEtape: 2 | 3 | 4 | 5,
+  ) => {
+    setData((precedent) => {
+      const profil = { ...precedent, [cle]: valeur };
+      sauvegarderProfilLocal(profil);
+      return profil;
+    });
+    setStep(prochaineEtape);
+  };
+
+  const terminerOnboarding = async () => {
+    if (enregistrementEnCours) return;
+    const profilComplet: OnboardingData = { ...data };
+    setData(profilComplet);
+    sauvegarderProfilLocal(profilComplet);
+    setErreurEnregistrement("");
+
+    if (!profilComplet.informations || !profilComplet.formations || !profilComplet.experiences || !profilComplet.mentorat) {
+      setErreurEnregistrement("Une étape précédente est incomplète. Revenez la vérifier avant de terminer.");
+      return;
+    }
+
+    setEnregistrementEnCours(true);
+    try {
+      await api.post("/onboarding", profilComplet);
+      setStep(6);
+    } catch (erreur) {
+      const message = axios.isAxiosError<{ message?: string }>(erreur)
+        ? erreur.response?.data?.message
+        : undefined;
+      setErreurEnregistrement(message || "Nous n'avons pas pu enregistrer votre profil. Vérifiez votre connexion puis réessayez.");
+    } finally {
+      setEnregistrementEnCours(false);
+    }
+  };
+
+  if (chargementInitial) {
+    return (
+      <main className="flex min-h-screen items-center justify-center bg-[var(--color-page)] px-4">
+        <div role="status" aria-live="polite" className="rounded-[18px] border border-[#e4d2b3] bg-[#fffbf5] px-7 py-5 text-center font-semibold text-[#2e261f] shadow-sm">
+          Chargement de votre profil…
+        </div>
+      </main>
+    );
+  }
 
   // Écran de bienvenue
   if (step === 0) {
     return (
-      <main className="min-h-screen overflow-x-hidden bg-[#f6efe3] px-4 py-8 sm:px-6 sm:py-10">
+      <main className="min-h-screen bg-[var(--color-page)] px-4 py-8 sm:px-6 sm:py-10">
         <div className="mx-auto w-full max-w-[1040px] space-y-6">
 
           {/* Header terre */}
@@ -149,7 +287,7 @@ export default function OnboardingPage() {
             </h1>
             <p className="max-w-[900px] text-base leading-[1.7] text-[#fffaf4] sm:text-[17px] lg:text-lg">
               Mali Wuli relie ceux qui cherchent et ceux qui proposent : mentorat, orientation,
-              chantiers concrets, emplois et cercles de réflexion.
+              chantiers concrets et emplois.
             </p>
           </section>
 
@@ -160,16 +298,17 @@ export default function OnboardingPage() {
                 Environ 5 minutes
               </span>
               <span className="text-sm text-[#2e261f] sm:text-base">
-                Quatre étapes courtes. Vous pouvez compléter le reste plus tard.
+                Quatre étapes courtes et vos associations, si vous le souhaitez.
               </span>
             </div>
 
-            <div className="mb-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="mb-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
               {[
                 { num: "ÉTAPE 1", titre: "Vos informations", desc: "Nom, prénom et lieu de résidence : de quoi vous identifier dans l'annuaire." },
                 { num: "ÉTAPE 2", titre: "Vos formations", desc: "École, lycée, université, et votre avis noté sur chacune pour guider les plus jeunes." },
                 { num: "ÉTAPE 3", titre: "Vos expériences", desc: "Postes et missions : ce qui permet aux autres de savoir quoi vous demander." },
                 { num: "ÉTAPE 4", titre: "Le mentorat", desc: "Voulez-vous ouvrir des créneaux ? Vous choisissez lesquels, et vous restez libre." },
+                { num: "ÉTAPE 5 · FACULTATIVE", titre: "Vos associations", desc: "Retrouvez vos associations et demandez la validation de votre affiliation." },
               ].map((s) => (
                 <article key={s.num} className="min-h-[200px] rounded-[18px] border border-[#ead8bd] bg-[#fffbf5] p-5 lg:min-h-[210px]">
                   <p className="mb-2 text-sm font-bold text-[#c65327] sm:text-base">{s.num}</p>
@@ -193,53 +332,65 @@ export default function OnboardingPage() {
   }
 
   // Écran de fin
-  if (step === 5) {
-    return <EcranConfirmation data={data} onBack={() => setStep(4)} />;
+  if (step === 6) {
+    return <EcranConfirmation data={data} onBack={() => setStep(5)} />;
   }
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f6efe3]">
+    <div className="min-h-screen bg-[var(--color-page)]">
       <div className="border-b border-[#ead8bd] bg-[#fffbf5] px-4 py-5 sm:px-6">
         <div className="mx-auto w-full max-w-[1320px]">
           <StepIndicator currentStep={step} steps={STEPS} />
         </div>
       </div>
 
-      <main className="mx-auto w-full min-w-0 max-w-[1320px] overflow-x-hidden px-4 py-8 sm:px-6 sm:py-12">
+      <main className="mx-auto w-full min-w-0 max-w-[1320px] px-4 py-8 sm:px-6 sm:py-12">
+
+        {(enregistrementEnCours || erreurEnregistrement) && (
+          <div
+            role={erreurEnregistrement ? "alert" : "status"}
+            className={`mb-5 rounded-[14px] border px-5 py-4 text-base font-semibold ${
+              erreurEnregistrement
+                ? "border-[#d89474] bg-[#fff1e9] text-[#8f3518]"
+                : "border-[#bad7c6] bg-[#e7f3ec] text-[#0d6738]"
+            }`}
+          >
+            {erreurEnregistrement || "Enregistrement sécurisé de votre profil…"}
+          </div>
+        )}
 
         {/* Étapes */}
         {step === 1 && (
           <StepInformations
             initialData={data.informations}
             onBack={() => setStep(0)}
-            onNext={(d) => { setData((p) => ({ ...p, informations: d })); setStep(2); }}
+            onNext={(d) => enregistrerEtContinuer("informations", d, 2)}
           />
         )}
         {step === 2 && (
           <StepFormations
             initialData={data.formations}
             onBack={() => setStep(1)}
-            onNext={(d) => { setData((p) => ({ ...p, formations: d })); setStep(3); }}
+            onNext={(d) => enregistrerEtContinuer("formations", d, 3)}
           />
         )}
         {step === 3 && (
           <StepExperiences
             initialData={data.experiences}
             onBack={() => setStep(2)}
-            onNext={(d) => { setData((p) => ({ ...p, experiences: d })); setStep(4); }}
+            onNext={(d) => enregistrerEtContinuer("experiences", d, 4)}
           />
         )}
         {step === 4 && (
           <StepMentorat
             initialData={data.mentorat}
             onBack={() => setStep(3)}
-            onNext={(d) => {
-              setData((p) => ({ ...p, mentorat: d }));
-              // TODO : envoyer les données à l'API
-              console.log("Onboarding complet :", { ...data, mentorat: d });
-              setStep(5);
-            }}
+            libelleSuivant="Continuer vers les associations"
+            onNext={(d) => enregistrerEtContinuer("mentorat", d, 5)}
           />
+        )}
+        {step === 5 && (
+          <StepAssociations onBack={() => setStep(4)} onNext={() => editionAssociations ? router.push("/profil") : void terminerOnboarding()} enregistrementEnCours={enregistrementEnCours} edition={editionAssociations} />
         )}
       </main>
     </div>

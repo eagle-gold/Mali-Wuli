@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import SearchCombobox, { type SearchOption } from "./SearchCombobox";
 import StarRating from "./StarRating";
-import type { FormationType, ProgrammeReference } from "@/lib/education/reference";
+import { cleReferencesFormation, referencesFormationDisponibles, getSystemeEducatifCode, libelleSystemeEducatif, libelleProgramme, type FormationType, type ProgrammeReference } from "@/lib/education/reference";
+import { diplomesDuParcoursScolaire, diplomeScolairePrincipal, erreurDiplomeScolaire, typeDiplomeScolaire, type DiplomeScolaire } from "@/lib/education/parcours-scolaire";
 import api from "@/lib/api";
 import {
   MOIS,
@@ -11,7 +12,19 @@ import {
   formaterMoisAnnee,
   normaliserAnnee,
   periodeEstValide,
+  trierParDateDebut,
 } from "@/lib/periode";
+import {
+  ancienneteDepuisFinEnMois,
+  avisEtablissementScolaireEstDisponible,
+  calculerEmploiDansLes12Mois,
+  dateOuvertureAvisEtablissementScolaire,
+  emploiTrouve,
+  reponseInsertionEstComplete,
+  type DelaiPremierEmploi,
+  type DemarcheApresFormation,
+  type LienEmploiFormation,
+} from "@/lib/education/suivi";
 
 type TypeSuggestionCatalogue = "ETABLISSEMENT" | "PROGRAMME" | "SPECIALITE" | "SERIE" | "DIPLOME";
 
@@ -36,7 +49,7 @@ const STATUTS_DIPLOME: Array<{ valeur: StatutDiplome; libelle: string; explicati
   {
     valeur: "OBTENU",
     libelle: "Oui, diplôme obtenu",
-    explication: "Vous avez terminé la formation et obtenu le diplôme. Le diplôme et l’année de promotion seront demandés.",
+    explication: "Vous avez terminé la formation et obtenu le diplôme. Le diplôme et son année d’obtention seront demandés.",
   },
   {
     valeur: "EN_COURS",
@@ -64,6 +77,8 @@ export interface Formation {
   etablissement: string;
   etablissementId: string;
   etablissementSource?: string;
+  systemeEducatifCode?: string;
+  diplomesScolaires?: DiplomeScolaire[];
   programme: string;
   programmeId: string;
   specialite: string;
@@ -84,7 +99,10 @@ export interface Formation {
   noteEnseignants: number | null;
   noteContenu: number | null;
   noteCadre: number | null;
-  noteInsertion: number | null;
+  demarcheApresFormation: DemarcheApresFormation | null;
+  delaiPremierEmploi: DelaiPremierEmploi | null;
+  emploiDansLes12Mois: boolean | null;
+  lienEmploiFormation: LienEmploiFormation | null;
   commentaire: string;
   propositionsCatalogue?: PropositionCatalogue[];
   synchronisationCatalogue?: "EN_COURS" | "TERMINEE" | "ERREUR";
@@ -134,14 +152,14 @@ const PAYS_DE_SECOURS: PaysOption[] = [
 ];
 
 const TYPE_LABELS: Record<FormationType, string> = {
-  ecole: "ÉCOLE",
-  lycee: "LYCÉE",
+  ecole: "ÉCOLE / LYCÉE",
+  lycee: "ÉCOLE / LYCÉE",
   universite: "SUPÉRIEUR",
 };
 
 const TYPE_TITRES: Record<FormationType, string> = {
-  ecole: "École fréquentée",
-  lycee: "Lycée fréquenté",
+  ecole: "École / lycée fréquenté",
+  lycee: "École / lycée fréquenté",
   universite: "Université / école privée",
 };
 
@@ -149,6 +167,59 @@ const FIELD_CLASS =
   "w-full rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-5 py-4 text-base text-[#2e261f] outline-none transition focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 sm:text-lg";
 
 const LABEL_CLASS = "mb-2 block text-base font-semibold text-[#2e261f]";
+
+const DEMARCHES_APRES_FORMATION: Array<{
+  valeur: DemarcheApresFormation;
+  libelle: string;
+  precision: string;
+}> = [
+  {
+    valeur: "RECHERCHE_EMPLOI",
+    libelle: "Je cherchais à travailler",
+    precision: "Emploi, activité indépendante ou création d’entreprise",
+  },
+  {
+    valeur: "POURSUITE_ETUDES",
+    libelle: "J’ai poursuivi mes études",
+    precision: "Une autre formation était mon projet principal",
+  },
+  {
+    valeur: "AUTRE_PROJET",
+    libelle: "J’avais un autre projet",
+    precision: "Projet personnel, familial ou autre situation",
+  },
+];
+
+const DELAIS_PREMIER_EMPLOI: Array<{ valeur: DelaiPremierEmploi; libelle: string }> = [
+  { valeur: "MOINS_3_MOIS", libelle: "Oui, en moins de 3 mois" },
+  { valeur: "DE_3_A_6_MOIS", libelle: "Oui, entre 3 et 6 mois" },
+  { valeur: "DE_7_A_12_MOIS", libelle: "Oui, entre 7 et 12 mois" },
+  { valeur: "PLUS_12_MOIS", libelle: "Non, après plus de 12 mois" },
+  { valeur: "MOINS_DE_12_MOIS_DEPUIS_FIN", libelle: "Je ne peux pas encore répondre : moins de 12 mois se sont écoulés" },
+  { valeur: "PAS_ENCORE", libelle: "Non, pas encore trouvé après 12 mois" },
+];
+
+const DELAIS_AVANT_DOUZE_MOIS = new Set<DelaiPremierEmploi>([
+  "MOINS_3_MOIS",
+  "DE_3_A_6_MOIS",
+  "DE_7_A_12_MOIS",
+  "MOINS_DE_12_MOIS_DEPUIS_FIN",
+]);
+
+const LIENS_EMPLOI_FORMATION: Array<{ valeur: LienEmploiFormation; libelle: string }> = [
+  { valeur: "DIRECT", libelle: "Oui, directement" },
+  { valeur: "PARTIEL", libelle: "Oui, en partie" },
+  { valeur: "AUCUN", libelle: "Non" },
+];
+
+const CLASSE_CHOIX =
+  "min-h-14 rounded-[13px] border px-4 py-3 text-left text-sm font-semibold leading-snug transition focus:outline-none focus:ring-2 focus:ring-[#0d6738]/25 sm:text-base";
+
+const avecPrepositionDe = (mois: string, annee: number) => {
+  const nom = mois.toLocaleLowerCase("fr");
+  const preposition = /^[aeiouyàâäéèêëîïôöùûü]/i.test(nom) ? "d’" : "de ";
+  return `${preposition}${nom} ${annee}`;
+};
 
 interface ZoneGuideeProps {
   bloquee: boolean;
@@ -211,7 +282,7 @@ type SuggestionCataloguePayload = {
 
 const construireSuggestions = (formation: Formation): SuggestionCataloguePayload[] => {
   const items: SuggestionCataloguePayload[] = [];
-  const contexteBase = { formationType: formation.type };
+  const contexteBase = { formationType: formation.type, systemeEducatifCode: formation.systemeEducatifCode || formation.paysCode };
   const etablissementCanonique = formation.etablissementId
     && !formation.etablissementId.startsWith("autre:")
     ? formation.etablissementId
@@ -250,7 +321,7 @@ const construireSuggestions = (formation: Formation): SuggestionCataloguePayload
   if (formation.specialiteEstAutre && formation.specialite.trim()) {
     items.push({
       clientKey: `${formation.id}:specialite`,
-      type: formation.type === "lycee" ? "SERIE" : "SPECIALITE",
+      type: formation.type !== "universite" ? "SERIE" : "SPECIALITE",
       libelle: formation.specialite,
       paysCode: formation.paysCode,
       contexteCle: `${formation.type}|${cleEtablissement}|${programmeCanonique || normaliserLibelle(formation.programme).slice(0, 80)}`,
@@ -286,6 +357,8 @@ const creerFormationVide = (type: FormationType): Omit<Formation, "id"> => ({
   etablissement: "",
   etablissementId: "",
   etablissementSource: "",
+  systemeEducatifCode: type === "universite" ? undefined : "ML",
+  diplomesScolaires: type === "universite" ? undefined : [],
   programme: "",
   programmeId: "",
   specialite: "",
@@ -306,15 +379,52 @@ const creerFormationVide = (type: FormationType): Omit<Formation, "id"> => ({
   noteEnseignants: null,
   noteContenu: null,
   noteCadre: null,
-  noteInsertion: null,
+  demarcheApresFormation: null,
+  delaiPremierEmploi: null,
+  emploiDansLes12Mois: null,
+  lienEmploiFormation: null,
   commentaire: "",
 });
 
+const avisFormationEstDisponible = (formation: Formation) => {
+  const statutDiplome = formation.statutDiplome
+    || (formation.diplomeObtenu ? "OBTENU" : "EN_COURS");
+  return formation.type === "universite"
+    || avisEtablissementScolaireEstDisponible(
+      statutDiplome,
+      formation.moisFin,
+      formation.anneeFin,
+      formation.anneePromo,
+    );
+};
+
 const calculerMoyenne = (formation: Formation) => {
+  if (!avisFormationEstDisponible(formation)) return null;
   const notes = [formation.noteEnseignants, formation.noteContenu, formation.noteCadre];
-  if (formation.type !== "ecole") notes.push(formation.noteInsertion);
   const valeurs = notes.filter((note): note is number => note !== null);
   return valeurs.length ? valeurs.reduce((total, note) => total + note, 0) / valeurs.length : null;
+};
+
+const nettoyerAvisNonEligible = (formation: Formation): Formation =>
+  avisFormationEstDisponible(formation)
+    ? formation
+    : {
+      ...formation,
+      noteEnseignants: null,
+      noteContenu: null,
+      noteCadre: null,
+      commentaire: "",
+    };
+
+const resumerInsertion = (formation: Formation) => {
+  if (formation.type !== "universite" || formation.statutDiplome === "EN_COURS") return "";
+  if (formation.demarcheApresFormation === "POURSUITE_ETUDES") return "poursuite d’études après la formation";
+  if (formation.demarcheApresFormation === "AUTRE_PROJET") return "autre projet après la formation";
+  if (formation.demarcheApresFormation !== "RECHERCHE_EMPLOI" || !formation.delaiPremierEmploi) return "";
+  if (formation.delaiPremierEmploi === "MOINS_DE_12_MOIS_DEPUIS_FIN") return "suivi d’insertion à venir";
+  if (formation.delaiPremierEmploi === "PAS_ENCORE") return "sans emploi après 12 mois";
+  const delai = DELAIS_PREMIER_EMPLOI.find(({ valeur }) => valeur === formation.delaiPremierEmploi)?.libelle;
+  return delai ? `première activité : ${delai.replace(/^Oui, |^Non, /, "").toLocaleLowerCase("fr")}` : "";
 };
 
 function FormationCard({
@@ -336,18 +446,24 @@ function FormationCard({
     NON_OBTENU: "",
     NON_DIPLOMANTE: "",
   };
+  const diplomesScolaires = diplomesDuParcoursScolaire(formation);
   const informations = [
-    libelleDiplome[statutDiplome],
-    statutDiplome === "OBTENU" && formation.mention ? `mention ${formation.mention}` : "",
-    formation.programme,
-    formation.specialite,
+    diplomesScolaires.length ? diplomesScolaires.map((diplome) => [
+      diplome.libelle, diplome.statut === "EN_COURS" ? "en préparation" : "",
+      diplome.anneeObtention, diplome.mention ? `mention ${diplome.mention}` : "", diplome.serie,
+    ].filter(Boolean).join(" · ")).join(" ; ") : libelleDiplome[statutDiplome],
+    !diplomesScolaires.length && statutDiplome === "OBTENU" && formation.mention ? `mention ${formation.mention}` : "",
+    libelleProgramme(formation.programme),
+    !diplomesScolaires.length ? formation.specialite : "",
+    formation.type !== "universite" ? libelleSystemeEducatif(formation.systemeEducatifCode) : "",
     `${formation.ville}, ${formation.pays}`,
     `${formaterMoisAnnee(formation.moisDebut, formation.anneeDebut)} – ${formaterMoisAnnee(formation.moisFin, formation.anneeFin)}`,
-    formation.anneePromo
+    !diplomesScolaires.length && formation.anneePromo
       ? statutDiplome === "EN_COURS"
         ? `diplôme prévu en ${formation.anneePromo}`
         : `promo ${formation.anneePromo}`
       : "",
+    resumerInsertion(formation),
   ].filter(Boolean);
 
   return (
@@ -366,11 +482,6 @@ function FormationCard({
               {formation.synchronisationCatalogue === "EN_COURS" && (
                 <span className="max-w-full rounded-[7px] bg-[#eee2d0] px-3 py-1 text-xs font-bold text-[#735133] sm:text-sm">
                   ENREGISTREMENT…
-                </span>
-              )}
-              {formation.synchronisationCatalogue === "TERMINEE" && Boolean(formation.propositionsCatalogue?.length) && (
-                <span className="max-w-full rounded-[7px] bg-[#f8e4d7] px-3 py-1 text-xs font-bold text-[#9a441f] sm:text-sm">
-                  PROPOSITION EN VALIDATION
                 </span>
               )}
               {formation.synchronisationCatalogue === "ERREUR" && (
@@ -474,6 +585,44 @@ function SelectAvecAutre({
   );
 }
 
+/** Conserve le texte personnalisé lors des allers-retours entre la liste et « Autre ». */
+function SelectScolaireAvecAutre({
+  id, label, value, options, onChange, placeholder, required = true,
+}: {
+  id: string;
+  label: string;
+  value: string;
+  options: string[];
+  onChange: (value: string) => void;
+  placeholder: string;
+  required?: boolean;
+}) {
+  const optionConnue = options.find((option) => option !== "Autre" && normaliserLibelle(option) === normaliserLibelle(value));
+  const [modeAutre, setModeAutre] = useState(false);
+  const textePersonnalise = useRef(value && !optionConnue ? value : "");
+  const autre = modeAutre || Boolean(value && !optionConnue);
+  return (
+    <SelectAvecAutre
+      id={id}
+      label={label}
+      value={autre ? value : optionConnue || value}
+      options={options}
+      autre={autre}
+      required={required}
+      placeholder={placeholder}
+      onSelect={(selection, choixAutre) => {
+        if (autre) textePersonnalise.current = value;
+        setModeAutre(choixAutre);
+        onChange(choixAutre ? textePersonnalise.current : selection);
+      }}
+      onOtherChange={(texte) => {
+        textePersonnalise.current = texte;
+        onChange(texte);
+      }}
+    />
+  );
+}
+
 function FormationForm({
   type,
   initialData,
@@ -491,19 +640,29 @@ function FormationForm({
     return {
       ...creerFormationVide(type),
       ...(initialData || {}),
+      programme: libelleProgramme(initialData?.programme),
       type,
       statutDiplome: statutInitial,
       diplomeObtenu: statutInitial === "OBTENU",
+      systemeEducatifCode: initialData?.systemeEducatifCode || getSystemeEducatifCode(initialData?.paysCode || "ML", initialData?.etablissementId),
+      diplomesScolaires: type === "universite" ? undefined : diplomesDuParcoursScolaire(initialData || { type }),
     };
   });
+  // Clés internes uniquement : elles ne sont jamais enregistrées dans le parcours.
+  const clesDiplomesScolaires = useRef((form.diplomesScolaires || []).map((_, index) => `initial-${index}`));
+  const prochaineCleDiplome = useRef(0);
+  const programmeScolaireChoisi = useRef(Boolean(initialData?.systemeEducatifCode));
   const [pays, setPays] = useState<PaysOption[]>(PAYS_DE_SECOURS);
   const [villes, setVilles] = useState<VilleOption[]>([]);
   const [institutions, setInstitutions] = useState<InstitutionOption[]>([]);
   const [programmes, setProgrammes] = useState<ProgrammeReference[]>([]);
-  const [series, setSeries] = useState<string[]>([]);
-  const [diplomes, setDiplomes] = useState<string[]>([]);
+  const [referencesChargees, setReferencesChargees] = useState<{ cle: string; series: string[]; diplomes: string[] } | null>(null);
+  const contexteReferences = { type, paysCode: form.paysCode, systemeEducatifCode: form.systemeEducatifCode, institutionId: form.etablissementId };
+  const cleReferences = cleReferencesFormation(contexteReferences);
+  const { series, diplomes } = referencesFormationDisponibles(contexteReferences, referencesChargees);
   const [rechercheVille, setRechercheVille] = useState(false);
   const [rechercheInstitution, setRechercheInstitution] = useState(false);
+  const [catalogueInstitutionPartiel, setCatalogueInstitutionPartiel] = useState(false);
   const [rechercheProgramme, setRechercheProgramme] = useState(false);
   const [revisionCatalogue, setRevisionCatalogue] = useState(0);
   const [etablissementAutre, setEtablissementAutre] = useState(
@@ -570,14 +729,14 @@ function FormationForm({
     let actif = true;
     const parametres = new URLSearchParams({ country: form.paysCode, type });
     if (form.etablissementId) parametres.set("institutionId", form.etablissementId);
+    if (form.systemeEducatifCode && type !== "universite") parametres.set("systemeEducatifCode", form.systemeEducatifCode);
     fetch(`/api/education/reference?${parametres}`)
       .then((reponse) => reponse.ok ? reponse.json() : Promise.reject(new Error("Référentiel indisponible")))
       .then((donnees: ReferenceResponse) => {
         if (!actif) return;
         const prochainesSeries = donnees.series || [];
         const prochainsDiplomes = donnees.diplomes || [];
-        setSeries(prochainesSeries);
-        setDiplomes(prochainsDiplomes);
+        setReferencesChargees({ cle: cleReferences, series: prochainesSeries, diplomes: prochainsDiplomes });
         if (type === "lycee" && form.specialite) {
           const serieConnue = prochainesSeries.find((serie) =>
             normaliserLibelle(serie) === normaliserLibelle(form.specialite),
@@ -600,7 +759,7 @@ function FormationForm({
     return () => {
       actif = false;
     };
-  }, [form.paysCode, form.etablissementId, type]);
+  }, [form.paysCode, form.etablissementId, form.systemeEducatifCode, type, cleReferences]);
 
   useEffect(() => {
     const recherche = form.ville.trim();
@@ -635,17 +794,20 @@ function FormationForm({
     if (!form.ville.trim()) {
       setInstitutions([]);
       setRechercheInstitution(false);
+      setCatalogueInstitutionPartiel(false);
       return;
     }
     if (!etablissementAutre && form.etablissement.trim().length < 2) {
       setInstitutions([]);
       setRechercheInstitution(false);
+      setCatalogueInstitutionPartiel(false);
       return;
     }
     // Ne jamais laisser les résultats de la requête précédente visibles pendant
     // le délai de saisie ou lorsqu'un onglet reprend le focus.
     setInstitutions([]);
     setRechercheInstitution(true);
+    setCatalogueInstitutionPartiel(false);
     let actif = true;
     const temporisateur = window.setTimeout(() => {
       const parametres = new URLSearchParams({
@@ -656,11 +818,21 @@ function FormationForm({
       });
       fetch(`/api/education/institutions?${parametres}`, { cache: "no-store" })
         .then((reponse) => reponse.ok ? reponse.json() : Promise.reject(new Error("Établissements indisponibles")))
-        .then((donnees: { institutions?: InstitutionOption[] }) => {
-          if (actif) setInstitutions(donnees.institutions || []);
+        .then((donnees: { institutions?: InstitutionOption[]; cataloguePartiel?: boolean }) => {
+          if (actif) {
+            setInstitutions(donnees.institutions || []);
+            const selection = donnees.institutions?.find((institution) => institution.id === form.etablissementId);
+            if (type !== "universite" && !programmeScolaireChoisi.current && selection?.systemeEducatifCode) {
+              setForm((precedent) => ({ ...precedent, systemeEducatifCode: selection.systemeEducatifCode }));
+            }
+            setCatalogueInstitutionPartiel(Boolean(donnees.cataloguePartiel));
+          }
         })
         .catch(() => {
-          if (actif) setInstitutions([]);
+          if (actif) {
+            setInstitutions([]);
+            setCatalogueInstitutionPartiel(true);
+          }
         })
         .finally(() => {
           if (actif) setRechercheInstitution(false);
@@ -714,7 +886,7 @@ function FormationForm({
 
   const programmeOptions = useMemo<SearchOption[]>(() => programmes.map((programme) => ({
     id: programme.id,
-    label: programme.label,
+    label: libelleProgramme(programme.label),
     secondary: programme.diplomeSuggere || programme.diplomes?.join(" · "),
   })), [programmes]);
 
@@ -724,24 +896,67 @@ function FormationForm({
     return programmeSelectionne?.diplomes?.length ? programmeSelectionne.diplomes : diplomes;
   }, [diplomes, form.programmeId, programmes, programmeAutre, type]);
 
-  const notesCompletes = form.noteEnseignants !== null
+  const estEtablissementScolaire = type === "ecole" || type === "lycee";
+  const anneeObtention = Number(form.anneePromo);
+  const anneeObtentionEstValide = anneeEstValide(form.anneePromo);
+  const anneeObtentionEstFuture = anneeObtentionEstValide
+    && anneeObtention > new Date().getFullYear();
+  const anneeObtentionEstCoherente = anneeObtentionEstValide && !anneeObtentionEstFuture;
+  const diplomesScolaires = form.diplomesScolaires || [];
+  const erreursDiplomesScolaires = diplomesScolaires.map((diplome) => erreurDiplomeScolaire(diplome, form.anneeDebut, form.anneeFin));
+  const avisEtablissementScolaireDisponible = !estEtablissementScolaire || (
+    (diplomesScolaires.some((diplome) => diplome.statut !== "EN_COURS") || anneeObtentionEstCoherente)
+    && avisEtablissementScolaireEstDisponible(
+      form.statutDiplome,
+      form.moisFin,
+      form.anneeFin,
+      form.anneePromo,
+    )
+  );
+  const avisDisponible = !estEtablissementScolaire || avisEtablissementScolaireDisponible;
+  const notesCompletes = !avisDisponible || (
+    form.noteEnseignants !== null
     && form.noteContenu !== null
     && form.noteCadre !== null
-    && (type === "ecole" || form.noteInsertion !== null);
-  const detailsTypeComplets = type === "ecole"
-    || (type === "lycee" ? Boolean(form.specialite.trim()) : Boolean(form.programme.trim()));
+  );
+  const commentaireComplet = !avisDisponible || Boolean(form.commentaire.trim());
+  const insertionDemandee = type === "universite" && form.statutDiplome !== "EN_COURS";
+  const ancienneteFormationEnMois = ancienneteDepuisFinEnMois(form.moisFin, form.anneeFin);
+  const dateFinEstFuture = ancienneteFormationEnMois !== null && ancienneteFormationEnMois < 0;
+  const douzeMoisEcoules = ancienneteFormationEnMois !== null && ancienneteFormationEnMois >= 12;
+  const delaiCompatibleAvecDate = form.demarcheApresFormation !== "RECHERCHE_EMPLOI"
+    || !form.delaiPremierEmploi
+    || ancienneteFormationEnMois === null
+    || (douzeMoisEcoules
+      ? form.delaiPremierEmploi !== "MOINS_DE_12_MOIS_DEPUIS_FIN"
+      : DELAIS_AVANT_DOUZE_MOIS.has(form.delaiPremierEmploi));
+  const insertionComplete = !insertionDemandee
+    || (reponseInsertionEstComplete(form) && delaiCompatibleAvecDate);
+  const delaisPremierEmploiDisponibles = DELAIS_PREMIER_EMPLOI.filter(({ valeur }) => {
+    if (ancienneteFormationEnMois === null) return true;
+    return douzeMoisEcoules
+      ? valeur !== "MOINS_DE_12_MOIS_DEPUIS_FIN"
+      : DELAIS_AVANT_DOUZE_MOIS.has(valeur);
+  });
+  const ouvertureAvisEtablissementScolaire = estEtablissementScolaire
+    ? dateOuvertureAvisEtablissementScolaire(form.moisFin, form.anneeFin, form.anneePromo)
+    : null;
+  const libelleOuvertureAvisEtablissementScolaire = ouvertureAvisEtablissementScolaire
+    ? `à partir ${avecPrepositionDe(MOIS[ouvertureAvisEtablissementScolaire.getMonth()]?.label || "", ouvertureAvisEtablissementScolaire.getFullYear())}`
+    : "un an après l’obtention de votre diplôme";
+  const detailsTypeComplets = estEtablissementScolaire ? Boolean(form.systemeEducatifCode) : Boolean(form.programme.trim());
   const diplomeAttendu = form.statutDiplome === "OBTENU" || form.statutDiplome === "EN_COURS";
   const statutInfoAffiche = STATUTS_DIPLOME.find(({ valeur }) => valeur === statutInfoOuvert);
-  const diplomeComplet = !diplomeAttendu || Boolean(form.diplome.trim() && anneeEstValide(form.anneePromo));
+  const diplomeComplet = !diplomeAttendu || (estEtablissementScolaire
+    ? diplomesScolaires.length > 0 && erreursDiplomesScolaires.every((erreur) => !erreur)
+      && (form.statutDiplome !== "OBTENU" || diplomesScolaires.every((diplome) => diplome.statut !== "EN_COURS"))
+    : Boolean(form.diplome.trim() && anneeObtentionEstValide));
   const anneesCompletes = anneeEstValide(form.anneeDebut) && anneeEstValide(form.anneeFin);
-  const periodeCompleteEtValide = periodeEstValide(form.moisDebut, form.anneeDebut, form.moisFin, form.anneeFin);
+  const periodeCompleteEtValide = periodeEstValide(form.moisDebut, form.anneeDebut, form.moisFin, form.anneeFin)
+    && (form.statutDiplome === "EN_COURS" || !dateFinEstFuture);
   const villeComplete = form.ville.trim().length >= 2;
   const etablissementComplet = villeComplete && form.etablissement.trim().length >= 2;
-  const parcoursComplet = type === "ecole"
-    ? etablissementComplet
-    : type === "lycee"
-      ? etablissementComplet && Boolean(form.specialite.trim())
-      : etablissementComplet && Boolean(form.programme.trim());
+  const parcoursComplet = etablissementComplet && (estEtablissementScolaire || Boolean(form.programme.trim()));
   const cibleEtablissement = etablissementAutre ? "etablissement-autre" : "formation-etablissement";
   const cibleParcours = type === "lycee"
     ? "formation-serie"
@@ -756,8 +971,9 @@ function FormationForm({
     && periodeCompleteEtValide
     && detailsTypeComplets
     && diplomeComplet
+    && insertionComplete
     && notesCompletes
-    && form.commentaire.trim(),
+    && commentaireComplet,
   );
 
   const demanderVille = () => setBlocageFormulaire({
@@ -797,9 +1013,11 @@ function FormationForm({
   const handlePaysChange = (code: string) => {
     const selection = pays.find((item) => item.code === code);
     if (!selection) return;
+    programmeScolaireChoisi.current = false;
     setForm((precedent) => ({
       ...precedent,
       paysCode: selection.code,
+      systemeEducatifCode: selection.code,
       pays: selection.nom,
       ville: "",
       etablissement: "",
@@ -820,11 +1038,13 @@ function FormationForm({
   const handleInstitutionSelect = (option: SearchOption) => {
     const institution = institutions.find((item) => item.id === option.id);
     if (!institution) return;
+    programmeScolaireChoisi.current = false;
     setForm((precedent) => ({
       ...precedent,
       etablissement: institution.nom,
       etablissementId: institution.id,
       etablissementSource: institution.source,
+      systemeEducatifCode: institution.systemeEducatifCode || getSystemeEducatifCode(institution.paysCode, institution.id),
       programme: "",
       programmeId: "",
       specialite: "",
@@ -843,7 +1063,7 @@ function FormationForm({
       || (diplomesAssocies.length === 1 ? diplomesAssocies[0] : "");
     setForm((precedent) => ({
       ...precedent,
-      programme: programme.label,
+      programme: libelleProgramme(programme.label),
       programmeId: programme.id,
       specialite: "",
       diplome: diplomeSuggere || (
@@ -856,13 +1076,16 @@ function FormationForm({
     setDiplomeAutre(false);
   };
 
-  const nombreNotes = type === "ecole" ? 3 : 4;
+  const nombreNotes = 3;
 
   const choisirStatutDiplome = (statutDiplome: StatutDiplome) => {
     const conserverDiplome = statutDiplome === "OBTENU" || statutDiplome === "EN_COURS";
+    const conserverInsertion = type === "universite" && statutDiplome !== "EN_COURS";
+    const conserverAvis = type === "universite" || statutDiplome === "OBTENU";
     setForm((precedent) => ({
       ...precedent,
       statutDiplome,
+      diplomesScolaires: statutDiplome === "OBTENU" ? precedent.diplomesScolaires?.map((item) => ({ ...item, statut: "OBTENU" as const })) : precedent.diplomesScolaires,
       diplomeObtenu: statutDiplome === "OBTENU",
       diplome: conserverDiplome ? precedent.diplome : "",
       diplomeId: conserverDiplome ? precedent.diplomeId : "",
@@ -870,9 +1093,64 @@ function FormationForm({
       mention: statutDiplome === "OBTENU" ? precedent.mention : "",
       mentionEstAutre: statutDiplome === "OBTENU" ? precedent.mentionEstAutre : false,
       anneePromo: conserverDiplome ? precedent.anneePromo : "",
+      demarcheApresFormation: conserverInsertion ? precedent.demarcheApresFormation : null,
+      delaiPremierEmploi: conserverInsertion ? precedent.delaiPremierEmploi : null,
+      emploiDansLes12Mois: conserverInsertion ? precedent.emploiDansLes12Mois : null,
+      lienEmploiFormation: conserverInsertion ? precedent.lienEmploiFormation : null,
+      noteEnseignants: conserverAvis ? precedent.noteEnseignants : null,
+      noteContenu: conserverAvis ? precedent.noteContenu : null,
+      noteCadre: conserverAvis ? precedent.noteCadre : null,
+      commentaire: conserverAvis ? precedent.commentaire : "",
     }));
     if (!conserverDiplome) setDiplomeAutre(false);
     if (statutDiplome !== "OBTENU") setMentionAutre(false);
+  };
+
+  const modifierDiplomesScolaires = (diplomes: DiplomeScolaire[]) => {
+    const principal = diplomeScolairePrincipal(diplomes);
+    setForm((precedent) => ({
+      ...precedent,
+      diplomesScolaires: diplomes,
+      diplomeId: "", specialiteId: "", programmeId: "",
+      diplome: principal?.libelle || "",
+      anneePromo: principal?.anneeObtention || "",
+      mention: principal?.mention || "",
+      specialite: principal?.serie || "",
+    }));
+  };
+  const modifierDiplomeScolaire = (index: number, valeurs: Partial<DiplomeScolaire>) =>
+    modifierDiplomesScolaires(diplomesScolaires.map((diplome, position) => position === index ? { ...diplome, ...valeurs } : diplome));
+
+  const retirerDiplomeScolaire = (index: number) => {
+    clesDiplomesScolaires.current = clesDiplomesScolaires.current.filter((_, position) => position !== index);
+    modifierDiplomesScolaires(diplomesScolaires.filter((_, position) => position !== index));
+  };
+
+  const ajouterDiplomeScolaire = (typeDiplome: DiplomeScolaire["type"]) => {
+    const libelle = typeDiplome === "AUTRE" ? "" : diplomes.find((item) => typeDiplomeScolaire(item) === typeDiplome) || (typeDiplome === "BAC" ? "Baccalauréat" : "Brevet / diplôme de fin d’études fondamentales");
+    clesDiplomesScolaires.current.push(`ajout-${prochaineCleDiplome.current++}`);
+    modifierDiplomesScolaires([...diplomesScolaires, {
+      type: typeDiplome, libelle, anneeObtention: "", mention: "", serie: "", statut: "OBTENU",
+    }]);
+  };
+
+  const choisirDemarcheApresFormation = (demarche: DemarcheApresFormation) => {
+    setForm((precedent) => ({
+      ...precedent,
+      demarcheApresFormation: demarche,
+      delaiPremierEmploi: demarche === "RECHERCHE_EMPLOI" ? precedent.delaiPremierEmploi : null,
+      emploiDansLes12Mois: demarche === "RECHERCHE_EMPLOI" ? precedent.emploiDansLes12Mois : null,
+      lienEmploiFormation: demarche === "RECHERCHE_EMPLOI" ? precedent.lienEmploiFormation : null,
+    }));
+  };
+
+  const choisirDelaiPremierEmploi = (delai: DelaiPremierEmploi) => {
+    setForm((precedent) => ({
+      ...precedent,
+      delaiPremierEmploi: delai,
+      emploiDansLes12Mois: calculerEmploiDansLes12Mois(delai),
+      lienEmploiFormation: emploiTrouve(delai) ? precedent.lienEmploiFormation : null,
+    }));
   };
 
   return (
@@ -996,8 +1274,12 @@ function FormationForm({
             disabled={!form.ville}
             minChars={2}
             required
-            helperText="Saisissez au moins 2 lettres : les résultats s’affichent automatiquement."
-            emptyMessage="Aucun établissement correspondant. Vérifiez l’orthographe ou ajoutez-le à la liste."
+            helperText={catalogueInstitutionPartiel
+              ? "Le catalogue complet est momentanément indisponible. Les références vérifiées restent proposées."
+              : "Saisissez au moins 2 lettres : les résultats s’affichent automatiquement."}
+            emptyMessage={catalogueInstitutionPartiel
+              ? "La recherche complète est momentanément indisponible. Ajoutez votre établissement manuellement."
+              : "Aucun établissement correspondant. Vérifiez l’orthographe ou ajoutez-le à la liste."}
             otherLabel="Mon établissement n’est pas dans la liste"
             onOther={() => {
               setEtablissementAutre(true);
@@ -1026,26 +1308,19 @@ function FormationForm({
       </div>
       </ZoneGuidee>
 
-      {type === "lycee" && (
-        <ZoneGuidee
-          bloquee={!etablissementComplet}
-          indication="Disponible après l’établissement"
-          onBlockedClick={demanderEtablissement}
-          className="mb-6"
-        >
-        <div>
-          <SelectAvecAutre
-            id="formation-serie"
-            label="Série / spécialité"
-            value={form.specialite}
-            options={series}
-            autre={specialiteAutre}
-            placeholder="Choisissez la série ou spécialité"
-            onSelect={(value, autre) => { setSpecialiteAutre(autre); set("specialite", value); }}
-            onOtherChange={(value) => set("specialite", value)}
-          />
+      {estEtablissementScolaire && (
+        <div className="mb-6">
+          <label htmlFor="formation-systeme" className={LABEL_CLASS}>Programme scolaire <span className="text-[#c65327]">*</span></label>
+          <select id="formation-systeme" value={form.systemeEducatifCode || form.paysCode} onChange={(event) => {
+            programmeScolaireChoisi.current = true;
+            const systemeEducatifCode = event.target.value;
+            setForm((precedent) => ({ ...precedent, systemeEducatifCode, diplomeId: "", specialiteId: "", programmeId: "" }));
+          }} className={FIELD_CLASS}>
+            {pays.map((item) => <option key={item.code} value={item.code}>{libelleSystemeEducatif(item.code)}</option>)}
+            <option value="AUTRE">Autre programme / programme international</option>
+          </select>
+          <p className="mt-2 text-sm text-[#56493e]">Choisissez le programme suivi, indépendamment du pays où se trouve l’établissement. Par exemple, Liberté à Bamako suit le programme français.</p>
         </div>
-        </ZoneGuidee>
       )}
 
       {type === "universite" && (
@@ -1187,7 +1462,11 @@ function FormationForm({
           <p className="mt-2 text-sm font-medium text-[#a44824]">Une année doit contenir exactement 4 chiffres.</p>
         ) : null}
         {anneesCompletes && form.moisDebut && form.moisFin && !periodeCompleteEtValide ? (
-          <p className="mt-2 text-sm font-medium text-[#a44824]">La date de début doit être antérieure ou égale à la date de fin.</p>
+          <p className="mt-2 text-sm font-medium text-[#a44824]">
+            {dateFinEstFuture && form.statutDiplome !== "EN_COURS"
+              ? "La date de fin d’une formation terminée ne peut pas être dans le futur."
+              : "La date de début doit être antérieure ou égale à la date de fin."}
+          </p>
         ) : null}
       </div>
 
@@ -1204,7 +1483,7 @@ function FormationForm({
                   onClick={() => choisirStatutDiplome(valeur)}
                   className={`h-[74px] w-full rounded-[13px] border px-10 py-3 text-base font-semibold leading-tight transition-colors ${selectionne ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#dfc9a8] bg-[#fffbf5] text-[#776b5e] hover:border-[#0d6738] hover:text-[#0d6738]"}`}
                 >
-                  {libelle}
+                  {estEtablissementScolaire && valeur === "OBTENU" ? "Diplôme(s) obtenu(s)" : libelle}
                 </button>
                 <button
                   type="button"
@@ -1263,7 +1542,75 @@ function FormationForm({
         </div>
       )}
 
-      {diplomeAttendu && (
+      {estEtablissementScolaire && diplomeAttendu && (
+        <section className="mb-8 space-y-4" aria-labelledby="diplomes-scolaires-titre">
+          <h3 id="diplomes-scolaires-titre" className="text-xl font-bold text-[#2e261f]">Diplômes dans cet établissement</h3>
+          <p className="text-sm text-[#56493e]">Vous pouvez ajouter le brevet ou DEF et le bac à des années différentes pendant la même scolarité, ainsi que tout autre diplôme.</p>
+          {diplomesScolaires.map((diplome, index) => (
+            <fieldset key={clesDiplomesScolaires.current[index]} className="rounded-[14px] border border-[#dfc9a8] p-4 sm:p-5">
+              <legend className="px-2 font-semibold text-[#2e261f]">{diplome.type === "BAC" ? "Baccalauréat" : diplome.type === "BREVET" ? "Brevet / DEF" : "Autre diplôme"}</legend>
+              <div className="mb-4 flex justify-end">
+                <button type="button" onClick={() => retirerDiplomeScolaire(index)} className="text-sm font-semibold text-[#0d6738] hover:underline">Retirer ce diplôme</button>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <SelectScolaireAvecAutre
+                  id={`diplome-scolaire-${index}`}
+                  label="Diplôme"
+                  value={diplome.libelle}
+                  options={diplomes.filter((item) => item !== "Autre" && (diplome.type === "AUTRE" || typeDiplomeScolaire(item) === diplome.type))}
+                  onChange={(libelle) => modifierDiplomeScolaire(index, { libelle })}
+                  placeholder="Choisissez le diplôme"
+                />
+                {form.statutDiplome === "EN_COURS" && (
+                  <div>
+                    <label htmlFor={`statut-scolaire-${index}`} className={LABEL_CLASS}>Statut du diplôme</label>
+                    <select id={`statut-scolaire-${index}`} value={diplome.statut || "OBTENU"} onChange={(event) => modifierDiplomeScolaire(index, { statut: event.target.value as "OBTENU" | "EN_COURS" })} className={FIELD_CLASS}>
+                      <option value="OBTENU">Obtenu</option>
+                      <option value="EN_COURS">En préparation</option>
+                    </select>
+                  </div>
+                )}
+                <div>
+                  <label htmlFor={`annee-scolaire-${index}`} className={LABEL_CLASS}>{diplome.statut === "EN_COURS" ? "Année prévue" : "Année d’obtention"} <span className="text-[#c65327]">*</span></label>
+                  <input id={`annee-scolaire-${index}`} inputMode="numeric" maxLength={4} value={diplome.anneeObtention} onChange={(event) => modifierDiplomeScolaire(index, { anneeObtention: normaliserAnnee(event.target.value) })} placeholder="Ex. 2014" className={FIELD_CLASS} aria-describedby={erreursDiplomesScolaires[index] && diplome.anneeObtention ? `erreur-scolaire-${index}` : undefined} />
+                </div>
+                {diplome.statut !== "EN_COURS" && (
+                  <SelectScolaireAvecAutre
+                    id={`mention-scolaire-${index}`}
+                    label="Mention obtenue"
+                    value={diplome.mention}
+                    options={["Passable", "Assez bien", "Bien", "Très bien", "Très honorable", "Félicitations du jury"]}
+                    onChange={(mention) => modifierDiplomeScolaire(index, { mention })}
+                    placeholder="Choisissez la mention (facultatif)"
+                    required={false}
+                  />
+                )}
+                {diplome.type !== "BREVET" && (
+                  <div className="md:col-span-2">
+                    <SelectScolaireAvecAutre
+                      id={`serie-scolaire-${index}`}
+                      label="Série / spécialité"
+                      value={diplome.serie}
+                      options={series}
+                      onChange={(serie) => modifierDiplomeScolaire(index, { serie })}
+                      placeholder="Choisissez la série ou spécialité (facultatif)"
+                      required={false}
+                    />
+                  </div>
+                )}
+              </div>
+              {erreursDiplomesScolaires[index] && diplome.anneeObtention && <p id={`erreur-scolaire-${index}`} className="mt-3 text-sm font-medium text-[#a44824]">{erreursDiplomesScolaires[index]}</p>}
+            </fieldset>
+          ))}
+          <div className="flex flex-wrap gap-3">
+            {(["BREVET", "BAC", "AUTRE"] as const).filter((typeDiplome) => typeDiplome === "AUTRE" || !diplomesScolaires.some((item) => item.type === typeDiplome)).map((typeDiplome) => (
+              <button key={typeDiplome} type="button" onClick={() => ajouterDiplomeScolaire(typeDiplome)} className="rounded-[12px] border border-dashed border-[#d7b98d] px-4 py-3 font-semibold text-[#0d6738] hover:bg-[#eee2d0]">+ {typeDiplome === "BREVET" ? "Ajouter le brevet / DEF" : typeDiplome === "BAC" ? "Ajouter le bac" : "Autre diplôme obtenu"}</button>
+            ))}
+          </div>
+        </section>
+      )}
+
+      {diplomeAttendu && !estEtablissementScolaire && (
         <div className="mb-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           <div>
             <SelectAvecAutre
@@ -1282,7 +1629,7 @@ function FormationForm({
           </div>
           <div>
             <label htmlFor="formation-promotion" className={LABEL_CLASS}>
-              {form.statutDiplome === "OBTENU" ? "Année de votre promotion" : "Année de diplôme prévue"} <span className="text-[#c65327]">*</span>
+              {form.statutDiplome === "OBTENU" ? "Année d’obtention du diplôme" : "Année de diplôme prévue"} <span className="text-[#c65327]">*</span>
             </label>
             <input id="formation-promotion" type="text" inputMode="numeric" maxLength={4} value={form.anneePromo} onChange={(event) => set("anneePromo", normaliserAnnee(event.target.value))} placeholder={form.statutDiplome === "OBTENU" ? "Ex. 2023" : "Ex. 2027"} className={FIELD_CLASS} />
             {form.anneePromo && !anneeEstValide(form.anneePromo) && (
@@ -1305,32 +1652,138 @@ function FormationForm({
         </div>
       )}
 
-      <div className="border-t border-[#e4d2b3] pt-7">
-        <h3 className="mb-1 text-xl font-bold text-[#2e261f]">Votre avis sur cette formation</h3>
-        <p className="mb-4 text-sm text-[#56493e] sm:text-base">
-          {nombreNotes} notes sur 5, puis un mot sur votre expérience. Ces avis aideront les membres du réseau à s’orienter.
-        </p>
-        <div className="divide-y divide-[#e4d2b3]">
-          <StarRating label="Qualité des enseignants" description="Compétence, disponibilité, suivi" value={form.noteEnseignants} onChange={(value) => set("noteEnseignants", value)} />
-          <StarRating label="Contenu de la formation" description="Programme, niveau, utilité réelle" value={form.noteContenu} onChange={(value) => set("noteContenu", value)} />
-          <StarRating label="Cadre & équipements" description="Locaux, bibliothèque, labos, vie étudiante" value={form.noteCadre} onChange={(value) => set("noteCadre", value)} />
-          {type !== "ecole" && (
-            <StarRating label="Taux d’insertion professionnelle" description="Trouve-t-on du travail à la sortie ?" value={form.noteInsertion} onChange={(value) => set("noteInsertion", value)} />
+      {insertionDemandee && (
+        <section className="mb-8 border-t border-[#e4d2b3] pt-7" aria-labelledby="titre-suivi-insertion">
+          <h3 id="titre-suivi-insertion" className="mb-1 text-xl font-bold text-[#2e261f]">
+            Après la formation
+          </h3>
+          <p className="mb-5 max-w-4xl text-sm leading-relaxed text-[#56493e] sm:text-base">
+            Quelques réponses simples nous permettent de calculer le taux d’insertion à 12 mois de l’établissement.
+            Seuls des résultats regroupés seront affichés.
+          </p>
+          {ancienneteFormationEnMois !== null && !douzeMoisEcoules && !dateFinEstFuture && (
+            <p className="mb-5 rounded-[13px] border border-[#d4e4d7] bg-[#edf5ef] px-4 py-3 text-sm leading-relaxed text-[#2e261f] sm:text-base" role="note">
+              Votre formation s’est terminée il y a moins de 12 mois. Votre réponse est enregistrée, mais elle ne sera intégrée au taux qu’une fois les 12 mois écoulés.
+            </p>
           )}
-        </div>
-      </div>
 
-      <div className="mb-6 mt-6">
-        <label htmlFor="formation-commentaire" className={LABEL_CLASS}>Commentaire global sur votre expérience <span className="text-[#c65327]">*</span></label>
-        <textarea
-          id="formation-commentaire"
-          value={form.commentaire}
-          onChange={(event) => set("commentaire", event.target.value)}
-          placeholder="Ce que vous diriez à quelqu’un qui hésite à s’y inscrire…"
-          rows={4}
-          className={`${FIELD_CLASS} resize-y`}
-        />
-      </div>
+          <fieldset className="mb-6">
+            <legend className={LABEL_CLASS}>
+              Après cette formation, quel était votre projet principal ? <span className="text-[#c65327]">*</span>
+            </legend>
+            <div className="grid gap-3 md:grid-cols-3">
+              {DEMARCHES_APRES_FORMATION.map(({ valeur, libelle, precision }) => {
+                const selectionne = form.demarcheApresFormation === valeur;
+                return (
+                  <button
+                    key={valeur}
+                    type="button"
+                    aria-pressed={selectionne}
+                    onClick={() => choisirDemarcheApresFormation(valeur)}
+                    className={`${CLASSE_CHOIX} ${selectionne ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#dfc9a8] bg-[#fffbf5] text-[#2e261f] hover:border-[#0d6738]"}`}
+                  >
+                    <span className="block">{libelle}</span>
+                    <span className={`mt-1 block text-xs font-normal ${selectionne ? "text-white/85" : "text-[#56493e]"}`}>
+                      {precision}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+
+          {form.demarcheApresFormation === "RECHERCHE_EMPLOI" && (
+            <fieldset className="mb-6">
+              <legend className={LABEL_CLASS}>
+                Avez-vous obtenu un emploi ou commencé une activité dans les 12 mois après cette formation ? <span className="text-[#c65327]">*</span>
+              </legend>
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
+                {delaisPremierEmploiDisponibles.map(({ valeur, libelle }) => {
+                  const selectionne = form.delaiPremierEmploi === valeur;
+                  return (
+                    <button
+                      key={valeur}
+                      type="button"
+                      aria-pressed={selectionne}
+                      onClick={() => choisirDelaiPremierEmploi(valeur)}
+                      className={`${CLASSE_CHOIX} text-center ${selectionne ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#dfc9a8] bg-[#fffbf5] text-[#2e261f] hover:border-[#0d6738]"}`}
+                    >
+                      {libelle}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
+          )}
+
+          {form.demarcheApresFormation === "RECHERCHE_EMPLOI" && emploiTrouve(form.delaiPremierEmploi) && (
+            <fieldset>
+              <legend className={LABEL_CLASS}>
+                Cette première activité était-elle liée à votre formation ? <span className="text-[#c65327]">*</span>
+              </legend>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {LIENS_EMPLOI_FORMATION.map(({ valeur, libelle }) => {
+                  const selectionne = form.lienEmploiFormation === valeur;
+                  return (
+                    <button
+                      key={valeur}
+                      type="button"
+                      aria-pressed={selectionne}
+                      onClick={() => set("lienEmploiFormation", valeur)}
+                      className={`${CLASSE_CHOIX} text-center ${selectionne ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#dfc9a8] bg-[#fffbf5] text-[#2e261f] hover:border-[#0d6738]"}`}
+                    >
+                      {libelle}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
+          )}
+        </section>
+      )}
+
+      {avisDisponible ? (
+        <>
+          <div className="border-t border-[#e4d2b3] pt-7">
+            <h3 className="mb-1 text-xl font-bold text-[#2e261f]">Votre avis sur cette formation</h3>
+            <p className="mb-4 text-sm text-[#56493e] sm:text-base">
+              {nombreNotes} notes sur 5, puis un mot sur votre expérience. Ces avis aideront les membres du réseau à s’orienter.
+            </p>
+            <div className="divide-y divide-[#e4d2b3]">
+              <StarRating label="Qualité des enseignants" description="Compétence, disponibilité, suivi" value={form.noteEnseignants} onChange={(value) => set("noteEnseignants", value)} />
+              <StarRating label="Contenu de la formation" description="Programme, niveau, utilité réelle" value={form.noteContenu} onChange={(value) => set("noteContenu", value)} />
+              <StarRating label="Cadre & équipements" description="Locaux, bibliothèque, labos, vie étudiante" value={form.noteCadre} onChange={(value) => set("noteCadre", value)} />
+            </div>
+          </div>
+
+          <div className="mb-6 mt-6">
+            <label htmlFor="formation-commentaire" className={LABEL_CLASS}>Commentaire global sur votre expérience <span className="text-[#c65327]">*</span></label>
+            <textarea
+              id="formation-commentaire"
+              value={form.commentaire}
+              onChange={(event) => set("commentaire", event.target.value)}
+              placeholder="Ce que vous diriez à quelqu’un qui hésite à s’y inscrire…"
+              rows={4}
+              className={`${FIELD_CLASS} resize-y`}
+            />
+          </div>
+        </>
+      ) : (
+        <div className="mb-6 border-t border-[#e4d2b3] pt-7" role="note">
+          <div className="rounded-[14px] border border-[#d4e4d7] bg-[#edf5ef] px-5 py-4 text-[#2e261f]">
+            <p className="font-semibold">Votre avis sera demandé plus tard</p>
+            <p className="mt-1 text-sm leading-relaxed sm:text-base">
+              {form.statutDiplome !== "OBTENU"
+                ? "Pour une école ou un lycée, l’avis est ouvert uniquement après l’obtention du diplôme et un an de recul. Vous pouvez enregistrer votre parcours sans le noter."
+                : !anneeObtentionEstValide
+                  ? "Indiquez une année d’obtention valide pour connaître la date à laquelle vous pourrez laisser un avis."
+                  : anneeObtentionEstFuture
+                    ? "L’année d’obtention du diplôme ne peut pas être dans le futur."
+                    : `Vous pourrez noter cet établissement ${libelleOuvertureAvisEtablissementScolaire}. Vous pouvez enregistrer votre parcours dès maintenant.`}
+            </p>
+          </div>
+        </div>
+      )}
       </ZoneGuidee>
 
       {blocageFormulaire && (
@@ -1387,9 +1840,29 @@ function FormationForm({
           disabled={!canSave}
           onClick={() => {
             if (!canSave) return;
+            const principal = estEtablissementScolaire && diplomeAttendu ? diplomeScolairePrincipal(diplomesScolaires) : undefined;
             onSave({
               ...form,
+              ...(estEtablissementScolaire ? {
+                type: "ecole" as const,
+                diplomeId: "", specialiteId: "", programmeId: "",
+                diplomesScolaires: diplomeAttendu ? diplomesScolaires : [],
+                diplome: principal?.libelle || "",
+                anneePromo: principal?.anneeObtention || "",
+                mention: principal?.mention || "",
+                specialite: principal?.serie || "",
+                demarcheApresFormation: null,
+                delaiPremierEmploi: null,
+                lienEmploiFormation: null,
+              } : {}),
               id: initialData?.id || crypto.randomUUID(),
+              emploiDansLes12Mois: !estEtablissementScolaire && form.demarcheApresFormation === "RECHERCHE_EMPLOI"
+                ? calculerEmploiDansLes12Mois(form.delaiPremierEmploi)
+                : null,
+              noteEnseignants: avisDisponible ? form.noteEnseignants : null,
+              noteContenu: avisDisponible ? form.noteContenu : null,
+              noteCadre: avisDisponible ? form.noteCadre : null,
+              commentaire: avisDisponible ? form.commentaire.trim() : "",
               specialiteEstAutre: specialiteAutre,
               diplomeEstAutre: diplomeAutre,
               mentionEstAutre: mentionAutre,
@@ -1401,14 +1874,72 @@ function FormationForm({
         </button>
       </div>
       <p className="mt-3 text-sm text-[#56493e]">
-        {canSave ? "Tout est bon, vous pourrez modifier cet avis plus tard." : `Complétez les champs obligatoires, les ${nombreNotes} notes et votre commentaire.`}
+        {canSave
+          ? avisDisponible
+            ? "Tout est bon, vous pourrez modifier cet avis plus tard."
+            : "Tout est bon. Votre parcours peut être enregistré sans avis pour le moment."
+          : insertionDemandee && !insertionComplete
+            ? !delaiCompatibleAvecDate
+              ? "Choisissez une réponse compatible avec la date de fin de votre formation."
+              : "Complétez les questions sur votre situation après la formation."
+            : avisDisponible
+              ? `Complétez les champs obligatoires, les ${nombreNotes} notes et votre commentaire.`
+              : "Complétez les champs obligatoires de votre parcours."}
       </p>
     </section>
   );
 }
 
+/** Fusionne uniquement deux périodes du même établissement canonique sans avis contradictoires. */
+const fusionnerParcoursScolairesCompatibles = (formations: Formation[]): Formation[] => {
+  const resultat: Formation[] = [];
+  // Le rapprochement des périodes nécessite un ordre ancien → récent.
+  for (const formation of trierParDateDebut(formations, "croissant")) {
+    if (formation.type === "universite" || !formation.etablissementId || formation.etablissementId.startsWith("autre:")) {
+      resultat.push(formation);
+      continue;
+    }
+    const memeValeur = (a: unknown, b: unknown) => a == null || a === "" || b == null || b === "" || a === b;
+    const index = resultat.findIndex((autre) => autre.type !== "universite"
+      && autre.etablissementId === formation.etablissementId
+      && autre.paysCode === formation.paysCode && normaliserLibelle(autre.ville) === normaliserLibelle(formation.ville)
+      && (autre.systemeEducatifCode || autre.paysCode) === (formation.systemeEducatifCode || formation.paysCode)
+      && autre.statutDiplome === formation.statutDiplome
+      && diplomesDuParcoursScolaire(autre).length > 0 && diplomesDuParcoursScolaire(formation).length > 0
+      && !autre.propositionsCatalogue?.length && !formation.propositionsCatalogue?.length
+      && !["EN_COURS", "ERREUR"].includes(autre.synchronisationCatalogue || "")
+      && !["EN_COURS", "ERREUR"].includes(formation.synchronisationCatalogue || "")
+      && ["commentaire", "noteEnseignants", "noteContenu", "noteCadre", "programme"].every((cle) => memeValeur(autre[cle as keyof Formation], formation[cle as keyof Formation]))
+      && periodeEstValide(autre.moisDebut, autre.anneeDebut, autre.moisFin, autre.anneeFin)
+      && periodeEstValide(formation.moisDebut, formation.anneeDebut, formation.moisFin, formation.anneeFin)
+      && Number(formation.anneeDebut) * 12 + Number(formation.moisDebut) <= Number(autre.anneeFin) * 12 + Number(autre.moisFin) + 12);
+    if (index === -1) {
+      resultat.push(formation);
+      continue;
+    }
+    const autre = resultat[index];
+    const diplomes = [...new Map([...diplomesDuParcoursScolaire(autre), ...diplomesDuParcoursScolaire(formation)]
+      .map((diplome) => [JSON.stringify(diplome), diplome])).values()];
+    const principal = diplomeScolairePrincipal(diplomes);
+    const derniere = Number(formation.anneeFin) * 12 + Number(formation.moisFin) > Number(autre.anneeFin) * 12 + Number(autre.moisFin) ? formation : autre;
+    resultat[index] = {
+      ...autre, type: "ecole", diplomesScolaires: diplomes,
+      programme: autre.programme || formation.programme,
+      programmeId: "", diplomeId: "", specialiteId: "",
+      anneeFin: derniere.anneeFin, moisFin: derniere.moisFin,
+      diplome: principal?.libelle || autre.diplome, anneePromo: principal?.anneeObtention || autre.anneePromo,
+      mention: principal?.mention || "", specialite: principal?.serie || "",
+      commentaire: autre.commentaire || formation.commentaire,
+      noteEnseignants: autre.noteEnseignants ?? formation.noteEnseignants,
+      noteContenu: autre.noteContenu ?? formation.noteContenu,
+      noteCadre: autre.noteCadre ?? formation.noteCadre,
+    };
+  }
+  return resultat;
+};
+
 export default function StepFormations({ onNext, onBack, initialData }: StepFormationsProps) {
-  const [formations, setFormations] = useState<Formation[]>(initialData || []);
+  const [formations, setFormations] = useState<Formation[]>(() => fusionnerParcoursScolairesCompatibles(initialData || []));
   const [formOuvert, setFormOuvert] = useState<FormationType | null>(null);
   const [editionId, setEditionId] = useState<string | null>(null);
   const formationEnEdition = editionId ? formations.find((formation) => formation.id === editionId) : undefined;
@@ -1481,7 +2012,7 @@ export default function StepFormations({ onNext, onBack, initialData }: StepForm
 
   const handleModifier = (formation: Formation) => {
     setEditionId(formation.id);
-    setFormOuvert(formation.type);
+    setFormOuvert(formation.type === "universite" ? "universite" : "ecole");
   };
 
   const fermerFormulaire = () => {
@@ -1493,10 +2024,10 @@ export default function StepFormations({ onNext, onBack, initialData }: StepForm
     <section className="min-w-0 overflow-hidden rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-4 shadow-sm sm:p-9 lg:p-12">
       <h1 className="mb-3 font-display text-3xl font-bold text-[#2e261f] sm:text-[36px]">Votre parcours de formation</h1>
       <p className="mb-8 max-w-[1160px] text-base leading-relaxed text-[#2e261f] sm:text-lg">
-        Ajoutez vos établissements, école, lycée, université ou école privée. Pour chacun, quelques notes et un commentaire. Ensemble construisons le guide d&apos;orientation pour nos futurs talents.
+        Ajoutez vos établissements : ils seront classés automatiquement du plus récent au plus ancien. Regroupez le brevet ou DEF, le bac et vos autres diplômes sur une seule fiche par école ou lycée. Les questions sur l’insertion concernent uniquement le supérieur.
       </p>
 
-      {formations.map((formation) => (
+      {trierParDateDebut(formations).map((formation) => (
         <FormationCard
           key={formation.id}
           formation={formation}
@@ -1518,14 +2049,14 @@ export default function StepFormations({ onNext, onBack, initialData }: StepForm
       {!formOuvert && (
         <>
           <div className="mb-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4">
-            {(["ecole", "lycee", "universite"] as const).map((type) => (
+            {(["ecole", "universite"] as const).map((type) => (
               <button
                 key={type}
                 type="button"
                 onClick={() => { setFormOuvert(type); setEditionId(null); }}
                 className="rounded-[14px] border border-dashed border-[#d7b98d] bg-[#fffbf5] px-6 py-4 text-left text-base font-semibold text-[#0d6738] transition-colors hover:border-[#0d6738] hover:bg-[#f6efe3] focus:outline-none focus:ring-2 focus:ring-[#0d6738]/25 sm:text-lg"
               >
-                + Ajouter {type === "ecole" ? "une école" : type === "lycee" ? "un lycée" : "une université ou école privée"}
+                + Ajouter {type === "ecole" ? "une école / un lycée" : "un établissement supérieur"}
               </button>
             ))}
           </div>
@@ -1536,7 +2067,7 @@ export default function StepFormations({ onNext, onBack, initialData }: StepForm
             </button>
             <button
               type="button"
-              onClick={() => onNext(formations)}
+              onClick={() => onNext(trierParDateDebut(formations).map(nettoyerAvisNonEligible))}
               className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${formations.length ? "bg-[#0d6738] hover:bg-[#09572f]" : "bg-[#aa997f] hover:bg-[#96866e]"}`}
             >
               {formations.length ? "Continuer vers les expériences" : "Passer cette étape"}

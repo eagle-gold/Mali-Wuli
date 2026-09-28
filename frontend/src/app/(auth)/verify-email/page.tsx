@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
+import { terminerSession } from "@/lib/session";
 
 const CODE_LENGTH = 6;
 
@@ -19,8 +20,14 @@ export default function VerifyEmailPage() {
   const codeSaisi = code.join("");
 
   useEffect(() => {
-    setEmail(localStorage.getItem("mali_wuli_pending_email") || "");
-  }, []);
+    const emailEnAttente = localStorage.getItem("mali_wuli_pending_email") || "";
+    const verificationId = localStorage.getItem("mali_wuli_pending_verificationId");
+    if (!emailEnAttente || !verificationId) {
+      router.replace("/register");
+      return;
+    }
+    setEmail(emailEnAttente);
+  }, [router]);
 
   const appliquerCode = (valeur: string) => {
     const chiffres = valeur.replace(/\D/g, "").slice(0, CODE_LENGTH);
@@ -69,12 +76,10 @@ export default function VerifyEmailPage() {
         email,
         code: codeSaisi,
       });
-      localStorage.setItem("mali_wuli_token", res.data.token);
-      localStorage.setItem("mali_wuli_user_id", res.data.user.id);
-      localStorage.removeItem("mali_wuli_pending_email");
+      terminerSession();
+      localStorage.setItem("mali_wuli_registration_token", res.data.registrationToken);
       localStorage.removeItem("mali_wuli_pending_verificationId");
-      localStorage.removeItem("mali_wuli_registration_token");
-      router.push("/onboarding");
+      router.push("/register/details");
     } catch (err: unknown) {
       const error = err as { response?: { data?: { message?: string } } };
       setErreur(error.response?.data?.message || "Code incorrect ou expiré.");
@@ -117,8 +122,8 @@ export default function VerifyEmailPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f6efe3] flex items-center justify-center px-4 py-10">
-      <section className="bg-[#fffbf5] rounded-2xl shadow-sm border border-[#e4d2b3] w-full max-w-md p-8 text-center">
+    <main className="min-h-screen bg-[var(--color-page)] flex items-center justify-center px-4 py-10">
+      <section className="bg-[#fffbf5] rounded-2xl shadow-sm border border-[#e4d2b3] w-full min-w-0 max-w-md p-5 text-center sm:p-8">
         <nav className="flex items-center justify-between mb-7" aria-label="Navigation de l'inscription">
           <button
             type="button"
@@ -139,13 +144,13 @@ export default function VerifyEmailPage() {
         <h1 className="font-display text-3xl font-bold text-[#2e261f] mb-3">
           Confirmez votre e-mail
         </h1>
-        <p className="text-sm text-[#2e261f] mb-8">
+        <p className="break-words text-sm text-[#2e261f] mb-8">
           Code à 6 chiffres envoyé à {" "}
           <strong>{email || "votre adresse e-mail"}</strong>
         </p>
 
         <div
-          className="flex justify-center gap-2 mb-6"
+          className="mx-auto mb-6 grid w-full max-w-[328px] grid-cols-6 gap-1.5 sm:gap-2"
           onPaste={handlePaste}
           aria-label="Code de confirmation"
         >
@@ -163,7 +168,7 @@ export default function VerifyEmailPage() {
               aria-label={`Chiffre ${index + 1}`}
               onChange={(event) => handleChange(index, event.target.value)}
               onKeyDown={(event) => handleKeyDown(index, event)}
-              className={`h-14 w-11 sm:w-12 rounded-xl border text-center text-xl font-bold text-[#2e261f] outline-none transition-colors focus:ring-2 focus:ring-[#0d6738] ${
+              className={`h-12 w-full min-w-0 sm:h-14 rounded-xl border text-center text-xl font-bold text-[#2e261f] outline-none transition-colors focus:ring-2 focus:ring-[#0d6738] ${
                 digit
                   ? "border-[#0d6738] bg-[#eaf1e9]"
                   : "border-[#dfc9a8] bg-[#fffbf5]"

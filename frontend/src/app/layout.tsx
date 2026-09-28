@@ -2,6 +2,12 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
+// Hostinger peut conserver le HTML prérendu dans son CDN après un nouveau
+// déploiement. Le document pointerait alors vers des chunks JavaScript de
+// l'ancienne version et provoquerait un écran blanc. Les assets hachés restent
+// mis en cache, mais le HTML est toujours régéné avec le build actif.
+export const dynamic = "force-dynamic";
+
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
 

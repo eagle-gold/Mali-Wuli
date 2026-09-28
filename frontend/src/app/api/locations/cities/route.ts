@@ -78,6 +78,11 @@ const chargerVilles = (codePays: string) => {
   })();
 
   cacheVilles.set(codePays, chargement);
+  // Une erreur de lecture ne doit pas empoisonner le cache jusqu'au prochain
+  // redémarrage : un appel ultérieur doit pouvoir retenter le chargement.
+  void chargement.catch(() => {
+    if (cacheVilles.get(codePays) === chargement) cacheVilles.delete(codePays);
+  });
   return chargement;
 };
 
@@ -93,23 +98,41 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ message: "Code pays invalide." }, { status: 400 });
   }
 
-  const toutesLesVilles = await chargerVilles(codePays);
-  const rechercheNormalisee = normaliser(recherche);
-  const villes = rechercheNormalisee
-    ? toutesLesVilles
-        .filter((ville) => normaliser(ville.nom).includes(rechercheNormalisee))
-        .sort((a, b) => {
-          const aCommencePar = normaliser(a.nom).startsWith(rechercheNormalisee);
-          const bCommencePar = normaliser(b.nom).startsWith(rechercheNormalisee);
-          if (aCommencePar !== bCommencePar) return aCommencePar ? -1 : 1;
-          return a.nom.localeCompare(b.nom, "fr", { sensitivity: "base" });
-        })
-        .slice(0, limite)
-    : [];
+  try {
+    const toutesLesVilles = await chargerVilles(codePays);
+    const rechercheNormalisee = normaliser(recherche);
+    const villes = rechercheNormalisee
+      ? toutesLesVilles
+          .filter((ville) => normaliser(ville.nom).includes(rechercheNormalisee))
+          .sort((a, b) => {
+            const nomA = normaliser(a.nom);
+            const nomB = normaliser(b.nom);
+            const aExact = nomA === rechercheNormalisee;
+            const bExact = nomB === rechercheNormalisee;
+            if (aExact !== bExact) return aExact ? -1 : 1;
 
-  return NextResponse.json({
-    villes,
-    total: toutesLesVilles.length,
-    source: "https://github.com/dr5hn/countries-states-cities-database",
-  });
+            const aCommencePar = nomA.startsWith(rechercheNormalisee);
+            const bCommencePar = nomB.startsWith(rechercheNormalisee);
+            if (aCommencePar !== bCommencePar) return aCommencePar ? -1 : 1;
+
+            // À pertinence égale, un nom court est généralement la ville
+            // attendue (par exemple Paris avant Paradou pour « par »).
+            if (nomA.length !== nomB.length) return nomA.length - nomB.length;
+            return a.nom.localeCompare(b.nom, "fr", { sensitivity: "base" });
+          })
+          .slice(0, limite)
+      : [];
+
+    return NextResponse.json({
+      villes,
+      total: toutesLesVilles.length,
+      source: "https://github.com/dr5hn/countries-states-cities-database",
+    });
+  } catch (erreur) {
+    console.error("Impossible de charger le catalogue des villes.", erreur);
+    return NextResponse.json(
+      { message: "La recherche des villes est momentanément indisponible." },
+      { status: 503 },
+    );
+  }
 }

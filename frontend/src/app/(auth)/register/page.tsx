@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import api from "@/lib/api";
 
@@ -13,6 +13,11 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [erreur, setErreur] = useState("");
   const emailValide = emailEstValide(email);
+
+  useEffect(() => {
+    const parrain = new URLSearchParams(window.location.search).get("parrain")?.trim();
+    if (parrain) localStorage.setItem("mali_wuli_parrain_code", parrain);
+  }, []);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -39,7 +44,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#f6efe3] flex items-center justify-center px-4 py-10">
+    <main className="min-h-screen bg-[var(--color-page)] flex items-center justify-center px-4 py-10">
       <section className="bg-[#fffbf5] rounded-2xl shadow-sm border border-[#e4d2b3] w-full max-w-md p-8">
         <h1 className="font-display text-3xl font-bold text-[#2e261f] mb-3">
           Créer votre compte

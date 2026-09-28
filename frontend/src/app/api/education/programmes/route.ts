@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getProgrammes, type ProgrammeReference } from "@/lib/education/reference";
+import { getProgrammes, libelleProgramme, type ProgrammeReference } from "@/lib/education/reference";
 
 export const runtime = "nodejs";
 const BACKEND_API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8002/api";
@@ -17,27 +17,37 @@ const chercherCatalogue = async (
   institutionId: string,
   recherche: string,
 ): Promise<{ programmes: ProgrammeReference[]; couvertureEtablissement: boolean }> => {
-  const parametres = new URLSearchParams({ country: paysCode });
-  if (institutionId) parametres.set("institutionId", institutionId);
-  if (recherche) parametres.set("q", recherche);
-  const reponse = await fetch(`${BACKEND_API}/education/catalogue/programmes?${parametres}`, {
-    signal: AbortSignal.timeout(5_000),
-    cache: "no-store",
-  });
-  if (!reponse.ok) throw new Error(`Catalogue Mali Wuli indisponible (${reponse.status}).`);
-  const donnees = await reponse.json() as {
-    programmes?: ProgrammeReference[];
-    couvertureEtablissement?: boolean;
-  };
+  const rechercheCatalogue = recherche.replace(/^Licence\s*[—–-]\s*([123])(?:re|e)\s+année/i, "L$1");
+  // Le catalogue conserve ses identifiants et noms sources. Rechercher aussi
+  // L1 permet de retrouver une sélection désormais affichée « Licence ».
+  const recherches = [...new Set([
+    rechercheCatalogue,
+    rechercheCatalogue.replace(/^Licence(?=\s|[-–—:]|$)/i, "L1"),
+  ])];
+  const resultats = await Promise.all(recherches.map(async (terme) => {
+    const parametres = new URLSearchParams({ country: paysCode });
+    if (institutionId) parametres.set("institutionId", institutionId);
+    if (terme) parametres.set("q", terme);
+    const reponse = await fetch(`${BACKEND_API}/education/catalogue/programmes?${parametres}`, {
+      signal: AbortSignal.timeout(5_000),
+      cache: "no-store",
+    });
+    if (!reponse.ok) throw new Error(`Catalogue Mali Wuli indisponible (${reponse.status}).`);
+    return await reponse.json() as {
+      programmes?: ProgrammeReference[];
+      couvertureEtablissement?: boolean;
+    };
+  }));
   return {
-    programmes: donnees.programmes || [],
-    couvertureEtablissement: Boolean(donnees.couvertureEtablissement),
+    programmes: resultats.flatMap((donnees) => donnees.programmes || []),
+    couvertureEtablissement: resultats.some((donnees) => donnees.couvertureEtablissement),
   };
 };
 
 const fusionner = (programmes: ProgrammeReference[]) => {
   const uniques = new Map<string, ProgrammeReference>();
-  for (const programme of programmes) {
+  for (const source of programmes) {
+    const programme = { ...source, label: libelleProgramme(source.label) };
     const cle = normaliser(programme.label);
     const existant = uniques.get(cle);
     if (!existant) {

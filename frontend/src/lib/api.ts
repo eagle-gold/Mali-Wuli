@@ -1,29 +1,37 @@
-import axios from "axios";
+import axios, { type AxiosRequestConfig } from "axios";
+import { invaliderSessionCourante, lireJetonSession } from "@/lib/session";
+
+/** Lecture facultative depuis une page publique : expire la session sans quitter cette page. */
+export type OptionsSessionPassive = AxiosRequestConfig & { sessionPassive?: boolean };
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8002/api",
   headers: { "Content-Type": "application/json" },
 });
 
-// Injecter le token JWT à chaque requête
 api.interceptors.request.use((config) => {
-  if (typeof window !== "undefined") {
-    const token = localStorage.getItem("mali_wuli_token")
-      || localStorage.getItem("mali_wuli_registration_token");
-    if (token) config.headers.Authorization = `Bearer ${token}`;
-  }
+  // Le jeton d’inscription reste réservé au corps de POST /auth/register.
+  const token = lireJetonSession();
+  if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
 
-// Gérer les erreurs globalement
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("mali_wuli_token");
-        window.location.href = "/login";
-      }
+    const config = error.config as OptionsSessionPassive | undefined;
+    const route = String(config?.url || "");
+    const estRouteAuthentification = route.startsWith("/auth/");
+    if (error.response?.status === 401 && !estRouteAuthentification && typeof window !== "undefined") {
+      const headers = config?.headers;
+      const autorisation = typeof headers?.get === "function"
+        ? headers.get("Authorization")
+        : headers?.Authorization ?? headers?.authorization;
+      const jetonEnvoye = typeof autorisation === "string" && autorisation.startsWith("Bearer ") ? autorisation.slice(7).trim() : "";
+      const courant = lireJetonSession();
+      // Une réponse 401 d’une ancienne requête n’affecte pas le nouveau compte connecté.
+      const invalidee = jetonEnvoye ? invaliderSessionCourante(jetonEnvoye) : false;
+      if (!config?.sessionPassive && (invalidee || (!jetonEnvoye && !courant))) window.location.href = "/login";
     }
     return Promise.reject(error);
   }

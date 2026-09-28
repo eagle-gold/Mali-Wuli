@@ -1,0 +1,17 @@
+.root { min-width: 0; max-width: 100%; margin-top: 12px; font-family: inherit; }
+.button { display: inline-flex; justify-content: center; align-items: center; gap: 8px; min-height: 44px; max-width: 100%; padding: 9px 13px; border: 1px solid #d6b3a4; border-radius: 9px; background: #fff8f3; color: #8a3e27; font: inherit; font-size: 13px; font-weight: 600; white-space: normal; overflow-wrap: anywhere; text-align: center; cursor: pointer; }
+.button svg { flex: none; }
+.button:hover { background: #f9eade; }
+.button:focus-visible { outline: 3px solid #0d6738; outline-offset: 3px; }
+.button:disabled { cursor: wait; opacity: .6; }
+.cancel { border-color: #dccbb5; color: #5e4a38; background: #fffbf5; }
+.confirmation { border: 1px solid #ddc1af; border-radius: 11px; background: #fff8f0; padding: 14px; overflow-wrap: anywhere; }
+.confirmation h3 { margin: 0 0 8px; color: #493627; font: inherit; font-size: 15px; font-weight: 600; }
+.confirmation p { margin: 5px 0; font-size: 13px; line-height: 1.5; color: #735c49; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.confirmation .error { color: #8a3e27; margin-top: 12px; }
+.status { color: #0d6738; font-size: 14px; }
+.spinner { animation: tourner .8s linear infinite; }
+@keyframes tourner { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+@media (max-width: 380px) { .actions { flex-direction: column; align-items: stretch; } .confirmation { padding: 11px; } }

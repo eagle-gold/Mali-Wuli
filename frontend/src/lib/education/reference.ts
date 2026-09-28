@@ -21,28 +21,28 @@ export type ProgrammeReference = {
 
 const AUTRE = "Autre";
 
+// Secours uniquement : identifiants et libellés vérifiés dans le catalogue actif le 21 septembre 2026.
 export const INSTITUTIONS_PRIORITAIRES: InstitutionReference[] = [
-  { id: "ml-ecole-mamadou-konate", nom: "École fondamentale Mamadou Konaté", paysCode: "ML", ville: "Bamako", type: "ecole", statut: "Public", source: "reference" },
-  { id: "ml-ecole-la-cathedrale", nom: "École La Cathédrale", paysCode: "ML", ville: "Bamako", type: "ecole", statut: "Privé", source: "reference" },
-  { id: "ml-lycee-askia", nom: "Lycée Askia Mohamed", paysCode: "ML", ville: "Bamako", type: "lycee", statut: "Public", source: "reference" },
-  { id: "ml-lycee-liberte", nom: "Lycée Français Liberté", paysCode: "ML", ville: "Bamako", type: "lycee", statut: "Privé", systemeEducatifCode: "FR", source: "reference" },
-  { id: "ml-lycee-technique-bamako", nom: "Lycée Technique de Bamako", paysCode: "ML", ville: "Bamako", type: "lycee", statut: "Public", source: "reference" },
-  { id: "ml-lycee-bouillagui-fadiga", nom: "Lycée Bouillagui Fadiga", paysCode: "ML", ville: "Bamako", type: "lycee", statut: "Public", source: "reference" },
-  { id: "ml-usttb", nom: "Université des Sciences, des Techniques et des Technologies de Bamako", paysCode: "ML", ville: "Bamako", type: "universite", statut: "Public", source: "reference" },
-  { id: "ml-ussgb", nom: "Université des Sciences Sociales et de Gestion de Bamako", paysCode: "ML", ville: "Bamako", type: "universite", statut: "Public", source: "reference" },
-  { id: "ml-ulshb", nom: "Université des Lettres et des Sciences Humaines de Bamako", paysCode: "ML", ville: "Bamako", type: "universite", statut: "Public", source: "reference" },
-  { id: "ml-usjpb", nom: "Université des Sciences Juridiques et Politiques de Bamako", paysCode: "ML", ville: "Bamako", type: "universite", statut: "Public", source: "reference" },
-  { id: "ml-segou", nom: "Université de Ségou", paysCode: "ML", ville: "Ségou", type: "universite", statut: "Public", source: "reference" },
-  { id: "ml-sikasso", nom: "Université de Sikasso", paysCode: "ML", ville: "Sikasso", type: "universite", statut: "Public", source: "reference" },
-  { id: "ml-eni-abt", nom: "École Nationale d’Ingénieurs Abderhamane Baba Touré", paysCode: "ML", ville: "Bamako", type: "universite", statut: "Public", source: "reference" },
-  { id: "ml-iug", nom: "Institut Universitaire de Gestion", paysCode: "ML", ville: "Bamako", type: "universite", statut: "Public", source: "reference" },
-  { id: "0755976N", nom: "Université Paris Cité", paysCode: "FR", ville: "Paris", type: "universite", statut: "Public", source: "reference" },
-  { id: "ci-ufhb", nom: "Université Félix Houphouët-Boigny", paysCode: "CI", ville: "Abidjan", type: "universite", statut: "Public", source: "reference" },
-  { id: "ci-inphb", nom: "Institut National Polytechnique Félix Houphouët-Boigny", paysCode: "CI", ville: "Yamoussoukro", type: "universite", statut: "Public", source: "reference" },
-  { id: "ng-unilag", nom: "University of Lagos", paysCode: "NG", ville: "Lagos", type: "universite", statut: "Public", source: "reference" },
-  { id: "ng-ui", nom: "University of Ibadan", paysCode: "NG", ville: "Ibadan", type: "universite", statut: "Public", source: "reference" },
-  { id: "ne-uam", nom: "Université Abdou Moumouni", paysCode: "NE", ville: "Niamey", type: "universite", statut: "Public", source: "reference" },
-  { id: "mr-una", nom: "Université de Nouakchott Al Aasriya", paysCode: "MR", ville: "Nouakchott", type: "universite", statut: "Public", source: "reference" },
+  { id: "ml-ecole-mamadou-konate", nom: "École fondamentale Mamadou Konaté", paysCode: "ML", ville: "Bamako", type: "ecole", statut: "Public", systemeEducatifCode: "ML", source: "reference" },
+  { id: "ml-lycee-askia", nom: "Lycée Askia Mohamed", paysCode: "ML", ville: "Bamako", type: "lycee", statut: "Public", systemeEducatifCode: "ML", source: "reference" },
+  { id: "ml-lycee-liberte", nom: "Établissement Liberté", paysCode: "ML", ville: "Bamako", type: "lycee", statut: "Privé", systemeEducatifCode: "FR", source: "reference" },
+  { id: "ml-osm-363151e3cd30077109a3a444", nom: "Lycée Technique de Bamako", paysCode: "ML", ville: "Bamako", type: "lycee", systemeEducatifCode: "ML", source: "reference" },
+  { id: "ml-osm-427d40348b9ebf220abd9d2c", nom: "Lycée Bouillagui Fadiga", paysCode: "ML", ville: "Bamako", type: "lycee", systemeEducatifCode: "ML", source: "reference" },
+  { id: "ml-usttb", nom: "Université des Sciences, des Techniques et des Technologies de Bamako", paysCode: "ML", ville: "Bamako", type: "universite", statut: "Public", systemeEducatifCode: "ML", source: "reference" },
+  { id: "ml-ussgb", nom: "Université des Sciences Sociales et de Gestion de Bamako", paysCode: "ML", ville: "Bamako", type: "universite", statut: "Public", systemeEducatifCode: "ML", source: "reference" },
+  { id: "ml-ulshb", nom: "Université Yambo Ouologuem de Bamako", paysCode: "ML", ville: "Bamako", type: "universite", statut: "Public", systemeEducatifCode: "ML", source: "reference" },
+  { id: "ml-usjpb", nom: "Université Kurukan Fuga de Bamako", paysCode: "ML", ville: "Bamako", type: "universite", statut: "Public", systemeEducatifCode: "ML", source: "reference" },
+  { id: "ml-segou", nom: "Université de Ségou", paysCode: "ML", ville: "Ségou", type: "universite", statut: "Public", systemeEducatifCode: "ML", source: "reference" },
+  { id: "ml-sikasso", nom: "Université de Sikasso", paysCode: "ML", ville: "Sikasso", type: "universite", statut: "Public", systemeEducatifCode: "ML", source: "reference" },
+  { id: "ml-eni-abt", nom: "École Nationale d’Ingénieurs Abderhamane Baba Touré", paysCode: "ML", ville: "Bamako", type: "universite", statut: "Public", systemeEducatifCode: "ML", source: "reference" },
+  { id: "ml-osm-203650e897345f1d19e494c2", nom: "Institut Universitaire de Gestion", paysCode: "ML", ville: "Bamako", type: "universite", systemeEducatifCode: "ML", source: "reference" },
+  { id: "fr-universite-paris-cite", nom: "Université Paris Cité", paysCode: "FR", ville: "Paris", type: "universite", statut: "Public", systemeEducatifCode: "FR", source: "reference" },
+  { id: "ror-03haqmz43", nom: "Université Félix Houphouët-Boigny", paysCode: "CI", ville: "Abidjan", type: "universite", systemeEducatifCode: "CI", source: "reference" },
+  { id: "ror-03f915n15", nom: "Institut National Polytechnique Félix Houphouët-Boigny", paysCode: "CI", ville: "Yamoussoukro", type: "universite", systemeEducatifCode: "CI", source: "reference" },
+  { id: "cmua35fpk0s4g5etjv96zj0oi", nom: "University of Lagos", paysCode: "NG", ville: "Lagos", type: "universite", systemeEducatifCode: "NG", source: "reference" },
+  { id: "cmua35fp10s3o5etjes6qv2cf", nom: "University of Ibadan", paysCode: "NG", ville: "Ibadan", type: "universite", systemeEducatifCode: "NG", source: "reference" },
+  { id: "cmua35fhz0rtc5etj1itqnn6u", nom: "Université Abdou Moumouni de Niamey", paysCode: "NE", ville: "Niamey", type: "universite", systemeEducatifCode: "NE", source: "reference" },
+  { id: "cmua35eoy0qu85etj299vdav3", nom: "Université de Nouakchott", paysCode: "MR", ville: "Nouakchott", type: "universite", systemeEducatifCode: "MR", source: "reference" },
 ];
 
 const SERIES_GENERIQUES = [
@@ -77,6 +77,9 @@ const SERIES_PAR_PAYS: Record<string, string[]> = {
     AUTRE,
   ],
   FR: [
+    "Ancienne série S — scientifique",
+    "Ancienne série ES — économique et social",
+    "Ancienne série L — littéraire",
     "Baccalauréat général — mathématiques",
     "Baccalauréat général — physique-chimie",
     "Baccalauréat général — sciences de la vie et de la Terre",
@@ -259,7 +262,7 @@ const PROGRAMMES_PAR_PAYS: Record<string, ProgrammeReference[]> = {
   ],
 };
 
-const getSystemeEducatifCode = (paysCode: string, institutionId?: string) =>
+export const getSystemeEducatifCode = (paysCode: string, institutionId?: string) =>
   INSTITUTIONS_PRIORITAIRES.find((institution) => institution.id === institutionId)?.systemeEducatifCode
   || paysCode;
 
@@ -278,4 +281,51 @@ export const getProgrammes = (paysCode: string) => {
   const prioritaires = PROGRAMMES_PAR_PAYS[paysCode] || [];
   const ids = new Set(prioritaires.map((programme) => programme.id));
   return [...prioritaires, ...PROGRAMMES_GENERIQUES.filter((programme) => !ids.has(programme.id))];
+};
+
+const LIBELLES_SYSTEMES: Record<string, string> = {
+  ML: "Programme malien", FR: "Programme français", CI: "Programme ivoirien",
+  NG: "Programme nigérian", NE: "Programme nigérien", MR: "Programme mauritanien",
+  AUTRE: "Autre programme / programme international",
+};
+
+export const libelleSystemeEducatif = (code?: string) => {
+  if (!code) return "";
+  if (LIBELLES_SYSTEMES[code]) return LIBELLES_SYSTEMES[code];
+  try {
+    return `Programme : ${new Intl.DisplayNames(["fr"], { type: "region" }).of(code) || code}`;
+  } catch {
+    return `Programme : ${code}`;
+  }
+};
+
+/** Présente L1 comme « Licence », y compris les libellés enregistrés auparavant. */
+export const libelleProgramme = (label?: string | null) =>
+  (label || "")
+    .replace(/^Licence\s*[—–-]\s*1re\s+année(?=\s|[-–—:]|$)/i, "Licence")
+    .replace(/^L([123])(?=\s|[-–—:]|$)/i, (_, annee: string) => annee === "1" ? "Licence" : `Licence — ${annee}e année`);
+
+export type ContexteReferencesFormation = {
+  type: FormationType;
+  paysCode: string;
+  systemeEducatifCode?: string;
+  institutionId?: string;
+};
+
+export const cleReferencesFormation = (contexte: ContexteReferencesFormation) =>
+  JSON.stringify([contexte.type, contexte.paysCode, contexte.systemeEducatifCode || "", contexte.institutionId || ""]);
+
+/** Une réponse précédente ne doit jamais alimenter les choix d’un nouveau contexte. */
+export const referencesFormationDisponibles = (
+  contexte: ContexteReferencesFormation,
+  chargees?: { cle: string; series: string[]; diplomes: string[] } | null,
+) => {
+  if (chargees?.cle === cleReferencesFormation(contexte)) return chargees;
+  const systeme = contexte.systemeEducatifCode || getSystemeEducatifCode(contexte.paysCode, contexte.institutionId);
+  return {
+    series: contexte.type === "universite" ? [] : getSeries(systeme),
+    diplomes: contexte.type === "universite"
+      ? getDiplomes(contexte.paysCode, "universite", contexte.institutionId)
+      : [...new Set([...getDiplomes(systeme, "ecole"), ...getDiplomes(systeme, "lycee")])],
+  };
 };

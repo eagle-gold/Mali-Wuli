@@ -1,0 +1,40 @@
+"use client";
+
+import Link from "next/link";
+import { ArrowLeft, MapPin, Mail, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
+import api from "@/lib/api";
+import { messageErreur, nomComplet } from "@/lib/community";
+import { urlMediaBackend } from "@/lib/media";
+import { formaterMoisAnnee, trierParDateDebut } from "@/lib/periode";
+import { libelleProgramme, libelleSystemeEducatif } from "@/lib/education/reference";
+import { Chargement, ErreurChargement } from "@/components/community/CommunityUi";
+import { ActionsMembre, AvatarAnnuaire, datePublique } from "./DirectoryUi";
+import type { MembrePublic } from "./types";
+import type { FormationProfilApi } from "@/types/profile";
+import styles from "./Directory.module.css";
+import LiensSociauxProfil from "@/components/profile/LiensSociauxProfil";
+
+function periodeFormation(f: FormationProfilApi) {
+  const debut = formaterMoisAnnee(f.moisDebut ? String(f.moisDebut).padStart(2, "0") : undefined, f.anneeDebut ? String(f.anneeDebut) : "");
+  const fin = f.enCours ? "Aujourd’hui" : formaterMoisAnnee(f.moisFin ? String(f.moisFin).padStart(2, "0") : undefined, f.anneeFin ? String(f.anneeFin) : "");
+  return [debut, fin].filter(Boolean).join(" – ");
+}
+
+export default function ProfilPublic({ profilId }: { profilId: string }) {
+  const [membre, setMembre] = useState<MembrePublic | null>(null);
+  const [chargement, setChargement] = useState(true);
+  const [erreur, setErreur] = useState("");
+  const [revision, setRevision] = useState(0);
+  useEffect(() => {
+    const abort = new AbortController(); setChargement(true); setErreur("");
+    void api.get<MembrePublic>(`/users/${encodeURIComponent(profilId)}`, { signal: abort.signal }).then(({ data }) => { if (!abort.signal.aborted) setMembre(data); }).catch((e) => { if (!abort.signal.aborted) setErreur(messageErreur(e, "Ce profil n’est pas disponible.")); }).finally(() => { if (!abort.signal.aborted) setChargement(false); });
+    return () => abort.abort();
+  }, [profilId, revision]);
+  const nom = nomComplet(membre?.prenom, membre?.nom);
+  const couverture = urlMediaBackend(membre?.photoCouverture);
+  const sujets = Array.isArray(membre?.volontaire?.sujets) ? membre.volontaire.sujets.filter((v): v is string => typeof v === "string") : [];
+  const formations = trierParDateDebut(membre?.formations || []);
+  const experiences = [...(membre?.experiences || [])].sort((a, b) => b.dateDebut.localeCompare(a.dateDebut));
+  return <div className={styles.page}><Link href="/annuaire" className={styles.back}><ArrowLeft size={16} aria-hidden />Retour à l’annuaire</Link>{chargement ? <Chargement texte="Chargement du profil…" /> : erreur ? <ErreurChargement message={erreur} reessayer={() => setRevision((r) => r + 1)} /> : membre && <><section className={styles.profileHero}><div className={styles.cover}>{couverture && <img src={couverture} alt="" />}</div><div className={styles.heroBody}><div className={styles.heroAvatar}><AvatarAnnuaire nom={nom} photo={membre.photo} grand /></div><div className={styles.heroHeading}><div><h1 className={styles.heroName}>{nom}</h1>{membre.titre && <p className={styles.subtitle}>{membre.titre}</p>}<p className={styles.location} style={{ marginTop: 10 }}><MapPin size={15} aria-hidden />{[membre.ville, membre.pays].filter(Boolean).join(", ") || "Localisation non renseignée"}</p><div className={styles.heroMeta}>{membre.stats?.nbSynergies !== undefined && <span>{membre.stats.nbSynergies} synergie{membre.stats.nbSynergies > 1 ? "s" : ""}</span>}{membre.membreDepuis && <span>Membre depuis {datePublique(membre.membreDepuis)}</span>}{membre.estVolontaire && <span className={`${styles.tag} ${styles.tagBrown}`}>Volontaire</span>}</div></div><div style={{ width: "min(100%, 260px)" }}><ActionsMembre profilId={membre.id} lienProfil={false} moi={membre.estMoi} /></div></div></div></section><div className={styles.detailGrid}><div className={styles.stack}>{membre.bio && <section className={styles.panel}><h2 className={styles.sectionTitle}>À propos</h2><p className={styles.description}>{membre.bio}</p></section>}<section className={styles.panel}><h2 className={styles.sectionTitle}>Expériences</h2>{experiences.length ? experiences.map((e) => <article key={e.id} className={styles.timelineItem}><h3>{e.poste}</h3><p className={styles.description}>{[e.entreprise, e.ville, e.pays].filter(Boolean).join(" · ")}</p><p className={styles.note}>{datePublique(e.dateDebut)} – {e.estActuel ? "Aujourd’hui" : datePublique(e.dateFin)}</p>{e.description && <p className={styles.description} style={{ marginTop: 10 }}>{e.description}</p>}</article>) : <p className={styles.note}>Aucune expérience renseignée.</p>}</section><section className={styles.panel}><h2 className={styles.sectionTitle}>Formations</h2>{formations.length ? formations.map((f) => <article key={f.id} className={styles.timelineItem}><h3>{f.etablissement?.nom || f.autreEtablissement || "Établissement non renseigné"}</h3><p className={styles.note}>{periodeFormation(f)}</p>{f.systemeEducatifCode && <p className={styles.note}>{libelleSystemeEducatif(f.systemeEducatifCode)}</p>}{f.diplomesScolaires?.length ? <ul className={styles.description} style={{ marginTop: 8 }}>{[...f.diplomesScolaires].sort((a, b) => Number(a.anneeObtention || 9999) - Number(b.anneeObtention || 9999)).map((d, index) => <li key={`${d.type}-${index}`} style={{ marginTop: 5 }}>{d.libelle}{d.anneeObtention ? ` · ${d.anneeObtention}` : ""}{d.serie ? ` · ${d.serie}` : ""}{d.mention ? ` · mention ${d.mention}` : ""}{d.statut === "EN_COURS" ? " · En préparation" : ""}</li>)}</ul> : <p className={styles.description}>{[f.diplomeReference?.libelle || f.diplome, libelleProgramme(f.programmeReference?.nom || f.programmeReference?.libelle || f.filiere || ""), libelleProgramme(f.parcoursReference?.nom || f.parcoursReference?.libelle || f.specialite || ""), f.serie, f.mention ? `mention ${f.mention}` : ""].filter(Boolean).join(" · ")}</p>}</article>) : <p className={styles.note}>Aucune formation renseignée.</p>}</section>{Boolean(membre.associations?.length) && <section className={styles.panel}><h2 className={styles.sectionTitle}>Associations</h2><p className={styles.note}>Affiliations validées par les responsables des associations.</p>{membre.associations?.map((a) => <Link href={`/associations/${encodeURIComponent(a.id)}`} key={a.id} className={styles.memberRow}><AvatarAnnuaire nom={a.nom} photo={a.photo} carre /><div className={styles.memberMain}><p className={styles.memberName}>{a.nom}</p><p className={styles.memberSubtitle}>{[a.vocation, a.ville, a.pays].filter(Boolean).join(" · ")}</p></div><span className={styles.link}>Voir la page</span></Link>)}</section>}</div><aside className={styles.stack}><LiensSociauxProfil liens={membre} />{membre.estVolontaire && <section className={styles.panel}><h2 className={styles.sectionTitle}>Peut vous aider</h2>{sujets.length ? <div className={styles.tags}>{sujets.map((sujet) => <span key={sujet} className={styles.tag}>{sujet}</span>)}</div> : <p className={styles.description}>{membre.volontaire?.specialite || "Ce membre propose son aide au réseau."}</p>}{membre.volontaire?.disponible === false && <p className={styles.note}>Actuellement indisponible pour de nouveaux rendez-vous.</p>}<ActionsMembre profilId={membre.id} lienProfil={false} synergie={false} moi={membre.estMoi} /></section>}{(membre.email || membre.telephone) && <section className={styles.panel}><h2 className={styles.sectionTitle}>Coordonnées</h2><p className={styles.note}>Informations rendues visibles par ce membre.</p><div className={styles.stack} style={{ gap: 14, marginTop: 15 }}>{membre.email && <a href={`mailto:${membre.email}`} className={styles.link} style={{ overflowWrap: "anywhere" }}><Mail size={14} aria-hidden style={{ display: "inline", marginRight: 5 }} />{membre.email}</a>}{membre.telephone && <a href={`tel:${membre.telephone.replace(/[^+\d]/g, "")}`} className={styles.link}><Phone size={14} aria-hidden style={{ display: "inline", marginRight: 5 }} />{membre.telephone}</a>}</div></section>}</aside></div></>}</div>;
+}

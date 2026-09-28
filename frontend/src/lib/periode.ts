@@ -38,3 +38,12 @@ export const formaterMoisAnnee = (mois: string | undefined, annee: string) => {
   const libelleMois = MOIS.find(({ value }) => value === mois)?.label;
   return [libelleMois?.toLocaleLowerCase("fr"), annee].filter(Boolean).join(" ");
 };
+
+/** Les parcours les plus récents en premier ; dates absentes en dernier, égalités stables. */
+export const trierParDateDebut = <T extends { anneeDebut?: string | number | null; moisDebut?: string | number | null }>(items: readonly T[], ordre: "croissant" | "decroissant" = "decroissant"): T[] =>
+  [...items].sort((a, b) => {
+    const cle = (item: T) => /^\d{4}$/.test(String(item.anneeDebut || ""))
+      ? Number(item.anneeDebut) * 12 + (Number(item.moisDebut) || 1)
+      : ordre === "croissant" ? Number.MAX_SAFE_INTEGER : -1;
+    return ordre === "croissant" ? cle(a) - cle(b) : cle(b) - cle(a);
+  });
