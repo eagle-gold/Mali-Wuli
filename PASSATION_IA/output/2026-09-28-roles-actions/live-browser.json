@@ -1,0 +1,7 @@
+{
+  "status": "PASS",
+  "requested": "https://mali-wuli.com/admin/membres",
+  "result": "Five-role page bundle loaded; anonymous visitor redirected to login",
+  "url": "https://mali-wuli.com/login",
+  "databaseWrites": 0
+}

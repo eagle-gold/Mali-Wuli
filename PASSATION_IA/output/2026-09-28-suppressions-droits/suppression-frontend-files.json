@@ -1,0 +1,54 @@
+[
+  {
+    "path": "frontend/src/components/community/SupprimerContenu.tsx",
+    "sha256": "abab760a336cfdcdf246c98b911e4bae5635771c9eb736db059b3e76b776ba92"
+  },
+  {
+    "path": "frontend/src/components/community/SupprimerContenu.module.css",
+    "sha256": "9e88d5246f7cb6fee297c9728e99cd4e2724878fcb4e09c043b2053dfd0826b1"
+  },
+  {
+    "path": "frontend/src/components/feed/ActualiteFeed.tsx",
+    "sha256": "34aaa8d1765f67fee231a318a16d4128aff43f8f704e415125b399298462a911"
+  },
+  {
+    "path": "frontend/src/components/associations/FicheAssociation.tsx",
+    "sha256": "f98765affe6052d2e8c21a9c2fa8cde5a6515d4b087686d2bed429a8a98d5461"
+  },
+  {
+    "path": "frontend/src/components/offres/DetailOffre.tsx",
+    "sha256": "08352e015ef1700c49ca39ed294e823814fe19a831443c7bcb3ee2e3d5fe3679"
+  },
+  {
+    "path": "frontend/src/components/offres/OffresPage.tsx",
+    "sha256": "96530e7c41799871f6a9bf77eefcd604a8304a2ec783db32bd3a19cb0cfda36e"
+  },
+  {
+    "path": "frontend/src/components/offres/AdminOffres.tsx",
+    "sha256": "15bad07bf65dc6070cb872b04152fa4b121c8ba5fa297de0041bd9e701e13d83"
+  },
+  {
+    "path": "frontend/src/components/evenements/FicheEvenement.tsx",
+    "sha256": "b66be5f591dad5ac3f2c171dcf7c32c4d54b9e0d7ef223af737018401f803baf"
+  },
+  {
+    "path": "frontend/src/app/(admin)/admin/evenements/page.tsx",
+    "sha256": "41da40a324e889703f73c13abc3c06b9007eff91224e6513b5505280121b2405"
+  },
+  {
+    "path": "frontend/src/types/api.ts",
+    "sha256": "0a76afa06eccff9b9e86da6fdd2bec99134b855fa3ccab16036a702b36990c3e"
+  },
+  {
+    "path": "frontend/src/types/associations.ts",
+    "sha256": "01447c9afe6f666b6a4482d66aa2f3e6cd30bc377fdf2c231553e0e42ccceccb"
+  },
+  {
+    "path": "frontend/src/types/offres.ts",
+    "sha256": "2e6364bd7d2bec8dc715c481d4de52b8f53439f89269be05a0d34b9304bde34f"
+  },
+  {
+    "path": "frontend/src/types/evenements.ts",
+    "sha256": "05d3d8817653b7b5117e8e82f3d4ca3801d87de48e5327036c644f7feac577c2"
+  }
+]

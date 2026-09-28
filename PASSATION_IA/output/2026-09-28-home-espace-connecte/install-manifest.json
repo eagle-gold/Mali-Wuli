@@ -1,0 +1,26 @@
+{
+  "frontend/src/components/MaliWuliHeader.tsx": {
+    "before": "b33c294c9c31f15d5b42634fe21596f51a17a53aa08402e953a1d09da64969b7",
+    "after": "8748c43abcd20a4735f0a8f63ebb5d4c327d22228885af54016d27a1c9b4f39f"
+  },
+  "frontend/src/hooks/useSessionAccueil.ts": {
+    "before": "b66d901f143f2e25b5226c8c755efa9c00487d2fc67ca1c89cc0b6ad036d1585",
+    "after": "1f02a576bc166ebbadb9a33b33a5e2a3e613734ecffbdbc208f63ac38e2013cf"
+  },
+  "frontend/src/lib/session.ts": {
+    "before": "ba7c9fc88525fa2ba791e4791fb3682c59cecec271fda83fa65b12837ed3b5fc",
+    "after": "cdcd9a04824a92450eec431155db70089b943dc8e8ae8f90ab2312ea0ac111bc"
+  },
+  "frontend/src/app/(auth)/verify-email/page.tsx": {
+    "before": "c8d9fd6c01bf2e5d5c416a167c78ebefad58e9690afadbfeaad4f4c4e566ab1c",
+    "after": "ea7be12236d27fe35fb2b4c64bf37a9c6287f47899d662e19c7d15ee838817e5"
+  },
+  "frontend/src/app/(auth)/login/page.tsx": {
+    "before": "e5ebb45a9118ceab95ce8f0e2597b40c1a5532966310a32f4cbc4b6e4eaab58f",
+    "after": "fc52a4d63627e5a5382660725c48f184326cc1daa5a59e03ae0a7daa97b52b1b"
+  },
+  "frontend/src/app/(auth)/register/details/page.tsx": {
+    "before": "c9eff4962953aa76b1df4e5b7c60010e0df16a89d1b8234f98f6a89d5bbdbe5b",
+    "after": "dd7b679d4e48edd79526de4d2f82a06a75eb50e1b8adad303d2c2943b33125ed"
+  }
+}

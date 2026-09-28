@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "geometry": [
+    {
+      "background": "rgb(244, 236, 221)",
+      "scrollWidth": 320,
+      "title": "Membres et rôles",
+      "width": 320
+    },
+    {
+      "background": "rgb(244, 236, 221)",
+      "scrollWidth": 375,
+      "title": "Membres et rôles",
+      "width": 375
+    },
+    {
+      "background": "rgb(244, 236, 221)",
+      "scrollWidth": 768,
+      "title": "Membres et rôles",
+      "width": 768
+    },
+    {
+      "background": "rgb(244, 236, 221)",
+      "scrollWidth": 320,
+      "view": "edition",
+      "width": 320
+    },
+    {
+      "background": "rgb(244, 236, 221)",
+      "scrollWidth": 1280,
+      "view": "edition",
+      "width": 1280
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario": "Attribution simultanée Offres + Événements en RAM puis réouverture",
+      "result": "PASS"
+    },
+    {
+      "scenario": "Compte délégué voit uniquement Offres et Événements dans Administration",
+      "result": "PASS"
+    },
+    {
+      "scenario": "Délégataire refusé sur gestion des rôles",
+      "result": "PASS"
+    },
+    {
+      "scenario": "Délégataire accède aux deux offres à valider",
+      "result": "PASS"
+    },
+    {
+      "scenario": "Rôles Offres + Événements : gestion associations refusée",
+      "result": "PASS"
+    }
+  ],
+  "databaseWrites": 0,
+  "realRoleChanges": 0,
+  "scope": "Local fixtures in memory. Backend authorization covered separately by 70 tests."
+}

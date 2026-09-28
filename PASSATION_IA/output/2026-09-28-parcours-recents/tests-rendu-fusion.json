@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "sourceRoot": "/Users/ibrahimakonate/Documents/ChatGPT/MALI-WULI-hostinger-integration/frontend",
+  "checks": [
+    "default descending by year/month; stable ties and undated entries last; input untouched",
+    "explicit ascending internal order preserves stable ties and keeps undated entries last",
+    "legacy adjacent school records merge while preserving earliest start, latest end and both diplomas",
+    "distant periods of the same school remain separate regardless of snapshot input order",
+    "contradictory reviews and distinct schools remain separate",
+    "formation onboarding SSR presents most recent school first without mutating its input snapshot",
+    "experience onboarding SSR presents most recent start first without mutating its input snapshot"
+  ],
+  "sourceSha256": {
+    "lib/periode.ts": "f146a7764e4740b2bd7f2ee2a68616e32c597e7fbe812643f699cd7daf28c1b5",
+    "components/onboarding/StepFormations.tsx": "e2e49802f11047018ccfae0bb07c27d2923750b53b359d0e753d38a3417fb231",
+    "lib/education/reference.ts": "90e86d640320e6e46c3836c59011470214d1c6b360de34546952b0f8e33f2a4d",
+    "lib/education/parcours-scolaire.ts": "427c6da93e0e8bb4e1f8b384de420a288fc263b2dcef0ec0d9dbb7e36c2491e4",
+    "lib/education/suivi.ts": "e4bcd49724f56f3f7228a2fddd0c01c12ed82bd820e1a7d56ef09bdca76f579d",
+    "components/onboarding/StepExperiences.tsx": "50239005b9e899ec04e19ac69eca3bec73ebabb63394a34ee8b9c7859f287074"
+  },
+  "applicationWrites": 0,
+  "networkRequests": 0,
+  "databaseWrites": 0,
+  "limitations": [
+    "SSR and pure local fixtures; no browser hydration or production account",
+    "Profile public/member rendering and current-job selection verified separately by the main session"
+  ]
+}

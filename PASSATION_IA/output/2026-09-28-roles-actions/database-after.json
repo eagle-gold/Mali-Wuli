@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "kind": "delegated-roles-post-migration-readonly",
+  "at": "2026-09-28T17:37:46.538Z",
+  "database": "u668963025_maliwuli",
+  "appliedCount": 14,
+  "pending": [],
+  "historicalChecksumsVerified": 13,
+  "migrationSha256": "67d8f0e24b2630378e2a28aa6724568afb85282a29168e4545c3946bd2942945",
+  "backupSha256": "6e44298cb79039d3d40945c26c8e22272fd79c55076b53a52ffc2096fa1c849c",
+  "counts": {
+    "User": 2,
+    "Profil": 2,
+    "Formation": 9,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "Evenement": 0,
+    "EvenementParticipant": 0,
+    "Offre": 0,
+    "OffreEnregistrement": 0,
+    "CandidatureOffre": 0,
+    "Message": 0,
+    "Conversation": 0
+  },
+  "grants": 0,
+  "userRolesAndTokenVersionsUnchanged": true,
+  "tableColumnsIndexesAndForeignKeyVerified": true,
+  "generatedClientRelationsVerified": true,
+  "service": {
+    "ownerProtected": true,
+    "adminCount": 1,
+    "memberCount": 2,
+    "ordinaryDenied": false,
+    "delegatedRoles": [
+      "INSCRIPTIONS",
+      "OFFRES",
+      "EVENEMENTS",
+      "CATALOGUE",
+      "ASSOCIATIONS"
+    ],
+    "grantsCount": 0,
+    "checks": [
+      "compiled registry and candidate service on existing DB through read-only delegates",
+      "five assignable delegated capabilities without ADMIN or MODERATEUR choice",
+      "protected principal and revision hashes",
+      "no tokenVersion in member payload",
+      "ordinary role catalogue denied if existing ordinary account available",
+      "User fingerprints and grant count unchanged"
+    ],
+    "limitations": [
+      "No specialized grant assigned to a real account; authorization matrix tested with fixtures separately.",
+      "No HTTP authentication or JWT minted.",
+      "Concurrent legitimate role changes can fail the stability check and require review."
+    ]
+  },
+  "databaseWrites": 0,
+  "realRoleChanges": 0,
+  "limitations": [
+    "Count comparisons may fail on legitimate concurrent activity; investigate rather than weaken assertions.",
+    "DDL application is a separate authorized step; these checks never mutate the database."
+  ]
+}

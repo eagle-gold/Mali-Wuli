@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "sourceRoot": "/Users/ibrahimakonate/Documents/ChatGPT/MALI-WULI-hostinger-integration/frontend/src",
+  "checks": [
+    "feed-retains-synergy-count-suggestions-events-three-filters",
+    "member-profile-retains-synergy-count-and-recommendations",
+    "desktop-and-open-mobile-header-keep-search-and-remaining-links",
+    "mobile-bottom-navigation-retains-four-links",
+    "directory-retains-synergy-action-search-filters-pagination",
+    "feed-retains-suggestions-api-alignment-and-synergy-listeners"
+  ],
+  "mockedRequests": [
+    "/publications",
+    "/users/me",
+    "/evenements",
+    "/synergies/suggestions"
+  ],
+  "socketListeners": [
+    "nouvelle_publication",
+    "nouveau_commentaire",
+    "reaction_mise_a_jour",
+    "publication_supprimee",
+    "commentaire_supprime",
+    "publication:created",
+    "publication:commentCreated",
+    "publication:reactionUpdated",
+    "synergie:created",
+    "synergie:updated",
+    "synergie:deleted",
+    "synergie_creee",
+    "synergie_mise_a_jour",
+    "synergie_supprimee",
+    "evenement_modifie",
+    "rendez_vous_modifie"
+  ],
+  "networkCalls": 0,
+  "databaseWrites": 0,
+  "filesWrittenByTest": 0,
+  "limitations": [
+    "SSR with fixtures and mocked Next/auth/notification components",
+    "Profile date/reference helpers stubbed for an empty education fixture",
+    "No browser layout or live account verification"
+  ]
+}

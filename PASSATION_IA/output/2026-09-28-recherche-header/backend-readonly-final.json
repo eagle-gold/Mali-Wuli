@@ -1,0 +1,613 @@
+{
+  "kind": "event-photos-readonly",
+  "mode": "post",
+  "migration": "20260928190000_event_photos",
+  "checkedAt": "2026-09-28T16:17:31.936Z",
+  "status": "WARN",
+  "counts": {
+    "User": 2,
+    "Profil": 2,
+    "Formation": 9,
+    "Experience": 2,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "AssociationSuggestion": 0,
+    "Etablissement": 143458,
+    "Publication": 1,
+    "Notification": 0,
+    "Message": 0,
+    "Evenement": 0,
+    "EvenementParticipant": 0,
+    "EvenementPhoto": 0
+  },
+  "checks": [
+    {
+      "name": "database-target",
+      "ok": true
+    },
+    {
+      "name": "existing-tables-present",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-User",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-User",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-Profil",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-Profil",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-Formation",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-Formation",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-Experience",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-Experience",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-Association",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-Association",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-AssociationMembre",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-AssociationMembre",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-AssociationSuggestion",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-AssociationSuggestion",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-Etablissement",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-Etablissement",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-Publication",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-Publication",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-Notification",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-Notification",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-Message",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-Message",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-Evenement",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-Evenement",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-EvenementParticipant",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-EvenementParticipant",
+      "ok": true
+    },
+    {
+      "name": "baseline-present-EvenementPhoto",
+      "ok": true
+    },
+    {
+      "name": "baseline-not-decreased-EvenementPhoto",
+      "ok": true
+    },
+    {
+      "name": "photo-table-present",
+      "ok": true
+    },
+    {
+      "name": "migration-table-present",
+      "ok": true
+    },
+    {
+      "name": "event-column-pays",
+      "ok": true
+    },
+    {
+      "name": "event-column-ville",
+      "ok": true
+    },
+    {
+      "name": "event-column-fuseauHoraire",
+      "ok": true
+    },
+    {
+      "name": "event-column-photoCouverture",
+      "ok": true
+    },
+    {
+      "name": "event-column-resume",
+      "ok": true
+    },
+    {
+      "name": "mariadb-check-constraints-enabled",
+      "ok": true
+    },
+    {
+      "name": "event-column-programme",
+      "ok": true,
+      "details": {
+        "storage": "MARIADB_CHECKED_JSON_ALIAS",
+        "checkedAlias": true
+      }
+    },
+    {
+      "name": "refusal-default-false",
+      "ok": true
+    },
+    {
+      "name": "legacy-event-fields-preserved",
+      "ok": true
+    },
+    {
+      "name": "photo-column-id",
+      "ok": true
+    },
+    {
+      "name": "photo-column-evenementId",
+      "ok": true
+    },
+    {
+      "name": "photo-column-auteurId",
+      "ok": true
+    },
+    {
+      "name": "photo-column-url",
+      "ok": true
+    },
+    {
+      "name": "photo-column-createdAt",
+      "ok": true
+    },
+    {
+      "name": "photo-caption-optional-300",
+      "ok": true
+    },
+    {
+      "name": "event-photo-indexes",
+      "ok": true
+    },
+    {
+      "name": "photo-event-cascade",
+      "ok": true
+    },
+    {
+      "name": "photo-author-profile-reference",
+      "ok": true
+    },
+    {
+      "name": "migration-applied",
+      "ok": true
+    },
+    {
+      "name": "migration-reviewed-checksum",
+      "ok": true
+    },
+    {
+      "name": "migration-database-checksum",
+      "ok": true
+    },
+    {
+      "name": "no-unresolved-migration",
+      "ok": true
+    },
+    {
+      "name": "generated-client-and-empty-safe-joins",
+      "ok": true
+    },
+    {
+      "name": "published-list-service",
+      "ok": true,
+      "details": {
+        "returned": 0,
+        "total": 0
+      }
+    },
+    {
+      "name": "list-counts-and-facets",
+      "ok": true
+    },
+    {
+      "name": "own-proposals-service",
+      "ok": true,
+      "details": {
+        "returned": 0,
+        "total": 0
+      }
+    },
+    {
+      "name": "period-a_venir-service",
+      "ok": true,
+      "details": {
+        "returned": 0
+      }
+    },
+    {
+      "name": "period-passes-service",
+      "ok": true,
+      "details": {
+        "returned": 0
+      }
+    },
+    {
+      "name": "moderation-en_attente-service",
+      "ok": true,
+      "details": {
+        "returned": 0,
+        "total": 0
+      }
+    },
+    {
+      "name": "moderation-refuses-service",
+      "ok": true,
+      "details": {
+        "returned": 0,
+        "total": 0
+      }
+    },
+    {
+      "name": "non-moderator-list-forbidden",
+      "ok": true
+    },
+    {
+      "name": "verification-present-User",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-User",
+      "ok": true
+    },
+    {
+      "name": "verification-present-Profil",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-Profil",
+      "ok": true
+    },
+    {
+      "name": "verification-present-Formation",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-Formation",
+      "ok": true
+    },
+    {
+      "name": "verification-present-Experience",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-Experience",
+      "ok": true
+    },
+    {
+      "name": "verification-present-Association",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-Association",
+      "ok": true
+    },
+    {
+      "name": "verification-present-AssociationMembre",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-AssociationMembre",
+      "ok": true
+    },
+    {
+      "name": "verification-present-AssociationSuggestion",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-AssociationSuggestion",
+      "ok": true
+    },
+    {
+      "name": "verification-present-Etablissement",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-Etablissement",
+      "ok": true
+    },
+    {
+      "name": "verification-present-Publication",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-Publication",
+      "ok": true
+    },
+    {
+      "name": "verification-present-Notification",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-Notification",
+      "ok": true
+    },
+    {
+      "name": "verification-present-Message",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-Message",
+      "ok": true
+    },
+    {
+      "name": "verification-present-Evenement",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-Evenement",
+      "ok": true
+    },
+    {
+      "name": "verification-present-EvenementParticipant",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-EvenementParticipant",
+      "ok": true
+    },
+    {
+      "name": "verification-present-EvenementPhoto",
+      "ok": true
+    },
+    {
+      "name": "verification-not-decreased-EvenementPhoto",
+      "ok": true
+    }
+  ],
+  "warnings": [
+    "DETAIL_SKIPPED_NO_ACCESSIBLE_EVENT"
+  ],
+  "databaseConfigurationSource": "EXPLICIT_ENV_FILE",
+  "database": "u668963025_maliwuli",
+  "serverVersion": "11.8.9-MariaDB-log",
+  "prismaVersion": "5.21.1",
+  "schemaSha256": "b517f4ae4e58528ce10b0da824b2ffd6e44bc0ec6d52a63ce1388cb703115662",
+  "countComparisons": [
+    {
+      "table": "User",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "table": "Profil",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "table": "Formation",
+      "before": 9,
+      "after": 9,
+      "delta": 0
+    },
+    {
+      "table": "Experience",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "table": "Association",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "AssociationMembre",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "AssociationSuggestion",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "Etablissement",
+      "before": 143458,
+      "after": 143458,
+      "delta": 0
+    },
+    {
+      "table": "Publication",
+      "before": 1,
+      "after": 1,
+      "delta": 0
+    },
+    {
+      "table": "Notification",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "Message",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "Evenement",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "EvenementParticipant",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "EvenementPhoto",
+      "before": null,
+      "after": 0,
+      "delta": 0
+    }
+  ],
+  "migrationSqlSha256": "1e7e87ed7f408597b3769c0630b08dd54591131e19cb2f75ad88a68414f42c0e",
+  "viewerKind": "EXISTING_MODERATOR",
+  "countsAfterReads": {
+    "User": 2,
+    "Profil": 2,
+    "Formation": 9,
+    "Experience": 2,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "AssociationSuggestion": 0,
+    "Etablissement": 143458,
+    "Publication": 1,
+    "Notification": 0,
+    "Message": 0,
+    "Evenement": 0,
+    "EvenementParticipant": 0,
+    "EvenementPhoto": 0
+  },
+  "readCountComparisons": [
+    {
+      "table": "User",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "table": "Profil",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "table": "Formation",
+      "before": 9,
+      "after": 9,
+      "delta": 0
+    },
+    {
+      "table": "Experience",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "table": "Association",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "AssociationMembre",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "AssociationSuggestion",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "Etablissement",
+      "before": 143458,
+      "after": 143458,
+      "delta": 0
+    },
+    {
+      "table": "Publication",
+      "before": 1,
+      "after": 1,
+      "delta": 0
+    },
+    {
+      "table": "Notification",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "Message",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "Evenement",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "EvenementParticipant",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "EvenementPhoto",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    }
+  ]
+}

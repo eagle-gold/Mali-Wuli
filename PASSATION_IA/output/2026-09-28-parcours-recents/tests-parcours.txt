@@ -1,0 +1,17 @@
+✔ brevet et bac sont valides dans une seule scolarité 2012–2019 (3.539583ms)
+✔ un diplôme obtenu ne peut pas être futur, un diplôme préparé le peut (0.086916ms)
+✔ migration d’un ancien lycée conserve le bac, la mention et la série (0.409083ms)
+✔ parcours récents en premier, dates absentes en dernier, sans mutation (0.147666ms)
+✔ programme français sélectionne brevet, bac et anciennes séries françaises (0.111625ms)
+✔ L1 est affiché comme Licence (0.145ms)
+✔ avis scolaire ouvert un an après le départ même si le brevet est antérieur (0.093875ms)
+✔ ML→FR immédiat ignore les anciennes références avant la réponse réseau (0.301833ms)
+✔ les brevets professionnels ou techniques ne sont jamais le brevet scolaire (0.14625ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 264.343375

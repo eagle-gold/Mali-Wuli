@@ -1,0 +1,70 @@
+{
+  "at": "2026-09-28T19:00:42.554Z",
+  "method": "curl --compressed from Hostinger to public CDN; anonymous GET, no application config or database mutation",
+  "results": [
+    {
+      "name": "landing@2x",
+      "source": "/images/landing/mali-wuli-arbre.png",
+      "width": 96,
+      "attempt": 1,
+      "status": 200,
+      "wireBytes": 4842,
+      "ttfb": 0.121895,
+      "seconds": 0.122056,
+      "type": "image/webp",
+      "cacheControl": "public, max-age=60, must-revalidate",
+      "nextCache": "MISS",
+      "cdnCache": "DYNAMIC",
+      "bodyBytes": 4842,
+      "format": "webp"
+    },
+    {
+      "name": "landing@2x",
+      "source": "/images/landing/mali-wuli-arbre.png",
+      "width": 96,
+      "attempt": 2,
+      "status": 200,
+      "wireBytes": 4842,
+      "ttfb": 0.018798,
+      "seconds": 0.018945,
+      "type": "image/webp",
+      "cacheControl": "public, max-age=60, must-revalidate",
+      "nextCache": "HIT",
+      "cdnCache": "DYNAMIC",
+      "bodyBytes": 4842,
+      "format": "webp"
+    },
+    {
+      "name": "member-header@2x",
+      "source": "/images/logo-mali-wuli.png",
+      "width": 256,
+      "attempt": 1,
+      "status": 200,
+      "wireBytes": 17586,
+      "ttfb": 0.043265,
+      "seconds": 0.04349,
+      "type": "image/webp",
+      "cacheControl": "public, max-age=60, must-revalidate",
+      "nextCache": "MISS",
+      "cdnCache": "DYNAMIC",
+      "bodyBytes": 17586,
+      "format": "webp"
+    },
+    {
+      "name": "member-header@2x",
+      "source": "/images/logo-mali-wuli.png",
+      "width": 256,
+      "attempt": 2,
+      "status": 200,
+      "wireBytes": 17586,
+      "ttfb": 0.015055,
+      "seconds": 0.015234,
+      "type": "image/webp",
+      "cacheControl": "public, max-age=60, must-revalidate",
+      "nextCache": "HIT",
+      "cdnCache": "DYNAMIC",
+      "bodyBytes": 17586,
+      "format": "webp"
+    }
+  ]
+}

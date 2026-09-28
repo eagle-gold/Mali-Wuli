@@ -1,0 +1,175 @@
+{
+  "measurement": "curl compressed HTTPS,3sequentialrequestsperroute,noBrowserCWV",
+  "results": [
+    {
+      "url": "https://mali-wuli.com/",
+      "samples": [
+        {
+          "http_code": 403,
+          "time_namelookup": 0.038787,
+          "time_connect": 0.232163,
+          "time_appconnect": 0.43659,
+          "time_starttransfer": 0.630447,
+          "time_total": 0.630828,
+          "size_download": 2983
+        },
+        {
+          "http_code": 403,
+          "time_namelookup": 0.003689,
+          "time_connect": 0.240189,
+          "time_appconnect": 0.44682,
+          "time_starttransfer": 0.639514,
+          "time_total": 0.643607,
+          "size_download": 2983
+        },
+        {
+          "http_code": 403,
+          "time_namelookup": 0.003415,
+          "time_connect": 0.20357,
+          "time_appconnect": 0.410838,
+          "time_starttransfer": 0.651389,
+          "time_total": 0.651992,
+          "size_download": 2983
+        }
+      ],
+      "medianTTFBMs": 640,
+      "medianTotalMs": 644
+    },
+    {
+      "url": "https://mali-wuli.com/login",
+      "samples": [
+        {
+          "http_code": 403,
+          "time_namelookup": 0.003665,
+          "time_connect": 0.196526,
+          "time_appconnect": 0.483143,
+          "time_starttransfer": 0.677122,
+          "time_total": 0.677749,
+          "size_download": 2983
+        },
+        {
+          "http_code": 403,
+          "time_namelookup": 0.003109,
+          "time_connect": 0.195981,
+          "time_appconnect": 0.392122,
+          "time_starttransfer": 0.579653,
+          "time_total": 0.583041,
+          "size_download": 2983
+        },
+        {
+          "http_code": 403,
+          "time_namelookup": 0.003514,
+          "time_connect": 0.229193,
+          "time_appconnect": 0.431938,
+          "time_starttransfer": 0.661275,
+          "time_total": 0.661711,
+          "size_download": 2983
+        }
+      ],
+      "medianTTFBMs": 661,
+      "medianTotalMs": 662
+    },
+    {
+      "url": "https://mali-wuli.com/profil",
+      "samples": [
+        {
+          "http_code": 403,
+          "time_namelookup": 0.00457,
+          "time_connect": 0.268772,
+          "time_appconnect": 0.462324,
+          "time_starttransfer": 0.644364,
+          "time_total": 0.645477,
+          "size_download": 2983
+        },
+        {
+          "http_code": 403,
+          "time_namelookup": 0.00356,
+          "time_connect": 0.215317,
+          "time_appconnect": 0.463689,
+          "time_starttransfer": 0.661119,
+          "time_total": 0.663431,
+          "size_download": 2983
+        },
+        {
+          "http_code": 403,
+          "time_namelookup": 0.003969,
+          "time_connect": 0.196003,
+          "time_appconnect": 0.39674,
+          "time_starttransfer": 0.587116,
+          "time_total": 0.590895,
+          "size_download": 2983
+        }
+      ],
+      "medianTTFBMs": 644,
+      "medianTotalMs": 645
+    },
+    {
+      "url": "https://mali-wuli.com/api/locations/countries",
+      "samples": [
+        {
+          "http_code": 403,
+          "time_namelookup": 0.002746,
+          "time_connect": 0.218241,
+          "time_appconnect": 0.418995,
+          "time_starttransfer": 0.603645,
+          "time_total": 0.604,
+          "size_download": 2983
+        },
+        {
+          "http_code": 403,
+          "time_namelookup": 0.003505,
+          "time_connect": 0.202097,
+          "time_appconnect": 0.418308,
+          "time_starttransfer": 0.646074,
+          "time_total": 0.646648,
+          "size_download": 2983
+        },
+        {
+          "http_code": 403,
+          "time_namelookup": 0.003792,
+          "time_connect": 0.196912,
+          "time_appconnect": 0.399785,
+          "time_starttransfer": 0.591217,
+          "time_total": 0.595016,
+          "size_download": 2983
+        }
+      ],
+      "medianTTFBMs": 604,
+      "medianTotalMs": 604
+    },
+    {
+      "url": "https://floralwhite-ram-987223.hostingersite.com/api/health",
+      "samples": [
+        {
+          "http_code": 200,
+          "time_namelookup": 0.089308,
+          "time_connect": 0.111458,
+          "time_appconnect": 0.137241,
+          "time_starttransfer": 0.149894,
+          "time_total": 0.150144,
+          "size_download": 84
+        },
+        {
+          "http_code": 200,
+          "time_namelookup": 0.003378,
+          "time_connect": 0.027104,
+          "time_appconnect": 0.052005,
+          "time_starttransfer": 0.067123,
+          "time_total": 0.067426,
+          "size_download": 84
+        },
+        {
+          "http_code": 200,
+          "time_namelookup": 0.003369,
+          "time_connect": 0.013492,
+          "time_appconnect": 0.030467,
+          "time_starttransfer": 0.042302,
+          "time_total": 0.04243,
+          "size_download": 84
+        }
+      ],
+      "medianTTFBMs": 67,
+      "medianTotalMs": 67
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "status": "passed",
+  "finishedAt": "2026-09-28 18:32:36 CEST",
+  "request": "Expériences et formations du plus récent au plus ancien",
+  "filesChanged": [
+    "frontend/src/components/directory/ProfilPublic.tsx",
+    "frontend/src/components/onboarding/StepFormations.tsx",
+    "frontend/src/components/profile/ProfilMembre.tsx",
+    "frontend/src/lib/education/parcours-scolaire.test.ts",
+    "frontend/src/lib/periode.ts"
+  ],
+  "tests": {
+    "parcours": 9,
+    "renderAndMerge": 7,
+    "linuxBuild": "passed",
+    "candidate": "passed",
+    "public": "passed",
+    "sourceHashes": 193,
+    "publicAssets": 54,
+    "publicBundles": 30
+  },
+  "browser": {
+    "environment": "fixtures locales en RAM",
+    "checked": [
+      "profil personnel : expériences 2024,2023,2020 et formations 2022,2019,2014",
+      "profil public : même ordre",
+      "formulaire formations : même ordre",
+      "titre professionnel actuel conservé"
+    ],
+    "screenshot": "parcours-recents-verifie.png",
+    "cleanup": "serveurs QA arrêtés, onglet temporaire fermé, viewport rétabli"
+  },
+  "deployment": {
+    "frontendPrevious": "versions/20260928-evenements-photos",
+    "frontendCurrent": "versions/20260928-parcours-recents",
+    "buildPrevious": "g_ZlNJ4g3BexnPjw2JQYj",
+    "buildCurrent": "OsGa4wg5bN0eLzWW4pzBH",
+    "backendUnchanged": "versions/20260928-evenements-photos",
+    "databaseMigration": "aucune, changement frontend uniquement",
+    "databaseWrites": 0,
+    "rollback": "ancienne version frontend conservée et .previous-target enregistré"
+  },
+  "gitFinal": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedModified": 68,
+    "untrackedEntries": 75,
+    "untrackedFiles": 125,
+    "at": "2026-09-28T18:31:41.538907+02:00"
+  },
+  "limitations": [
+    "Rendu authentifié vérifié sur fixtures ; production vérifiée en lecture seule via ressources et routes servies.",
+    "Pas de test téléphone physique ; styles inchangés."
+  ],
+  "evidence": [
+    "tests-parcours.txt",
+    "tests-rendu-fusion.json",
+    "onboarding-tri.txt",
+    "profil-public-tri.txt",
+    "frontend-candidate.json",
+    "frontend-public.json",
+    "candidate-source-check.json",
+    "remote-final.txt"
+  ]
+}

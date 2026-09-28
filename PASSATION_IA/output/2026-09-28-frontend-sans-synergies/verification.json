@@ -1,0 +1,161 @@
+{
+  "status": "TERMINÉ",
+  "startedAt": "2026-09-28 16:53:14 CEST",
+  "gitBefore": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 67,
+    "untrackedEntries": 57,
+    "untrackedFiles": 85
+  },
+  "previousEntriesSha256": "9c8f09c9fb781f9e4f47c91965f136a3f324737299f4e4a2850522d683146a22",
+  "steps": [
+    {
+      "at": "2026-09-28 16:54:19 CEST",
+      "note": "Navigation desktop/mobile, annuaire, page synergies en redirection, types, statistique admin et mentions publiques nettoyés en staging. Fil et profil en cours séparément. Production relue : sans-cercles-r2, build j0CKbKg2B4_1p7LIJYq-o.",
+      "stoppedAt": "Finaliser fil/profil et filtre notifications, puis vérifier staging avant copie ; aucun fichier actif modifié."
+    },
+    {
+      "at": "2026-09-28 16:55:18 CEST",
+      "note": "Fil et profil nettoyés en staging ; compteurs/cartes/API/listeners supprimés. Trois types de notifications synergies et liens correspondants ajoutés au filtre existant. Audit backend confirme messagerie indépendante des synergies ; aucune modification backend.",
+      "stoppedAt": "Relire les 13 fichiers staging, installer après comparaison sauvegardes, puis TypeScript et contrôles simulés."
+    },
+    {
+      "at": "2026-09-28 16:55:58 CEST",
+      "note": "Treize fichiers installés après comparaison aux sauvegardes, TypeScript actif réussi, 11 tests notifications réussis. Seules références restantes : redirection et filtre des notifications masquées. Archive vérifiée : 76 fichiers, 13 changements ciblés.",
+      "stoppedAt": "Contrôles SSR complémentaires en cours ; transférer puis compiler candidate Linux avant activation."
+    },
+    {
+      "at": "2026-09-28 16:56:14 CEST",
+      "note": "Relecture indépendante des 13 fichiers réussie. Archive et contrôle HTTP transférés sur Hostinger pour nouvelle candidate.",
+      "stoppedAt": "Compiler candidate 20260928-frontend-sans-synergies ; current reste sans-cercles-r2 jusqu’à validation."
+    },
+    {
+      "at": "2026-09-28 16:57:07 CEST",
+      "note": "Compilation Linux, TypeScript et lint réussis ; assemblage et contrôle HTTP candidate en cours. Guide 05 mis à jour avec retrait et dépendance backend résiduelle des notifications de publications.",
+      "stoppedAt": "Attendre contrôle candidate puis relire current avant activation."
+    },
+    {
+      "at": "2026-09-28 16:57:45 CEST",
+      "note": "Candidate validée : build VONsvj3hhv9tNqFn-AA-K, 26 assets et 20 bundles sans interface synergies/cercles. Redirections /synergies et /cercles vers /dashboard réussies.",
+      "stoppedAt": "Recevoir contrôle SSR/effets final puis relire current et activer."
+    },
+    {
+      "at": "2026-09-28 16:58:28 CEST",
+      "note": "Sept contrôles SSR/effets réussis sur le src actif : menus desktop/mobile, fil/profil, annuaire, admin et requêtes/listeners. Current relu identique à sans-cercles-r2 ; candidate prête.",
+      "stoppedAt": "Activer la candidate validée puis contrôle public HTTPS."
+    },
+    {
+      "at": "2026-09-28 16:58:32 CEST",
+      "note": "Bascule atomique effectuée : current versions/20260928-frontend-sans-synergies, build VONsvj3hhv9tNqFn-AA-K. Backend toujours versions/20260921-profile-schools-r2.",
+      "stoppedAt": "Contrôler HTTPS public, puis clôturer journal et guide 05."
+    },
+    {
+      "at": "2026-09-28 16:59:03 CEST",
+      "note": "Correction utilisateur reçue après bascule : retirer seulement la section du menu ; conserver recommandations et logique sur les autres pages. Le retrait étendu est remplacé par un retrait des entrées de navigation uniquement.",
+      "stoppedAt": "Restaurer les 11 fichiers hors menus depuis before, avec garde-fou empreintes ; conserver MaliWuliHeader et layout plateforme sans entrée Synergies. Recompiler et republier correctif."
+    },
+    {
+      "at": "2026-09-28 16:59:39 CEST",
+      "note": "Restauration ciblée terminée : 11 fichiers rétablis. Comparaison complète aux 76 sources avant session : seuls MaliWuliHeader.tsx et layout plateforme diffèrent (retrait des liens menus). Page Synergies, recommandations/actions, compteurs, notifications et FAQ rétablis.",
+      "stoppedAt": "Publier correctif 20260928-menu-synergies ; compilation et smoke doivent vérifier explicitement les fonctions rétablies."
+    },
+    {
+      "at": "2026-09-28 17:00:13 CEST",
+      "note": "Archive corrigée et contrôle vérifiant le maintien des recommandations transférés sur Hostinger.",
+      "stoppedAt": "Compiler correctif menu-synergies puis vérifier les recommandations avant bascule."
+    },
+    {
+      "at": "2026-09-28 17:00:47 CEST",
+      "note": "Six contrôles SSR/effets réussis sur la source rétablie : menus sans entrée, recommandations et compteurs fil/profil conservés, annuaire avec propositions, API et listeners synergies présents. Scripts QA local et distant nommés séparément.",
+      "stoppedAt": "Attendre build Linux et contrôle HTTP du correctif, puis activer."
+    },
+    {
+      "at": "2026-09-28 17:02:15 CEST",
+      "note": "Correctif compilé (DPia9wiu4OeyoZRNtEXYH). Recommandations présentes dans les bundles ; contrôle texte initial échoue sur accents encodés en JavaScript (vérifié dans bundle dashboard). Contrôle corrigé pour décoder les chaînes ; application inchangée.",
+      "stoppedAt": "Rejouer uniquement le contrôle candidate corrigé, puis publier si réussite."
+    },
+    {
+      "at": "2026-09-28 17:03:03 CEST",
+      "note": "Candidate menu-synergies validée : build DPia9wiu4OeyoZRNtEXYH, page et recommandations Synergies présentes, 26 assets valides ; retrait cercles conservé. Current relu sans-synergies. Tentative QA précédente stoppée par garde-fou de préfixe socket avant lancement, reprise avec préfixe attendu réussie.",
+      "stoppedAt": "Activer correctif validé puis contrôle public."
+    },
+    {
+      "at": "2026-09-28 17:03:07 CEST",
+      "note": "Correctif publié : current versions/20260928-menu-synergies, build DPia9wiu4OeyoZRNtEXYH. Backend toujours versions/20260921-profile-schools-r2.",
+      "stoppedAt": "Contrôle HTTPS public du correctif, puis clôturer avec décision finale et deux fichiers modifiés."
+    }
+  ],
+  "productionBefore": {
+    "frontendCurrent": "versions/20260928-frontend-sans-cercles-r2",
+    "frontendBuildId": "j0CKbKg2B4_1p7LIJYq-o",
+    "backendCurrent": "versions/20260921-profile-schools-r2"
+  },
+  "sourceFiles": 76,
+  "changedFiles": [
+    "src/app/(platform)/layout.tsx",
+    "src/components/MaliWuliHeader.tsx"
+  ],
+  "backendAudit": {
+    "messagingIndependentOfSynergies": true,
+    "publicationNotifications": "Distribution aux synergies acceptées conservée côté backend ; NOUVELLE_PUBLICATION reste visible.",
+    "databaseActions": "aucune"
+  },
+  "candidate": {
+    "release": "20260928-menu-synergies",
+    "buildId": "DPia9wiu4OeyoZRNtEXYH",
+    "status": "passed"
+  },
+  "userCorrection": {
+    "decision": "Retirer uniquement les entrées de navigation Synergies, garder la page et toute logique/recommandation des autres pages.",
+    "replaces": "retrait étendu de la fonctionnalité"
+  },
+  "firstDeployment": {
+    "frontendCurrent": "versions/20260928-frontend-sans-synergies",
+    "frontendBuildId": "VONsvj3hhv9tNqFn-AA-K",
+    "status": "superseded by user correction"
+  },
+  "supersededLocalChecks": {
+    "typescript": "passed",
+    "notificationScenarios": 11
+  },
+  "scopeFinal": "Entrées menu uniquement ; toutes fonctions Synergies préservées.",
+  "finishedAt": "2026-09-28 17:04:07 CEST",
+  "gitAfter": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 67,
+    "untrackedEntries": 57,
+    "untrackedFiles": 85
+  },
+  "productionAfter": {
+    "frontendCurrent": "versions/20260928-menu-synergies",
+    "frontendBuildId": "DPia9wiu4OeyoZRNtEXYH",
+    "backendCurrent": "versions/20260921-profile-schools-r2"
+  },
+  "localChecks": {
+    "uiScenarios": 6,
+    "sourceComparison": "2 menus modifiés ; 74 autres fichiers identiques à la version avant session"
+  },
+  "publicChecks": {
+    "status": "passed",
+    "assets": 26,
+    "memberBundles": 18,
+    "sameAssetsAsCandidate": true,
+    "synergyFeaturesPreserved": true
+  },
+  "databaseActions": "aucune",
+  "limitations": [
+    "UI vérifiée en SSR et effets simulés ; pas de test connecté avec compte réel.",
+    "Le backend et la base n’ont pas été modifiés."
+  ],
+  "finalEvidence": [
+    "source-diff.json",
+    "source-manifest.json",
+    "ui-menu-check.json",
+    "candidate-check.json",
+    "live-check.json",
+    "activation.txt"
+  ],
+  "previousEntriesPreserved": true
+}

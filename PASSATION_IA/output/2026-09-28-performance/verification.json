@@ -1,0 +1,6 @@
+{
+  "status": "interrupted",
+  "startedAt": "2026-09-28 20:57:13 CEST",
+  "externalActions": [],
+  "reason": "User reprioritized to profile typography before integration; staging only, active repository and production unchanged."
+}

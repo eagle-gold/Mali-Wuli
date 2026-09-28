@@ -1,0 +1,107 @@
+[
+  {
+    "path": "backend/src/routes/education.routes.ts",
+    "before": "556d9ee180aa36ea1b5f9f619d811abb3c601f3411328970fdb0b5ee478fa58b",
+    "after": "d49b45cb2acd32ecb7b4e9aa636da106cff9ee431d269ff5b148dbdc5eee4d2b"
+  },
+  {
+    "path": "backend/src/routes/user.routes.ts",
+    "before": "9fac13ed222fba1e2a1a1dfbd7e4fe8e8fc8281c095f79abec7354f1d9a72656",
+    "after": "ff7e38be706a56a6a222c7abbe9b55357c040745852e83e98addb4d37e7c0398"
+  },
+  {
+    "path": "backend/src/services/education-facettes.service.ts",
+    "before": null,
+    "after": "47585b550a350b2b43b4a074ea9f6246e12871b7cc653ed410def9611e315199"
+  },
+  {
+    "path": "frontend/public/images/optimized/logo-mali-wuli-128-d2b3b2f296.webp",
+    "before": null,
+    "after": "d2b3b2f29664fe123c67bc509fe9848d8f404ca79f922412c76696ae6b6cb18f"
+  },
+  {
+    "path": "frontend/public/images/optimized/logo-mali-wuli-192-a20ec012bd.webp",
+    "before": null,
+    "after": "a20ec012bdb7764fc267446554e28061a9c22f08666a163e1a94b2083e3cd15b"
+  },
+  {
+    "path": "frontend/public/images/optimized/logo-mali-wuli-288-f92be6a04c.webp",
+    "before": null,
+    "after": "f92be6a04c4f7a81a34b2c211d5a295e3bc26fd4f8ba959fae48cb783bc88153"
+  },
+  {
+    "path": "frontend/public/images/optimized/logo-mali-wuli-64-a9fea92c35.webp",
+    "before": null,
+    "after": "a9fea92c354965bad646117e6214810d6a66b144214010d143f2972e6b5f54d3"
+  },
+  {
+    "path": "frontend/public/images/optimized/mali-wuli-arbre-144-c64cd3448f.webp",
+    "before": null,
+    "after": "c64cd3448f9fbb5b18c037c5692e7cb3a5ffba912d36684c22b7c1947315d7e2"
+  },
+  {
+    "path": "frontend/public/images/optimized/mali-wuli-arbre-48-7270efc8d2.webp",
+    "before": null,
+    "after": "7270efc8d206eae7e804851e9bd7bdded544a8fe62c95546277d15b0f1ae0ab3"
+  },
+  {
+    "path": "frontend/public/images/optimized/mali-wuli-arbre-96-ac67b3de00.webp",
+    "before": null,
+    "after": "ac67b3de00b9d3ffbd814391939fb1058da5e6d3e5d01b5262d74547c3cc882c"
+  },
+  {
+    "path": "frontend/src/app/(platform)/layout.tsx",
+    "before": "7e5490ff770edda98bf9ed47094e99bf209a5256cb26ec6c56274e1303967159",
+    "after": "488f6db114883351947b8667669bc2c7bd088f3678d7f0b0608d21fa0e51835a"
+  },
+  {
+    "path": "frontend/src/app/(platform)/loading.tsx",
+    "before": null,
+    "after": "1e87e9748aebe6a2424fea52f580172733e97e5b07d12e78b580361df18e87c4"
+  },
+  {
+    "path": "frontend/src/components/LogoMaliWuliImage.tsx",
+    "before": null,
+    "after": "2d675393433c6f2878c7ae66cd742d0c7b9bc76b4eb69c09166b6c73a41c532d"
+  },
+  {
+    "path": "frontend/src/components/MaliWuliHeader.tsx",
+    "before": "8748c43abcd20a4735f0a8f63ebb5d4c327d22228885af54016d27a1c9b4f39f",
+    "after": "b61d64e51033fa96139ac1e84321f2f3574acb4f470b61b2961fdcf1d26bc68d"
+  },
+  {
+    "path": "frontend/src/components/auth/PlatformAuthGuard.tsx",
+    "before": "1678f383bb12b868e83928dc36939f76f867f06760da54ed537b89ff71d85d53",
+    "after": "2222fd3eea0104fe7e4a652089a76552cfe770a43868b2fd8291e0681c67bea6"
+  },
+  {
+    "path": "frontend/src/components/auth/SessionMembreContext.tsx",
+    "before": null,
+    "after": "439295b3ba787cdb18db59e36fbb149ca4470929327882ff378bd7fdfa912dcc"
+  },
+  {
+    "path": "frontend/src/components/education/CatalogueEtablissements.tsx",
+    "before": "e683feacd53b4358a97745463a7ce809abf456461a6ceacdec680d435ee57c4b",
+    "after": "469accb701560a8a3a2196b076dc6f488be68ed32123a6f2e340718731c7f32b"
+  },
+  {
+    "path": "frontend/src/components/landing/LandingArbre.tsx",
+    "before": "73c4c9d8387c538cc4dc759b6f8b6acba4b319e470bbaf34f6b7c38733507e0d",
+    "after": "7dfeebba3a07b8dc44199c66949e25a55e887b577dd825513c8e66f711a4d85b"
+  },
+  {
+    "path": "frontend/src/components/profile/ProfilMembre.tsx",
+    "before": "e7955986c435696489e33bdf12cc099531c07640ebabdb7789b87cbea888ba1f",
+    "after": "82a2bcbf49b4d560aa7278ce5729ff4af57ed9ebbfe8b8af9a98192659265e70"
+  },
+  {
+    "path": "frontend/src/hooks/useSessionAccueil.ts",
+    "before": "1f02a576bc166ebbadb9a33b33a5e2a3e613734ecffbdbc208f63ac38e2013cf",
+    "after": "8099c81f784b0f0f4531aef59b8545ef0c93ebb93f6e925f605007687bf21de1"
+  },
+  {
+    "path": "frontend/src/lib/session.ts",
+    "before": "cdcd9a04824a92450eec431155db70089b943dc8e8ae8f90ab2312ea0ac111bc",
+    "after": "90ee064a714daffca9ca90789fcfb27a55cfca1ddde46a43f7443d2f51662ff8"
+  }
+]

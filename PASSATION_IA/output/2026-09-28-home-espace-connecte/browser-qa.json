@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "environment": "Next localhost3006 / API4307 fixtures RAM",
+  "checks": [
+    "Connexion mot de passe compte fictif depuis accueil",
+    "Mon espace vers dashboard et Mon profil vers profil",
+    "Retour arrière accueil authenticated ; aucun lien /login ou /register",
+    "Actualisation accueil reste authenticated",
+    "Mobile375 : largeur375 sans débordement, Mon espace visible",
+    "Déconnexion autre onglet actualise accueil en visitor",
+    "Reconnexion autre onglet rétablit Mon espace sans rechargement"
+  ],
+  "screenshot": "accueil-connecte.png",
+  "realAccountUsed": false,
+  "databaseWrites": 0,
+  "limitations": [
+    "Pas de téléphone physique/Safari",
+    "Scénario pageshow isolé reproduit en harness ; capture utilisateur non reproduite sur sa session réelle"
+  ],
+  "cleanup": "Deux ongletsQA fermés, sessionfictive déconnectée, viewport rétabli"
+}

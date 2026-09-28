@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "completedAt": "2026-09-28 19:24:51 CEST",
+  "release": "20260928-fond-mobile-roles",
+  "frontendBuildId": "XKxGZymQs7bdnHFnsf0bl",
+  "previousFrontendAndBackend": "versions/20260928-offres-emploi",
+  "currentFrontendAndBackend": "versions/20260928-fond-mobile-roles",
+  "database": "u668963025_maliwuli",
+  "migrations": {
+    "new": 0,
+    "total": 13
+  },
+  "databaseWrites": 0,
+  "realRoleChanges": 0,
+  "realEmails": 0,
+  "sourceFiles": 220,
+  "modifiedOrAddedFiles": 41,
+  "tests": {
+    "backend": {
+      "tests": 65,
+      "pass": 65,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "frontendAdminGroups": 7,
+    "typescript": "PASS local + Linux production builds",
+    "browserGeometryMeasurements": 66,
+    "widths": [
+      320,
+      375,
+      768,
+      1280
+    ],
+    "horizontalOverflow": false,
+    "background": "#f4ecdd",
+    "publicRoutes": 25,
+    "publicAssets": 66,
+    "publicBundles": 39,
+    "candidatePublicEquality": "PASS (2 PNGs pixel-identical with recorded recompression evidence)",
+    "readOnlyRealDatabaseService": "PASS: single admin, protected owner, ordinary access denied"
+  },
+  "gitFinal": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedModified": 69,
+    "untrackedEntries": 85,
+    "untrackedFiles": 152
+  },
+  "evidence": [
+    "frontend-public.json",
+    "frontend-candidate.json",
+    "browser-verification.json",
+    "live-browser.json",
+    "roles-before.json",
+    "roles-service-readonly.json",
+    "tests-backend-roles.tap",
+    "tests-frontend-admin.json",
+    "source-manifest.json",
+    "installed-final.json"
+  ],
+  "limitations": [
+    "No real member role was changed for testing.",
+    "Interactive member/admin checks used an in-memory fixture API; real DB services checked read-only.",
+    "Physical mobile keyboard and Safari not exercised.",
+    "Realtime intentionally unavailable in local HTTP fixtures; backend revocation covered by mocks."
+  ],
+  "cleanup": "Local QA servers stopped, temporary browser tabs closed, viewport restored. No commit or push."
+}

@@ -1,0 +1,144 @@
+{
+  "status": "PASS",
+  "completedAt": "2026-09-28 20:01:48 CEST",
+  "request": "Priorité aux établissements et associations affiliés ; session conservée sur accueil",
+  "release": "20260928-priorite-membres-home",
+  "previousFrontend": "versions/20260928-roles-actions",
+  "previousBackend": "versions/20260928-roles-actions",
+  "previousBuildId": "FuGDWQkQpcBCevVL404El",
+  "buildId": "dj5SeEGNIha9psRUR-GDY",
+  "installedFiles": [
+    "backend/src/routes/association.routes.test.ts",
+    "backend/src/routes/education.routes.ts",
+    "backend/src/services/association.service.ts",
+    "backend/src/services/priorite-membres.service.test.ts",
+    "backend/src/services/priorite-membres.service.ts",
+    "frontend/src/components/auth/PlatformAuthGuard.tsx",
+    "frontend/src/components/landing/LandingArbre.module.css",
+    "frontend/src/components/landing/LandingArbre.tsx",
+    "frontend/src/components/landing/LandingTree.tsx",
+    "frontend/src/hooks/useSessionAccueil.ts",
+    "frontend/src/lib/api.ts",
+    "frontend/src/lib/session.ts"
+  ],
+  "tests": {
+    "backend": 23,
+    "frontendSessionGroups": 8,
+    "deploymentScriptGroups": 6,
+    "typescript": true,
+    "linuxBuilds": true,
+    "sourceFiles": 226,
+    "publicRoutes": 25,
+    "publicAssets": 66,
+    "browser": "browser-verification.json",
+    "productionBrowser": "live-browser.json"
+  },
+  "externalActions": [
+    "Création et compilation des candidates frontend/backend",
+    "Bascule des deux current vers versions/20260928-priorite-membres-home et restart Passenger"
+  ],
+  "migration": false,
+  "appliedMigrations": 14,
+  "database": "u668963025_maliwuli",
+  "databaseWrites": 0,
+  "databasePreserved": true,
+  "productionRanking": {
+    "status": "PASS",
+    "eligibility": {
+      "onboardingFini": true,
+      "userStatut": "VALIDE",
+      "associationAffiliation": "VERIFIE"
+    },
+    "etablissements": {
+      "total": 141941,
+      "populatedStructures": 7,
+      "emptyStructures": 141934,
+      "pages": [
+        {
+          "page": 1,
+          "rows": 12,
+          "counts": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "page": 2,
+          "rows": 12,
+          "counts": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "exercisedNonEmptyOrder": true,
+      "exercisedDistinctCounts": false
+    },
+    "associations": {
+      "total": 0,
+      "populatedStructures": 0,
+      "emptyStructures": 0,
+      "pages": [
+        {
+          "page": 1,
+          "rows": 0,
+          "counts": []
+        },
+        {
+          "page": 2,
+          "rows": 0,
+          "counts": []
+        }
+      ],
+      "exercisedNonEmptyOrder": false,
+      "exercisedDistinctCounts": false
+    },
+    "databaseWrites": 0,
+    "realSessionsCreated": 0,
+    "limitations": [
+      "Unfiltered public listings only; country/search/filter combinations have separate RAM tests.",
+      "Counts are separate reads: concurrent profile or affiliation changes can fail this check.",
+      "Empty or tied data cannot prove every ranking case; exercised flags report actual coverage."
+    ]
+  },
+  "transientIncident": "Premier GET /associations 503 pendant redémarrage backend ; second contrôle complet 12/12 réussi avant bascule frontend.",
+  "limitations": [
+    "Aucune association réelle en base ; cas non vides couverts par tests et UI en RAM.",
+    "Session authentifiée testée sur comptes fictifs locaux, pas sur le compte réel du propriétaire.",
+    "Pas de téléphone physique ni Safari ; viewport320 et1280 vérifiés."
+  ],
+  "git": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "tracked": 69,
+    "untrackedEntries": 87,
+    "untrackedFiles": 158
+  },
+  "cleanup": {
+    "qaServersStopped": true,
+    "temporaryTabsClosed": true,
+    "viewportReset": true,
+    "commits": 0,
+    "pushes": 0
+  }
+}

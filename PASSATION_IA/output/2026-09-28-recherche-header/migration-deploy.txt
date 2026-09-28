@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T16:14:59.060Z",
+  "database": "u668963025_maliwuli",
+  "appliedCount": 11,
+  "pending": [
+    "20260928190000_event_photos"
+  ],
+  "allAppliedChecksumsMatch": true,
+  "currentTargetsUnchanged": true
+}
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": MySQL database "u668963025_maliwuli" at "localhost:3306"
+
+12 migrations found in prisma/migrations
+
+Applying migration `20260928190000_event_photos`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260928190000_event_photos/
+    └─ migration.sql
+      
+All migrations have been successfully applied.
+┌─────────────────────────────────────────────────────────┐
+│  Update available 5.21.1 -> 8.0.0-rc.17                 │
+│                                                         │
+│  This is a major update - please follow the guide at    │
+│  https://pris.ly/d/major-version-upgrade                │
+│                                                         │
+│  Run the following to update                            │
+│    npm i --save-dev prisma@latest                       │
+│    npm i @prisma/client@latest                          │
+└─────────────────────────────────────────────────────────┘
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": MySQL database "u668963025_maliwuli" at "localhost:3306"
+
+12 migrations found in prisma/migrations
+
+Database schema is up to date!

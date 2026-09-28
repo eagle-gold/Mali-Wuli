@@ -1,0 +1,15 @@
+{
+  "status": "deployed-and-verified",
+  "release": "20260921-diploma-status",
+  "frontendBuildId": "v1gTaJomxZZNlEBezuOy4",
+  "linuxBuildAndTypeCheck": "passed",
+  "deploymentSmoke": "passed",
+  "publicOnboardingBundle": "/_next/static/chunks/app/(auth)/onboarding/page-42d99959805d2641.js",
+  "conditionVerified": "per-diploma status rendered only when overall status EN_COURS",
+  "choices": [
+    "Obtenu",
+    "En préparation"
+  ],
+  "review": "Choosing overall OBTENU forces each diploma to OBTENU; validation rejects inconsistent or future obtained dates",
+  "databaseChanged": false
+}

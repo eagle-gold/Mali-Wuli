@@ -1,0 +1,22 @@
+Tu reprends le projet Mali Wuli.
+
+Commence par lire intégralement :
+/Users/ibrahimakonate/Documents/ChatGPT/Mali Wuli/PASSATION_IA/JOURNAL_REPRISE.md
+
+Puis lis :
+/Users/ibrahimakonate/Documents/ChatGPT/Mali Wuli/PASSATION_IA/LIRE_EN_PREMIER.md
+/Users/ibrahimakonate/Documents/ChatGPT/Mali Wuli/PASSATION_IA/PROMPT_CODEX_TRACES.txt
+
+Le protocole de traces est obligatoire. Si le statut courant indique EN COURS par un autre agent, arrête-toi et demande à l’utilisateur avant de toucher au code. Sinon, prends le statut EN COURS avec ton nom, la date/heure et le sujet ; ouvre une entrée avec l’état Git initial. Actualise-la à chaque étape significative : fichiers, vérifications, décisions, actions externes et étape exacte où reprendre. Ne modifie pas les entrées des autres agents.
+
+À la fin ou en cas d’arrêt, indique TERMINÉ ou INTERROMPU, l’état Git final, ce qui reste à faire et la prochaine action, puis remets le statut LIBRE avec ton nom et la date/heure. Reporte toute décision produit ou procédure modifiée dans le guide 05 en marquant l’ancienne comme remplacée.
+
+Puis lis les documents numérotés utiles à la demande. La source utilisée pour les derniers déploiements est dans /Users/ibrahimakonate/Documents/ChatGPT/MALI-WULI-hostinger-integration, pas dans l’ancienne copie « Mali Wuli » qui contient cette passation. Vérifie tes permissions avant d’écrire dans le dépôt actif.
+
+Préserve les nombreuses modifications Git non commitées et les fichiers non suivis. Un clone ou worktree de HEAD ne contient pas tout le travail. Pas de réinitialisation, nettoyage Git, restauration globale, stash global ni remplacement par un clone. Aucun import, fusion, nettoyage ou smoke écrivant en base sans vérification des effets et de la base visée, puis accord de l’utilisateur. Aucun push ni déploiement sans demande explicite. Les commits éventuels sont ciblés et leur hash est inscrit au journal. Les preuves importantes vont dans output/<AAAA-MM-JJ>-<sujet>/verification.json, sans secret, et sont citées dans l’entrée.
+
+La passation a été préparée le 26/09/2026 à partir des fichiers locaux et des preuves de déploiement du 21/09/2026. Vérifie l’état réel actuel avant d’affirmer que le site ou la base correspond toujours à ces preuves. Les secrets ne sont pas inclus dans les documents.
+
+Respecte les dernières décisions, notamment : polices d’origine rétablies, profil prénom/nom, L1 affiché « Licence », école/lycée réunis avec plusieurs diplômes, programme scolaire indépendant du pays, sélecteurs avec « Autre », statut individuel seulement pour une formation en cours, bouton « Brevet / DEF », badge de validation catalogue masqué. Le nettoyage global des doublons reste inachevé malgré l’audit.
+
+Travaille sur la nouvelle demande que je te donnerai. Commence par un bref état des lieux ciblé, puis réalise et vérifie la modification autorisée. Ne déploie pas simplement parce qu’une procédure de déploiement figure dans cette documentation.

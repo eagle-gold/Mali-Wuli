@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "kind": "delegated-roles-pre-migration-readonly",
+  "at": "2026-09-28T17:37:44.298Z",
+  "database": "u668963025_maliwuli",
+  "appliedCount": 13,
+  "pending": [
+    "20260928210000_delegated_roles"
+  ],
+  "historicalChecksumsVerified": 13,
+  "migrationSha256": "67d8f0e24b2630378e2a28aa6724568afb85282a29168e4545c3946bd2942945",
+  "currentTargetsUnchanged": true,
+  "newSchemaAbsent": true,
+  "backupVerified": true,
+  "databaseWrites": 0
+}

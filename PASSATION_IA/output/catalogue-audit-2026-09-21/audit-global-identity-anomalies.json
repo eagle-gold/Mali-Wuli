@@ -1,0 +1,2085 @@
+{
+  "dateVerification": "2026-09-21",
+  "methodologie": "Vérification ciblée read-only de 9 identifiants via API publique ROR ; aucune revue exhaustive des regroupements multi-ROR. Plusieurs ROR sur une fiche ne prouvent pas seuls une erreur, car les identités historiques/relations parent/enfant existent.",
+  "totalFichesHorsMLAvecPlusieursROR": 154,
+  "parPays": {
+    "US": 117,
+    "RU": 12,
+    "FR": 11,
+    "NG": 6,
+    "GB": 5,
+    "MA": 2,
+    "CA": 1
+  },
+  "anomaliesConfirmees": [
+    {
+      "id": "ror-03ykmm292",
+      "nom": "Advanced Barber College & Hair Design",
+      "paysCode": "US",
+      "statut": "rattachement_incorrect_confirme_par_ROR",
+      "constat": "La fiche Advanced Barber College & Hair Design à Weslaco (Texas) porte aussi les ROR d’Alaska Bible College à Palmer (Alaska), Arlington Baptist College à Arlington (Texas), et Appalachian Bible College à Mount Hope (Virginie-Occidentale). Domaines distincts, localités distinctes, aucun lien parent/enfant dans ROR ; seul acronyme ABC commun. Rattachement incorrect confirmé dans les données importées. Séparer les identités après examen de la provenance, ne pas lancer une nouvelle fusion.",
+      "ficheExport": {
+        "id": "ror-03ykmm292",
+        "nom": "Advanced Barber College & Hair Design",
+        "nomNormalise": "advanced barber college hair design",
+        "sigle": "ABC",
+        "type": "ECOLE_SUPERIEURE",
+        "paysCode": "US",
+        "systemeEducatifCode": "US",
+        "ville": "Weslaco",
+        "villeNormalisee": "weslaco",
+        "statut": "INCONNU",
+        "siteWeb": "http://abcrgv.com/",
+        "latitude": "26.15952",
+        "longitude": "-97.99084",
+        "createdAt": "2026-09-20T17:24:52.074Z",
+        "alias": [
+          {
+            "nom": "ABC",
+            "nomNormalise": "abc"
+          },
+          {
+            "nom": "Arlington Baptist University, Bible Baptist Seminary, Fundamental Baptist Bible Institute",
+            "nomNormalise": "arlington baptist university bible baptist seminary fundamental baptist bible institute"
+          }
+        ],
+        "niveaux": [
+          {
+            "niveau": "SUPERIEUR"
+          }
+        ],
+        "sources": [
+          {
+            "identifiantExterne": "03ykmm292",
+            "urlSource": "https://ror.org/03ykmm292",
+            "confiance": 0.92,
+            "donneesBrutes": {},
+            "source": {
+              "code": "ror",
+              "priorite": 8
+            }
+          },
+          {
+            "identifiantExterne": "02thhxe24",
+            "urlSource": "https://ror.org/02thhxe24",
+            "confiance": 0.92,
+            "donneesBrutes": {},
+            "source": {
+              "code": "ror",
+              "priorite": 8
+            }
+          },
+          {
+            "identifiantExterne": "007735r88",
+            "urlSource": "https://ror.org/007735r88",
+            "confiance": 0.92,
+            "donneesBrutes": {},
+            "source": {
+              "code": "ror",
+              "priorite": 8
+            }
+          },
+          {
+            "identifiantExterne": "02fad4q52",
+            "urlSource": "https://ror.org/02fad4q52",
+            "confiance": 0.92,
+            "donneesBrutes": {},
+            "source": {
+              "code": "ror",
+              "priorite": 8
+            }
+          }
+        ],
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        }
+      },
+      "preuvesAPI": [
+        {
+          "id": "03ykmm292",
+          "names": [
+            {
+              "lang": null,
+              "types": [
+                "acronym"
+              ],
+              "value": "ABC"
+            },
+            {
+              "lang": "en",
+              "types": [
+                "ror_display",
+                "label"
+              ],
+              "value": "Advanced Barber College & Hair Design"
+            }
+          ],
+          "locations": [
+            {
+              "geonames_details": {
+                "continent_code": "NA",
+                "continent_name": "North America",
+                "country_code": "US",
+                "country_name": "United States",
+                "country_subdivision_code": "TX",
+                "country_subdivision_name": "Texas",
+                "lat": 26.15952,
+                "lng": -97.99084,
+                "name": "Weslaco"
+              },
+              "geonames_id": 4740629
+            }
+          ],
+          "links": [
+            {
+              "type": "website",
+              "value": "http://abcrgv.com/"
+            }
+          ],
+          "relationships": [],
+          "status": "active",
+          "url": "https://api.ror.org/v2/organizations/03ykmm292"
+        },
+        {
+          "id": "02thhxe24",
+          "names": [
+            {
+              "lang": null,
+              "types": [
+                "acronym"
+              ],
+              "value": "ABC"
+            },
+            {
+              "lang": "en",
+              "types": [
+                "ror_display",
+                "label"
+              ],
+              "value": "Alaska Bible College"
+            }
+          ],
+          "locations": [
+            {
+              "geonames_details": {
+                "continent_code": "NA",
+                "continent_name": "North America",
+                "country_code": "US",
+                "country_name": "United States",
+                "country_subdivision_code": "AK",
+                "country_subdivision_name": "Alaska",
+                "lat": 61.59941,
+                "lng": -149.11456,
+                "name": "Palmer"
+              },
+              "geonames_id": 5871146
+            }
+          ],
+          "links": [
+            {
+              "type": "website",
+              "value": "http://www.akbible.edu/"
+            },
+            {
+              "type": "wikipedia",
+              "value": "https://en.wikipedia.org/wiki/Alaska_Bible_College"
+            }
+          ],
+          "relationships": [],
+          "status": "active",
+          "url": "https://api.ror.org/v2/organizations/02thhxe24"
+        },
+        {
+          "id": "007735r88",
+          "names": [
+            {
+              "lang": null,
+              "types": [
+                "acronym"
+              ],
+              "value": "ABC"
+            },
+            {
+              "lang": "en",
+              "types": [
+                "ror_display",
+                "label"
+              ],
+              "value": "Arlington Baptist College"
+            },
+            {
+              "lang": "en",
+              "types": [
+                "alias"
+              ],
+              "value": "Arlington Baptist University"
+            },
+            {
+              "lang": "en",
+              "types": [
+                "alias"
+              ],
+              "value": "Bible Baptist Seminary"
+            },
+            {
+              "lang": "en",
+              "types": [
+                "alias"
+              ],
+              "value": "Fundamental Baptist Bible Institute"
+            }
+          ],
+          "locations": [
+            {
+              "geonames_details": {
+                "continent_code": "NA",
+                "continent_name": "North America",
+                "country_code": "US",
+                "country_name": "United States",
+                "country_subdivision_code": "TX",
+                "country_subdivision_name": "Texas",
+                "lat": 32.73569,
+                "lng": -97.10807,
+                "name": "Arlington"
+              },
+              "geonames_id": 4671240
+            }
+          ],
+          "links": [
+            {
+              "type": "website",
+              "value": "https://www.abu.edu/"
+            },
+            {
+              "type": "wikipedia",
+              "value": "https://en.wikipedia.org/wiki/Arlington_Baptist_College"
+            }
+          ],
+          "relationships": [],
+          "status": "active",
+          "url": "https://api.ror.org/v2/organizations/007735r88"
+        },
+        {
+          "id": "02fad4q52",
+          "names": [
+            {
+              "lang": null,
+              "types": [
+                "acronym"
+              ],
+              "value": "ABC"
+            },
+            {
+              "lang": "en",
+              "types": [
+                "ror_display",
+                "label"
+              ],
+              "value": "Appalachian Bible College"
+            }
+          ],
+          "locations": [
+            {
+              "geonames_details": {
+                "continent_code": "NA",
+                "continent_name": "North America",
+                "country_code": "US",
+                "country_name": "United States",
+                "country_subdivision_code": "WV",
+                "country_subdivision_name": "West Virginia",
+                "lat": 37.89539,
+                "lng": -81.16427,
+                "name": "Mount Hope"
+              },
+              "geonames_id": 4815582
+            }
+          ],
+          "links": [
+            {
+              "type": "website",
+              "value": "https://abc.edu/"
+            },
+            {
+              "type": "wikipedia",
+              "value": "https://en.wikipedia.org/wiki/Appalachian_Bible_College"
+            }
+          ],
+          "relationships": [],
+          "status": "active",
+          "url": "https://api.ror.org/v2/organizations/02fad4q52"
+        }
+      ]
+    },
+    {
+      "id": "cmua34xlc08uw5etj3vnkwpn0",
+      "nom": "Bethel University",
+      "paysCode": "US",
+      "statut": "rattachement_incorrect_confirme_par_ROR",
+      "constat": "La fiche Bethel University porte deux ROR : McKenzie (Tennessee), site bethelu.edu, et Arden Hills (Minnesota), site bethel.edu. Le nom est homonyme, les villes et domaines sont distincts. Rattachement incorrect confirmé dans les données importées. Le champ ville McKenzie et le site bethel.edu mélangent les deux établissements.",
+      "ficheExport": {
+        "id": "cmua34xlc08uw5etj3vnkwpn0",
+        "nom": "Bethel University",
+        "nomNormalise": "bethel university",
+        "sigle": null,
+        "type": "UNIVERSITE",
+        "paysCode": "US",
+        "systemeEducatifCode": "US",
+        "ville": "McKenzie",
+        "villeNormalisee": "mckenzie",
+        "statut": "INCONNU",
+        "siteWeb": "http://www.bethel.edu/",
+        "latitude": "36.13256",
+        "longitude": "-88.51866",
+        "createdAt": "2026-09-20T17:23:30.961Z",
+        "alias": [
+          {
+            "nom": "Bethel College",
+            "nomNormalise": "bethel college"
+          },
+          {
+            "nom": "Bethel College and Seminary, Bethel Junior College",
+            "nomNormalise": "bethel college and seminary bethel junior college"
+          }
+        ],
+        "niveaux": [
+          {
+            "niveau": "SUPERIEUR"
+          }
+        ],
+        "sources": [
+          {
+            "identifiantExterne": "bethel.edu",
+            "urlSource": "http://www.bethel.edu/",
+            "confiance": 0.68,
+            "donneesBrutes": {},
+            "source": {
+              "code": "hipo",
+              "priorite": 40
+            }
+          },
+          {
+            "identifiantExterne": "05wnc7373",
+            "urlSource": "https://ror.org/05wnc7373",
+            "confiance": 0.92,
+            "donneesBrutes": {},
+            "source": {
+              "code": "ror",
+              "priorite": 8
+            }
+          },
+          {
+            "identifiantExterne": "02faxbd19",
+            "urlSource": "https://ror.org/02faxbd19",
+            "confiance": 0.92,
+            "donneesBrutes": {},
+            "source": {
+              "code": "ror",
+              "priorite": 8
+            }
+          }
+        ],
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        }
+      },
+      "preuvesAPI": [
+        {
+          "id": "05wnc7373",
+          "names": [
+            {
+              "lang": "en",
+              "types": [
+                "alias"
+              ],
+              "value": "Bethel College"
+            },
+            {
+              "lang": "en",
+              "types": [
+                "ror_display",
+                "label"
+              ],
+              "value": "Bethel University"
+            }
+          ],
+          "locations": [
+            {
+              "geonames_details": {
+                "continent_code": "NA",
+                "continent_name": "North America",
+                "country_code": "US",
+                "country_name": "United States",
+                "country_subdivision_code": "TN",
+                "country_subdivision_name": "Tennessee",
+                "lat": 36.13256,
+                "lng": -88.51866,
+                "name": "McKenzie"
+              },
+              "geonames_id": 4640736
+            }
+          ],
+          "links": [
+            {
+              "type": "website",
+              "value": "http://www.bethelu.edu/"
+            },
+            {
+              "type": "wikipedia",
+              "value": "https://en.wikipedia.org/wiki/Bethel_University_(Tennessee)"
+            }
+          ],
+          "relationships": [],
+          "status": "active",
+          "url": "https://api.ror.org/v2/organizations/05wnc7373"
+        },
+        {
+          "id": "02faxbd19",
+          "names": [
+            {
+              "lang": "en",
+              "types": [
+                "alias"
+              ],
+              "value": "Bethel College and Seminary"
+            },
+            {
+              "lang": "en",
+              "types": [
+                "alias"
+              ],
+              "value": "Bethel Junior College"
+            },
+            {
+              "lang": "en",
+              "types": [
+                "ror_display",
+                "label"
+              ],
+              "value": "Bethel University"
+            }
+          ],
+          "locations": [
+            {
+              "geonames_details": {
+                "continent_code": "NA",
+                "continent_name": "North America",
+                "country_code": "US",
+                "country_name": "United States",
+                "country_subdivision_code": "MN",
+                "country_subdivision_name": "Minnesota",
+                "lat": 45.05024,
+                "lng": -93.15661,
+                "name": "Arden Hills"
+              },
+              "geonames_id": 5016553
+            }
+          ],
+          "links": [
+            {
+              "type": "website",
+              "value": "https://www.bethel.edu/"
+            },
+            {
+              "type": "wikipedia",
+              "value": "http://en.wikipedia.org/wiki/Bethel_University_(Minnesota)"
+            }
+          ],
+          "relationships": [
+            {
+              "label": "Private Academic Library Network of Indiana, Inc. (PALNI)",
+              "type": "related",
+              "id": "https://ror.org/05dch6316"
+            }
+          ],
+          "status": "active",
+          "url": "https://api.ror.org/v2/organizations/02faxbd19"
+        }
+      ]
+    }
+  ],
+  "nuanceAlias": "Les alias Bethel University sur Shorter College et Roger Williams University sur Ottawa University figurent déjà dans la source ROR. Une collision d’alias ne permet donc pas d’inférer une identité commune ou une erreur locale. Ils n’ont pas été classés comme doublons.",
+  "fichesPlusieursROR": [
+    {
+      "id": "cmua34x3708bk5etjn55iyjap",
+      "nom": "University of Mary Washington",
+      "paysCode": "US",
+      "ville": "Fredericksburg",
+      "rorIds": [
+        "03b48gv34",
+        "0241gfe92"
+      ]
+    },
+    {
+      "id": "cmua34x5j08e45etji8tk4ofe",
+      "nom": "University of Massachusetts Boston",
+      "paysCode": "US",
+      "ville": "Boston",
+      "rorIds": [
+        "04ydmy275",
+        "0260j1g46"
+      ]
+    },
+    {
+      "id": "cmua34x5u08eg5etjlkfwe966",
+      "nom": "Wilmington University",
+      "paysCode": "US",
+      "ville": "New Castle",
+      "rorIds": [
+        "00jrtvk29",
+        "02t0qr014"
+      ]
+    },
+    {
+      "id": "cmua34x6408es5etjdht466m6",
+      "nom": "University of Findlay",
+      "paysCode": "US",
+      "ville": "Findlay",
+      "rorIds": [
+        "03yemaq40",
+        "00v23bh67"
+      ]
+    },
+    {
+      "id": "cmua34x6b08f05etjzytd8p3i",
+      "nom": "Yosemite Community College District",
+      "paysCode": "US",
+      "ville": "Modesto",
+      "rorIds": [
+        "02zb8tm77",
+        "04fqgk073"
+      ]
+    },
+    {
+      "id": "cmua34xaq08js5etjmbfxdfo8",
+      "nom": "Mount St. Mary's University",
+      "paysCode": "US",
+      "ville": "Los Angeles",
+      "rorIds": [
+        "040ty4453",
+        "02nmv9618"
+      ]
+    },
+    {
+      "id": "cmua34xdx08n05etj22wxnm0f",
+      "nom": "Abilene Christian University",
+      "paysCode": "US",
+      "ville": "Abilene",
+      "rorIds": [
+        "004srrf86",
+        "04x12sm71",
+        "01j8znm98"
+      ]
+    },
+    {
+      "id": "cmua34xft08ow5etjgolzu9gy",
+      "nom": "American International College",
+      "paysCode": "US",
+      "ville": "Springfield",
+      "rorIds": [
+        "02p014d02",
+        "01rppxt60",
+        "02apzcx95"
+      ]
+    },
+    {
+      "id": "cmua34xj908so5etjh0z82g4n",
+      "nom": "Baker University",
+      "paysCode": "US",
+      "ville": "Baldwin City",
+      "rorIds": [
+        "04r0kzx48",
+        "007dga614",
+        "008rmbt77",
+        "04p81nz21"
+      ]
+    },
+    {
+      "id": "cmua34xlc08uw5etj3vnkwpn0",
+      "nom": "Bethel University",
+      "paysCode": "US",
+      "ville": "McKenzie",
+      "rorIds": [
+        "05wnc7373",
+        "02faxbd19"
+      ]
+    },
+    {
+      "id": "cmua34xll08v45etjtttcnako",
+      "nom": "Birmingham-Southern College",
+      "paysCode": "US",
+      "ville": "Birmingham",
+      "rorIds": [
+        "006g42111",
+        "042fn4q48"
+      ]
+    },
+    {
+      "id": "cmua34xw6094c5etjwlmg8sip",
+      "nom": "Christopher Newport University",
+      "paysCode": "US",
+      "ville": "Newport News",
+      "rorIds": [
+        "00m4rwq02",
+        "03h0d2228"
+      ]
+    },
+    {
+      "id": "cmua34y2k09b05etjlx790tmm",
+      "nom": "Dallas Baptist University",
+      "paysCode": "US",
+      "ville": "Dallas",
+      "rorIds": [
+        "04e118j07",
+        "03k3yk915"
+      ]
+    },
+    {
+      "id": "cmua34ycg09jw5etjs49ka2pm",
+      "nom": "Frostburg State University",
+      "paysCode": "US",
+      "ville": "Frostburg",
+      "rorIds": [
+        "048drzm61",
+        "02mp2w060"
+      ]
+    },
+    {
+      "id": "cmua34ye009lc5etj9jnrmfd2",
+      "nom": "Georgian Court University",
+      "paysCode": "US",
+      "ville": "Lakewood",
+      "rorIds": [
+        "04m8b1e20",
+        "0203q4h88"
+      ]
+    },
+    {
+      "id": "cmua34ywc0a145etjqtajpnb3",
+      "nom": "Lyndon State College",
+      "paysCode": "US",
+      "ville": "Lyndonville",
+      "rorIds": [
+        "03bhj4j04",
+        "03ywb2q15"
+      ]
+    },
+    {
+      "id": "cmua34z010a3o5etjn47t4627",
+      "nom": "Mercer University",
+      "paysCode": "US",
+      "ville": "Savannah",
+      "rorIds": [
+        "01g67by91",
+        "04bk7v425"
+      ]
+    },
+    {
+      "id": "cmua34zch0ad85etjut0bl5r2",
+      "nom": "Northern Illinois University",
+      "paysCode": "US",
+      "ville": "DeKalb",
+      "rorIds": [
+        "012wxa772",
+        "049sfwc36"
+      ]
+    },
+    {
+      "id": "cmua34zfr0afo5etjavgqdx3m",
+      "nom": "Oklahoma Baptist University",
+      "paysCode": "US",
+      "ville": "Shawnee",
+      "rorIds": [
+        "04nwm7739",
+        "044r07286"
+      ]
+    },
+    {
+      "id": "cmua34zsu0aoo5etjlkjmioyo",
+      "nom": "Sacred Heart University",
+      "paysCode": "US",
+      "ville": "Fairfield",
+      "rorIds": [
+        "0085j8z36",
+        "02p2msn36"
+      ]
+    },
+    {
+      "id": "cmua34ztu0apc5etjs1gv8f6x",
+      "nom": "St. Francis College",
+      "paysCode": "US",
+      "ville": "New York",
+      "rorIds": [
+        "00571jt67",
+        "012p9gs30"
+      ]
+    },
+    {
+      "id": "cmua34zua0apo5etjnyrv77gk",
+      "nom": "Saint Joseph's University",
+      "paysCode": "US",
+      "ville": "Philadelphia",
+      "rorIds": [
+        "05q87sg56",
+        "00bgtad15"
+      ]
+    },
+    {
+      "id": "cmua34zx20ars5etjfsbeeykw",
+      "nom": "Sarah Lawrence College",
+      "paysCode": "US",
+      "ville": "Bronxville",
+      "rorIds": [
+        "04sxj4848",
+        "05sv2w840"
+      ]
+    },
+    {
+      "id": "cmua3509i0b1k5etjy1uhp3ak",
+      "nom": "Sweet Briar College",
+      "paysCode": "US",
+      "ville": "Amherst",
+      "rorIds": [
+        "05e3rkh95",
+        "05qgtg165",
+        "04725j767",
+        "02f5k2623"
+      ]
+    },
+    {
+      "id": "cmua350rz0bgs5etjdrsnk2vu",
+      "nom": "University of Minnesota - Duluth",
+      "paysCode": "US",
+      "ville": "Duluth",
+      "rorIds": [
+        "01hy4qx27",
+        "00fzmm222"
+      ]
+    },
+    {
+      "id": "cmua3510v0bn85etj2fmy7blm",
+      "nom": "University of Southern Maine",
+      "paysCode": "US",
+      "ville": "Portland",
+      "rorIds": [
+        "03ke6tv85",
+        "045bzwt16"
+      ]
+    },
+    {
+      "id": "cmua351dy0bvs5etj4anhj8wo",
+      "nom": "Washington College",
+      "paysCode": "US",
+      "ville": "Hartford",
+      "rorIds": [
+        "03j3dbz94",
+        "02vk0qj37"
+      ]
+    },
+    {
+      "id": "cmua357fu0ics5etjef4stsuj",
+      "nom": "Institut National des Sciences Appliquées de Rennes",
+      "paysCode": "FR",
+      "ville": "Rennes",
+      "rorIds": [
+        "04xaa4j22",
+        "03y0qc033"
+      ]
+    },
+    {
+      "id": "cmua35fi10rtg5etjhzznk5sz",
+      "nom": "Adekunle Ajasin University",
+      "paysCode": "NG",
+      "ville": "Ondo",
+      "rorIds": [
+        "04e27p903",
+        "04snhqa82"
+      ]
+    },
+    {
+      "id": "cmua35fir0rug5etj851t8pba",
+      "nom": "Adeleke University",
+      "paysCode": "NG",
+      "ville": "Ede",
+      "rorIds": [
+        "03gnb6c23",
+        "01vqvef44",
+        "05vdpxd68"
+      ]
+    },
+    {
+      "id": "cmua35fpz0s545etjco96wq2e",
+      "nom": "University of Uyo",
+      "paysCode": "NG",
+      "ville": "Uyo",
+      "rorIds": [
+        "0127mpp72",
+        "012w5e784"
+      ]
+    },
+    {
+      "id": "cmua35hkf0uki5etj4tyuy3p3",
+      "nom": "Kursk State Medical University",
+      "paysCode": "RU",
+      "ville": "Kursk",
+      "rorIds": [
+        "004dwfr15",
+        "013pk4y14"
+      ]
+    },
+    {
+      "id": "cmua35hwu0uym5etj8e9b43tp",
+      "nom": "Stavropol State University",
+      "paysCode": "RU",
+      "ville": "Stavropol",
+      "rorIds": [
+        "0424c1c69",
+        "03x8kxy88"
+      ]
+    },
+    {
+      "id": "cmua35lwh0zbs5etjb2sukrgt",
+      "nom": "GateWay Community College",
+      "paysCode": "US",
+      "ville": "Phoenix",
+      "rorIds": [
+        "05b2g5r95",
+        "0511q3e85"
+      ]
+    },
+    {
+      "id": "cmua35lwm0zbw5etjms0mr5yr",
+      "nom": "Glendale Community College",
+      "paysCode": "US",
+      "ville": "Glendale",
+      "rorIds": [
+        "02e1syn97",
+        "00z6n3z58"
+      ]
+    },
+    {
+      "id": "cmua35mxy0zxw5etj6glw9795",
+      "nom": "Lanier Technical College",
+      "paysCode": "US",
+      "ville": "Oakwood",
+      "rorIds": [
+        "05r7dwa03",
+        "05qc49402"
+      ]
+    },
+    {
+      "id": "cmua35myw0zyg5etjbczpfg21",
+      "nom": "Savannah Technical College",
+      "paysCode": "US",
+      "ville": "Savannah",
+      "rorIds": [
+        "02yjrq169",
+        "03693et41",
+        "03038ad20"
+      ]
+    },
+    {
+      "id": "cmua35n1a0zzw5etjeehqkhi9",
+      "nom": "College of Southern Idaho",
+      "paysCode": "US",
+      "ville": "Twin Falls",
+      "rorIds": [
+        "04rqs6380",
+        "02p179j44"
+      ]
+    },
+    {
+      "id": "cmua35n7z104c5etjin9re59e",
+      "nom": "South Suburban College",
+      "paysCode": "US",
+      "ville": "South Holland",
+      "rorIds": [
+        "01c6kab21",
+        "01e78mv37"
+      ]
+    },
+    {
+      "id": "cmua35nfl109a5etjq5w435mq",
+      "nom": "Ashland Community and Technical College",
+      "paysCode": "US",
+      "ville": "Ashland",
+      "rorIds": [
+        "03w9z9x42",
+        "003438m13"
+      ]
+    },
+    {
+      "id": "cmua35nmh10dq5etj73mcdvzs",
+      "nom": "College of Southern Maryland",
+      "paysCode": "US",
+      "ville": "La Plata",
+      "rorIds": [
+        "03tkh4446",
+        "01p3wmk50"
+      ]
+    },
+    {
+      "id": "cmua35nq310fw5etj7y3in7dy",
+      "nom": "Urban College of Boston",
+      "paysCode": "US",
+      "ville": "Boston",
+      "rorIds": [
+        "02yec8h85",
+        "02ttsq026"
+      ]
+    },
+    {
+      "id": "cmua35nzj10l85etj6gl2f8h6",
+      "nom": "North Hennepin Community College",
+      "paysCode": "US",
+      "ville": "Brooklyn Park",
+      "rorIds": [
+        "02hfw7a32",
+        "05g617r34"
+      ]
+    },
+    {
+      "id": "cmua35o5o10oo5etjzzqzuvfc",
+      "nom": "Jefferson College",
+      "paysCode": "US",
+      "ville": "Roanoke",
+      "rorIds": [
+        "01616f936",
+        "04fcaga30"
+      ]
+    },
+    {
+      "id": "cmua35obk10s65etjm2j3f642",
+      "nom": "Truckee Meadows Community College",
+      "paysCode": "US",
+      "ville": "Reno",
+      "rorIds": [
+        "04c0sqe08",
+        "02mn8sh47"
+      ]
+    },
+    {
+      "id": "cmua35p3911885etj0kg1tnw8",
+      "nom": "Williston State College",
+      "paysCode": "US",
+      "ville": "Williston",
+      "rorIds": [
+        "052zj9g72",
+        "02cntrd02"
+      ]
+    },
+    {
+      "id": "cmua35p7o11aw5etj9mbbwdsi",
+      "nom": "Washington State Community College",
+      "paysCode": "US",
+      "ville": "Marietta",
+      "rorIds": [
+        "03mbgzm57",
+        "04qs0rx25"
+      ]
+    },
+    {
+      "id": "cmua35pv711o85etj1pxajz1q",
+      "nom": "Northeast Texas Community College",
+      "paysCode": "US",
+      "ville": "Mount Pleasant",
+      "rorIds": [
+        "04wh0kc34",
+        "02q094x95"
+      ]
+    },
+    {
+      "id": "cmua35pyn11qc5etji7jzb1ut",
+      "nom": "Weatherford College",
+      "paysCode": "US",
+      "ville": "Weatherford",
+      "rorIds": [
+        "02xwsbr93",
+        "02k8h2m07"
+      ]
+    },
+    {
+      "id": "cmua35pzc11qs5etjqgukvd4o",
+      "nom": "Salt Lake Community College",
+      "paysCode": "US",
+      "ville": "Salt Lake City",
+      "rorIds": [
+        "029z7h505",
+        "0169by476"
+      ]
+    },
+    {
+      "id": "cmua35q2i11sq5etjblwz9lfg",
+      "nom": "Richard Bland College of the College of William and Mary",
+      "paysCode": "US",
+      "ville": "Petersburg",
+      "rorIds": [
+        "01v4enb76",
+        "04pf8en64"
+      ]
+    },
+    {
+      "id": "cmua35qba11xq5etjjfta9743",
+      "nom": "Gateway Technical College",
+      "paysCode": "US",
+      "ville": "Batesville",
+      "rorIds": [
+        "005qzg609",
+        "03j4kg535"
+      ]
+    },
+    {
+      "id": "cmua35r1o12ii5etjqsudnx6b",
+      "nom": "Central State University",
+      "paysCode": "US",
+      "ville": "Wilberforce",
+      "rorIds": [
+        "03xhrps63",
+        "03mwnnn55"
+      ]
+    },
+    {
+      "id": "cmua35r6s12l65etj8ljf42mj",
+      "nom": "Morris Brown College",
+      "paysCode": "US",
+      "ville": "Atlanta",
+      "rorIds": [
+        "01cnxmm67",
+        "01yh59845",
+        "027xhdf25"
+      ]
+    },
+    {
+      "id": "cmua35r7212la5etjc868010t",
+      "nom": "Morris College",
+      "paysCode": "US",
+      "ville": "Sumter",
+      "rorIds": [
+        "05d3sbc55",
+        "01arkg777",
+        "01g9cpz33"
+      ]
+    },
+    {
+      "id": "cmua35s6y13ek5etjqo5ymd63",
+      "nom": "Florida Southern College",
+      "paysCode": "US",
+      "ville": "Lakeland",
+      "rorIds": [
+        "026hjc247",
+        "01wzmsm36"
+      ]
+    },
+    {
+      "id": "ror-000vmwg42",
+      "nom": "École nationale supérieure d'architecture de Marseille",
+      "paysCode": "FR",
+      "ville": "Marseille",
+      "rorIds": [
+        "000vmwg42",
+        "008axfh28",
+        "018pp1107"
+      ]
+    },
+    {
+      "id": "ror-00aj75s74",
+      "nom": "Belmont Abbey College",
+      "paysCode": "US",
+      "ville": "Belmont",
+      "rorIds": [
+        "00aj75s74",
+        "00q4tes89"
+      ]
+    },
+    {
+      "id": "ror-00n208030",
+      "nom": "St Mary's University College",
+      "paysCode": "GB",
+      "ville": "Belfast",
+      "rorIds": [
+        "00n208030",
+        "0067fqk38"
+      ]
+    },
+    {
+      "id": "ror-00qbqm161",
+      "nom": "International Business College - Fort Wayne",
+      "paysCode": "US",
+      "ville": "Fort Wayne",
+      "rorIds": [
+        "00qbqm161",
+        "04vs0xj88"
+      ]
+    },
+    {
+      "id": "ror-00s13q694",
+      "nom": "École Supérieure d'Ingénieurs des Travaux de la Construction de Metz",
+      "paysCode": "FR",
+      "ville": "Metz",
+      "rorIds": [
+        "00s13q694",
+        "037mk9523",
+        "04twen471"
+      ]
+    },
+    {
+      "id": "ror-00tf0yk25",
+      "nom": "Adyghe State University",
+      "paysCode": "RU",
+      "ville": "Maykop",
+      "rorIds": [
+        "00tf0yk25",
+        "04tf3kx07"
+      ]
+    },
+    {
+      "id": "ror-013f0nb72",
+      "nom": "Compton Community College District",
+      "paysCode": "US",
+      "ville": "Compton",
+      "rorIds": [
+        "013f0nb72",
+        "004x1qr23"
+      ]
+    },
+    {
+      "id": "ror-017wcm924",
+      "nom": "University System of Georgia",
+      "paysCode": "US",
+      "ville": "Atlanta",
+      "rorIds": [
+        "017wcm924",
+        "00yfjng44"
+      ]
+    },
+    {
+      "id": "ror-0195rjn62",
+      "nom": "Lambeth College",
+      "paysCode": "GB",
+      "ville": "London",
+      "rorIds": [
+        "0195rjn62",
+        "02cx93t24"
+      ]
+    },
+    {
+      "id": "ror-01ej02438",
+      "nom": "Florida Technical College",
+      "paysCode": "US",
+      "ville": "Orlando",
+      "rorIds": [
+        "01ej02438",
+        "03bnxc149"
+      ]
+    },
+    {
+      "id": "ror-01emtgd92",
+      "nom": "Mansfield University",
+      "paysCode": "US",
+      "ville": "Mansfield",
+      "rorIds": [
+        "01emtgd92",
+        "01qzkbq71"
+      ]
+    },
+    {
+      "id": "ror-01fd8g905",
+      "nom": "University of Montevallo",
+      "paysCode": "US",
+      "ville": "Montevallo",
+      "rorIds": [
+        "01fd8g905",
+        "00jmfr291"
+      ]
+    },
+    {
+      "id": "ror-01gdk5c28",
+      "nom": "Institut des Hautes Études Bancaires et Financières",
+      "paysCode": "MA",
+      "ville": "Oujda",
+      "rorIds": [
+        "01gdk5c28",
+        "02kpg0b77"
+      ]
+    },
+    {
+      "id": "ror-01gek1696",
+      "nom": "The University of Texas System",
+      "paysCode": "US",
+      "ville": "Austin",
+      "rorIds": [
+        "01gek1696",
+        "00xzqjh13"
+      ]
+    },
+    {
+      "id": "ror-01hahmf81",
+      "nom": "Clear Creek Independent School District",
+      "paysCode": "US",
+      "ville": "League City",
+      "rorIds": [
+        "01hahmf81",
+        "00gyqd239"
+      ]
+    },
+    {
+      "id": "ror-01pj4rr81",
+      "nom": "Mid-America Christian University",
+      "paysCode": "US",
+      "ville": "Oklahoma City",
+      "rorIds": [
+        "01pj4rr81",
+        "009p87514"
+      ]
+    },
+    {
+      "id": "ror-01rk35k63",
+      "nom": "Université de Lyon",
+      "paysCode": "FR",
+      "ville": "Lyon",
+      "rorIds": [
+        "01rk35k63",
+        "02kzqn938"
+      ]
+    },
+    {
+      "id": "ror-01swx2932",
+      "nom": "Institut Catholique d'Arts et Métiers",
+      "paysCode": "FR",
+      "ville": "Paris",
+      "rorIds": [
+        "01swx2932",
+        "02jj4jf83",
+        "04155vc40"
+      ]
+    },
+    {
+      "id": "ror-01vf40t90",
+      "nom": "San Francisco University High School",
+      "paysCode": "US",
+      "ville": "San Francisco",
+      "rorIds": [
+        "01vf40t90",
+        "040vwpm13"
+      ]
+    },
+    {
+      "id": "ror-01vq5dj09",
+      "nom": "Shrewsbury College",
+      "paysCode": "GB",
+      "ville": "Shrewsbury",
+      "rorIds": [
+        "01vq5dj09",
+        "02vgk5x44"
+      ]
+    },
+    {
+      "id": "ror-01w1jmq84",
+      "nom": "École Normale Supérieure - Marrakech",
+      "paysCode": "MA",
+      "ville": "Marrakesh",
+      "rorIds": [
+        "01w1jmq84",
+        "035gpvf24"
+      ]
+    },
+    {
+      "id": "ror-01wmj1g45",
+      "nom": "Atlanta University Center",
+      "paysCode": "US",
+      "ville": "Atlanta",
+      "rorIds": [
+        "01wmj1g45",
+        "03aat3341",
+        "02e31nc37"
+      ]
+    },
+    {
+      "id": "ror-01zf2fw60",
+      "nom": "Bluefield College",
+      "paysCode": "US",
+      "ville": "Bluefield",
+      "rorIds": [
+        "01zf2fw60",
+        "02srjxm46",
+        "016j6dw22"
+      ]
+    },
+    {
+      "id": "ror-01zgv1x24",
+      "nom": "Portland Public Schools",
+      "paysCode": "US",
+      "ville": "Portland",
+      "rorIds": [
+        "01zgv1x24",
+        "00e3ms285"
+      ]
+    },
+    {
+      "id": "ror-022q4qx22",
+      "nom": "Chicago Public Schools",
+      "paysCode": "US",
+      "ville": "Chicago",
+      "rorIds": [
+        "022q4qx22",
+        "054bssx30",
+        "00p61n467",
+        "018tpb721"
+      ]
+    },
+    {
+      "id": "ror-027hwee24",
+      "nom": "Seward County Community College",
+      "paysCode": "US",
+      "ville": "Liberal",
+      "rorIds": [
+        "027hwee24",
+        "03ncxj847"
+      ]
+    },
+    {
+      "id": "ror-02866re76",
+      "nom": "Boston University Academy",
+      "paysCode": "US",
+      "ville": "Boston",
+      "rorIds": [
+        "02866re76",
+        "016848p13"
+      ]
+    },
+    {
+      "id": "ror-02d7rnk16",
+      "nom": "North Seattle College",
+      "paysCode": "US",
+      "ville": "Seattle",
+      "rorIds": [
+        "02d7rnk16",
+        "0081xr281"
+      ]
+    },
+    {
+      "id": "ror-02dyzf078",
+      "nom": "Central Baptist College",
+      "paysCode": "US",
+      "ville": "Conway",
+      "rorIds": [
+        "02dyzf078",
+        "04fdz6f52"
+      ]
+    },
+    {
+      "id": "ror-02evj4e11",
+      "nom": "Universal Technical Institute of Illinois",
+      "paysCode": "US",
+      "ville": "Lisle",
+      "rorIds": [
+        "02evj4e11",
+        "00f6qhc93",
+        "019njds38"
+      ]
+    },
+    {
+      "id": "ror-02gk19b80",
+      "nom": "North Central University",
+      "paysCode": "US",
+      "ville": "Minneapolis",
+      "rorIds": [
+        "02gk19b80",
+        "04xf6c905"
+      ]
+    },
+    {
+      "id": "ror-02hc4dw24",
+      "nom": "Montgomery High School",
+      "paysCode": "US",
+      "ville": "Somerset",
+      "rorIds": [
+        "02hc4dw24",
+        "00dv5qk90"
+      ]
+    },
+    {
+      "id": "ror-02hce4k71",
+      "nom": "École Nationale Supérieure d'Art et de Design de Nancy",
+      "paysCode": "FR",
+      "ville": "Nancy",
+      "rorIds": [
+        "02hce4k71",
+        "01jq57122",
+        "00a5dxw64"
+      ]
+    },
+    {
+      "id": "ror-02kbwgp44",
+      "nom": "École Supérieure d'Art et de Design d'Orléans",
+      "paysCode": "FR",
+      "ville": "Orléans",
+      "rorIds": [
+        "02kbwgp44",
+        "04ch3k260"
+      ]
+    },
+    {
+      "id": "ror-02kgft750",
+      "nom": "École Nationale Supérieure d'Art",
+      "paysCode": "FR",
+      "ville": "Bourges",
+      "rorIds": [
+        "02kgft750",
+        "019xp4858"
+      ]
+    },
+    {
+      "id": "ror-02kkj1692",
+      "nom": "World Medicine Institute",
+      "paysCode": "US",
+      "ville": "Honolulu",
+      "rorIds": [
+        "02kkj1692",
+        "05qa5rt69"
+      ]
+    },
+    {
+      "id": "ror-02nv0qb16",
+      "nom": "Ohio Christian University",
+      "paysCode": "US",
+      "ville": "Circleville",
+      "rorIds": [
+        "02nv0qb16",
+        "0453rg493",
+        "0260bxf47"
+      ]
+    },
+    {
+      "id": "ror-02q5gkg61",
+      "nom": "Henderson State University",
+      "paysCode": "US",
+      "ville": "Arkadelphia",
+      "rorIds": [
+        "02q5gkg61",
+        "03ff06b47"
+      ]
+    },
+    {
+      "id": "ror-02rdhhs90",
+      "nom": "Emmanuel College - Massachusetts",
+      "paysCode": "US",
+      "ville": "Boston",
+      "rorIds": [
+        "02rdhhs90",
+        "02fj83z08",
+        "02qqa1p29"
+      ]
+    },
+    {
+      "id": "ror-0306bn619",
+      "nom": "South Downs College",
+      "paysCode": "GB",
+      "ville": "Waterlooville",
+      "rorIds": [
+        "0306bn619",
+        "01jqked53"
+      ]
+    },
+    {
+      "id": "ror-0317pbn61",
+      "nom": "Minot Public Schools",
+      "paysCode": "US",
+      "ville": "Minot",
+      "rorIds": [
+        "0317pbn61",
+        "05w5qjg18",
+        "057s2cn07"
+      ]
+    },
+    {
+      "id": "ror-032hvdr57",
+      "nom": "Gordon-Conwell Theological Seminary",
+      "paysCode": "US",
+      "ville": "Hamilton",
+      "rorIds": [
+        "032hvdr57",
+        "0364wpq06"
+      ]
+    },
+    {
+      "id": "ror-037n46f49",
+      "nom": "Royal College of Pathologists",
+      "paysCode": "GB",
+      "ville": "London",
+      "rorIds": [
+        "037n46f49",
+        "0530xmm89"
+      ]
+    },
+    {
+      "id": "ror-039fwv620",
+      "nom": "Sierra Nevada College",
+      "paysCode": "US",
+      "ville": "Incline Village",
+      "rorIds": [
+        "039fwv620",
+        "01hw93t68"
+      ]
+    },
+    {
+      "id": "ror-03a3qwm26",
+      "nom": "Augustana University",
+      "paysCode": "US",
+      "ville": "Sioux Falls",
+      "rorIds": [
+        "03a3qwm26",
+        "04bqrfs31"
+      ]
+    },
+    {
+      "id": "ror-03bnt5240",
+      "nom": "College of Menominee Nation",
+      "paysCode": "US",
+      "ville": "Keshena",
+      "rorIds": [
+        "03bnt5240",
+        "01qfzbz52"
+      ]
+    },
+    {
+      "id": "ror-03dqzan26",
+      "nom": "Salem University",
+      "paysCode": "US",
+      "ville": "Salem",
+      "rorIds": [
+        "03dqzan26",
+        "026492508",
+        "04rv9a088"
+      ]
+    },
+    {
+      "id": "ror-03fa2nf38",
+      "nom": "Methodist University",
+      "paysCode": "US",
+      "ville": "Fayetteville",
+      "rorIds": [
+        "03fa2nf38",
+        "01ncz5595"
+      ]
+    },
+    {
+      "id": "ror-03kf30874",
+      "nom": "District of Columbia Public School",
+      "paysCode": "US",
+      "ville": "Washington",
+      "rorIds": [
+        "03kf30874",
+        "00ts6eq50"
+      ]
+    },
+    {
+      "id": "ror-03ng8vp43",
+      "nom": "Arctic State Agrotechnological University",
+      "paysCode": "RU",
+      "ville": "Yakutsk",
+      "rorIds": [
+        "03ng8vp43",
+        "01jsr8a33"
+      ]
+    },
+    {
+      "id": "ror-03nvtfm43",
+      "nom": "Concordia University",
+      "paysCode": "US",
+      "ville": "Seward",
+      "rorIds": [
+        "03nvtfm43",
+        "01qxhf360"
+      ]
+    },
+    {
+      "id": "ror-03vfpjp29",
+      "nom": "Hope International University",
+      "paysCode": "US",
+      "ville": "Fullerton",
+      "rorIds": [
+        "03vfpjp29",
+        "01dzm1z55"
+      ]
+    },
+    {
+      "id": "ror-03ykmm292",
+      "nom": "Advanced Barber College & Hair Design",
+      "paysCode": "US",
+      "ville": "Weslaco",
+      "rorIds": [
+        "03ykmm292",
+        "02thhxe24",
+        "007735r88",
+        "02fad4q52"
+      ]
+    },
+    {
+      "id": "ror-0405thq08",
+      "nom": "Saint Ambrose University",
+      "paysCode": "US",
+      "ville": "Davenport",
+      "rorIds": [
+        "0405thq08",
+        "02j8e5x02",
+        "036sak533"
+      ]
+    },
+    {
+      "id": "ror-042abrf84",
+      "nom": "Columbus City Schools",
+      "paysCode": "US",
+      "ville": "Columbus",
+      "rorIds": [
+        "042abrf84",
+        "03pyecx64",
+        "04n4x0209"
+      ]
+    },
+    {
+      "id": "ror-0432s1v23",
+      "nom": "University Vascular Associates",
+      "paysCode": "US",
+      "ville": "Los Angeles",
+      "rorIds": [
+        "0432s1v23",
+        "0153tk833"
+      ]
+    },
+    {
+      "id": "ror-043953r63",
+      "nom": "Auburn School District",
+      "paysCode": "US",
+      "ville": "Auburn",
+      "rorIds": [
+        "043953r63",
+        "02yvffa38",
+        "00rmkq989",
+        "020fqx327"
+      ]
+    },
+    {
+      "id": "ror-044k1rn02",
+      "nom": "Institute of Business and Law",
+      "paysCode": "RU",
+      "ville": "Moscow",
+      "rorIds": [
+        "044k1rn02",
+        "05qr5xz39"
+      ]
+    },
+    {
+      "id": "ror-046wacp46",
+      "nom": "South-Russian State Polytechnic University named after MI Platov",
+      "paysCode": "RU",
+      "ville": "Shakhty",
+      "rorIds": [
+        "046wacp46",
+        "00vqyrr20"
+      ]
+    },
+    {
+      "id": "ror-046whjx61",
+      "nom": "Franklin County Schools",
+      "paysCode": "US",
+      "ville": "Louisburg",
+      "rorIds": [
+        "046whjx61",
+        "0152arp12",
+        "0234w4k48"
+      ]
+    },
+    {
+      "id": "ror-047qfe374",
+      "nom": "Clifford University",
+      "paysCode": "NG",
+      "ville": "Ihie",
+      "rorIds": [
+        "047qfe374",
+        "00d1mx684"
+      ]
+    },
+    {
+      "id": "ror-047vv7q25",
+      "nom": "École Supérieure d'Art du Nord-Pas-de-Calais",
+      "paysCode": "FR",
+      "ville": "Tourcoing",
+      "rorIds": [
+        "047vv7q25",
+        "03sq4z970",
+        "02vb4k656"
+      ]
+    },
+    {
+      "id": "ror-0485fyg31",
+      "nom": "Russian State Agrarian University - Moscow Timiryazev Agricultural Academy",
+      "paysCode": "RU",
+      "ville": "Moscow",
+      "rorIds": [
+        "0485fyg31",
+        "02b4gv182"
+      ]
+    },
+    {
+      "id": "ror-04bw38x95",
+      "nom": "Pike High School",
+      "paysCode": "US",
+      "ville": "Indianapolis",
+      "rorIds": [
+        "04bw38x95",
+        "05rtxtk57"
+      ]
+    },
+    {
+      "id": "ror-04ckzt204",
+      "nom": "Tucson Unified School District",
+      "paysCode": "US",
+      "ville": "Tucson",
+      "rorIds": [
+        "04ckzt204",
+        "00xqcgm91"
+      ]
+    },
+    {
+      "id": "ror-04czy3x31",
+      "nom": "Heritage Bible College",
+      "paysCode": "US",
+      "ville": "Dunn",
+      "rorIds": [
+        "04czy3x31",
+        "04qm1zm15"
+      ]
+    },
+    {
+      "id": "ror-04eh72y51",
+      "nom": "Weldon City Schools",
+      "paysCode": "US",
+      "ville": "Weldon",
+      "rorIds": [
+        "04eh72y51",
+        "028ewej26"
+      ]
+    },
+    {
+      "id": "ror-04ehq7g28",
+      "nom": "Clark County School District",
+      "paysCode": "US",
+      "ville": "Las Vegas",
+      "rorIds": [
+        "04ehq7g28",
+        "00vvhe852",
+        "03jpef473"
+      ]
+    },
+    {
+      "id": "ror-04js4m423",
+      "nom": "Federal Polytechnic, Nasarawa",
+      "paysCode": "NG",
+      "ville": "Nasarawa",
+      "rorIds": [
+        "04js4m423",
+        "00rhy6f50"
+      ]
+    },
+    {
+      "id": "ror-04m21fy21",
+      "nom": "Broward County Public Schools",
+      "paysCode": "US",
+      "ville": "Lauderdale Lakes",
+      "rorIds": [
+        "04m21fy21",
+        "000kzf191",
+        "001cf8537",
+        "04pv7qx83"
+      ]
+    },
+    {
+      "id": "ror-04mw1zx86",
+      "nom": "Karachay-Cherkess State Pedagogical University",
+      "paysCode": "RU",
+      "ville": "Karachayevsk",
+      "rorIds": [
+        "04mw1zx86",
+        "05ba5xv93"
+      ]
+    },
+    {
+      "id": "ror-04n4xt623",
+      "nom": "École nationale supérieure de la photographie",
+      "paysCode": "FR",
+      "ville": "Arles",
+      "rorIds": [
+        "04n4xt623",
+        "00mnan534",
+        "05d3yke23"
+      ]
+    },
+    {
+      "id": "ror-04nfs2483",
+      "nom": "University of St. Francis",
+      "paysCode": "US",
+      "ville": "Joliet",
+      "rorIds": [
+        "04nfs2483",
+        "01h6pze39"
+      ]
+    },
+    {
+      "id": "ror-04nstae51",
+      "nom": "Charlotte-Mecklenburg Schools",
+      "paysCode": "US",
+      "ville": "Charlotte",
+      "rorIds": [
+        "04nstae51",
+        "04vnww336"
+      ]
+    },
+    {
+      "id": "ror-04rfsd440",
+      "nom": "Buryat State University",
+      "paysCode": "RU",
+      "ville": "Ulan-Ude",
+      "rorIds": [
+        "04rfsd440",
+        "024fhbm82"
+      ]
+    },
+    {
+      "id": "ror-04spj3m21",
+      "nom": "Durham Public Schools",
+      "paysCode": "US",
+      "ville": "Durham",
+      "rorIds": [
+        "04spj3m21",
+        "02z1p6e80"
+      ]
+    },
+    {
+      "id": "ror-04spsbn56",
+      "nom": "Wayne County Public Schools",
+      "paysCode": "US",
+      "ville": "Goldsboro",
+      "rorIds": [
+        "04spsbn56",
+        "05fssfa53"
+      ]
+    },
+    {
+      "id": "ror-04ttjs010",
+      "nom": "Indianapolis Public Schools",
+      "paysCode": "US",
+      "ville": "Indianapolis",
+      "rorIds": [
+        "04ttjs010",
+        "04w93kd83"
+      ]
+    },
+    {
+      "id": "ror-04vfs5h36",
+      "nom": "Washington State University Spokane",
+      "paysCode": "US",
+      "ville": "Spokane",
+      "rorIds": [
+        "04vfs5h36",
+        "02sjef319"
+      ]
+    },
+    {
+      "id": "ror-04xhv0r49",
+      "nom": "Graceland University",
+      "paysCode": "US",
+      "ville": "Lamoni",
+      "rorIds": [
+        "04xhv0r49",
+        "00qt47544"
+      ]
+    },
+    {
+      "id": "ror-04zmm8y38",
+      "nom": "Central Methodist University",
+      "paysCode": "US",
+      "ville": "Fayette",
+      "rorIds": [
+        "04zmm8y38",
+        "04phxq043"
+      ]
+    },
+    {
+      "id": "ror-0507a9w72",
+      "nom": "Brown Mackie College",
+      "paysCode": "US",
+      "ville": "Cincinnati",
+      "rorIds": [
+        "0507a9w72",
+        "05spzbw39"
+      ]
+    },
+    {
+      "id": "ror-051csrn64",
+      "nom": "Jackson County Public Schools",
+      "paysCode": "US",
+      "ville": "Sylva",
+      "rorIds": [
+        "051csrn64",
+        "04c16pd38"
+      ]
+    },
+    {
+      "id": "ror-0521rfb23",
+      "nom": "Lincoln University - Pennsylvania",
+      "paysCode": "US",
+      "ville": "Oxford",
+      "rorIds": [
+        "0521rfb23",
+        "00ef10m46",
+        "00zjk7642"
+      ]
+    },
+    {
+      "id": "ror-0531gz477",
+      "nom": "University Settlement",
+      "paysCode": "US",
+      "ville": "New York",
+      "rorIds": [
+        "0531gz477",
+        "05ap66461"
+      ]
+    },
+    {
+      "id": "ror-055j5q029",
+      "nom": "Midwives College of Utah",
+      "paysCode": "US",
+      "ville": "Salt Lake City",
+      "rorIds": [
+        "055j5q029",
+        "03rn1m191",
+        "01r5gad37"
+      ]
+    },
+    {
+      "id": "ror-056atnc19",
+      "nom": "École Nationale Supérieure de Création Industrielle",
+      "paysCode": "FR",
+      "ville": "Paris",
+      "rorIds": [
+        "056atnc19",
+        "00ysecr35"
+      ]
+    },
+    {
+      "id": "ror-059s97738",
+      "nom": "Skyline University Nigeria",
+      "paysCode": "NG",
+      "ville": "Kano",
+      "rorIds": [
+        "059s97738",
+        "044wk9m82"
+      ]
+    },
+    {
+      "id": "ror-05grkcd68",
+      "nom": "Cleveland Institute of Art",
+      "paysCode": "US",
+      "ville": "Cleveland",
+      "rorIds": [
+        "05grkcd68",
+        "00bcgjj54"
+      ]
+    },
+    {
+      "id": "ror-05gyeb173",
+      "nom": "Cégep de Jonquière",
+      "paysCode": "CA",
+      "ville": "Saguenay",
+      "rorIds": [
+        "05gyeb173",
+        "03kzn3e44"
+      ]
+    },
+    {
+      "id": "ror-05pc4m625",
+      "nom": "Martin Luther College",
+      "paysCode": "US",
+      "ville": "New Ulm",
+      "rorIds": [
+        "05pc4m625",
+        "0051kfw19"
+      ]
+    },
+    {
+      "id": "ror-05qcjpk30",
+      "nom": "M. Akmullah Bashkir State Pedagogical University",
+      "paysCode": "RU",
+      "ville": "Ufa",
+      "rorIds": [
+        "05qcjpk30",
+        "02f4g9771"
+      ]
+    },
+    {
+      "id": "ror-05sa6gg87",
+      "nom": "Moscow Power Engineering Institute",
+      "paysCode": "RU",
+      "ville": "Moscow",
+      "rorIds": [
+        "05sa6gg87",
+        "033zpbv42"
+      ]
+    },
+    {
+      "id": "ror-05sc9ba13",
+      "nom": "Montgomery County Public Schools",
+      "paysCode": "US",
+      "ville": "Rockville",
+      "rorIds": [
+        "05sc9ba13",
+        "03h362x79"
+      ]
+    },
+    {
+      "id": "ror-05ta60489",
+      "nom": "International Institute of Management Arkhangelsk",
+      "paysCode": "RU",
+      "ville": "Arkhangelsk",
+      "rorIds": [
+        "05ta60489",
+        "042qgw219"
+      ]
+    },
+    {
+      "id": "ror-05vfxvp80",
+      "nom": "University of St. Thomas - Minnesota",
+      "paysCode": "US",
+      "ville": "Saint Paul",
+      "rorIds": [
+        "05vfxvp80",
+        "02pkt3s45"
+      ]
+    },
+    {
+      "id": "ror-05w0qtv14",
+      "nom": "American InterContinental University",
+      "paysCode": "US",
+      "ville": "Schaumburg",
+      "rorIds": [
+        "05w0qtv14",
+        "04j0w0694",
+        "04k8zab17"
+      ]
+    },
+    {
+      "id": "ror-05xdrya09",
+      "nom": "Rock Point Community School",
+      "paysCode": "US",
+      "ville": "Chinle",
+      "rorIds": [
+        "05xdrya09",
+        "02y0s5375"
+      ]
+    }
+  ]
+}

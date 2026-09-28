@@ -1,0 +1,29 @@
+{
+  "release": "20260928-profil-typographie",
+  "previousFrontend": "20260928-liens-sociaux",
+  "previousBackend": "20260928-liens-sociaux",
+  "backendRelease": "20260928-liens-sociaux",
+  "baselineBuildId": "MF940TX4N8sLGFRsT_gyN",
+  "migrationAllowed": false,
+  "databaseWritesAllowed": false,
+  "files": 235,
+  "frontendFiles": 129,
+  "backendFiles": 106,
+  "baselineManifestSha256": "5a33bd43b7d7b119517eaef7f0a714ee960b033d989f6a7114b320f83ce87f6d",
+  "manifestSha256": "5e130668c6ff41103babc82bdff4e4e17be39ca2d421902c7928aaf350d479d9",
+  "frontendArchiveSha256": "92939bb04d1ccb7e9c5a7bbeb961cddbf17fd9fc8717cda2604f1353b6703d69",
+  "allowedChanges": {
+    "frontend/src/components/profile/AssociationsProfil.tsx": {
+      "before": "ea24ebce655c6d0388c63a7ea0d445ba8c6098e7f6b3c38eea8501deb6c2fb61",
+      "after": "6e718153b5dadb0678e6e8001753aff50e94b783b43f033e80663293f72a113e"
+    },
+    "frontend/src/components/profile/LiensSociauxProfil.tsx": {
+      "before": "133304bca617400bc92cd7b41769b1210323225f6e5c7ce034b3f67832bbe281",
+      "after": "1a9d38a4b5f2aa8bee2797e0b38c8a40d1011a46004307c1f35cb0bf5e241221"
+    },
+    "frontend/src/components/profile/ProfilMembre.tsx": {
+      "before": "af732be0fc2571f1e65b6ec3fdad19bfd69866f894144134fb8f05289b85de26",
+      "after": "e7955986c435696489e33bdf12cc099531c07640ebabdb7789b87cbea888ba1f"
+    }
+  }
+}

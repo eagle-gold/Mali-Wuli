@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "checks": [
+    "next-app-router-pages-only-expose-supported-exports",
+    "cards-use-real-counts-education-aid-and-keep-member-actions",
+    "contact-selects-conversation-and-synergy-action-remains",
+    "affiliation-pending-label-and-confirmed-cancellation",
+    "directory-filters-and-tab-change-target-correct-endpoint",
+    "onboarding-proposal-uses-restricted-endpoint-and-busy-state",
+    "public-profile-shows-provided-associations-and-no-hidden-contact-placeholder"
+  ],
+  "simulatedActions": 7,
+  "networkCalls": 0,
+  "databaseWrites": 0,
+  "limitations": [
+    "Simulated React hooks, API and router; no live session or visual browser test",
+    "Backend access control and affiliation selection tested separately"
+  ]
+}

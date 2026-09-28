@@ -1,0 +1,140 @@
+{
+  "date": "2026-09-28T17:33:43.114950+00:00",
+  "status": "passed",
+  "exitCode": 0,
+  "totals": {
+    "tests": 70,
+    "pass": 70,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "tap": "tests-backend.tap",
+  "testFiles": [
+    "src/routes/admin-roles.test.ts",
+    "src/routes/offre.routes.test.ts",
+    "src/routes/association.routes.test.ts",
+    "src/routes/evenement.routes.test.ts",
+    "src/routes/user-directory.test.ts",
+    "src/services/annuaire.test.ts"
+  ],
+  "guards": {
+    "file": "tests-backend-guard.cjs",
+    "sha256": "5a00495fa76c82ff325d66257553a5c55b191ad110b17c520f3a40bfe12b1758",
+    "realPrismaAndGeneratedClient": "blocked",
+    "networkAndSmtp": "blocked",
+    "uploads": "temporary outside repository, removed"
+  },
+  "typescript": "passed (full backend source, isolated generated Prisma client)",
+  "schema": "generated locally, no DB connection",
+  "migration": {
+    "file": "staging/backend/prisma/migrations/20260928210000_delegated_roles/migration.sql",
+    "sha256": "67d8f0e24b2630378e2a28aa6724568afb85282a29168e4545c3946bd2942945",
+    "newTables": [
+      "UserRoleGrant"
+    ],
+    "backfill": false,
+    "executed": false
+  },
+  "sourceHashes": [
+    {
+      "file": "src/lib/community.ts",
+      "sha256": "531894493c5c38fc55f567f8ed941ff725b9f55590372ce65f3487659b31526e",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/lib/roles.ts",
+      "sha256": "8acfe715300eeafbd69e501b031bc1f5f684851c366ce70d29787556ec0dde3b",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/middlewares/auth.middleware.ts",
+      "sha256": "14852f271abf4347e2c2857520ca40d94c27e88d2fcc7402a91ab6a700bce27a",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/routes/admin-roles.test.ts",
+      "sha256": "04d077459b7294e37acdd0a00242f9ec6ecc801f1a711d75f967734b736b3fa1",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/routes/admin.routes.ts",
+      "sha256": "407b15a999110923d198a329b0f0393c939b1f2d63793ca2e3c03a6b9a7cb4a9",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/routes/association.routes.test.ts",
+      "sha256": "9eb6523a71356f01a1f1b34edf581aa8666200928beea22b3d0275529f314d24",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/routes/association.routes.ts",
+      "sha256": "4a16726436c28305accb5952a2c5bccf2f2b4f10cb09a0df93ed212c1ec55e1a",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/routes/auth.routes.ts",
+      "sha256": "2ab4676323441e39918fb0f3343016ae6bbc4d47881562348eb8ef02953fddad",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/routes/cercle.routes.ts",
+      "sha256": "57925b13d94f93ff9bcd5585150902f65103432b484d57bb26659ecec03eca66",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/routes/evenement.routes.test.ts",
+      "sha256": "1bf57500edb05bddb356c5f41fa8f75e0397e03ee5b7942ff31d29455a429a8d",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/routes/evenement.routes.ts",
+      "sha256": "daba1ff2bc592f790e085ddb8608e9b3ad98335d94e16c050431bb81e1c9937e",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/routes/offre.routes.test.ts",
+      "sha256": "677a0250a0c83547a043763ed510b778c44c9d3320f208e424cbc2b4da2373e1",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/routes/offre.routes.ts",
+      "sha256": "4477e6abde6e18e1026dc96ab5b95098f80f18f084a0902c60d1a3a4c3ffa8f1",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/routes/user.routes.ts",
+      "sha256": "1c8c541ef1d40f19323436600f2c9b9627c38ac625fdb03ede66e8b34374f096",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/services/admin-membres.service.ts",
+      "sha256": "4abf3b2ee8d74496cb55da4a1a6147a41d7cd355b1412114e9436c60f67ada3f",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/services/association.service.ts",
+      "sha256": "cca89eee7d531598c956765ae04962c1f47cb26cfb54fb0840baf84f0a145ebb",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/services/evenement.service.ts",
+      "sha256": "8850b7701b7b263fa3fcf775d43a14eb76ff6e5636f8dee8d226b865dd9ae81c",
+      "testedCopyMatches": true
+    },
+    {
+      "file": "src/services/offre.service.ts",
+      "sha256": "e058521d7ad6fd54cc1a292789a34de6b1602758c1bf7195c42bcf0da4edd1b0",
+      "testedCopyMatches": true
+    }
+  ],
+  "realDatabaseUsed": false,
+  "networkUsed": false,
+  "mailSent": false,
+  "deploymentExclusions": [
+    ".verification/**",
+    "tests-backend*.tap",
+    "tests-backend*.json",
+    "tests-backend-guard.cjs"
+  ]
+}

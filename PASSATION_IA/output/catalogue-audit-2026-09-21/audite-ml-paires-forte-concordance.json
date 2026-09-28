@@ -1,0 +1,4683 @@
+[
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "bo sangare a"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "narena"
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-25f9ee81f089ea516aa47405",
+      "nom": "BÔ SANGARE [1er C]ycle A",
+      "type": "FONDAMENTALE",
+      "ville": "Narena",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.227533,
+          -8.636967
+        ],
+        [
+          12.2275333,
+          -8.6369667
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079742909",
+          "url": "https://www.openstreetmap.org/node/3079742909"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079742909"
+        ]
+      ],
+      "administrations": [
+        [
+          "koulikoro",
+          "kangaba",
+          "narena",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-707c1bab3218eb899b305203",
+      "nom": "BÔ SANGARE A",
+      "type": "FONDAMENTALE",
+      "ville": "Narena",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "BÔ SANGARE 1er Cycle A"
+      ],
+      "coordonnees": [
+        [
+          12.227533,
+          -8.636967
+        ],
+        [
+          12.22753333,
+          -8.63696667
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:731036",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:731036"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "731036"
+        ]
+      ],
+      "administrations": [
+        [
+          "koulikoro",
+          "kangaba",
+          "narena",
+          "narena"
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "bo sangare b"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "narena"
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-73f3d61a097a15461ccce7be",
+      "nom": "Bô SANGARE [1er C]ycle B",
+      "type": "FONDAMENTALE",
+      "ville": "Narena",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.227533,
+          -8.636967
+        ],
+        [
+          12.2275333,
+          -8.6369667
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079742910",
+          "url": "https://www.openstreetmap.org/node/3079742910"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079742910"
+        ]
+      ],
+      "administrations": [
+        [
+          "koulikoro",
+          "kangaba",
+          "narena",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-c590304d14ab7d292ec37257",
+      "nom": "Bô SANGARE B",
+      "type": "FONDAMENTALE",
+      "ville": "Narena",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "Bô SANGARE 1er Cycle B"
+      ],
+      "coordonnees": [
+        [
+          12.227533,
+          -8.636967
+        ],
+        [
+          12.22753333,
+          -8.63696667
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:1041611",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:1041611"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "1041611"
+        ]
+      ],
+      "administrations": [
+        [
+          "koulikoro",
+          "kangaba",
+          "narena",
+          "narena"
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "kouloufa i"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "bamako"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "bamako",
+            "bamako",
+            "commune i",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-69c9d83ee87c59175cc4993c",
+      "nom": "COLLEGE École privée KOULOUFA I [1er C]",
+      "type": "LYCEE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "SECONDAIRE"
+        }
+      ],
+      "alias": [
+        "COLLEGE École privée KOULOUFA I [2ème C]"
+      ],
+      "coordonnees": [
+        [
+          12.674395,
+          -7.92812
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079731294",
+          "url": "https://www.openstreetmap.org/node/3079731294"
+        },
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079731295",
+          "url": "https://www.openstreetmap.org/node/3079731295"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079731294"
+        ],
+        [
+          "external:hotosm-mali-education",
+          "node/3079731295"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-518069eaf9956a6dfa795a21",
+      "nom": "COLLEGE PRIVE KOULOUFA I",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "COLLEGE PRIVE KOULOUFA I [1er C]",
+        "COLLEGE PRIVE KOULOUFA I [2ème C]"
+      ],
+      "coordonnees": [
+        [
+          12.674395,
+          -7.92812
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:11040568",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        },
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:943249",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:11040568"
+        ],
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:943249"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "11040568"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "943249"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "diabougou"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "faleme"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "kayes",
+            "kayes",
+            "faleme",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-2cc1529a8650f1e6f4e78116",
+      "nom": "DIABOUGOU [1er C]ycle",
+      "type": "FONDAMENTALE",
+      "ville": "Falémé",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          14.540817,
+          -12.214717
+        ],
+        [
+          14.5408167,
+          -12.2147167
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079750977",
+          "url": "https://www.openstreetmap.org/node/3079750977"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079750977"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "kayes",
+          "faleme",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-e433c563760f30241bca3eb2",
+      "nom": "DIABOUGOU",
+      "type": "FONDAMENTALE",
+      "ville": "FALEME",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "DIABOUGOU 1er Cycle"
+      ],
+      "coordonnees": [
+        [
+          14.540817,
+          -12.214717
+        ],
+        [
+          14.54081667,
+          -12.21471667
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:734892",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:734892"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "734892"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "kayes",
+          "faleme",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "seye boule"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "koussane"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "kayes",
+            "kayes",
+            "koussane",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-301bbb063b1f68b047a56620",
+      "nom": "Ecole publique de Seye Boulé",
+      "type": "FONDAMENTALE",
+      "ville": "Koussané",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          14.821033,
+          -11.210033
+        ],
+        [
+          14.8210333,
+          -11.2100333
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079753672",
+          "url": "https://www.openstreetmap.org/node/3079753672"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079753672"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "kayes",
+          "koussane",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-a22ed47d5990c8f92cbecc9f",
+      "nom": "SEYE BOULE",
+      "type": "FONDAMENTALE",
+      "ville": "KOUSSANE",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          14.821033,
+          -11.210033
+        ],
+        [
+          14.82103333,
+          -11.21003333
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:937772",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:937772"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "937772"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "kayes",
+          "koussane",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "aminata haidara"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "bamako"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "bamako",
+            "bamako",
+            "commune i",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-73b22e6f9afb539afdee8aa7",
+      "nom": "GROUPE SCOLAIRE École privée AMINATA HAIDARA",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.67846,
+          -7.95534
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079731541",
+          "url": "https://www.openstreetmap.org/node/3079731541"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079731541"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-4eaf7d48e12f9f7389eccc3e",
+      "nom": "GROUPE SCOLAIRE PRIVE AMINATA HAIDARA",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.67846,
+          -7.95534
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:11032007",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:11032007"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "11032007"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "hamdallaye"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "kirane kaniaga"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "kayes",
+            "yelimane",
+            "kirane kaniaga",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-508c1d632a1c32f1b08254f5",
+      "nom": "HAMDALLAYE [1er C]ycle",
+      "type": "FONDAMENTALE",
+      "ville": "Kirané Kaniaga",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          15.2001667,
+          -10.2563833
+        ],
+        [
+          15.200167,
+          -10.256383
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079751624",
+          "url": "https://www.openstreetmap.org/node/3079751624"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079751624"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "yelimane",
+          "kirane kaniaga",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-394f883e1862a24975eebd88",
+      "nom": "HAMDALLAYE",
+      "type": "FONDAMENTALE",
+      "ville": "KIRANE KANIAGA",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "HAMDALLAYE 1er Cycle"
+      ],
+      "coordonnees": [
+        [
+          15.200167,
+          -10.256383
+        ],
+        [
+          15.20016667,
+          -10.25638333
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:768041",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:768041"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "768041"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "yelimane",
+          "kirane kaniaga",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "kirane c"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "kirane kaniaga"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "kayes",
+            "yelimane",
+            "kirane kaniaga",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-95a3dfd300cfd5d66ea91e15",
+      "nom": "KIRANE [1er C]ycle C",
+      "type": "FONDAMENTALE",
+      "ville": "Kirané Kaniaga",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          15.4111,
+          -10.2232833
+        ],
+        [
+          15.4111,
+          -10.223283
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079751700",
+          "url": "https://www.openstreetmap.org/node/3079751700"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079751700"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "yelimane",
+          "kirane kaniaga",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-888669f59159d4eea25ed232",
+      "nom": "KIRANE C",
+      "type": "FONDAMENTALE",
+      "ville": "KIRANE KANIAGA",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "KIRANE 1er Cycle C"
+      ],
+      "coordonnees": [
+        [
+          15.4111,
+          -10.22328333
+        ],
+        [
+          15.4111,
+          -10.223283
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:11002315",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:11002315"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "11002315"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "yelimane",
+          "kirane kaniaga",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "mamassoni ouest"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "sikasso",
+            "sikasso",
+            "sikasso",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-ec419409554b89ecf407eda9",
+      "nom": "MAMASSONI OUEST [1er C]ycle",
+      "type": "FONDAMENTALE",
+      "ville": "Mamassoni",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          11.3479667,
+          -5.6651333
+        ],
+        [
+          11.347967,
+          -5.665133
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079775498",
+          "url": "https://www.openstreetmap.org/node/3079775498"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079775498"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "sikasso",
+          "sikasso",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-30a8517df8b554a25f61ad8f",
+      "nom": "Mamassoni Ouest",
+      "type": "FONDAMENTALE",
+      "ville": "Sikasso",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "MAMASSONI OUEST 1er Cycle"
+      ],
+      "coordonnees": [
+        [
+          11.34796667,
+          -5.66513333
+        ],
+        [
+          11.347967,
+          -5.665133
+        ]
+      ],
+      "sources": [
+        {
+          "code": "ocha-men-mali-schools-2023",
+          "identifiantExterne": "men-2023:SIKSIK0343:5b4ee07b2f",
+          "url": "https://data.humdata.org/dataset/52ba0caf-1caf-4e40-a0c4-7c9d17454f15/resource/c85aa3d0-b42b-47cf-b51c-0c4a2c1bcdca/download/ml_schools_octobre_2023.xlsx"
+        },
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:940213",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:ocha-men-mali-schools-2023",
+          "men-2023:SIKSIK0343:5b4ee07b2f"
+        ],
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:940213"
+        ],
+        [
+          "ocha-men-mali-schools-2023:cluster",
+          "SIKSIK0343"
+        ],
+        [
+          "ocha-men-mali-schools-2023:officiel",
+          "940213"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "940213"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "sikasso",
+          "commune de sikasso",
+          "mamassoni"
+        ],
+        [
+          "sikasso",
+          "sikasso",
+          "sikasso",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "manantali"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 23.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "bamafele"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "kayes",
+            "bafoulabe",
+            "bamafele",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-ffdbf6eaad2ded9dee9536e5",
+      "nom": "MANANTALI École privée",
+      "type": "FONDAMENTALE",
+      "ville": "Bamafélé",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          13.2086369,
+          -10.4624548
+        ],
+        [
+          13.208637,
+          -10.462455
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079755868",
+          "url": "https://www.openstreetmap.org/node/3079755868"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079755868"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "bafoulabe",
+          "bamafele",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-f734529b3147cba48216cdf6",
+      "nom": "MANANTALI PRIVE",
+      "type": "FONDAMENTALE",
+      "ville": "BAMAFELE",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          13.20865,
+          -10.462667
+        ],
+        [
+          13.20865,
+          -10.46266667
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:702167",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:702167"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "702167"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "bafoulabe",
+          "bamafele",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "med",
+          "med sallah"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 1.7
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "sallah"
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-2eecae55883db65bfd46e363",
+      "nom": "MED SALLAH [2ème C]YCLE",
+      "type": "FONDAMENTALE",
+      "ville": "Sallah",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          15.168176,
+          -7.290707
+        ],
+        [
+          15.1681763,
+          -7.2907065
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079757677",
+          "url": "https://www.openstreetmap.org/node/3079757677"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079757677"
+        ]
+      ],
+      "administrations": [
+        [
+          "koulikoro",
+          "nara",
+          "nara",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-7a68989cbf3624d006af7c10",
+      "nom": "MED SALLAH",
+      "type": "FONDAMENTALE",
+      "ville": "Sallah",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "MED SALLAH 2° CYCLE"
+      ],
+      "coordonnees": [
+        [
+          15.168192,
+          -7.290706
+        ],
+        [
+          15.1681924,
+          -7.2907055
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:939551",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:939551"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "939551"
+        ]
+      ],
+      "administrations": [
+        [
+          "koulikoro",
+          "nara",
+          "nara",
+          "sallah"
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "medina coura"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 4.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "mopti"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "mopti",
+            "mopti",
+            "mopti",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-141a6158d7962898f7c71969",
+      "nom": "MEDINA - COURA École privée",
+      "type": "FONDAMENTALE",
+      "ville": "Mopti",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          14.535503,
+          -4.095025
+        ],
+        [
+          14.5355027,
+          -4.0950252
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079761411",
+          "url": "https://www.openstreetmap.org/node/3079761411"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079761411"
+        ]
+      ],
+      "administrations": [
+        [
+          "mopti",
+          "mopti",
+          "mopti",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-d95884640ec3ca8071076c5a",
+      "nom": "Médina - Coura Privée",
+      "type": "FONDAMENTALE",
+      "ville": "Mopti",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          14.53553,
+          -4.09505
+        ]
+      ],
+      "sources": [
+        {
+          "code": "ocha-men-mali-schools-2023",
+          "identifiantExterne": "men-2023:MOPMOP0233:8a4637f163",
+          "url": "https://data.humdata.org/dataset/52ba0caf-1caf-4e40-a0c4-7c9d17454f15/resource/c85aa3d0-b42b-47cf-b51c-0c4a2c1bcdca/download/ml_schools_octobre_2023.xlsx"
+        },
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:749016",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:ocha-men-mali-schools-2023",
+          "men-2023:MOPMOP0233:8a4637f163"
+        ],
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:749016"
+        ],
+        [
+          "ocha-men-mali-schools-2023:cluster",
+          "MOPMOP0233"
+        ],
+        [
+          "ocha-men-mali-schools-2023:officiel",
+          "749016"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "749016"
+        ]
+      ],
+      "administrations": [
+        [
+          "mopti",
+          "mopti",
+          "commune de mopti",
+          "mopti"
+        ],
+        [
+          "mopti",
+          "mopti",
+          "mopti",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "n tesso"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "ntiesso 1"
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-f693ed290dfebe6797471aef",
+      "nom": "N'TESSO [2ème C]",
+      "type": "FONDAMENTALE",
+      "ville": "Ntiesso 1",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.95,
+          -5.389
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079766221",
+          "url": "https://www.openstreetmap.org/node/3079766221"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079766221"
+        ]
+      ],
+      "administrations": [
+        [
+          "segou",
+          "bla",
+          "kemeni",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-1e9b4acca058ef5eb3b1318c",
+      "nom": "N'TESSO SECOND CYCLE",
+      "type": "FONDAMENTALE",
+      "ville": "Ntiesso 1",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.95,
+          -5.389
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:1004024",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:1004024"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "1004024"
+        ]
+      ],
+      "administrations": [
+        [
+          "segou",
+          "bla",
+          "kemeni",
+          "ntiesso 1"
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "sido soninkoura a"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "segou",
+            "segou",
+            "segou",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-4ef97679a93d2c4d149daa0a",
+      "nom": "SIDO-SONINKOURA [1er C]ycle A",
+      "type": "FONDAMENTALE",
+      "ville": "Sidossonikoura",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          13.425367,
+          -6.246181
+        ],
+        [
+          13.4253667,
+          -6.2461812
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079771180",
+          "url": "https://www.openstreetmap.org/node/3079771180"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079771180"
+        ]
+      ],
+      "administrations": [
+        [
+          "segou",
+          "segou",
+          "segou",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-0c0586de7373d447eddef71e",
+      "nom": "Sido-Soninkoura /A",
+      "type": "FONDAMENTALE",
+      "ville": "Segou",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "SIDO-SONINKOURA 1er Cycle A",
+        "Sido-Soninkoura 1°C/A"
+      ],
+      "coordonnees": [
+        [
+          13.425367,
+          -6.246181
+        ],
+        [
+          13.4253667,
+          -6.2461812
+        ]
+      ],
+      "sources": [
+        {
+          "code": "ocha-men-mali-schools-2023",
+          "identifiantExterne": "men-2023:SEGSEG0450:3be6044b7f",
+          "url": "https://data.humdata.org/dataset/52ba0caf-1caf-4e40-a0c4-7c9d17454f15/resource/c85aa3d0-b42b-47cf-b51c-0c4a2c1bcdca/download/ml_schools_octobre_2023.xlsx"
+        },
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:758027",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:ocha-men-mali-schools-2023",
+          "men-2023:SEGSEG0450:3be6044b7f"
+        ],
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:758027"
+        ],
+        [
+          "ocha-men-mali-schools-2023:cluster",
+          "SEGSEG0450"
+        ],
+        [
+          "ocha-men-mali-schools-2023:officiel",
+          "758027"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "758027"
+        ]
+      ],
+      "administrations": [
+        [
+          "segou",
+          "segou",
+          "commune de segou",
+          "sidossonikoura"
+        ],
+        [
+          "segou",
+          "segou",
+          "segou",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "n tjilla"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 8.3
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "wateni"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "sikasso",
+            "sikasso",
+            "wateni",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-0a5e71b7ed5a1125a408dda3",
+      "nom": "Second Cycle de N'tjilla",
+      "type": "FONDAMENTALE",
+      "ville": "Waténi",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "Premier cycle de N'tjilla"
+      ],
+      "coordonnees": [
+        [
+          11.5077492,
+          -6.5129051
+        ],
+        [
+          11.507749,
+          -6.512905
+        ],
+        [
+          11.5082171,
+          -6.5117437
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/9174361069",
+          "url": "https://www.openstreetmap.org/node/9174361069"
+        },
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/9174361067",
+          "url": "https://www.openstreetmap.org/node/9174361067"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/9174361067"
+        ],
+        [
+          "external:hotosm-mali-education",
+          "node/9174361069"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "sikasso",
+          "wateni",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-ca9e15b5fc36bda819c05cc4",
+      "nom": "N’Tjilla",
+      "type": "FONDAMENTALE",
+      "ville": "Wateni",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "N’Tjilla 2°C"
+      ],
+      "coordonnees": [
+        [
+          11.507803,
+          -6.512852
+        ]
+      ],
+      "sources": [
+        {
+          "code": "ocha-men-mali-schools-2023",
+          "identifiantExterne": "men-2023:SIKNIE0165:6a03fb91dd",
+          "url": "https://data.humdata.org/dataset/52ba0caf-1caf-4e40-a0c4-7c9d17454f15/resource/c85aa3d0-b42b-47cf-b51c-0c4a2c1bcdca/download/ml_schools_octobre_2023.xlsx"
+        }
+      ],
+      "codes": [
+        [
+          "external:ocha-men-mali-schools-2023",
+          "men-2023:SIKNIE0165:6a03fb91dd"
+        ],
+        [
+          "ocha-men-mali-schools-2023:cluster",
+          "SIKNIE0165"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "sikasso",
+          "wateni",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "zanadougou kolokoba"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "sikasso",
+            "sikasso",
+            "kolokoba",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-ca7afa680521fc5eece0152c",
+      "nom": "ZANADOUGOU-KOLOKOBA [1er C]ycle",
+      "type": "FONDAMENTALE",
+      "ville": "Zanadougou",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          11.2295833,
+          -5.9353667
+        ],
+        [
+          11.229583,
+          -5.935367
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079777642",
+          "url": "https://www.openstreetmap.org/node/3079777642"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079777642"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "sikasso",
+          "kolokoba",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-dae0351c2e12b606f2bdc71f",
+      "nom": "Zanadougou-Kolokoba",
+      "type": "FONDAMENTALE",
+      "ville": "KOLOKOBA",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "ZANADOUGOU-KOLOKOBA 1er Cycle",
+        "Zanadougou-Kolokoba 1°C"
+      ],
+      "coordonnees": [
+        [
+          11.22958333,
+          -5.93536667
+        ],
+        [
+          11.229583,
+          -5.935367
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:940201",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        },
+        {
+          "code": "ocha-men-mali-schools-2023",
+          "identifiantExterne": "men-2023:SIKNKO0120:e8134abcc5",
+          "url": "https://data.humdata.org/dataset/52ba0caf-1caf-4e40-a0c4-7c9d17454f15/resource/c85aa3d0-b42b-47cf-b51c-0c4a2c1bcdca/download/ml_schools_octobre_2023.xlsx"
+        }
+      ],
+      "codes": [
+        [
+          "external:ocha-men-mali-schools-2023",
+          "men-2023:SIKNKO0120:e8134abcc5"
+        ],
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:940201"
+        ],
+        [
+          "ocha-men-mali-schools-2023:cluster",
+          "SIKNKO0120"
+        ],
+        [
+          "ocha-men-mali-schools-2023:officiel",
+          "940201"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "940201"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "sikasso",
+          "kolokoba",
+          ""
+        ],
+        [
+          "sikasso",
+          "sikasso",
+          "kolokoba",
+          "zanadougou"
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "doumieda"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 30.8
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "sahel"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "kayes",
+            "kayes",
+            "sahel",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-29a90682ed8667f01cc29702",
+      "nom": "École de Doumiéda",
+      "type": "FONDAMENTALE",
+      "ville": "Sahel",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          15.541722,
+          -11.513995
+        ],
+        [
+          15.5417218,
+          -11.5139953
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079751536",
+          "url": "https://www.openstreetmap.org/node/3079751536"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079751536"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "kayes",
+          "sahel",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-fc5c5e08a6e51804bdfe7e83",
+      "nom": "DOUMIEDA",
+      "type": "FONDAMENTALE",
+      "ville": "SAHEL",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          15.54165,
+          -11.513717
+        ],
+        [
+          15.54165,
+          -11.51371667
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:959697",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:959697"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "959697"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "kayes",
+          "sahel",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "n tibabougou"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 39.5
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "n tjibabougou"
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-c3f3c695353ca87243e93ba8",
+      "nom": "École de N'Tibabougou",
+      "type": "FONDAMENTALE",
+      "ville": "N'Tjibabougou",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          11.990335,
+          -7.456092
+        ],
+        [
+          11.9903351,
+          -7.4560922
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079735375",
+          "url": "https://www.openstreetmap.org/node/3079735375"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079735375"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "bougouni",
+          "dogo",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-7a6764032c568655bec2c3fc",
+      "nom": "N'TIBABOUGOU",
+      "type": "FONDAMENTALE",
+      "ville": "N'Tjibabougou",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          11.990567,
+          -7.455817
+        ],
+        [
+          11.99056667,
+          -7.45581667
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:11050444",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:11050444"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "11050444"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "bougouni",
+          "dogo",
+          "n tjibabougou"
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "nagala wossa"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "nagala"
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-4e81794fa4b94d4a8e1d13fa",
+      "nom": "École de Nagala Wossa",
+      "type": "FONDAMENTALE",
+      "ville": "Nagala",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.051633,
+          -7.278383
+        ],
+        [
+          12.0516333,
+          -7.2783833
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079735111",
+          "url": "https://www.openstreetmap.org/node/3079735111"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079735111"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "bougouni",
+          "meridiela",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-34cd06d36109164aa7a9b465",
+      "nom": "NAGALA WOSSA",
+      "type": "FONDAMENTALE",
+      "ville": "Nagala",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.05163333,
+          -7.27838333
+        ],
+        [
+          12.051633,
+          -7.278383
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:1044632",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:1044632"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "1044632"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "bougouni",
+          "meridiela",
+          "nagala"
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "batasso"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "bafoulabe"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "kayes",
+            "bafoulabe",
+            "bafoulabe",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-c63676573c8adbee128d6bf2",
+      "nom": "École primaire de Batasso",
+      "type": "FONDAMENTALE",
+      "ville": "Bafoulabe",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          13.82935,
+          -10.896483
+        ],
+        [
+          13.82935,
+          -10.8964833
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079742824",
+          "url": "https://www.openstreetmap.org/node/3079742824"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079742824"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "bafoulabe",
+          "bafoulabe",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-e03377418364913ce0a37380",
+      "nom": "BATASSO",
+      "type": "FONDAMENTALE",
+      "ville": "BAFOULABE",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          13.82935,
+          -10.896483
+        ],
+        [
+          13.82935,
+          -10.89648333
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:702009",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:702009"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "702009"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "bafoulabe",
+          "bafoulabe",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "guirel"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "koulikoro",
+            "nara",
+            "gueneibe",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-61b4319ec2e7b189e2007726",
+      "nom": "École primaire de Guirel",
+      "type": "FONDAMENTALE",
+      "ville": "Guirel Ecom",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          15.44917,
+          -7.10617
+        ],
+        [
+          15.4491699,
+          -7.1061695
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079757022",
+          "url": "https://www.openstreetmap.org/node/3079757022"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079757022"
+        ]
+      ],
+      "administrations": [
+        [
+          "koulikoro",
+          "nara",
+          "gueneibe",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-2fd43e88c38354e14d66cafd",
+      "nom": "Guirel",
+      "type": "FONDAMENTALE",
+      "ville": "Gueneibe",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          15.44917,
+          -7.10617
+        ],
+        [
+          15.4491699,
+          -7.1061695
+        ]
+      ],
+      "sources": [
+        {
+          "code": "ocha-men-mali-schools-2023",
+          "identifiantExterne": "men-2023:NARNAR0057:b1a6404c4f",
+          "url": "https://data.humdata.org/dataset/52ba0caf-1caf-4e40-a0c4-7c9d17454f15/resource/c85aa3d0-b42b-47cf-b51c-0c4a2c1bcdca/download/ml_schools_octobre_2023.xlsx"
+        },
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:751561",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:ocha-men-mali-schools-2023",
+          "men-2023:NARNAR0057:b1a6404c4f"
+        ],
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:751561"
+        ],
+        [
+          "ocha-men-mali-schools-2023:cluster",
+          "NARNAR0057"
+        ],
+        [
+          "ocha-men-mali-schools-2023:officiel",
+          "751561"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "751561"
+        ]
+      ],
+      "administrations": [
+        [
+          "koulikoro",
+          "nara",
+          "gueneibe",
+          ""
+        ],
+        [
+          "koulikoro",
+          "nara",
+          "gueneibe",
+          "guirel ecom"
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "taskaye"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "koussane"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "kayes",
+            "kayes",
+            "koussane",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-abc5bf3bb920727a213783ab",
+      "nom": "École primaire de Taskaye",
+      "type": "FONDAMENTALE",
+      "ville": "Koussané",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          15.4926,
+          -11.3154833
+        ],
+        [
+          15.4926,
+          -11.315483
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079753722",
+          "url": "https://www.openstreetmap.org/node/3079753722"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079753722"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "kayes",
+          "koussane",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-24792fe5204ee3785a834227",
+      "nom": "TASKAYE",
+      "type": "FONDAMENTALE",
+      "ville": "KOUSSANE",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          15.4926,
+          -11.31548333
+        ],
+        [
+          15.4926,
+          -11.315483
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:990029",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:990029"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "990029"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "kayes",
+          "koussane",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "tintila"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "bafoulabe"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "kayes",
+            "bafoulabe",
+            "bafoulabe",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-5712ec08ceed145d53aca2b5",
+      "nom": "École primaire de Tintila",
+      "type": "FONDAMENTALE",
+      "ville": "Bafoulabe",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          13.81735,
+          -10.8260333
+        ],
+        [
+          13.81735,
+          -10.826033
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079756153",
+          "url": "https://www.openstreetmap.org/node/3079756153"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079756153"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "bafoulabe",
+          "bafoulabe",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-3a958547ce0ebe30954fcabe",
+      "nom": "TINTILA",
+      "type": "FONDAMENTALE",
+      "ville": "BAFOULABE",
+      "systemeEducatifCode": "ML",
+      "statut": "PUBLIC",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          13.81735,
+          -10.82603333
+        ],
+        [
+          13.81735,
+          -10.826033
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:938303",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:938303"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "938303"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "bafoulabe",
+          "bafoulabe",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "layebougou notre reve"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "bamako"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "bamako",
+            "bamako",
+            "commune i",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-a799f1c099f2275d9fff3df7",
+      "nom": "École privée LAYEBOUGOU NOTRE REVE",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.6775667,
+          -7.9667167
+        ],
+        [
+          12.677567,
+          -7.966717
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079731618",
+          "url": "https://www.openstreetmap.org/node/3079731618"
+        },
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079731617",
+          "url": "https://www.openstreetmap.org/node/3079731617"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079731617"
+        ],
+        [
+          "external:hotosm-mali-education",
+          "node/3079731618"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-67f765cabcf5d4e407346b42",
+      "nom": "PRIVEE LAYEBOUGOU NOTRE REVE",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.6775666667,
+          -7.9667166667
+        ],
+        [
+          12.677567,
+          -7.966717
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:11069975",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        },
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:11069974",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:11069974"
+        ],
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:11069975"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "11069974"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "11069975"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "progres",
+          "progres yanfolila"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 11.3
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "yanfolila"
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-f8bc70f4fc68450a1f6d10c9",
+      "nom": "École privée LE PROGRES de YANFOLILA",
+      "type": "FONDAMENTALE",
+      "ville": "Yanfolila",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          11.177222,
+          -8.159312
+        ],
+        [
+          11.177222,
+          -8.1593124
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079735410",
+          "url": "https://www.openstreetmap.org/node/3079735410"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079735410"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "yanfolila",
+          "wassoulou balle",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-d667e1d07ce901fcf0df17e1",
+      "nom": "PRIVEE LE PROGRES DE YANFOLILA",
+      "type": "FONDAMENTALE",
+      "ville": "Yanfolila",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          11.177317,
+          -8.15935
+        ],
+        [
+          11.17731667,
+          -8.15935
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:999814",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:999814"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "999814"
+        ]
+      ],
+      "administrations": [
+        [
+          "sikasso",
+          "yanfolila",
+          "wassoulou balle",
+          "yanfolila"
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "moustaph"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "bamako"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "bamako",
+            "bamako",
+            "commune i",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-27633815dc7d45c9c1b5c93e",
+      "nom": "École privée MOUSTAPH",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.6748833,
+          -7.9629167
+        ],
+        [
+          12.674883,
+          -7.962917
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079731619",
+          "url": "https://www.openstreetmap.org/node/3079731619"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079731619"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-148f31549f5244410bb67eed",
+      "nom": "PRIVEE MOUSTAPH",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.6748833333,
+          -7.9629166667
+        ],
+        [
+          12.674883,
+          -7.962917
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:11032003",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:11032003"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "11032003"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "oumou sidibe"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "bamako"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "bamako",
+            "bamako",
+            "commune i",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-560efb009d61ae42718da6ff",
+      "nom": "École privée OUMOU SIDIBE",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.67097,
+          -7.92086
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079731612",
+          "url": "https://www.openstreetmap.org/node/3079731612"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079731612"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-a72c8f5ca80772f6e36e5da1",
+      "nom": "PRIVE OUMOU SIDIBE",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.67097,
+          -7.92086
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:979058",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:979058"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "979058"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "oumoutah"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "bamako"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "bamako",
+            "bamako",
+            "commune i",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-4fe5e68b8fa145225558cc1c",
+      "nom": "École privée OUMOUTAH",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.6872,
+          -7.94895
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079731620",
+          "url": "https://www.openstreetmap.org/node/3079731620"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079731620"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-2dfa9c067f27ee8e3a43b004",
+      "nom": "PRIVEE OUMOUTAH",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.6872,
+          -7.94895
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:959379",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:959379"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "959379"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "setiguiso"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "setiguisso"
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-3a8b69777211d86a2acb3afe",
+      "nom": "École privée SETIGUISO",
+      "type": "FONDAMENTALE",
+      "ville": "Setiguisso",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.767536,
+          -6.9679842
+        ],
+        [
+          12.767536,
+          -6.967984
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079748752",
+          "url": "https://www.openstreetmap.org/node/3079748752"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079748752"
+        ]
+      ],
+      "administrations": [
+        [
+          "koulikoro",
+          "dioila",
+          "guegneka",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-b4a06d1fa064ded8288f0723",
+      "nom": "PRIVEE SETIGUISO",
+      "type": "FONDAMENTALE",
+      "ville": "Setiguisso",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.767536,
+          -6.9679842
+        ],
+        [
+          12.767536,
+          -6.967984
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:1040610",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:1040610"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "1040610"
+        ]
+      ],
+      "administrations": [
+        [
+          "koulikoro",
+          "dioila",
+          "guegneka",
+          "setiguisso"
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "sogoba"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "bamako"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "bamako",
+            "bamako",
+            "commune i",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-a5592977901ad02dd59505f0",
+      "nom": "École privée SOGOBA",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.67828,
+          -7.95924
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079731621",
+          "url": "https://www.openstreetmap.org/node/3079731621"
+        },
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079731622",
+          "url": "https://www.openstreetmap.org/node/3079731622"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079731621"
+        ],
+        [
+          "external:hotosm-mali-education",
+          "node/3079731622"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-b54d828218a9671b12ebce2d",
+      "nom": "PRIVEE SOGOBA",
+      "type": "FONDAMENTALE",
+      "ville": "Bamako",
+      "systemeEducatifCode": "ML",
+      "statut": "PRIVE",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.67828,
+          -7.95924
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:11069983",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        },
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:11032006",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:11032006"
+        ],
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:11069983"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "11032006"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "11069983"
+        ]
+      ],
+      "administrations": [
+        [
+          "bamako",
+          "bamako",
+          "commune i",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  },
+  {
+    "categorie": "forte-concordance",
+    "priorite": 100,
+    "raisonsDetection": [
+      "nom-campus-simplifie",
+      "nom-ou-alias-exact",
+      "nom-proche-coordonnees"
+    ],
+    "preuves": [
+      {
+        "critere": "nom-ou-alias-identique",
+        "valeurs": [
+          "garoudji"
+        ]
+      },
+      {
+        "critere": "nom-campus-simplifie-identique",
+        "valeurs": [
+          "garoudji"
+        ]
+      },
+      {
+        "critere": "distance-minimale-metres",
+        "valeur": 0.0
+      },
+      {
+        "critere": "ville-identique",
+        "valeur": "faraba"
+      },
+      {
+        "critere": "administration-identique",
+        "valeurs": [
+          [
+            "kayes",
+            "kenieba",
+            "faraba",
+            ""
+          ]
+        ]
+      },
+      {
+        "critere": "nom-discriminant-et-sources-disjointes-a-moins-de-40m"
+      }
+    ],
+    "contradictions": [],
+    "a": {
+      "id": "ml-osm-d22f1e310e75d64fe864e531",
+      "nom": "غارودجي GAROUDJI",
+      "type": "FONDAMENTALE",
+      "ville": "Faraba",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [
+        "Grwdjy GAROUDJI"
+      ],
+      "coordonnees": [
+        [
+          12.35635,
+          -10.908867
+        ],
+        [
+          12.35635,
+          -10.9088667
+        ]
+      ],
+      "sources": [
+        {
+          "code": "hotosm-mali-education",
+          "identifiantExterne": "node/3079751599",
+          "url": "https://www.openstreetmap.org/node/3079751599"
+        }
+      ],
+      "codes": [
+        [
+          "external:hotosm-mali-education",
+          "node/3079751599"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "kenieba",
+          "faraba",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    },
+    "b": {
+      "id": "ml-registre-56c38da8c033cfd19ca59ab7",
+      "nom": "GAROUDJI",
+      "type": "FONDAMENTALE",
+      "ville": "FARABA",
+      "systemeEducatifCode": "ML",
+      "statut": "INCONNU",
+      "niveaux": [
+        {
+          "niveau": "PRIMAIRE"
+        },
+        {
+          "niveau": "FONDAMENTAL"
+        }
+      ],
+      "alias": [],
+      "coordonnees": [
+        [
+          12.35635,
+          -10.90886667
+        ],
+        [
+          12.35635,
+          -10.908867
+        ]
+      ],
+      "sources": [
+        {
+          "code": "unicef-men-mali-schools-2013",
+          "identifiantExterne": "men-2013:938103",
+          "url": "https://raw.githubusercontent.com/jokkolabs/mali_schools/master/MLI_schools.csv"
+        }
+      ],
+      "codes": [
+        [
+          "external:unicef-men-mali-schools-2013",
+          "men-2013:938103"
+        ],
+        [
+          "unicef-men-mali-schools-2013:officiel",
+          "938103"
+        ]
+      ],
+      "administrations": [
+        [
+          "kayes",
+          "kenieba",
+          "faraba",
+          ""
+        ]
+      ],
+      "activite": {
+        "formations": 0,
+        "avis": 0,
+        "programmes": 0
+      }
+    }
+  }
+]

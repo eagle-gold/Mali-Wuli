@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "route": "/health",
+      "status": 200
+    },
+    {
+      "route": "/offres",
+      "status": 401
+    },
+    {
+      "route": "/offres/verification-readonly",
+      "status": 401
+    },
+    {
+      "route": "/offres/verification-readonly/profil-candidature.pdf",
+      "status": 401
+    }
+  ],
+  "databaseWrites": 0,
+  "realApplications": 0,
+  "realEmails": 0
+}

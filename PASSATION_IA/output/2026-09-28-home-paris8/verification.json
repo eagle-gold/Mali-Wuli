@@ -1,0 +1,72 @@
+{
+  "status": "TERMINÉ",
+  "startedAt": "2026-09-28 16:35:43 CEST",
+  "gitBefore": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 66,
+    "untrackedEntries": 56,
+    "untrackedFiles": 84
+  },
+  "previousEntriesSha256": "6491379d03b21a49233acfee51904cf6061963260cb49a0807de4b12af20106c",
+  "steps": [
+    {
+      "at": "2026-09-28 16:36:26 CEST",
+      "note": "Occurrence unique remplacée dans landing-data.ts. Le reste des 75 fichiers source du frontend est identique à la version publiée.",
+      "stoppedAt": "Transférer puis compiler la candidate 20260928-home-paris8."
+    },
+    {
+      "at": "2026-09-28 16:36:34 CEST",
+      "note": "Archive et contrôle transférés, compilation Linux lancée.",
+      "stoppedAt": "Attendre la fin de compilation et le contrôle candidate."
+    },
+    {
+      "at": "2026-09-28 16:36:51 CEST",
+      "note": "Relecture indépendante : unique remplacement Paris 11e → Paris 8e, 74 autres fichiers identiques, aucun ajout/suppression. Décision consignée dans le guide 05.",
+      "stoppedAt": "Compilation candidate en cours, contrôle du texte compilé ensuite."
+    },
+    {
+      "at": "2026-09-28 16:37:40 CEST",
+      "note": "Compilation Linux et contrôle candidate réussis, build 6kWRIfnkU5zQUYQGMeVaJ ; Paris 8e présent, Paris 11e absent, 26 assets HTTP 200.",
+      "stoppedAt": "Relire current puis activer la correction et vérifier le site public."
+    },
+    {
+      "at": "2026-09-28 16:37:57 CEST",
+      "note": "Bascule effectuée : current versions/20260928-home-paris8, build 6kWRIfnkU5zQUYQGMeVaJ ; backend inchangé.",
+      "stoppedAt": "Contrôler publiquement la présence de Paris 8e et clôturer les traces."
+    },
+    {
+      "at": "2026-09-28 16:38:09 CEST",
+      "note": "Contrôle public réussi : Paris 8e présent et Paris 11e absent ; homepage, inscription/connexion et 26 assets HTTP 200, ressources identiques à la candidate.",
+      "stoppedAt": "Terminer le relevé Git et rendre le journal LIBRE."
+    }
+  ],
+  "finishedAt": "2026-09-28 16:38:09 CEST",
+  "gitAfter": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 66,
+    "untrackedEntries": 56,
+    "untrackedFiles": 84
+  },
+  "productionBefore": {
+    "current": "versions/20260928-home-presentation",
+    "buildId": "ffELDPgTjnC3CY7hSOXld"
+  },
+  "productionAfter": {
+    "current": "versions/20260928-home-paris8",
+    "buildId": "6kWRIfnkU5zQUYQGMeVaJ",
+    "backendCurrent": "versions/20260921-profile-schools-r2"
+  },
+  "checks": [
+    "Diff indépendant : un remplacement, 74 autres fichiers identiques",
+    "Compilation Linux et TypeScript/lint réussis",
+    "Candidate et site public HTTP 200 ; Paris 8e présent et Paris 11e absent",
+    "26 assets valides et identiques candidate/public ; login/register HTTP 200"
+  ],
+  "externalActions": [
+    "Compilation et activation frontend 20260928-home-paris8",
+    "Aucune écriture en base, migration, import ou fusion"
+  ],
+  "previousEntriesPreserved": true
+}

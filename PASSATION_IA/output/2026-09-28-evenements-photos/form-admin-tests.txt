@@ -1,0 +1,15 @@
+PASS form renders full preview, three formats, image limits and no invented deadline
+PASS creation converts selected local time to UTC and repeated submit cannot create a duplicate
+PASS failed image upload retains created event and offers detail retry without a second JSON POST
+PASS invalid MIME and oversize cover rejected locally, with a clearable selection
+PASS hybrid link, required city, chronological dates and DST gaps block invalid requests
+PASS past event summary patch omits unchanged dates, seconds, content and format
+PASS legacy hybrid without video or city still permits summary-only editing
+PASS cover-only edit uploads directly without empty PATCH or proposal re-creation
+PASS summary-only edit of refused proposal reports unchanged refusal without promising review
+PASS editing permission denial hides the form and exposes retry feedback
+PASS admin UI blocks members and recognizes moderators
+PASS moderation explicitly fetches all periods so older pending proposals remain visible
+PASS moderation requires confirmation then publishes and refreshes pending list/count
+PASS refusal failure stays on its proposal, retains data and permits retry
+14 groups passed; API and browser effects are mocked, no DB/network writes.

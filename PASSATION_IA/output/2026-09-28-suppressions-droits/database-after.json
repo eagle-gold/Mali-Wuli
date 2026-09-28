@@ -1,0 +1,124 @@
+{
+  "status": "PASS",
+  "kind": "no-migration-release-readonly",
+  "at": "2026-09-28T18:22:43.936Z",
+  "release": "20260928-suppressions-droits",
+  "phase": "after",
+  "currentTarget": "versions/20260928-suppressions-droits",
+  "database": "u668963025_maliwuli",
+  "appliedCount": 14,
+  "pending": [],
+  "sourceAndDatabaseChecksumsVerified": 14,
+  "snapshot": {
+    "counts": {
+      "User": 2,
+      "UserRoleGrant": 0,
+      "Profil": 2,
+      "Formation": 9,
+      "Etablissement": 143458,
+      "Association": 0,
+      "AssociationMembre": 0,
+      "Evenement": 0,
+      "EvenementParticipant": 0,
+      "Offre": 0,
+      "OffreEnregistrement": 0,
+      "CandidatureOffre": 0,
+      "Message": 0,
+      "Conversation": 0,
+      "Publication": 1,
+      "CommentairePublication": 1,
+      "ReactionPublication": 1,
+      "EvenementPhoto": 0
+    },
+    "usersRoleFingerprint": "312e0933c6615e3fff777903dd3f561926351a947711aa27d0d899977a7fe135",
+    "grantsFingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+  },
+  "priority": {
+    "status": "PASS",
+    "eligibility": {
+      "onboardingFini": true,
+      "userStatut": "VALIDE",
+      "associationAffiliation": "VERIFIE"
+    },
+    "etablissements": {
+      "total": 141941,
+      "populatedStructures": 7,
+      "emptyStructures": 141934,
+      "pages": [
+        {
+          "page": 1,
+          "rows": 12,
+          "counts": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "page": 2,
+          "rows": 12,
+          "counts": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "exercisedNonEmptyOrder": true,
+      "exercisedDistinctCounts": false
+    },
+    "associations": {
+      "total": 0,
+      "populatedStructures": 0,
+      "emptyStructures": 0,
+      "pages": [
+        {
+          "page": 1,
+          "rows": 0,
+          "counts": []
+        },
+        {
+          "page": 2,
+          "rows": 0,
+          "counts": []
+        }
+      ],
+      "exercisedNonEmptyOrder": false,
+      "exercisedDistinctCounts": false
+    },
+    "databaseWrites": 0,
+    "realSessionsCreated": 0,
+    "limitations": [
+      "Unfiltered public listings only; country/search/filter combinations have separate RAM tests.",
+      "Counts are separate reads: concurrent profile or affiliation changes can fail this check.",
+      "Empty or tied data cannot prove every ranking case; exercised flags report actual coverage."
+    ]
+  },
+  "preservationComparedToBefore": true,
+  "databaseWrites": 0,
+  "realRoleChanges": 0,
+  "realSessionsCreated": 0,
+  "limitations": [
+    "Snapshots are separate reads; legitimate concurrent activity can fail preservation checks and needs review.",
+    "No real account/session is created or modified; content deletion and member deactivation behavior are tested on RAM fixtures.",
+    "Counts and role/grant hashes cover the specified fields, not every content byte in the database."
+  ]
+}

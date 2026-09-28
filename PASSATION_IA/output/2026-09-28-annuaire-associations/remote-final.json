@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-09-28T15:41:51.211Z",
+  "status": "PASS",
+  "frontendCurrent": "versions/20260928-annuaire-associations",
+  "frontendBuild": "oEfW-e-0s4HeQEgov9CNS",
+  "frontendPrevious": "versions/20260928-menu-synergies",
+  "backendCurrent": "versions/20260928-annuaire-associations",
+  "backendPrevious": "versions/20260921-profile-schools-r2",
+  "publicApiInCompiledJs": true,
+  "qaApiAbsent": true,
+  "uploads": "/home/u668963025/domains/floralwhite-ram-987223.hostingersite.com/uploads"
+}

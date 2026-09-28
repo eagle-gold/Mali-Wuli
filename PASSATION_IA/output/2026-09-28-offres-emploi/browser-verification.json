@@ -1,0 +1,17 @@
+{
+  "environment": "fixtures locales en mémoire",
+  "checks": [
+    "filtre pays France -> une offre et lien externe correct",
+    "Mali Wuli : confirmation puis conversation avec lien profil cliquable",
+    "EMAIL : aperçu PDF protégé puis succès simulé",
+    "dépôt offre EMAIL -> attente -> admin publication,3 à2 en attente",
+    "largeur320 : formulaire, liste/détail, dialogue candidature et admin sans débordement"
+  ],
+  "screenshots": [
+    "offres-verifiees.png",
+    "mobile-candidature.png"
+  ],
+  "cleanup": "serveurs3006/4307 arrêtés, onglet QA fermé, viewport rétabli",
+  "productionMutations": 0,
+  "realEmails": 0
+}

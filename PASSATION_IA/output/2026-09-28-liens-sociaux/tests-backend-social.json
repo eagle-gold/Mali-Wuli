@@ -1,0 +1,32 @@
+{
+  "status": "PASS",
+  "tests": 17,
+  "passed": 17,
+  "failed": 0,
+  "newSocialTests": 13,
+  "directoryRegressionTests": 4,
+  "realHandlers": true,
+  "prisma": "simulated",
+  "databaseRequests": 0,
+  "networkRequests": 0,
+  "realEmails": 0,
+  "activeRepositoryWrites": 0,
+  "migrationExecuted": false,
+  "clientGeneratedInActiveRepository": false,
+  "typecheck": "Pending root integration and Prisma generation",
+  "files": {
+    "backend/prisma/migrations/20260928220000_profile_social_links/migration.sql": "4589bd57ab81031d583431eba8e8477d572a220d47367debc7a1c918a3fbdf0b",
+    "backend/prisma/schema.prisma": "7f9e40ab21377155bd0ff48553b50c5b34a4f625e122a554ef6b5ec7f6d86fe5",
+    "backend/src/lib/liens-sociaux.ts": "c2979850b15d25249c33ae9425586bf62d5b61956e750e60580ed5d184b7f3cf",
+    "backend/src/routes/onboarding.routes.ts": "45f7eef240927b72706443be7d9dfa88bf4cddf4b772e00479e4120f9c0384f1",
+    "backend/src/routes/profile-social-links.test.ts": "b8a54f5920a1582c98931b743addb28db3d7a88643d99e126f42c0dba1811668",
+    "backend/src/routes/user.routes.ts": "9fac13ed222fba1e2a1a1dfbd7e4fe8e8fc8281c095f79abec7354f1d9a72656"
+  },
+  "unchangedByThisTask": [
+    "profil-candidature.service.ts",
+    "validation.ts"
+  ],
+  "proof": "tests-backend-social.tap",
+  "guard": "tests-social-guard.cjs",
+  "reproduction": "reproduce-backend-social-tests.sh"
+}

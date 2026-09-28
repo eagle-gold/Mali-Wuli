@@ -1,0 +1,98 @@
+{
+  "status": "DEPLOYED_VERIFIED",
+  "scope": [
+    "events migration and deployment",
+    "header search width"
+  ],
+  "approval": "Explicit user permission for events migration/deployment and future completed verified lots",
+  "local": {
+    "header1280": "full placeholder visible, navigation intact",
+    "header1536": "full placeholder visible, navigation intact",
+    "mobile320": {
+      "viewport": 320,
+      "documentWidth": 320
+    },
+    "search": "Mali => persons3 fixtures, associations1 fixture, same term retained",
+    "screenshot": "header-verifie.png",
+    "qaStopped": true,
+    "temporaryTabClosed": true,
+    "viewportReset": true,
+    "screenshotsNote": "Les captures recadrées header-1280/1536 sont mal dimensionnées par le backend ; utiliser header-verifie.png, capture complète."
+  },
+  "external": {
+    "backup": {
+      "at": "2026-09-28T16:11:34.433Z",
+      "database": "u668963025_maliwuli",
+      "backup": "/home/u668963025/private-backups/20260928-evenements-photos/before.sql.gz",
+      "bytes": 31533348,
+      "sha256": "b545c20342a3cea8fb99be2df8381b821aebe954ac016a8fcb5f42d7ef3f5712",
+      "counts": {
+        "User": 2,
+        "Profil": 2,
+        "Formation": 9,
+        "Association": 0,
+        "AssociationMembre": 0,
+        "Evenement": 0,
+        "EvenementParticipant": 0
+      },
+      "warning": null
+    },
+    "productionBefore": {
+      "front": "versions/20260928-annuaire-associations",
+      "back": "versions/20260928-annuaire-associations",
+      "build": "oEfW-e-0s4HeQEgov9CNS",
+      "frontCandidateExists": false,
+      "backCandidateExists": false
+    },
+    "migration": "20260928190000_event_photos applied to u668963025_maliwuli",
+    "productionAfter": {
+      "at": "2026-09-28T16:18:46.379Z",
+      "front": "versions/20260928-evenements-photos",
+      "back": "versions/20260928-evenements-photos",
+      "build": "g_ZlNJ4g3BexnPjw2JQYj",
+      "previousFront": "versions/20260928-annuaire-associations",
+      "previousBack": "versions/20260928-annuaire-associations",
+      "uploads": "/home/u668963025/domains/floralwhite-ram-987223.hostingersite.com/uploads"
+    }
+  },
+  "eventTests": "../2026-09-28-evenements-photos/verification.json",
+  "limitations": [
+    "Actual database contains zero events; no mutable database smoke planned",
+    "Search remains directory only; URL/filter synchronisation limitations documented separately"
+  ],
+  "at": "2026-09-28T18:22:00.537220+02:00",
+  "verification": {
+    "candidate": "frontend-candidate.json",
+    "public": "frontend-public.json",
+    "api": "backend-public.json",
+    "schemaAndServices": "backend-readonly-final.json",
+    "sqlDiagnostic": "programme-schema-diagnostic.json",
+    "migration": "migration-deploy.txt",
+    "sources": "candidate-source-check.json",
+    "assets": 54,
+    "memberBundles": 30,
+    "backendChecks": 91,
+    "allChecksPassed": true,
+    "databaseCountDeltas": 0,
+    "warnings": [
+      "DETAIL_SKIPPED_NO_ACCESSIBLE_EVENT"
+    ]
+  },
+  "gitBefore": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 68,
+    "untrackedEntries": 75,
+    "untrackedFiles": 125
+  },
+  "gitAfter": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 68,
+    "untrackedEntries": 75,
+    "untrackedFiles": 125
+  },
+  "sourceManifest": "source-manifest.json",
+  "verificationScriptSha256": "3d269d729ee2e899e613a5b70cc1f669f4d10cff57f17379837e47921ea994c2",
+  "publicBrowser": "GET /evenements redirects anonymous browser to /login; temporary tab closed"
+}

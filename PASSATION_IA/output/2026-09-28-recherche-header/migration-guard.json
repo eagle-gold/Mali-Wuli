@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T16:13:31.676Z",
+  "database": "u668963025_maliwuli",
+  "appliedCount": 11,
+  "pending": [
+    "20260928190000_event_photos"
+  ],
+  "allAppliedChecksumsMatch": true,
+  "currentTargetsUnchanged": true
+}

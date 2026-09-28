@@ -1,0 +1,18 @@
+[
+  "frontend/src/types/offres.ts",
+  "frontend/src/lib/offres.ts",
+  "frontend/src/components/messages/Messagerie.tsx",
+  "frontend/src/components/offres/CarteOffre.tsx",
+  "frontend/src/components/offres/FormulaireOffre.tsx",
+  "frontend/src/components/offres/CandidatureOffre.tsx",
+  "frontend/src/components/offres/DetailOffre.tsx",
+  "frontend/src/components/offres/OffresEdition.module.css",
+  "frontend/src/components/offres/OffresUi.tsx",
+  "frontend/src/components/offres/AdminOffres.tsx",
+  "frontend/src/components/offres/OffresPage.tsx",
+  "frontend/src/components/offres/Offres.module.css",
+  "frontend/src/app/(admin)/admin/page.tsx",
+  "frontend/src/app/(admin)/admin/offres/page.tsx",
+  "frontend/src/app/(platform)/offres/page.tsx",
+  "frontend/src/app/(platform)/offres/deposer/page.tsx"
+]

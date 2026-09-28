@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "checks": [
+    "CJS/shell/Python syntax, without executing operational scripts",
+    "Contract bound to previous 226-source release, 14 exact migrations and unchanged schema",
+    "Source guard rejects modified schema/SQL, extra migration and missing migration",
+    "Read proxy rejects writes/raw/transactions; candidate/after require absolute before evidence",
+    "Snapshots detect role/grant/count changes; simulated database refuses pending or wrong checksums",
+    "Priority checker detects wrong order/count and checks empty continuation in RAM"
+  ],
+  "baselineSources": 226,
+  "expectedAppliedMigrations": 14,
+  "migrationsAllowed": false,
+  "sshCalls": 0,
+  "databaseQueries": 0,
+  "httpRequests": 0,
+  "archivesCreated": 0,
+  "operationalScriptsExecuted": 0
+}

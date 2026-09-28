@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "groups": 10,
+  "networkRequests": 0,
+  "databaseWrites": 0,
+  "limitations": [
+    "Mock API and SSR tests; visual widths at 320px are verified separately in the browser"
+  ]
+}

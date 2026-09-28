@@ -1,0 +1,56 @@
+{
+  "status": "passed",
+  "finishedAt": "2026-09-28T20:55:41.658936+02:00",
+  "release": "20260928-liens-sociaux",
+  "buildId": "MF940TX4N8sLGFRsT_gyN",
+  "frontendPrevious": "versions/20260928-home-session-r2",
+  "backendPrevious": "versions/20260928-suppressions-droits",
+  "currentFrontend": "versions/20260928-liens-sociaux",
+  "currentBackend": "versions/20260928-liens-sociaux",
+  "migration": "20260928220000_profile_social_links",
+  "database": "u668963025_maliwuli",
+  "appliedMigrations": 15,
+  "preserved": true,
+  "backup": {
+    "path": "/home/u668963025/private-backups/20260928-liens-sociaux/before.sql.gz",
+    "bytes": 31534387,
+    "gzipIntegrity": true,
+    "sha256": "44ffcc176d21e3550ebf73c03d7bbb9cef8b09683c1f6f5568386faedabcf377"
+  },
+  "sourceFiles": 235,
+  "routes": 25,
+  "assets": 62,
+  "memberBundles": 39,
+  "tests": {
+    "backend": 17,
+    "frontendGroups": 7,
+    "deploymentGroups": 7,
+    "typescript": "frontend/backend PASS",
+    "linuxBuilds": "frontend/backend PASS",
+    "browser": "browser-qa.json"
+  },
+  "runtime": "runtime-after.json",
+  "externalActions": [
+    "Private database backup",
+    "Additive migration: LinkedIn width500, three nullable social fields",
+    "Backend/frontend activation preserving old versions and shared uploads",
+    "Targeted SIGTERM to old backend1252090/frontend1969107 after exact cwd/current guards; restart.txt alone was ineffective"
+  ],
+  "realBusinessWrites": 0,
+  "commits": [],
+  "pushes": 0,
+  "gitFinal": {
+    "at": "2026-09-28T20:54:57.423190+02:00",
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "modified": 69,
+    "untrackedEntries": 90,
+    "untrackedFiles": 167
+  },
+  "limitations": [
+    "Authenticated save verified with real handlers and mocked Prisma plus RAM browser, not by modifying production profiles",
+    "No physical phone/Safari test",
+    "Backup gzip/hash checked, no restore rehearsal",
+    "Current symlink and restart file alone do not prove the executing application version; runtime and public bundle hashes verified"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "checks": [
+    "CJS/shell/Python scripts parse; operational scripts not executed",
+    "SQL exact SHA bound; only additive grant table and foreign key",
+    "Migration guard accepts exact 14 sources and rejects changed SQL, extra or missing migration",
+    "Read-only service proxy rejects writes, transactions and raw statements; argument paths checked"
+  ],
+  "migrationSha256": "67d8f0e24b2630378e2a28aa6724568afb85282a29168e4545c3946bd2942945",
+  "historicalMigrations": 13,
+  "nextTotal": 14,
+  "sshCalls": 0,
+  "databaseQueries": 0,
+  "archivesCreated": 0,
+  "operationalScriptsExecuted": 0
+}

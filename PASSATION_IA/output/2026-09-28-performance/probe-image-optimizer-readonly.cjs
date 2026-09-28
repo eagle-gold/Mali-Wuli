@@ -1,0 +1,7 @@
+'use strict';
+// Anonymous image GET requests only. Normal server image cache may be populated.
+const cp=require('node:child_process');
+const cases=[{name:'landing@2x',source:'/images/landing/mali-wuli-arbre.png',width:96},{name:'member-header@2x',source:'/images/logo-mali-wuli.png',width:256}];
+const results=[];
+for(const c of cases){const url='https://mali-wuli.com/_next/image?url='+encodeURIComponent(c.source)+'&w='+c.width+'&q=75';for(let i=0;i<2;i++){const out=cp.execFileSync('curl',['--compressed','--silent','--show-error','--max-time','30','-H','Accept: image/webp','-D','-','-w','\n__META__{"status":%{http_code},"wireBytes":%{size_download},"ttfb":%{time_starttransfer},"seconds":%{time_total}}',url]);const marker=Buffer.from('\n__META__'),j=out.lastIndexOf(marker),meta=JSON.parse(out.subarray(j+marker.length));let body=out.subarray(0,j);const end=body.indexOf(Buffer.from('\r\n\r\n')),header=body.subarray(0,end).toString();body=body.subarray(end+4);results.push({...c,attempt:i+1,...meta,type:header.match(/content-type:\s*([^\r\n]+)/i)?.[1],cacheControl:header.match(/cache-control:\s*([^\r\n]+)/i)?.[1],nextCache:header.match(/x-nextjs-cache:\s*([^\r\n]+)/i)?.[1],cdnCache:header.match(/x-hcdn-cache-status:\s*([^\r\n]+)/i)?.[1],bodyBytes:body.length,format:body.subarray(0,4).toString()==='RIFF'&&body.subarray(8,12).toString()==='WEBP'?'webp':'other'});}}
+console.log(JSON.stringify({at:new Date().toISOString(),method:'curl --compressed from Hostinger to public CDN; anonymous GET, no application config or database mutation',results},null,2));

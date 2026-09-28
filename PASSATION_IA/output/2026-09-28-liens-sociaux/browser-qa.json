@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T20:55:41.658936+02:00",
+  "environment": "Local Next frontend with in-memory fixtures only",
+  "account": "Synthetic Awa Diarra",
+  "checks": [
+    "Existing LinkedIn prefilled when opening Modifier mes infos",
+    "Four optional fields shown",
+    "javascript URL rejected with field error",
+    "Four URLs entered and retained through all five onboarding steps",
+    "Final POST to RAM fixture followed by profile display of all four links",
+    "Own profile and directory member detail show four clickable links with correct href, _blank and noopener noreferrer",
+    "Reopening Informations preloads the four saved URLs",
+    "Form and own profile at width320 have scrollWidth320",
+    "Original browser viewport restored, fake session logged out, temporary tab closed and servers stopped"
+  ],
+  "screenshots": [
+    "formulaire-mobile-320.png",
+    "profil-mobile-320.png",
+    "profil-public-desktop.png"
+  ],
+  "limitations": [
+    "No authenticated production mutation",
+    "No physical phone or Safari test",
+    "RAM fixture has no Socket.IO server; expected socket404 noise",
+    "Link destinations verified as href, no navigation to third-party test accounts",
+    "Empty/null/deletion/old-client preservation covered by real-handler and component tests, not a second browser save"
+  ]
+}

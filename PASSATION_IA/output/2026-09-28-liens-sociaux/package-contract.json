@@ -1,0 +1,10 @@
+{
+  "release": "20260928-liens-sociaux",
+  "files": 235,
+  "manifestSha256": "5a33bd43b7d7b119517eaef7f0a714ee960b033d989f6a7114b320f83ce87f6d",
+  "migrationContractSha256": "533904f603c7ddbe40790484ac68fff08acb1ebca7b07bcc6002edc65d4f98f5",
+  "archives": {
+    "frontend": "997e2c322ca9b81e567090674061cf4e0658b62e99ca99d19285f3178f7b5d9f",
+    "backend": "ebe84772e5c7d9557e624de6f20b625c278d9637049ea4c30ded57c19203ee53"
+  }
+}

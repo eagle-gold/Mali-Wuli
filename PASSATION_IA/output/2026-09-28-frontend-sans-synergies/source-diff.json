@@ -1,0 +1,11 @@
+{
+  "modified": [
+    "src/app/(platform)/layout.tsx",
+    "src/components/MaliWuliHeader.tsx"
+  ],
+  "added": [],
+  "removed": [],
+  "totalFiles": 76,
+  "baseline": "20260928-frontend-sans-cercles-r2",
+  "restoredFiles": 11
+}

@@ -1,0 +1,78 @@
+{
+  "status": "TERMINÉ",
+  "startedAt": "2026-09-28 16:31:57 CEST",
+  "gitBefore": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 66,
+    "untrackedEntries": 56,
+    "untrackedFiles": 84
+  },
+  "previousEntriesSha256": "b2e987c2bec17ab6a9f76cb0b70ed4580463814940477673a25b5a31ef92c39f",
+  "externalActions": [
+    "Compilation et déploiement frontend 20260928-home-presentation ; current antérieur versions/20260928-home-arbre",
+    "Aucune migration, import, fusion ni écriture en base"
+  ],
+  "checks": [
+    "TypeScript et compilation Linux",
+    "Diff indépendant : 3 fichiers landing uniquement ; inscription inchangée",
+    "Libellés absents du HTML et du bundle homepage",
+    "Homepage, login, register et 26 assets HTTP 200 ; candidate et public identiques",
+    "Contrôle navigateur public et capture"
+  ],
+  "steps": [
+    {
+      "at": "2026-09-28 16:32:58 CEST",
+      "note": "Quatre notices retirées, textes accessibles harmonisés et styles inutilisés supprimés. Seuls 3 fichiers landing diffèrent du build publié. CTA inscription et responsive conservés.",
+      "stoppedAt": "Transférer la source puis compiler la candidate 20260928-home-presentation et vérifier absence des libellés."
+    },
+    {
+      "at": "2026-09-28 16:33:11 CEST",
+      "note": "Relecture indépendante valide un diff limité aux notices/CSS, inscriptions inchangées. Sources et scripts transférés sur Hostinger.",
+      "stoppedAt": "Compiler la candidate Linux, puis vérifier avant activation."
+    },
+    {
+      "at": "2026-09-28 16:34:00 CEST",
+      "note": "Les trois fichiers ont été transférés ; compilation Linux en cours dans la nouvelle source 20260928-home-presentation. Inscription et données inchangées.",
+      "stoppedAt": "Attendre la fin du build et le résultat du contrôle candidate intégré."
+    },
+    {
+      "at": "2026-09-28 16:34:30 CEST",
+      "note": "Compilation Linux, TypeScript/lint et contrôle candidate réussis : build ffELDPgTjnC3CY7hSOXld, 26 assets valides, mentions absentes du HTML et du bundle homepage. Current relu : versions/20260928-home-arbre.",
+      "stoppedAt": "Activer versions/20260928-home-presentation puis confirmer publiquement."
+    },
+    {
+      "at": "2026-09-28 16:34:43 CEST",
+      "note": "Bascule atomique effectuée vers 20260928-home-presentation, build ffELDPgTjnC3CY7hSOXld. Ancienne cible conservée, backend inchangé.",
+      "stoppedAt": "Vérifier le site public et clôturer les traces."
+    },
+    {
+      "at": "2026-09-28 16:35:14 CEST",
+      "note": "Site public vérifié : les quatre mentions et descriptions accessibles sont absentes ; 26 assets valides identiques à la candidate. Panneau France ouvert sans notice et capture live-home.png conservée. Aucun débordement.",
+      "stoppedAt": "Terminer les preuves, relever Git et rendre le journal LIBRE."
+    }
+  ],
+  "finishedAt": "2026-09-28 16:35:14 CEST",
+  "gitAfter": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 66,
+    "untrackedEntries": 56,
+    "untrackedFiles": 84
+  },
+  "productionBefore": {
+    "frontendCurrent": "versions/20260928-home-arbre",
+    "buildId": "r6fxXo2h-I-T9b-iHpHsU"
+  },
+  "productionAfter": {
+    "frontendCurrent": "versions/20260928-home-presentation",
+    "buildId": "ffELDPgTjnC3CY7hSOXld",
+    "backendCurrent": "versions/20260921-profile-schools-r2"
+  },
+  "filesChanged": [
+    "frontend/src/components/landing/LandingArbre.tsx",
+    "frontend/src/components/landing/LandingTree.tsx",
+    "frontend/src/components/landing/LandingArbre.module.css"
+  ],
+  "previousJournalEntriesPreserved": true
+}

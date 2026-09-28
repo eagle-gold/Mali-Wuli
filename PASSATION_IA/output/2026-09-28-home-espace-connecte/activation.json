@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "kind": "frontend-only-sources-and-targets",
+  "at": "2026-09-28T18:35:34.996Z",
+  "phase": "after",
+  "release": "20260928-home-session-r2",
+  "targets": {
+    "frontend": "versions/20260928-home-session-r2",
+    "backend": "versions/20260928-suppressions-droits"
+  },
+  "buildId": "ZbOkxHyHSm-qkR0dR9Qeh",
+  "files": 230,
+  "frontendFiles": 127,
+  "backendFiles": 103,
+  "backendUnchanged": true,
+  "databaseRequests": 0,
+  "databaseWrites": 0,
+  "remoteWrites": 0
+}

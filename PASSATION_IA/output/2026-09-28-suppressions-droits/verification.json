@@ -1,0 +1,53 @@
+{
+  "status": "published_verified",
+  "startedAt": "2026-09-28 20:04:57 CEST",
+  "externalActions": [
+    "Backend current versions/20260928-priorite-membres-home → versions/20260928-suppressions-droits, redémarrage Passenger",
+    "Frontend current versions/20260928-priorite-membres-home → versions/20260928-suppressions-droits, build dj5SeEGNIha9psRUR-GDY → cNI0N04igTlrU9KwyDz4k, redémarrage Passenger",
+    "Anciennes versions et uploads conservés ; aucune migration, aucun import, aucune modification de données métier"
+  ],
+  "release": "20260928-suppressions-droits",
+  "previousRelease": "20260928-priorite-membres-home",
+  "previousBuildId": "dj5SeEGNIha9psRUR-GDY",
+  "backendTests": 81,
+  "uiGroups": 8,
+  "fixtureScenarios": 4,
+  "deployScriptGroups": 6,
+  "migrationRequired": false,
+  "realDataWrites": 0,
+  "sourceFiles": 230,
+  "browserProof": "browser-qa.json",
+  "remaining": "Aucun travail partiel ; attendre prochaine demande.",
+  "completedAt": "2026-09-28T20:26:08.152808+02:00",
+  "buildId": "cNI0N04igTlrU9KwyDz4k",
+  "database": "u668963025_maliwuli",
+  "appliedMigrations": 14,
+  "realRoleChanges": 0,
+  "currentFrontend": "versions/20260928-suppressions-droits",
+  "currentBackend": "versions/20260928-suppressions-droits",
+  "publicRoutes": 25,
+  "publicAssets": 62,
+  "proofs": [
+    "frontend-public.json",
+    "frontend-candidate.json",
+    "source-current.json",
+    "database-before.json",
+    "database-after.json",
+    "api-before-frontend.json",
+    "browser-qa.json"
+  ],
+  "limitations": [
+    "Suppressions et désactivations exercées sur fixtures RAM, sans compte réel",
+    "Pas de téléphone physique/Safari ; sockets vérifiés par mocks",
+    "Désactivation réversible des comptes retenue par prudence, aucune suppression définitive de compte implémentée"
+  ],
+  "gitFinal": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedModified": 69,
+    "untrackedEntries": 88,
+    "untrackedFiles": 162,
+    "commits": 0,
+    "pushes": 0
+  }
+}

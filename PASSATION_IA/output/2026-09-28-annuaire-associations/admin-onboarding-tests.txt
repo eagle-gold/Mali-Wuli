@@ -1,0 +1,15 @@
+PASS own profile separates verified, pending and refused affiliations
+PASS unpublished associations remain private and have no broken public detail links
+PASS pending, suspended and uninitialized accounts never request management API
+PASS validated responsible finds photo and approval management without self affiliation; admin gets dedicated link
+PASS management API failure has an independent retry and recovers without changing affiliations
+PASS optional step allows skip but prevents leaving while affiliation/proposal/final save is pending
+PASS affiliation request and cancellation use direct scoped API and refresh visible state
+PASS affiliation failure preserves previous state and releases busy controls
+PASS steps 4 → 5 → confirmation retain legacy snapshot without association fields
+PASS all legacy editing URLs remain stable; association edit returns without resaving onboarding
+PASS five-step indicator retains visible wrapping labels and current step semantics
+PASS admin access guard and required validated responsible selection
+PASS admin creation sends profile ID and exposes saved association photo-management link
+PASS suggestion preparation creates nothing; review status mutation refreshes pending list
+14 groups passed; all API, router and storage interactions mocked. No production or DB access.

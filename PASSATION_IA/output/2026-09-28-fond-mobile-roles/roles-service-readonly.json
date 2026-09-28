@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T17:18:27.301Z",
+  "database": "u668963025_maliwuli",
+  "databaseWrites": 0,
+  "migrations": 13,
+  "ownerProtected": true,
+  "adminCount": 1,
+  "ordinaryDenied": true,
+  "memberCount": 2,
+  "assignableRoles": [
+    "MEMBRE",
+    "MODERATEUR"
+  ],
+  "checks": [
+    "compiled candidate service on real database via read-only proxy",
+    "principal identity and status",
+    "role catalogue",
+    "member list and owner protection",
+    "ordinary access denied",
+    "no tokenVersion disclosure",
+    "13 unchanged migrations"
+  ],
+  "limitations": [
+    "No JWT minted; HTTP authorization covered by guarded tests.",
+    "No real role changed or account validated."
+  ]
+}

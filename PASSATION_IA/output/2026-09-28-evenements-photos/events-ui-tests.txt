@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "checks": [
+    "photo-validation-10MiB-JPEG-PNG-WebP-and-sequential-partial-failure-cancellation",
+    "date-tile-uses-event-timezone-at-month-boundary",
+    "participation-POST-DELETE-capacity-owner-pending-start-and-local-end-boundaries",
+    "list-real-counts-filters-pagination-and-own-proposals-all-dates",
+    "album-upload-and-delete-rights-and-local-deletion-confirmation",
+    "album-cancels-remaining-files-after-active-save-and-resume-skips-successes",
+    "album-and-participants-pagination-use-independent-endpoints-and-limits",
+    "detail-revoked-access-removes-data-and-controls-transient-errors-keep-album-mounted",
+    "organizer-contact-created-only-on-click-by-profile-id-no-self-contact"
+  ],
+  "simulatedActions": 14,
+  "networkCalls": 0,
+  "databaseWrites": 0,
+  "limitations": [
+    "In-memory React hooks, API, router and fixed date; browser geometry and native dialog checked separately",
+    "Backend enforces access and upload content validation independently"
+  ]
+}

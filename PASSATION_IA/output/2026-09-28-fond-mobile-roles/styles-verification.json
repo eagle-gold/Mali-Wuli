@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "checks": [
+    "Tailwind compilation without warnings",
+    "page token and generated CSS variable background",
+    "six shrinkable OTP tracks",
+    "all staged CSS modules parse"
+  ],
+  "cssModules": 6,
+  "generatedCssBytes": 84394,
+  "limitations": [
+    "Browser geometry, keyboard, responsive content and bottom navigation verified separately by the main agent"
+  ]
+}

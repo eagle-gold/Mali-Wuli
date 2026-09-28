@@ -1,0 +1,757 @@
+{
+  "generatedAtUtc": "2026-09-26T00:01:15.265726+00:00",
+  "sourcePath": "/Users/ibrahimakonate/Documents/ChatGPT/MALI-WULI-hostinger-integration",
+  "note": "Empreintes seulement ; aucun fichier .env, dépendance, build, upload, dump de base ou secret copié. Ne constitue pas une sauvegarde du code ni une preuve de correspondance totale avec la production.",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 849,
+      "sha256": "b855cf8d58a2c569b11a862c67971608ffc631fe4f39d68cb53b82f8e2f9c673"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4893,
+      "sha256": "f1e43ba1fbdbd9eee9c7869554acdb5a010d87f7f06143546b70bdb1b71e5a01"
+    },
+    {
+      "path": "Specification_Fonctionnelle_Mali_Wuli.md",
+      "bytes": 24609,
+      "sha256": "84b8361c0f87577cb4b0135897ff0299a0712c710d84095297036467ebb5311d"
+    },
+    {
+      "path": "backend/COMMUNITY_API.md",
+      "bytes": 6912,
+      "sha256": "cad01e2b81e626b521beb2420faa84a68db408ac4dd70ed50cfd60617def1586"
+    },
+    {
+      "path": "backend/SOCIAL_API.md",
+      "bytes": 5962,
+      "sha256": "aa6c303e4936de6ad32be0be6ebd23f34c41a4021246f63bb6bf34c95cd8cf71"
+    },
+    {
+      "path": "backend/package-lock.json",
+      "bytes": 133193,
+      "sha256": "75c5ef51ae6d62ed163d5b4bfd45a73f6e9f33fa0e8bd2bcc9cae70a515d7711"
+    },
+    {
+      "path": "backend/package.json",
+      "bytes": 3010,
+      "sha256": "f7416271d668b3d70bded9931fb35719e7b5bf68a861ea988430212b9567271e"
+    },
+    {
+      "path": "backend/prisma/migrations/20260919000000_production_baseline/migration.sql",
+      "bytes": 35614,
+      "sha256": "cce2ac6952f274f7b635723ea5f12b5906c35ce8967ed8d7a4cd61ce9614e963"
+    },
+    {
+      "path": "backend/prisma/migrations/20260920000000_social_realtime_mysql/migration.sql",
+      "bytes": 8615,
+      "sha256": "80631dea47bcb51046a1fc3b23e40c29412eeac437b855167ec3371026a3b61c"
+    },
+    {
+      "path": "backend/prisma/migrations/20260920010000_onboarding_mentorat/migration.sql",
+      "bytes": 444,
+      "sha256": "f110deabb5f61e1fe3ad2c611445c929137bb819db2e006d813663f769e315a7"
+    },
+    {
+      "path": "backend/prisma/migrations/20260920020000_community_features_mysql/migration.sql",
+      "bytes": 2350,
+      "sha256": "567066e767bf218e35129fc037f375943095bf47f927a5fda34944f4f6e7f099"
+    },
+    {
+      "path": "backend/prisma/migrations/20260920030000_password_reset_codes/migration.sql",
+      "bytes": 729,
+      "sha256": "4305efa25267845f1f32d0f5e1e44df73d5a978c9971064c7c098b67a90c946d"
+    },
+    {
+      "path": "backend/prisma/migrations/20260920040000_onboarding_snapshot/migration.sql",
+      "bytes": 220,
+      "sha256": "6d6a7a460933a120c8c3baa635646b8ee76dab7038175f29fbddc9e8b43a25b5"
+    },
+    {
+      "path": "backend/prisma/migrations/20260920050000_community_long_urls/migration.sql",
+      "bytes": 263,
+      "sha256": "0cac845f1ac5053d5902669e3e75d13e548fc4c61313c2f8f49bb1a1b7a85861"
+    },
+    {
+      "path": "backend/prisma/migrations/20260920060000_auth_session_version/migration.sql",
+      "bytes": 229,
+      "sha256": "d4b0915b5d5cec58a122a9809ff599aa2daeb231b10bebae1176745b4fb457fa"
+    },
+    {
+      "path": "backend/prisma/migrations/20260920070000_login_otp_codes/migration.sql",
+      "bytes": 722,
+      "sha256": "78b378b0cd3621d9f5acb8d61af58eed67daad1821df85ec8b496de30b21cfd2"
+    },
+    {
+      "path": "backend/prisma/migrations/20260921000000_school_curriculum_diplomas/migration.sql",
+      "bytes": 120,
+      "sha256": "aea82cd2800da468e412d1b2c4e8d0880bbcb4985bcc8d1e9ea573d4473c33d1"
+    },
+    {
+      "path": "backend/prisma/migrations/migration_lock.toml",
+      "bytes": 122,
+      "sha256": "6069a9930667bb7353de5674869e191ad02edcb39aca4d683521b8f7dd366d25"
+    },
+    {
+      "path": "backend/prisma/schema.prisma",
+      "bytes": 33852,
+      "sha256": "0eed7f66482b8574d946c394fb6301e034f8fa2eaf039bffec00c3a7beb5a480"
+    },
+    {
+      "path": "backend/src/education/README.md",
+      "bytes": 4035,
+      "sha256": "1ff86b4e35785fc8d9e5db912e1ed1fd380004a606c8e935c092973b869c96e5"
+    },
+    {
+      "path": "backend/src/education/catalog-data.ts",
+      "bytes": 45847,
+      "sha256": "ff174d8331b0f0ea7ecfd4410d391bc9f6c78f62d54d3a367c6c87f32bbc7af3"
+    },
+    {
+      "path": "backend/src/education/catalog-service.ts",
+      "bytes": 18523,
+      "sha256": "1d6a0941353625d187163454a11b18f1f2b59b0bc4fe8fc809b8df249ef3198e"
+    },
+    {
+      "path": "backend/src/education/catalog-suggestion-service.ts",
+      "bytes": 24718,
+      "sha256": "7047f3c44ddff6deffb97f0f378669dbcff90439b08f8e2a6898e48a834c4101"
+    },
+    {
+      "path": "backend/src/education/deduplication-etablissements.ts",
+      "bytes": 4515,
+      "sha256": "4afc0e3b064c3d4273a155ebfb87e24c5b22f895ef77bb6815a484d0c964391a"
+    },
+    {
+      "path": "backend/src/education/import-mali-osm-utils.test.ts",
+      "bytes": 13335,
+      "sha256": "b12212cf7f67ece7e205c76e67476eb783cee6244fed6fda6fb696e2dbad5445"
+    },
+    {
+      "path": "backend/src/education/import-mali-osm-utils.ts",
+      "bytes": 20780,
+      "sha256": "2a67ee4460f44bb3a394182725c1018900e0b733b5beac5d2fa342f64b1ad3f4"
+    },
+    {
+      "path": "backend/src/education/mali-overture-education.test.ts",
+      "bytes": 9088,
+      "sha256": "685cdcfcf1a9ebecbdfbe6341d91fa993e5e6889a96f413690f7fcf3af1bce7d"
+    },
+    {
+      "path": "backend/src/education/mali-overture-education.ts",
+      "bytes": 19160,
+      "sha256": "d44238fa9a4189785ce7e9f25e257687bd37fcd1e06c999abb92c345b20868f3"
+    },
+    {
+      "path": "backend/src/education/mali-registry-reconciliation.test.ts",
+      "bytes": 10254,
+      "sha256": "85dda7614b31efc5a5e1eb387ad9085d3976e35aecd51cd22556362cddc2fc81"
+    },
+    {
+      "path": "backend/src/education/mali-registry-reconciliation.ts",
+      "bytes": 16702,
+      "sha256": "686f73ed6a9186e3a330e576ec9afa4768b60d82eff52763ed50bea462b3b4d9"
+    },
+    {
+      "path": "backend/src/education/mali-school-registries.test.ts",
+      "bytes": 12154,
+      "sha256": "3b066cce600ea699ac29d3d5a0f4ba2c58d2312bfbea858e22e9652e839c7ea2"
+    },
+    {
+      "path": "backend/src/education/mali-school-registries.ts",
+      "bytes": 15452,
+      "sha256": "1c7f052c15c7cbb067631df51ec87102fc02a6467ccabb2647458a9aee24138d"
+    },
+    {
+      "path": "backend/src/education/normalisation-localisations.test.ts",
+      "bytes": 1596,
+      "sha256": "a7fa19b5d7cbee704a9cf6162ad862be536fadfe67978e341cb93bc386c10595"
+    },
+    {
+      "path": "backend/src/education/normalisation-localisations.ts",
+      "bytes": 2029,
+      "sha256": "e5cf5b76250a09eb7a1c2d328f4a75746413ff8f389a726f9105dfb6b7a4046e"
+    },
+    {
+      "path": "backend/src/education/openrouter-deduplication.ts",
+      "bytes": 5335,
+      "sha256": "f37d74e5fed8b371cab2325331e12d79e7cc045e5b43c4b4d4cc2e80ccb61a54"
+    },
+    {
+      "path": "backend/src/index.ts",
+      "bytes": 5472,
+      "sha256": "95284b5d36a6e1488b3c82141a55beb9f4dc95a4079105ca5f4b933254daac5e"
+    },
+    {
+      "path": "backend/src/lib/auth-token.ts",
+      "bytes": 1738,
+      "sha256": "b9f2226f5d2d584e54352e0fb47e083be41ac1133d03d747704a6121560a0d1c"
+    },
+    {
+      "path": "backend/src/lib/community.ts",
+      "bytes": 1976,
+      "sha256": "06fd3db517277f3e21c62d34381c2429da3edf7485520496273fc8d0b115a746"
+    },
+    {
+      "path": "backend/src/lib/mentor-availability.ts",
+      "bytes": 6522,
+      "sha256": "6dc892bf0f7281b496e30b4957a83f340a3707d69b380c308bdfeb4c2fa4265e"
+    },
+    {
+      "path": "backend/src/lib/prisma.ts",
+      "bytes": 455,
+      "sha256": "d8cf087a75a454381c52f653e38301d0cea62da051d73d21123daf3af7871a32"
+    },
+    {
+      "path": "backend/src/lib/validation.ts",
+      "bytes": 761,
+      "sha256": "b8c87496c2842e3b3738ce1e4d89649722b0b427730cdf0257fba112886b8556"
+    },
+    {
+      "path": "backend/src/middlewares/auth.middleware.ts",
+      "bytes": 2975,
+      "sha256": "f4053a57d0fd41e9a65e1808635a6eeb1a8b4aef1df9d741baf98647bb54137e"
+    },
+    {
+      "path": "backend/src/middlewares/upload.middleware.ts",
+      "bytes": 3799,
+      "sha256": "0f984aea420c89bb5785d934067ff99827178dbc29c3b648f9fa9c331277986b"
+    },
+    {
+      "path": "backend/src/realtime/socket.ts",
+      "bytes": 4146,
+      "sha256": "10779e3e4644393c3243b65d3c83c466bb7431cbb75d93874f0cfb380ef78377"
+    },
+    {
+      "path": "backend/src/routes/admin.routes.ts",
+      "bytes": 11909,
+      "sha256": "b1740a10228f246e2edb4871e5667a7c70d6fa6bd82346065ffe4677e5f1ef68"
+    },
+    {
+      "path": "backend/src/routes/auth.routes.ts",
+      "bytes": 32310,
+      "sha256": "78ae52efc4e31513c69b37f66c1a0e9df2048503e2d59e0582313438b916ec15"
+    },
+    {
+      "path": "backend/src/routes/cercle.routes.ts",
+      "bytes": 16529,
+      "sha256": "9eef5aafb7cbf2373ce9d138263503bc6ae5e35302a9dc24fae9a0f31ac69772"
+    },
+    {
+      "path": "backend/src/routes/education.routes.ts",
+      "bytes": 26907,
+      "sha256": "e626cb54735ab943b852d1bf169fbdb54ceec8491f00da5a7f5a9e2a0cd3962d"
+    },
+    {
+      "path": "backend/src/routes/evenement.routes.ts",
+      "bytes": 19844,
+      "sha256": "de034f9f3e40f59564c7281c61bd49d875e7ffa21fedddb154d3ae0e597d9915"
+    },
+    {
+      "path": "backend/src/routes/message.routes.ts",
+      "bytes": 13671,
+      "sha256": "8472219d7ca066df761a08a3a21d374cb7afb1421206f8f03af8ae64c83ef0f8"
+    },
+    {
+      "path": "backend/src/routes/notification.routes.ts",
+      "bytes": 4241,
+      "sha256": "7406d83f2067ae358a65534a2d61f6b43d00433bcbd6bffcfcfc9fad0b5556b3"
+    },
+    {
+      "path": "backend/src/routes/offre.routes.ts",
+      "bytes": 13099,
+      "sha256": "0287025954ea26cf8edf879d88f58975904ae4ff7ffe6f8bb4e1614e0f39c2bc"
+    },
+    {
+      "path": "backend/src/routes/onboarding.routes.ts",
+      "bytes": 31250,
+      "sha256": "c5bc5cb60e39faddcd3877997e2f3fed04d0e5969d71f2f26856ef51a72a27d1"
+    },
+    {
+      "path": "backend/src/routes/publication.routes.ts",
+      "bytes": 24534,
+      "sha256": "c4ba95495b54df11d778087b713ad1a1cf59a306c6e7c2ddf91e2b200cccc551"
+    },
+    {
+      "path": "backend/src/routes/synergie.routes.ts",
+      "bytes": 10490,
+      "sha256": "42d6eb13e2b7c5d8451cf56aeeafcb60ca669213c18b743b10526ec6fc2f070b"
+    },
+    {
+      "path": "backend/src/routes/user.routes.ts",
+      "bytes": 17945,
+      "sha256": "df1ada956091855d9c134d332521037cebba26fbc29d7d639198232498060b2c"
+    },
+    {
+      "path": "backend/src/routes/volontaire.routes.ts",
+      "bytes": 20227,
+      "sha256": "05f87013dd1b66bb6c83a544b9e41a1c1e0c13aa1b36252250a049fda9b1ab33"
+    },
+    {
+      "path": "backend/src/scripts/audit-education-dedup.ts",
+      "bytes": 5965,
+      "sha256": "84a5aad8c47a3c7efe086bbac21350c0dfec3c482bd96c2101c98f28e96abe90"
+    },
+    {
+      "path": "backend/src/scripts/check-onboarding-canonical-security.ts",
+      "bytes": 3641,
+      "sha256": "2ca04d6d209f68e5b0d8a753396315858eb6e82152cf16b438ba5167b1dbcf39"
+    },
+    {
+      "path": "backend/src/scripts/import-canada-education.ts",
+      "bytes": 7851,
+      "sha256": "1c049d70f09d8f1ac84c6e049979f141bc16d0f9f151b1a5976d71e6b7e4ef87"
+    },
+    {
+      "path": "backend/src/scripts/import-france-education.ts",
+      "bytes": 8964,
+      "sha256": "12be301024fae153dcaa60ba34c2fdd79a5800cfe1d88a7931dc53f061f6eaf5"
+    },
+    {
+      "path": "backend/src/scripts/import-france-programmes.ts",
+      "bytes": 29138,
+      "sha256": "1ccce4f756ecef7e3145c6156e6146b4f54889f089e0f6c91986721c5e250663"
+    },
+    {
+      "path": "backend/src/scripts/import-mali-campus-programmes.ts",
+      "bytes": 24303,
+      "sha256": "31ee683fb32dca3e992a874f017c965e273b8a997db9b07c42161ccb7585fb71"
+    },
+    {
+      "path": "backend/src/scripts/import-mali-osm-education.ts",
+      "bytes": 16449,
+      "sha256": "9d68ea876afbb34aa2ab2daf57d2f733e0921579c9fd676fdf70bb9d9783cf09"
+    },
+    {
+      "path": "backend/src/scripts/import-mali-overture-education.ts",
+      "bytes": 22798,
+      "sha256": "a09d8bd02cbf5598399c052469938bbbfb21dec146794190bc2a3d98813b75a1"
+    },
+    {
+      "path": "backend/src/scripts/import-mali-school-registries.ts",
+      "bytes": 36082,
+      "sha256": "322031b6e18943eaa9e3d9c8fe0dcad490a8765bf57e930fe70cccc7cc1bb4b7"
+    },
+    {
+      "path": "backend/src/scripts/import-maroc-education.ts",
+      "bytes": 8929,
+      "sha256": "72477244effd9a6f4c250121b4064a709cb89956e20feea90b89ac868d3371a4"
+    },
+    {
+      "path": "backend/src/scripts/import-ror.ts",
+      "bytes": 14333,
+      "sha256": "ed124be7c12f9cbae960a402a6211636f4ca0a8d4d374ec005b92be01f25ad97"
+    },
+    {
+      "path": "backend/src/scripts/normalize-mali-establishment-cities.ts",
+      "bytes": 2934,
+      "sha256": "2453ba7a5347e0277993dc0e9feae4c52ae469003fd9a2f59292d193290ea2e9"
+    },
+    {
+      "path": "backend/src/scripts/reconcile-mali-education-duplicates.ts",
+      "bytes": 9750,
+      "sha256": "1d5f670675290087cc68949b309ede5deb9b8c94d029317100812a88b76e3977"
+    },
+    {
+      "path": "backend/src/scripts/reconcile-mali-school-registries.ts",
+      "bytes": 7431,
+      "sha256": "894a4319982a404ce5f95ee75c3c5ade8148f53099d9973ce17771cfa97d05cd"
+    },
+    {
+      "path": "backend/src/scripts/reconcile-profile-school-catalogue.ts",
+      "bytes": 3701,
+      "sha256": "dfa9bc822443e8b3941813a491f9e44f70b9ef62b2780553f4b8cd15cdfcbe3d"
+    },
+    {
+      "path": "backend/src/scripts/seed-education.ts",
+      "bytes": 26060,
+      "sha256": "795e8a2aa2db8ffb2ec01f21ae09405cc61ae8be5055e66933ab8754c0eb923b"
+    },
+    {
+      "path": "backend/src/scripts/smoke-community.ts",
+      "bytes": 9339,
+      "sha256": "b2bf711c2246c9f40fd9090f3195fd1755f451c9c340cc16a77a0aacd86fa7a3"
+    },
+    {
+      "path": "backend/src/scripts/smoke-login-otp.ts",
+      "bytes": 5739,
+      "sha256": "92865a063e3bad72f9e725b62579d1687d09522517780340671e08540dec5403"
+    },
+    {
+      "path": "backend/src/scripts/smoke-social.ts",
+      "bytes": 6310,
+      "sha256": "2faa15247d08988ea6c615a5d11218e7b18b1c6117e79b6a5fd63e1bae33bfb2"
+    },
+    {
+      "path": "backend/src/services/email.service.ts",
+      "bytes": 4328,
+      "sha256": "af5ac46b5f69cd93b37eb440fdaf5af5980be08c2872ff40a508ed9c8d94000e"
+    },
+    {
+      "path": "backend/src/services/notification.service.ts",
+      "bytes": 1989,
+      "sha256": "4b0a475203602213c1d4e9d18772bd39b084668494f62e7e7414780cd013a1aa"
+    },
+    {
+      "path": "backend/src/services/onboarding-education-validation.ts",
+      "bytes": 9822,
+      "sha256": "3955b70b3c9e013d527f74bce946770afaff938e8cc06dad1aeb3347b8f1e69b"
+    },
+    {
+      "path": "backend/src/services/onboarding-school-records.test.ts",
+      "bytes": 12534,
+      "sha256": "9cb73134e441ff94e1c533e7263438ba66a80ffc54278919eae8152b508516a3"
+    },
+    {
+      "path": "backend/src/services/onboarding-school-records.ts",
+      "bytes": 4513,
+      "sha256": "7bbe69014e5e68d4da5abc187f784240f6c613805dcc40fe1b5ba9e146143539"
+    },
+    {
+      "path": "backend/tsconfig.json",
+      "bytes": 445,
+      "sha256": "d49bdb658f222bf369488db5a7ef7f7193b692a31fc4f8d4fc979122df280caf"
+    },
+    {
+      "path": "frontend/next.config.js",
+      "bytes": 3132,
+      "sha256": "e13bd814a1df6464dcc34f0e78cf77f0fe9ec28047f8d219434864b057848f22"
+    },
+    {
+      "path": "frontend/package-lock.json",
+      "bytes": 249549,
+      "sha256": "c87bfc6a22b1cbc3b3bc47193746cdaefb06d03a13d229c2dba94a8eb717ca16"
+    },
+    {
+      "path": "frontend/package.json",
+      "bytes": 1190,
+      "sha256": "9333d06a1384080839077e12e4d25096acbc4f947c8a13623d4109d95f9599de"
+    },
+    {
+      "path": "frontend/postcss.config.js",
+      "bytes": 83,
+      "sha256": "fa650b380adfabb151a0b352f7135e107e6352345f899060f1c5c231228f94bf"
+    },
+    {
+      "path": "frontend/public/images/logo-mali-wuli.png",
+      "bytes": 171168,
+      "sha256": "608bf62ba790f79e9bc53ad8a13a3a6e06e17a19a0864d3eff5c78d8c56164d8"
+    },
+    {
+      "path": "frontend/src/app/(admin)/admin/page.tsx",
+      "bytes": 16481,
+      "sha256": "3294874ddce1e04974125bbcc32e85de2cb71f317762c7d88d6c6ec20c39f3e4"
+    },
+    {
+      "path": "frontend/src/app/(auth)/forgot-password/page.tsx",
+      "bytes": 3611,
+      "sha256": "9f849224094b167b8287393b5f157d1034a35490c3d566a8bc91cd44626d402e"
+    },
+    {
+      "path": "frontend/src/app/(auth)/layout.tsx",
+      "bytes": 298,
+      "sha256": "dcd35965e7d90bfee2653c5c06a87c6849451c44a650a2d6f04975ca4b9dab86"
+    },
+    {
+      "path": "frontend/src/app/(auth)/login/page.tsx",
+      "bytes": 20531,
+      "sha256": "36b90616229d8b3bc3b1d4857233aec6537effe2199532f48713a54ab60e5bac"
+    },
+    {
+      "path": "frontend/src/app/(auth)/onboarding/page.tsx",
+      "bytes": 15945,
+      "sha256": "53d0e3ccbfe8532320e93e04cd989f27016f33f176b6154291a0c9b64a8a7c22"
+    },
+    {
+      "path": "frontend/src/app/(auth)/register/details/page.tsx",
+      "bytes": 10630,
+      "sha256": "ed896318f61c824f7dcb6cfb5df1a2831588b178e4bf7a6694ad95bc9e739e1c"
+    },
+    {
+      "path": "frontend/src/app/(auth)/register/page.tsx",
+      "bytes": 3762,
+      "sha256": "365797a78955a7c892052339be1baf3dd3d1b8f7a85028c639945772e68cc040"
+    },
+    {
+      "path": "frontend/src/app/(auth)/reset-password/page.tsx",
+      "bytes": 9777,
+      "sha256": "f67cbe06ba2691c8f4a3d8d3bba21f38b759afa794c67f0d8347df952c2b7e4c"
+    },
+    {
+      "path": "frontend/src/app/(auth)/verify-email/page.tsx",
+      "bytes": 6914,
+      "sha256": "13bfc68e69341afce0d9fff4624649aae256a0796afd26977851b26c0c17d3d7"
+    },
+    {
+      "path": "frontend/src/app/(platform)/agenda/page.tsx",
+      "bytes": 14859,
+      "sha256": "9bcb8eccc8b4bf8ca5b9b4594f5307aa89b6412ff39fac8921534f2a63c3c739"
+    },
+    {
+      "path": "frontend/src/app/(platform)/annuaire/page.tsx",
+      "bytes": 11403,
+      "sha256": "07b1b19849a7b4dbda989f0a14898e92e7ccb3796f3e5ad6177c4fbf2a88934e"
+    },
+    {
+      "path": "frontend/src/app/(platform)/cercles/page.tsx",
+      "bytes": 10904,
+      "sha256": "8a595d2e96818449ec3d9bbac9a8c202107f6bfd0c66d70d9fff99ec1b5f59d8"
+    },
+    {
+      "path": "frontend/src/app/(platform)/dashboard/page.tsx",
+      "bytes": 134,
+      "sha256": "52a488c9732025b24c0bb14af69ab2ff0bba73ed583b785a2b2c25bb81372425"
+    },
+    {
+      "path": "frontend/src/app/(platform)/education/etablissements/[id]/page.tsx",
+      "bytes": 283,
+      "sha256": "ee3694adfaa846248649769294e4875fc7ce128072240c3639396471170b2496"
+    },
+    {
+      "path": "frontend/src/app/(platform)/education/page.tsx",
+      "bytes": 169,
+      "sha256": "a248e8143c33260a80831f82122909270299ffe67e18e625c11773b657ad1065"
+    },
+    {
+      "path": "frontend/src/app/(platform)/evenements/page.tsx",
+      "bytes": 16101,
+      "sha256": "8115495d7e0cd362af1e65e7da5a7e79aeecc729a59fe03634d354cabc7540ec"
+    },
+    {
+      "path": "frontend/src/app/(platform)/layout.tsx",
+      "bytes": 1332,
+      "sha256": "d0b6ecf4d4aaa966b28939d512bd148b37436f1977c81626a1ddea65796562a0"
+    },
+    {
+      "path": "frontend/src/app/(platform)/messages/page.tsx",
+      "bytes": 128,
+      "sha256": "c5838338f32c55e18ec3cb2e315840df2bfe68447aee293a2a8a70bb28d60936"
+    },
+    {
+      "path": "frontend/src/app/(platform)/offres/page.tsx",
+      "bytes": 20577,
+      "sha256": "922263cf4596fae5dbbb95fab235bc288003b7292a4146c481dd6634ab042a10"
+    },
+    {
+      "path": "frontend/src/app/(platform)/profil/page.tsx",
+      "bytes": 131,
+      "sha256": "86d91bbdfd4ee86ddf905edbb599bdc5a7fafa92442951dc501ae8807d9aa321"
+    },
+    {
+      "path": "frontend/src/app/(platform)/synergies/page.tsx",
+      "bytes": 12249,
+      "sha256": "bfca7eb9c5bacf0c0a38995b68e1b0d0cd7f47973570b3df5b0a8a80f717b007"
+    },
+    {
+      "path": "frontend/src/app/(platform)/volontaires/page.tsx",
+      "bytes": 15308,
+      "sha256": "24f7e7d6eb271ca8986481ad581142ac11691d6b0cee47ee2f01eea286c19472"
+    },
+    {
+      "path": "frontend/src/app/api/education/institutions/route.ts",
+      "bytes": 3881,
+      "sha256": "8d29a3e782fe16351fce6c11056f1340cdc8d4d8747b47f770c1ed86b8186aeb"
+    },
+    {
+      "path": "frontend/src/app/api/education/programmes/route.ts",
+      "bytes": 4544,
+      "sha256": "2517457cff934f32a714d5079f80cf3fa46786f4536fdfdb741968d4a0179497"
+    },
+    {
+      "path": "frontend/src/app/api/education/reference/route.ts",
+      "bytes": 2713,
+      "sha256": "6757e3ba9705a3737672940bd303b8b8f292cc57e168df2ad969fda3ad244749"
+    },
+    {
+      "path": "frontend/src/app/api/locations/cities/route.ts",
+      "bytes": 4985,
+      "sha256": "27c2afcc133ce25dc5aaf25249601e8c8d5111ef6bd6bb2b63333af42428737c"
+    },
+    {
+      "path": "frontend/src/app/api/locations/countries/route.ts",
+      "bytes": 1631,
+      "sha256": "d73796a8a58a9fcc7259de30cf021e0c9f6c09e64541bd1014fff14923b8ca10"
+    },
+    {
+      "path": "frontend/src/app/globals.css",
+      "bytes": 884,
+      "sha256": "2e7c8fb1aba18d2b4f337511bacf621eb1b9ba28609f58e31ef001b79cfa9c08"
+    },
+    {
+      "path": "frontend/src/app/layout.tsx",
+      "bytes": 1230,
+      "sha256": "e2df7fa2c62967cff30ffc134bd2ab0cdac8bcc90f6f790af6b5c108b4a123a7"
+    },
+    {
+      "path": "frontend/src/app/page.tsx",
+      "bytes": 3324,
+      "sha256": "d234d5f8ec4e9ef7a4346d7c9b2941b03c2aed59262212cf7ecd7d72b480009b"
+    },
+    {
+      "path": "frontend/src/components/MaliWuliHeader.tsx",
+      "bytes": 17120,
+      "sha256": "d28f8e89070b4a3b202ccbeab0d23eb3ffabc6a46b6dadfd140081116b52e964"
+    },
+    {
+      "path": "frontend/src/components/auth/PlatformAuthGuard.tsx",
+      "bytes": 2068,
+      "sha256": "fcb0164cf9c09fa1b0462971f9fd21c060a544743d6576edb488887174e91f6e"
+    },
+    {
+      "path": "frontend/src/components/community/CommunityUi.tsx",
+      "bytes": 2775,
+      "sha256": "8d4def1ec89a840e89322f70d4bebea813980c7045ba18995fc4acefb37babc9"
+    },
+    {
+      "path": "frontend/src/components/education/CatalogueEtablissements.tsx",
+      "bytes": 10546,
+      "sha256": "79ee8f29e2095b251ebb44ef7681a73273d486e51f2292e3dc87244683af3a93"
+    },
+    {
+      "path": "frontend/src/components/education/FicheEtablissement.tsx",
+      "bytes": 13295,
+      "sha256": "3f46242b1baeb59e57238d9d71cb6b4da6922ba44eecb04ba55684855694916d"
+    },
+    {
+      "path": "frontend/src/components/education/NoteEtoiles.tsx",
+      "bytes": 684,
+      "sha256": "ca6d6d1b11dd131eed4aa91ad9419524c426b62a3fd928719c026e3574069773"
+    },
+    {
+      "path": "frontend/src/components/education/types-etablissements.ts",
+      "bytes": 1865,
+      "sha256": "a5ba4153e034782cfe3f371834c66d8929cbd024aacbfdb1eac1943bac8cd219"
+    },
+    {
+      "path": "frontend/src/components/feed/ActualiteFeed.tsx",
+      "bytes": 73315,
+      "sha256": "bd9ede30995db2745cee914fff263edb694da8cf1b40508b1876156f8299d557"
+    },
+    {
+      "path": "frontend/src/components/messages/Messagerie.tsx",
+      "bytes": 32608,
+      "sha256": "96891c8b59ae4ecbdde82e53f7932517b810b87d6775fa867852345c0ad50335"
+    },
+    {
+      "path": "frontend/src/components/notifications/NotificationsPopover.tsx",
+      "bytes": 15511,
+      "sha256": "0ca97496b278286da7420214e791c1ecaeb3026e9e2c0c644908166b86e3570b"
+    },
+    {
+      "path": "frontend/src/components/onboarding/SearchCombobox.tsx",
+      "bytes": 8760,
+      "sha256": "620f8a282e532ea92f1b2332a0d23f8751846e7538a0583ccdf61ea0b977bd13"
+    },
+    {
+      "path": "frontend/src/components/onboarding/StarRating.tsx",
+      "bytes": 1827,
+      "sha256": "5928f7598ac0bca601e3ba3dbde9bcc476b7956f5f9ba5db82d12716ef356e4f"
+    },
+    {
+      "path": "frontend/src/components/onboarding/StepExperiences.tsx",
+      "bytes": 18947,
+      "sha256": "50239005b9e899ec04e19ac69eca3bec73ebabb63394a34ee8b9c7859f287074"
+    },
+    {
+      "path": "frontend/src/components/onboarding/StepFormations.tsx",
+      "bytes": 93210,
+      "sha256": "93976529d16ef3ba2229de77f73fb95edf58273d333690fa57665038710dc955"
+    },
+    {
+      "path": "frontend/src/components/onboarding/StepIndicator.tsx",
+      "bytes": 2554,
+      "sha256": "73800aa908d8fcedbe11b4c3a2bdd0c860cebc35739ae14d35f29e281b400a7d"
+    },
+    {
+      "path": "frontend/src/components/onboarding/StepInformations.tsx",
+      "bytes": 14370,
+      "sha256": "df1e56742f8fa549e50c27a341b5a376c2de7196fb3e4e0d3f48577a41bfc04f"
+    },
+    {
+      "path": "frontend/src/components/onboarding/StepMentorat.tsx",
+      "bytes": 36624,
+      "sha256": "0a320ee99703518d7f1b89e9b79c61aab0a3f9593d1bab4e8f6921292ebc79dd"
+    },
+    {
+      "path": "frontend/src/components/profile/ProfilMembre.tsx",
+      "bytes": 48894,
+      "sha256": "96c031cf827a063d44fa9ae0fdc5464e8c60d3acdbd6acc06d16ef8133486546"
+    },
+    {
+      "path": "frontend/src/hooks/useCountries.ts",
+      "bytes": 791,
+      "sha256": "0ac69fc70b25c4470901d2568731778d90460cb293b516d3970d6b65033b3b06"
+    },
+    {
+      "path": "frontend/src/hooks/useSocket.ts",
+      "bytes": 1808,
+      "sha256": "87d781db55fabbe8053079f47a647ea33ef3da5faf350c6d126ea3e9d93b2691"
+    },
+    {
+      "path": "frontend/src/lib/api.ts",
+      "bytes": 1118,
+      "sha256": "85737bcfb6456b4ccef87c93b68ba1c26a856fc542d7d0460c75402e4ed10290"
+    },
+    {
+      "path": "frontend/src/lib/community.ts",
+      "bytes": 1455,
+      "sha256": "5e404468729c6729c86fa2050037d939b3e3a2b6f572beb3bdaade01b683cab4"
+    },
+    {
+      "path": "frontend/src/lib/education/parcours-scolaire.test.ts",
+      "bytes": 5623,
+      "sha256": "3e137b1972f8b0dfe4ac08d7725ec79dda2b3e249bfff67c9bd54afaab6aed71"
+    },
+    {
+      "path": "frontend/src/lib/education/parcours-scolaire.ts",
+      "bytes": 2542,
+      "sha256": "427c6da93e0e8bb4e1f8b384de420a288fc263b2dcef0ec0d9dbb7e36c2491e4"
+    },
+    {
+      "path": "frontend/src/lib/education/reference.ts",
+      "bytes": 19032,
+      "sha256": "90e86d640320e6e46c3836c59011470214d1c6b360de34546952b0f8e33f2a4d"
+    },
+    {
+      "path": "frontend/src/lib/education/suivi.ts",
+      "bytes": 5217,
+      "sha256": "e4bcd49724f56f3f7228a2fddd0c01c12ed82bd820e1a7d56ef09bdca76f579d"
+    },
+    {
+      "path": "frontend/src/lib/media.ts",
+      "bytes": 383,
+      "sha256": "4b1fd273668c2ccb5cff8ea8e50a22a0c95c3a2a71239bb3f9eb9d7940acdd7f"
+    },
+    {
+      "path": "frontend/src/lib/periode.ts",
+      "bytes": 1813,
+      "sha256": "942d003bcff28f193e250246fcd37e45e08ec4d5c41bd163e6a42ca6e8c1922d"
+    },
+    {
+      "path": "frontend/src/types/api.ts",
+      "bytes": 4457,
+      "sha256": "de615fd620d378d24e198d1c50de05379b8960d14b3c9acba0900313587a1488"
+    },
+    {
+      "path": "frontend/src/types/index.ts",
+      "bytes": 4099,
+      "sha256": "9c7015d1ab2f81544267026baaae023e9117fd9bcf989411c1ebea11f9a543b2"
+    },
+    {
+      "path": "frontend/src/types/profile.ts",
+      "bytes": 4505,
+      "sha256": "8cdd74b3f86d4c2024326fba1a6fa2d63bae2143e6ae25460f87209b19581ff9"
+    },
+    {
+      "path": "frontend/tailwind.config.ts",
+      "bytes": 1170,
+      "sha256": "e6dba660601d8a56af934a7ab1cb52b8affdbe51bbafe7f136d221a96d0e40ea"
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "bytes": 576,
+      "sha256": "1c739283a10f88279fe8dc936de18d9e2737b76db8a12cb00869cf628ed0e9d8"
+    }
+  ]
+}

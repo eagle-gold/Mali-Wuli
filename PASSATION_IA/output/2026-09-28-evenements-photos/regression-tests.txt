@@ -1,0 +1,37 @@
+✔ auth réelle : anonyme refusé, compte en attente limité au routeur onboarding (36.238334ms)
+✔ demande personnelle idempotente pendant onboarding, aucun statut injectable (1.460208ms)
+✔ demander à nouveau conserve VERIFIE ; REFUSE/DECLARE redeviennent EN_ATTENTE (0.754708ms)
+✔ seul le responsable de cette association ou admin décide, jamais auto-approbation (1.318459ms)
+✔ profil non validé/incomplet ne peut pas devenir membre vérifié (0.812542ms)
+✔ roster vérifié seul, membres privés et en attente exclus, pas d'e-mail de compte sélectionné (2.844583ms)
+✔ filtrage annuaire, compte global et facettes gardent leurs sémantiques (2.942209ms)
+✔ création admin exige descriptif complet et responsable valide ; URL dangereuse refusée (3.672458ms)
+✔ PATCH administratif partiel permet d'effacer un responsable legacy sans exposer médias (0.685208ms)
+✔ suggestion onboarding reste interne ; seul admin la traite, sans créer d'association (0.666083ms)
+✔ quitter est personnel, idempotent et possible même après désactivation (0.317917ms)
+✔ gestion ne révèle pas les associations d'un autre responsable et préautorise les uploads (0.547667ms)
+✔ profil public : seules les affiliations validées et actives sont sélectionnées ; coordonnées privées masquées (34.601833ms)
+✔ profil public : compte non visible reste introuvable (0.316541ms)
+✔ annuaire : compteurs et facettes suivent les mêmes règles de visibilité que les membres (1.162625ms)
+✔ annuaire : mauvaise pagination arrêtée avant Prisma (0.370792ms)
+✔ annuaire : membres validés et inscrits, profil courant exclu (1.999ms)
+✔ annuaire : prénom et nom recherchés séparément sans élargir le périmètre (0.256166ms)
+✔ annuaire : établissement et promotion doivent appartenir à la même formation (0.130542ms)
+✔ annuaire : aides limitées aux sujets déclarés par les volontaires (0.124208ms)
+✔ annuaire : années historiques et diplômes scolaires fusionnés dédupliqués (0.106042ms)
+✔ annuaire : filtres invalides refusés avant toute requête (0.394083ms)
+✔ un parcours 2012–2019 accepte brevet 2014 et bac 2019, et les trie (1.860334ms)
+✔ dates des diplômes : hors scolarité et futur refusés, brevet acquis pendant une scolarité en cours accepté (28.772458ms)
+✔ ancien diplôme unique conservé et ordre de saisie ignoré (0.552791ms)
+✔ les brevets professionnels restent des autres diplômes lors de la reprise des anciennes fiches (1.148958ms)
+✔ curriculum français au Mali, type canonique et références contrôlés (1.933625ms)
+✔ les références scolaires réunissent brevet, bac et séries du programme français au Mali (0.551ms)
+✔ POST persiste les deux diplômes et GET les restitue avec et sans snapshot; insertion scolaire exclue (48.044959ms)
+ℹ tests 29
+ℹ suites 0
+ℹ pass 29
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 422.073834

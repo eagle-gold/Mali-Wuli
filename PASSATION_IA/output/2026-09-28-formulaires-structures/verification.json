@@ -1,0 +1,19 @@
+{
+  "statut": "PRET_A_INTEGRER",
+  "depotActifModifie": false,
+  "baseModifiee": false,
+  "productionModifiee": false,
+  "migrationRequise": false,
+  "tests": {
+    "typescript": "PASS",
+    "buildProduction": "PASS",
+    "installateurGardeFou": "PASS",
+    "salaires": { "resultat": "PASS", "total": 5 },
+    "structureStatique": { "resultat": "PASS", "total": 7 }
+  },
+  "compatibilite": {
+    "offresExistantes": "conservees",
+    "salaireBackend": "chaine canonique dans Offre.salaire",
+    "localisationsHistoriques": "conservees en edition"
+  }
+}

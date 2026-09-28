@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-09-28T15:28:52.853Z",
+  "readOnly": true,
+  "database": "u668963025_maliwuli",
+  "frontendCurrent": "versions/20260928-menu-synergies",
+  "frontendBuild": "DPia9wiu4OeyoZRNtEXYH",
+  "backendCurrent": "versions/20260921-profile-schools-r2",
+  "migrations": [
+    {
+      "migration_name": "20260919000000_production_baseline",
+      "finished_at": "2026-09-20T13:50:09.303Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260920000000_social_realtime_mysql",
+      "finished_at": "2026-09-20T13:50:10.516Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260920010000_onboarding_mentorat",
+      "finished_at": "2026-09-20T13:50:10.520Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260920020000_community_features_mysql",
+      "finished_at": "2026-09-20T13:50:11.020Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260920030000_password_reset_codes",
+      "finished_at": "2026-09-20T13:50:11.027Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260920040000_onboarding_snapshot",
+      "finished_at": "2026-09-20T13:50:11.033Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260920050000_community_long_urls",
+      "finished_at": "2026-09-20T13:50:11.053Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260920060000_auth_session_version",
+      "finished_at": "2026-09-20T13:50:11.057Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260920070000_login_otp_codes",
+      "finished_at": "2026-09-20T14:39:37.363Z",
+      "rolled_back_at": null
+    },
+    {
+      "migration_name": "20260921000000_school_curriculum_diplomas",
+      "finished_at": "2026-09-21T13:44:13.790Z",
+      "rolled_back_at": null
+    }
+  ]
+}

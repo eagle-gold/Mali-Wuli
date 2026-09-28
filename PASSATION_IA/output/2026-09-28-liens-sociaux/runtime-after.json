@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T18:54:49.998Z",
+  "release": "20260928-liens-sociaux",
+  "buildId": "MF940TX4N8sLGFRsT_gyN",
+  "targets": {
+    "frontend": "versions/20260928-liens-sociaux",
+    "backend": "versions/20260928-liens-sociaux"
+  },
+  "processes": [
+    {
+      "part": "backend",
+      "pid": 2641321,
+      "comm": "lsnode:/home/u6",
+      "cwd": "/home/u668963025/domains/floralwhite-ram-987223.hostingersite.com/hbuilds/versions/20260928-liens-sociaux/nodejs"
+    },
+    {
+      "part": "frontend",
+      "pid": 2668881,
+      "comm": "next-server (v1",
+      "cwd": "/home/u668963025/domains/mali-wuli.com/hbuilds/versions/20260928-liens-sociaux/nodejs"
+    }
+  ],
+  "routes": [
+    {
+      "route": "/profil",
+      "status": 200,
+      "cdn": "DYNAMIC",
+      "chunksVerified": 13,
+      "pageChunks": [
+        {
+          "path": "/_next/static/chunks/app/(platform)/profil/page-c5cc94d14996beb5.js",
+          "sha256": "86ba37411ff717cc9934f9b8e05f8478e0c3177d76f00c2ccb78f2570f25fe5d",
+          "bytes": 41489
+        }
+      ]
+    },
+    {
+      "route": "/onboarding",
+      "status": 200,
+      "cdn": "DYNAMIC",
+      "chunksVerified": 13,
+      "pageChunks": [
+        {
+          "path": "/_next/static/chunks/app/(auth)/onboarding/page-27361bc778a65ad6.js",
+          "sha256": "76b6ad936486ddabfa5c9a0992bd4d7735dbcc86a503ac8648f0173b7b08bd5a",
+          "bytes": 138110
+        }
+      ]
+    },
+    {
+      "route": "/membres/00000000-0000-4000-8000-000000000000",
+      "status": 200,
+      "cdn": "DYNAMIC",
+      "chunksVerified": 14,
+      "pageChunks": [
+        {
+          "path": "/_next/static/chunks/app/(platform)/membres/%5Bid%5D/page-65ab304e1b411c18.js",
+          "sha256": "92652ee030e71450aba097191a54fa00ed9b583a14667caa8d8beb02b176b57a",
+          "bytes": 10310
+        }
+      ]
+    }
+  ],
+  "uniqueBundlesVerified": 16,
+  "allBundlesMatchCandidate": true,
+  "databaseRequests": 0,
+  "remoteWrites": 0
+}

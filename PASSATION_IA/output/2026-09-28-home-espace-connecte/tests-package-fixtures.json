@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "checks": [
+    "real packager creates frontend-only 127-file archive and preserves 103 backend files",
+    "existing archive, manifest and contract cannot be overwritten",
+    "backend drift blocks packaging before artifact creation",
+    "frontend edits outside reviewed staging are rejected",
+    "staging must be integrated exactly before packaging"
+  ],
+  "activeRepositoryWrites": 0,
+  "databaseRequests": 0,
+  "networkRequests": 0,
+  "realBuilds": 0
+}

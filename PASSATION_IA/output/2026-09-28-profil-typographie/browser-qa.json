@@ -1,0 +1,56 @@
+{
+  "checkedAt": "2026-09-28T21:20:00+02:00",
+  "fixture": "API en mémoire, sans base ni e-mail",
+  "routes": [
+    "http://127.0.0.1:3006/profil"
+  ],
+  "desktop": {
+    "viewportCssPx": { "width": 1422, "height": 1000 },
+    "horizontalOverflow": false,
+    "sectionHeading": {
+      "fontFamily": "Playfair Display, serif",
+      "fontSize": "30px",
+      "lineHeight": "36px",
+      "fontWeight": 700,
+      "textTransform": "none"
+    },
+    "subheading": {
+      "fontFamily": "Playfair Display, serif",
+      "fontSize": "20px",
+      "lineHeight": "28px",
+      "fontWeight": 700
+    }
+  },
+  "mobile": {
+    "viewportCssPx": { "width": 433, "height": 938 },
+    "horizontalOverflow": false,
+    "sectionHeading": {
+      "fontFamily": "Playfair Display, serif",
+      "fontSize": "24px",
+      "lineHeight": "30px",
+      "fontWeight": 700,
+      "textTransform": "none"
+    },
+    "subheading": {
+      "fontFamily": "Playfair Display, serif",
+      "fontSize": "18px",
+      "lineHeight": "24.75px",
+      "fontWeight": 700
+    }
+  },
+  "headingsFoundExactlyOnce": [
+    "Expériences",
+    "Formations",
+    "Réseaux sociaux",
+    "Dans le réseau",
+    "Mon mentorat",
+    "En ce moment sur le réseau",
+    "Mes associations",
+    "Mes contributions"
+  ],
+  "associations": {
+    "nestedAdminPanelPresent": false,
+    "emptyManagementPanelHidden": true
+  },
+  "result": "PASS"
+}

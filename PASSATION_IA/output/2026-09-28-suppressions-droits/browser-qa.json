@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "environment": "localhost4307 RAM only, Next3006",
+  "realDataWrites": 0,
+  "checks": [
+    "Auteur voit son bouton ; bouton absent pour publication étrangère",
+    "Annulation ne retire aucun contenu",
+    "Suppression publication fictive retire immédiatement la carte",
+    "403 conserve la publication et affiche erreur",
+    "Suppression commentaire personnel sur post étranger : compteur 2→1",
+    "Suppression association fictive : confirmation explicite, fiche absente annuaire, membres conservés",
+    "Admin fictif ne peut désactiver son compte",
+    "Désactivation puis rétablissement fictif retourne EN_ATTENTE",
+    "MEMBRES+PUBLICATIONS : aucun bouton de rôle, aucun retrait possible propriétaire/soi/autres délégués",
+    "Responsive membres320, confirmation publication320/375 sans débordement"
+  ],
+  "screenshots": [
+    "membres-mobile.png",
+    "suppression-mobile.png"
+  ],
+  "limitations": [
+    "Pas de compte réel utilisé",
+    "Socket testé en mocks, absent fixture HTTP",
+    "Pas de téléphone physique/Safari"
+  ]
+}

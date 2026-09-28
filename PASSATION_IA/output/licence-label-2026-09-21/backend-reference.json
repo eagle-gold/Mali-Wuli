@@ -1,0 +1,442 @@
+{
+  "programmes": [
+    {
+      "id": "fr-programme-0019ed0c854d64d863449988",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Physique / Chimie / Sciences de l'Ingénieur",
+        "Licence - Portail Physique / Chimie / Sciences de l'Ingénieur - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-01db5349d5ecece9a3c68c40",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Physique-Chimie",
+        "Licence - Portail Sciences de la vie-Chimie",
+        "Licence - Portail Sciences de la vie-Chimie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-05d8bb6110ae6ca325dca2b8",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie",
+        "Licence - Chimie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-0df37907a5f1e25259e64d1b",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Licence Chimie / Licence Physique-Chimie",
+        "Licence - Portail Licence Chimie / Licence Physique-Chimie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-1ed13bd18f9a62448a6ea4eb",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Mathématiques Physique Chimie (MPC)",
+        "Licence - Portail Portail CB : Chimie - Biologie"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-244cf8e08b9e8240fd47a414",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Mathématiques Physique Chimie Sciences de l'Ingénieur",
+        "Licence - Portail Mathématiques Physique Chimie Sciences de l'Ingénieur - Accès Santé (LAS)",
+        "Licence - Portail Mathématiques Physique Chimie Sciences de l'Ingénieur L1 aménagée pour Bac Technologiques"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-44b640f4fdcd0878de18f697",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Biologie-Chimie-Sciences de la Terre (BCST)",
+        "Licence - Portail Biologie-Chimie-Sciences de la Terre (BCST) - Accès Santé (LAS)",
+        "Licence - Portail Biologie-Chimie-Sciences de la Terre (BCST) - cursus kiné",
+        "Licence - Portail Mathématiques, Physique, Chimie (MPC), spécialité Physique, Chimie, Mathématiques (PCm)",
+        "Licence - Portail Mathématiques, Physique, Chimie (MPC), spécialité Physique, Chimie, Mathématiques (PCm) - Accès Santé (LAS)",
+        "Licence - Portail Mathématiques, Physique, Chimie (MPC), spécialité Physique, Chimie, Mathématiques (PCm) - cursus kiné"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-507bfc59aafce0adfb2f2045",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Licence - physique/chimie/sciences de l'ingénieur (PCSI)",
+        "Licence - Portail Licence - physique/chimie/sciences de l'ingénieur (PCSI) - Accès Santé (LAS)",
+        "Licence - Portail Licence - physique/chimie/sciences de l'ingénieur (PCSI) - option Kinésithérapie",
+        "Licence - Portail Licence - physique/chimie/sciences de l'ingénieur (PCSI) - option préPAC (Parfums-Arômes-Cosmétiques)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-59f1d60792fa1383d67e0fe1",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Portail : Chimie, Sciences de la Vie (CSV)",
+        "Licence - Portail Portail : Chimie, Sciences de la Vie (CSV) - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-63620d550895417ec6d3e409",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Physique / Chimie / Sciences de l'Ingénieur"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-6934b6894fc12321c28ffb7f",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie",
+        "Licence - Chimie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-70c5681ac780c74ec85b6da0",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie - Chimie",
+        "Licence - Chimie - Chimie - Accès Santé (LAS)",
+        "Licence - Chimie - Parcours Chimie-Biologie"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-74d2617b9c294c61738f5d68",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Physique, Chimie, Géosciences et Environnement (PCGE)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-776d1e0332e526ae34ea96e5",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Sciences et technologies"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-7af84a40a8e7adc5c718d230",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie",
+        "Licence - Chimie - Accès Santé (LAS)",
+        "Licence - Chimie - BGC",
+        "Licence - Chimie - BGC - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-804f4f212f3d70c326f8b584",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Double licence - Physique / Chimie -",
+        "Licence - Chimie",
+        "Licence - Chimie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-8239e0dba4cd6605451dbcb9",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie",
+        "Licence - Chimie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-84a1c86eab6b35c0b74e415e",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie - Parcours International",
+        "Licence - Portail Sciences et technologies : Chimie",
+        "Licence - Portail Sciences et technologies : Chimie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-852a007fdc9ad509985a8eb0",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Double licence - Sciences de la vie / Chimie -",
+        "Licence - Chimie",
+        "Licence - Chimie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-88ef8ddfeaf2b8d7662945f9",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie",
+        "Licence - Chimie - Accès Santé (LAS)",
+        "Licence - Double diplôme - Licence Chimie - DU Parcours Spéciaux"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-9893d39be3fd0181a188dacb",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Double licence - Histoire - Sciences",
+        "Double licence - LLCER / Sciences - LLCER : ALLEMAND NON DEBUTANT - SCIENCES",
+        "Double licence - Sciences - Droit",
+        "Double licence - Sciences - Philosophie",
+        "Licence - Double diplôme - Licence Chimie - Double diplôme Sciences et Journalisme - Licence Sciences - Bachelor Communication et Journalisme",
+        "Licence - Portail Chimie, Sciences de la Terre, Mécanique",
+        "Licence - Portail Chimie, Sciences de la Terre, Mécanique - Accès Santé (LAS)",
+        "Licence - Portail Physique, Chimie",
+        "Licence - Portail Physique, Chimie - Accès Santé (LAS)",
+        "Licence - Portail Sciences de la Vie, Chimie, Sciences de la Terre",
+        "Licence - Portail Sciences de la Vie, Chimie, Sciences de la Terre - Accès Santé (LAS)",
+        "Licence - Portail Sciences et Chinois"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-9ff9073f028a2b61804770d1",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie",
+        "Licence - Chimie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-a0874f9ca36be25fe39884b0",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Chimie / Informatique / Mathématiques / Physique / Sciences pour l'Ingénieur (Electronique ou Mécanique)",
+        "Licence - Portail Chimie / Informatique / Mathématiques / Physique / Sciences pour l'Ingénieur (Electronique ou Mécanique) - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-a657efded7d5f967266d37d8",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie - Accès Santé (LAS)",
+        "Licence - Portail CSt (Chimie, Sciences de la terre)",
+        "Licence - Portail CSt Excellence Minerve - Chimie Sciences de la terre",
+        "Licence - Portail PC (Chimie, Physique)",
+        "Licence - Portail PC Excellence Minerve - Chimie Physique",
+        "Licence - Portail SvC (Sciences de la vie et Chimie)",
+        "Licence - Portail SvC Excellence Minerve - Sciences de la vie - Chimie"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-ab670d965631d0ef5d63e84c",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie - Portail Louis Pasteur"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-b5b6ee5afd8bb13fc663cd9e",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie - Portail Louis Pasteur",
+        "Licence - Chimie - Portail Marie Curie",
+        "Licence - Chimie - Portail Marie Curie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-bc50d93b7ad86d117d9f1c60",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie - Chimie et Biochimie",
+        "Licence - Chimie - Chimie et Biochimie - Accès Santé (LAS)",
+        "Licence - Chimie - Parcours Biochimie International",
+        "Licence - Portail Physique-Chimie-Mécanique International"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-be8fa87b9c9a5b759c75e205",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Licence 1ère année Physique - Chimie",
+        "Licence - Portail Licence 1ère année Physique - Chimie - Accès Santé (LAS)",
+        "Licence - Portail Licence 1ère année Physique - Chimie parcours Professorat des écoles"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-c640cb0ad7195a8e2062b9b5",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie - Portail Chimie - Biologie",
+        "Licence - Chimie - Portail Chimie - Biologie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-ca17a7a7ba9997507835c7c8",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Double licence - Chimie / Sciences de la vie -",
+        "Licence - Portail Biologie Chimie - Accès Santé (LAS)",
+        "Licence - Portail Biologie-Chimie",
+        "Licence - Portail Chimie-Maths",
+        "Licence - Portail Géologie-Chimie",
+        "Licence - Portail Mathématiques - Chimie - Accès Santé (LAS)",
+        "Licence - Portail Physique Sciences pour l'Ingénieur - Chimie"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-cc07dcfd6d6e6cc94731103d",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie",
+        "Licence - Chimie - Accès Santé (LAS)",
+        "Licence - Chimie - Parcours Mineure Biologie",
+        "Licence - Double diplôme - Licence Chimie - Chimie - Cursus intégré franco-allemand avec l'Université de Bielefeld"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-cdd8f4e490b50eaecb6a809b",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie - Portail Marie Curie",
+        "Licence - Chimie - Portail Marie Curie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-d0e907bc3498aa953726bc6e",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie - Parcours Sciences Exactes et Appliquées",
+        "Licence - Chimie - Parcours Sciences Exactes et Appliquées - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-d8877860a45dadde1140fe74",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail PCSI (Physique-Chimie-Sciences pour l'Ingénieur-Electronique, Energie Electrique, Automatique)",
+        "Licence - Portail PCSI (Physique-Chimie-Sciences pour l'Ingénieur-Electronique, Energie Electrique, Automatique) - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-eb10f76e9ca2ba9d7588fd9c",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Biologie Environnement Chimie du vivant - Licence Accès aux Métiers de l'Enseignement (LAME)",
+        "Licence - Portail Physique, Chimie, Sciences de la Terre et Mécanique (PCSTM)",
+        "Licence - Portail Physique, Chimie, Sciences de la Terre et Mécanique (PCSTM) - Accès Santé (LAS)",
+        "Licence - Portail Physique, Chimie, Sciences de la Terre et Mécanique (PCSTM) - Licence Accès aux Métiers de l'Enseignement (LAME)",
+        "Licence - Portail Portail Biologie Environnement Chimie du vivant",
+        "Licence - Portail Portail Biologie Environnement Chimie du vivant - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-ef566d787a1a68e06aefc16a",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie",
+        "Licence - Chimie - Accès Santé (LAS)"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-ef8426841842227eac357e9b",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-f54f5fb8d8aaf75dda8ff303",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie",
+        "Licence - Portail Plurisciences"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-f87a37fb0c323648769ba572",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-fb819fc4c186a04d55dd242e",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Portail Licence 1ère année Physique - Chimie",
+        "Licence - Portail Licence 1ère année Physique - Chimie - Accès Santé (LAS)",
+        "Licence - Portail Licence 1ère année Physique - Chimie parcours Professorat des écoles"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-fceef1f105e32da0f7ea3b0a",
+      "label": "L1 - Chimie",
+      "specialites": [
+        "Licence - Chimie - Portail Louis Pasteur",
+        "Licence - Chimie - Portail Louis Pasteur - Accès Santé (LAS)",
+        "Licence - Chimie - Portail Marie Curie"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-c2a6f26748d835afe54d80cb",
+      "label": "L1 - Chimie, Sciences de la vie",
+      "specialites": [
+        "Licence - Double diplôme - Licence Chimie, Sciences de la vie - Licence Double-Diplôme Chimie, Sciences de la Vie"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-de97d315638de15a5dd9cc59",
+      "label": "L1 - Chimie, Sciences de la vie",
+      "specialites": [
+        "Licence - Chimie, Sciences de la vie - Chimie - Biologie",
+        "Licence - Chimie, Sciences de la vie - Chimie - Biologie - Accès Santé (LAS)",
+        "Licence - Chimie, Sciences de la vie - Parcours Chimie-Biologie - cursus international"
+      ],
+      "diplomes": []
+    },
+    {
+      "id": "fr-programme-f065860594ea9414d001ec71",
+      "label": "L1 - Chimie, Sciences de la vie",
+      "specialites": [
+        "Licence - Double diplôme - Licence Chimie, Sciences de la vie - Licence Double-Diplôme Chimie, Sciences de la Vie"
+      ],
+      "diplomes": []
+    }
+  ],
+  "couvertureEtablissement": false,
+  "stockage": "postgresql"
+}

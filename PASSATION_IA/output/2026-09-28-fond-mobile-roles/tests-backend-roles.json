@@ -1,0 +1,107 @@
+{
+  "date": "2026-09-28T17:11:48.730768+00:00",
+  "status": "passed",
+  "exitCode": 0,
+  "totals": {
+    "tests": 65,
+    "pass": 65,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "scope": "10 tests rôles + 55 régressions existantes, sans élargissement",
+  "tap": "tests-backend-roles.tap",
+  "workingDirectory": "/Users/ibrahimakonate/Documents/ChatGPT/Mali Wuli/output/2026-09-28-fond-mobile-roles/staging/backend/.verification",
+  "testFiles": [
+    "src/routes/admin-roles.test.ts",
+    "src/routes/offre.routes.test.ts",
+    "src/routes/association.routes.test.ts",
+    "src/routes/evenement.routes.test.ts",
+    "src/routes/user-directory.test.ts",
+    "src/services/annuaire.test.ts"
+  ],
+  "guards": {
+    "file": "/Users/ibrahimakonate/Documents/ChatGPT/Mali Wuli/output/2026-09-28-offres-emploi/tests-backend-guard.cjs",
+    "sha256": "730a8b0397f4fea28d330bfe954edcb5b79a933a84f5093b5549ef49538b3947",
+    "network": "blocked before socket/connect/listen/request/fetch",
+    "prisma": "real requests blocked before execution",
+    "smtp": "createTransport blocked",
+    "uploads": "fresh temporary directory removed at completion"
+  },
+  "sourceHashes": [
+    {
+      "file": "src/lib/roles.ts",
+      "stagingSha256": "996c8312b5f516d8caf0b8dcc9263eadc146aa8f068d43b886821092d633d396",
+      "activeMatchesStaging": true,
+      "verificationMatchesStaging": true
+    },
+    {
+      "file": "src/middlewares/auth.middleware.ts",
+      "stagingSha256": "97a8dd9520e8f398b06f2e6c763176f1645f5a862aa346de955b1dbaff97d069",
+      "activeMatchesStaging": true,
+      "verificationMatchesStaging": true
+    },
+    {
+      "file": "src/routes/admin-roles.test.ts",
+      "stagingSha256": "4c483354ae401d23b03bdae8ffbe15f4a0cbecb7a7d28f1d3dbe4c61262d61d5",
+      "activeMatchesStaging": true,
+      "verificationMatchesStaging": true
+    },
+    {
+      "file": "src/routes/admin.routes.ts",
+      "stagingSha256": "d95e17f4283e981eb5190cf349febc2ba75926995928ca2ab76e44f972ea0494",
+      "activeMatchesStaging": true,
+      "verificationMatchesStaging": true
+    },
+    {
+      "file": "src/routes/association.routes.test.ts",
+      "stagingSha256": "ac92228a56ee5252087e7deb94c0280928e9db5467aa5d6df8677ea75aa47bde",
+      "activeMatchesStaging": true,
+      "verificationMatchesStaging": true
+    },
+    {
+      "file": "src/routes/auth.routes.ts",
+      "stagingSha256": "7d91c9bc523df9ab5aa0c50a607637cdfbe3998110ec11a38fa6b12598e1e1bb",
+      "activeMatchesStaging": true,
+      "verificationMatchesStaging": true
+    },
+    {
+      "file": "src/routes/evenement.routes.test.ts",
+      "stagingSha256": "d74f1c1f422d868631f53c7cd97e4bfbf60577dac20bad2d602a383c6e865093",
+      "activeMatchesStaging": true,
+      "verificationMatchesStaging": true
+    },
+    {
+      "file": "src/routes/offre.routes.test.ts",
+      "stagingSha256": "e483bd4f4959d8909fa88c52399fe1c13fef6dc632b7111e236c6e81a6c5dd12",
+      "activeMatchesStaging": true,
+      "verificationMatchesStaging": true
+    },
+    {
+      "file": "src/routes/user.routes.ts",
+      "stagingSha256": "467c596f71a13ac31d5b3b9c80b0e0d8755fea7eb91be1829b88a9588d6b99a6",
+      "activeMatchesStaging": true,
+      "verificationMatchesStaging": true
+    },
+    {
+      "file": "src/services/admin-membres.service.ts",
+      "stagingSha256": "7b78891df832e2f3a34297beeb846ba74893488c75f03539645acd15d9f15f53",
+      "activeMatchesStaging": true,
+      "verificationMatchesStaging": true
+    }
+  ],
+  "realDatabaseUsed": false,
+  "networkUsed": false,
+  "realMailSent": false,
+  "sourceFilesModifiedByThisRun": false,
+  "deploymentExclusions": [
+    ".verification/**",
+    "tests-backend-roles.tap",
+    "tests-backend-roles.json"
+  ],
+  "typescriptCheck": {
+    "status": "passed",
+    "command": "node node_modules/typescript/bin/tsc --noEmit",
+    "when": "previous run on same staged source, not repeated"
+  }
+}

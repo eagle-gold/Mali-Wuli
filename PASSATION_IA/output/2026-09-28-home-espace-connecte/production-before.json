@@ -1,0 +1,81 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T18:28:53.358Z",
+  "release": "20260928-suppressions-droits",
+  "targets": {
+    "frontend": "versions/20260928-suppressions-droits",
+    "backend": "versions/20260928-suppressions-droits"
+  },
+  "buildId": "cNI0N04igTlrU9KwyDz4k",
+  "sourceFiles": 230,
+  "frontendFiles": 127,
+  "backendFiles": 103,
+  "redirects": [
+    {
+      "input": "http://mali-wuli.com/",
+      "finalUrl": "https://mali-wuli.com/",
+      "hops": [
+        {
+          "url": "http://mali-wuli.com/",
+          "status": 301,
+          "location": "https://mali-wuli.com/",
+          "cacheControl": null
+        },
+        {
+          "url": "https://mali-wuli.com/",
+          "status": 200,
+          "location": null,
+          "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "input": "https://mali-wuli.com/",
+      "finalUrl": "https://mali-wuli.com/",
+      "hops": [
+        {
+          "url": "https://mali-wuli.com/",
+          "status": 200,
+          "location": null,
+          "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "input": "http://www.mali-wuli.com/",
+      "finalUrl": "https://www.mali-wuli.com/",
+      "hops": [
+        {
+          "url": "http://www.mali-wuli.com/",
+          "status": 301,
+          "location": "https://www.mali-wuli.com/",
+          "cacheControl": null
+        },
+        {
+          "url": "https://www.mali-wuli.com/",
+          "status": 200,
+          "location": null,
+          "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "input": "https://www.mali-wuli.com/",
+      "finalUrl": "https://www.mali-wuli.com/",
+      "hops": [
+        {
+          "url": "https://www.mali-wuli.com/",
+          "status": 200,
+          "location": null,
+          "cacheControl": "private, no-cache, no-store, max-age=0, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "remoteWrites": 0,
+  "databaseRequests": 0,
+  "authenticatedRequests": 0,
+  "limitations": [
+    "Public HEAD redirects only; no browser storage or authenticated user data is inspected."
+  ]
+}

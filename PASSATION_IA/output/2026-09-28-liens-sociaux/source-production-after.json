@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "kind": "social-links-sources-and-targets",
+  "at": "2026-09-28T18:50:53.372Z",
+  "phase": "after",
+  "release": "20260928-liens-sociaux",
+  "targets": {
+    "frontend": "versions/20260928-liens-sociaux",
+    "backend": "versions/20260928-liens-sociaux"
+  },
+  "buildId": "MF940TX4N8sLGFRsT_gyN",
+  "files": 235,
+  "manifestSha256": "5a33bd43b7d7b119517eaef7f0a714ee960b033d989f6a7114b320f83ce87f6d",
+  "databaseRequests": 0,
+  "databaseWrites": 0,
+  "remoteWrites": 0
+}

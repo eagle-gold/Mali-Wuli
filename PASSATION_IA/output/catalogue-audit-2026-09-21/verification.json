@@ -1,0 +1,85 @@
+{
+  "status": "deployed-and-verified",
+  "dateUtc": "2026-09-21T14:06:09.389013+00:00",
+  "release": "20260921-canonical-suggestions",
+  "previousRelease": "20260921-hide-catalogue-label",
+  "frontendBuildId": "GEW6j8YQguUXNwZ7IZvrw",
+  "databaseMutations": false,
+  "localFallbackBefore": 21,
+  "staleIdsFound": 11,
+  "staleIdsReplaced": 10,
+  "ambiguousFallbackRemoved": 1,
+  "localFallbackAfter": 20,
+  "typeCheck": "passed",
+  "linuxProductionBuild": "passed",
+  "isolatedSmokeChecks": "passed: login, compiled public API, assets, city API, Castors, Linux Sharp/image optimization",
+  "mockRouteChecks": [
+    "backend empty result stays empty",
+    "distinct IDs sharing a name preserved",
+    "unavailable backend uses corrected Paris Cité ID",
+    "unavailable backend uses corrected Moumouni ID",
+    "unavailable backend does not return obsolete Cathédrale ID"
+  ],
+  "publicApiChecks": [
+    {
+      "query": {
+        "country": "ML",
+        "type": "ecole",
+        "city": "Bamako",
+        "q": "liber"
+      },
+      "count": 1,
+      "matchesBackendExactly": true
+    },
+    {
+      "query": {
+        "country": "ML",
+        "type": "ecole",
+        "city": "Bamako",
+        "q": "angelo"
+      },
+      "count": 1,
+      "matchesBackendExactly": true
+    },
+    {
+      "query": {
+        "country": "ML",
+        "type": "ecole",
+        "city": "Bamako",
+        "q": "lutins"
+      },
+      "count": 1,
+      "matchesBackendExactly": true
+    },
+    {
+      "query": {
+        "country": "ML",
+        "type": "ecole",
+        "city": "Bamako",
+        "q": "technique"
+      },
+      "count": 8,
+      "matchesBackendExactly": true
+    },
+    {
+      "query": {
+        "country": "FR",
+        "type": "universite",
+        "city": "Paris",
+        "q": "Paris Cité"
+      },
+      "count": 4,
+      "matchesBackendExactly": true
+    },
+    {
+      "query": {
+        "country": "NE",
+        "type": "universite",
+        "city": "Niamey",
+        "q": "Moumouni"
+      },
+      "count": 1,
+      "matchesBackendExactly": true
+    }
+  ]
+}

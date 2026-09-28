@@ -1,0 +1,80 @@
+{
+  "status": "TERMINÉ",
+  "completedAt": "2026-09-28 17:43:01 CEST",
+  "site": "https://mali-wuli.com",
+  "gitBefore": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 67,
+    "untrackedEntries": 57,
+    "untrackedFiles": 85
+  },
+  "gitAfter": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 68,
+    "untrackedEntries": 67,
+    "untrackedFiles": 106,
+    "installedFilesVerified": 31,
+    "unexpectedChangesOutsideOwnedFiles": []
+  },
+  "changesManifest": "installed.json",
+  "production": {
+    "checkedAt": "2026-09-28T15:41:51.211Z",
+    "status": "PASS",
+    "frontendCurrent": "versions/20260928-annuaire-associations",
+    "frontendBuild": "oEfW-e-0s4HeQEgov9CNS",
+    "frontendPrevious": "versions/20260928-menu-synergies",
+    "backendCurrent": "versions/20260928-annuaire-associations",
+    "backendPrevious": "versions/20260921-profile-schools-r2",
+    "publicApiInCompiledJs": true,
+    "qaApiAbsent": true,
+    "uploads": "/home/u668963025/domains/floralwhite-ram-987223.hostingersite.com/uploads"
+  },
+  "migration": {
+    "name": "20260928180000_association_directory",
+    "database": "u668963025_maliwuli",
+    "status": "APPLIED",
+    "existingCountsUnchanged": true
+  },
+  "backup": {
+    "backup": "/home/u668963025/private-backups/20260928-annuaire-associations/before.sql.gz",
+    "bytes": 31533042,
+    "sha256": "3ebbf89d92b81f61ada694dedf5a00c0358ef6d386bb3a3137cf994bddf566df"
+  },
+  "verification": {
+    "backendTests": 29,
+    "directoryUiGroups": 7,
+    "adminOnboardingProfileGroups": 14,
+    "localAndLinuxBuilds": "PASS",
+    "backendReadOnlyChecksPassed": 47,
+    "backendReadOnlyWarning": "DETAIL_SKIPPED_NO_ACTIVE_ASSOCIATION",
+    "publicAssets": 46,
+    "publicBundles": 25,
+    "publicResult": "PASS",
+    "cdnPngs": "2 PNG recompressés sans perte : dimensions et SHA des pixels identiques",
+    "browser": "Flux admin/responsable/membre/onboarding testés avec fixtures locales ; mobile CSS 320 sans débordement ; /annuaire public anonyme redirige vers login, console sans erreur"
+  },
+  "limitations": [
+    "Catalogue réel : 0 association ; pas de test métier mutable en production.",
+    "Pas de téléphone physique ; pas de restauration de sauvegarde testée."
+  ],
+  "externalEffects": [
+    "Migration additive autorisée et publication backend/frontend, versions précédentes conservées.",
+    "Aucun import, fusion, compte QA réel, association réelle, message ou e-mail créé."
+  ],
+  "cleanup": "Aperçus et API locale arrêtés, onglets QA fermés et viewport rétabli.",
+  "previousJournalEntriesSha256": "a97bece6f4a9e40382195b50becd117292f0a7e7379d43c1fe7112e18d2c8173",
+  "evidence": [
+    "etapes.json",
+    "migration-deploy.txt",
+    "backend-readonly-after.json",
+    "frontend-candidate.json",
+    "frontend-public.json",
+    "backend-public.json",
+    "public-images-comparison.json",
+    "source-manifest.json",
+    "annuaire-associations-apercu.png",
+    "LIRE_REPRISE.md"
+  ]
+}

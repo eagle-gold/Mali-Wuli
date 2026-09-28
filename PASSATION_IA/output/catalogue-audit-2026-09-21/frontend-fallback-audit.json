@@ -1,0 +1,242 @@
+[
+  {
+    "id": "ml-ecole-mamadou-konate",
+    "nom": "École fondamentale Mamadou Konaté",
+    "canonicalActive": true,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-ecole-mamadou-konate",
+        "nom": "École fondamentale Mamadou Konaté",
+        "ville": "Bamako"
+      }
+    ]
+  },
+  {
+    "id": "ml-ecole-la-cathedrale",
+    "nom": "École La Cathédrale",
+    "canonicalActive": false,
+    "sameNameOrAlias": []
+  },
+  {
+    "id": "ml-lycee-askia",
+    "nom": "Lycée Askia Mohamed",
+    "canonicalActive": true,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-lycee-askia",
+        "nom": "Lycée Askia Mohamed",
+        "ville": "Bamako"
+      }
+    ]
+  },
+  {
+    "id": "ml-lycee-liberte",
+    "nom": "Lycée Français Liberté",
+    "canonicalActive": true,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-lycee-liberte",
+        "nom": "Établissement Liberté",
+        "ville": "Bamako"
+      }
+    ]
+  },
+  {
+    "id": "ml-lycee-technique-bamako",
+    "nom": "Lycée Technique de Bamako",
+    "canonicalActive": false,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-osm-363151e3cd30077109a3a444",
+        "nom": "Lycée Technique de Bamako",
+        "ville": "Bamako"
+      }
+    ]
+  },
+  {
+    "id": "ml-lycee-bouillagui-fadiga",
+    "nom": "Lycée Bouillagui Fadiga",
+    "canonicalActive": false,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-osm-427d40348b9ebf220abd9d2c",
+        "nom": "Lycée Bouillagui Fadiga",
+        "ville": "Bamako"
+      }
+    ]
+  },
+  {
+    "id": "ml-usttb",
+    "nom": "Université des Sciences, des Techniques et des Technologies de Bamako",
+    "canonicalActive": true,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-usttb",
+        "nom": "Université des Sciences, des Techniques et des Technologies de Bamako",
+        "ville": "Bamako"
+      }
+    ]
+  },
+  {
+    "id": "ml-ussgb",
+    "nom": "Université des Sciences Sociales et de Gestion de Bamako",
+    "canonicalActive": true,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-ussgb",
+        "nom": "Université des Sciences Sociales et de Gestion de Bamako",
+        "ville": "Bamako"
+      }
+    ]
+  },
+  {
+    "id": "ml-ulshb",
+    "nom": "Université des Lettres et des Sciences Humaines de Bamako",
+    "canonicalActive": true,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-ulshb",
+        "nom": "Université Yambo Ouologuem de Bamako",
+        "ville": "Bamako"
+      }
+    ]
+  },
+  {
+    "id": "ml-usjpb",
+    "nom": "Université des Sciences Juridiques et Politiques de Bamako",
+    "canonicalActive": true,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-usjpb",
+        "nom": "Université Kurukan Fuga de Bamako",
+        "ville": "Bamako"
+      }
+    ]
+  },
+  {
+    "id": "ml-segou",
+    "nom": "Université de Ségou",
+    "canonicalActive": true,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-segou",
+        "nom": "Université de Ségou",
+        "ville": "Ségou"
+      }
+    ]
+  },
+  {
+    "id": "ml-sikasso",
+    "nom": "Université de Sikasso",
+    "canonicalActive": true,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-sikasso",
+        "nom": "Université de Sikasso",
+        "ville": "Sikasso"
+      }
+    ]
+  },
+  {
+    "id": "ml-eni-abt",
+    "nom": "École Nationale d’Ingénieurs Abderhamane Baba Touré",
+    "canonicalActive": true,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-eni-abt",
+        "nom": "École Nationale d’Ingénieurs Abderhamane Baba Touré",
+        "ville": "Bamako"
+      }
+    ]
+  },
+  {
+    "id": "ml-iug",
+    "nom": "Institut Universitaire de Gestion",
+    "canonicalActive": false,
+    "sameNameOrAlias": [
+      {
+        "id": "ml-osm-203650e897345f1d19e494c2",
+        "nom": "Institut Universitaire de Gestion",
+        "ville": "Bamako"
+      }
+    ]
+  },
+  {
+    "id": "0755976N",
+    "nom": "Université Paris Cité",
+    "canonicalActive": false,
+    "sameNameOrAlias": [
+      {
+        "id": "fr-universite-paris-cite",
+        "nom": "Université Paris Cité",
+        "ville": "Paris"
+      }
+    ]
+  },
+  {
+    "id": "ci-ufhb",
+    "nom": "Université Félix Houphouët-Boigny",
+    "canonicalActive": false,
+    "sameNameOrAlias": [
+      {
+        "id": "ror-03haqmz43",
+        "nom": "Université Félix Houphouët-Boigny",
+        "ville": "Abidjan"
+      }
+    ]
+  },
+  {
+    "id": "ci-inphb",
+    "nom": "Institut National Polytechnique Félix Houphouët-Boigny",
+    "canonicalActive": false,
+    "sameNameOrAlias": [
+      {
+        "id": "ror-03f915n15",
+        "nom": "Institut National Polytechnique Félix Houphouët-Boigny",
+        "ville": "Yamoussoukro"
+      }
+    ]
+  },
+  {
+    "id": "ng-unilag",
+    "nom": "University of Lagos",
+    "canonicalActive": false,
+    "sameNameOrAlias": [
+      {
+        "id": "cmua35fpk0s4g5etjv96zj0oi",
+        "nom": "University of Lagos",
+        "ville": "Lagos"
+      }
+    ]
+  },
+  {
+    "id": "ng-ui",
+    "nom": "University of Ibadan",
+    "canonicalActive": false,
+    "sameNameOrAlias": [
+      {
+        "id": "cmua35fp10s3o5etjes6qv2cf",
+        "nom": "University of Ibadan",
+        "ville": "Ibadan"
+      }
+    ]
+  },
+  {
+    "id": "ne-uam",
+    "nom": "Université Abdou Moumouni",
+    "canonicalActive": false,
+    "sameNameOrAlias": []
+  },
+  {
+    "id": "mr-una",
+    "nom": "Université de Nouakchott Al Aasriya",
+    "canonicalActive": false,
+    "sameNameOrAlias": [
+      {
+        "id": "cmua35eoy0qu85etj299vdav3",
+        "nom": "Université de Nouakchott",
+        "ville": "Nouakchott"
+      }
+    ]
+  }
+]

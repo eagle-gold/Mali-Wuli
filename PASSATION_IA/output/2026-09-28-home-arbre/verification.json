@@ -1,0 +1,183 @@
+{
+  "status": "TERMINÉ",
+  "startedAt": "2026-09-28 16:08:00 CEST",
+  "request": "Intégrer et mettre en ligne la home du ZIP",
+  "zipSha256": "96c5ec22f4d00bd722ad2715c1e9ecab37921f338f7c510f6752ab74be93f634",
+  "gitBefore": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 66,
+    "untrackedEntries": 55,
+    "untrackedFiles": 78
+  },
+  "previousJournalEntriesSha256": "6083d1de869924ac991f8e1399b3e2b402f48916c283874205754928b1e8c29c",
+  "externalActions": [
+    "Upload des sources frontend et scripts QA",
+    "Compilation Linux candidate 20260928-home-arbre",
+    "Activation atomique frontend : versions/20260921-brevet-def-label → versions/20260928-home-arbre ; restart.txt",
+    "Aucune migration, import, fusion ou écriture en base"
+  ],
+  "checks": [
+    {
+      "check": "localVsServerSourcesBefore",
+      "files": 68,
+      "differences": 0
+    },
+    {
+      "check": "productionBuildLinuxLintTypeScript",
+      "status": "passed"
+    },
+    {
+      "check": "candidateLogin",
+      "status": "passed",
+      "checks": [
+        "login page",
+        "all login scripts",
+        "compiled public API",
+        "no development URLs",
+        "no-store HTML",
+        "Paris",
+        "Bamako",
+        "Castors unique from backend",
+        "Linux Sharp",
+        "image optimization"
+      ]
+    },
+    {
+      "check": "candidateHomeAndPublic",
+      "status": "passed",
+      "assets": 26,
+      "assetsIdentical": true
+    },
+    {
+      "check": "browser",
+      "status": "passed",
+      "localViewports": [
+        "320x740",
+        "375x812",
+        "1280x900"
+      ],
+      "liveViewports": [
+        "375x812",
+        "1280x900"
+      ],
+      "horizontalOverflow": false,
+      "consoleErrors": 0,
+      "existingRegisterNavigation": true,
+      "emailSent": false,
+      "accountCreated": false
+    }
+  ],
+  "steps": [
+    {
+      "at": "2026-09-28 16:10:30 CEST",
+      "note": "ZIP inspecté : design React à adapter sans runtime support.js. SSH lecture seule réussie : frontend versions/20260921-brevet-def-label, build YcLgbCm833jUBenTkA30s ; backend versions/20260921-profile-schools-r2. Page Next et polices locales préparées en staging ; composants et préremplissage délégués. Tentative de création staging sous mauvais cwd refusée par sandbox, aucun fichier applicatif créé.",
+      "stoppedAt": "Composants landing en préparation ; prochaine étape validation puis copie approuvée dans dépôt actif et build Linux."
+    },
+    {
+      "at": "2026-09-28 16:12:12 CEST",
+      "note": "Contrôle préalable : les 68 fichiers frontend sélectionnés (sources, public et configurations) sont identiques entre le dépôt local et la source de compilation Hostinger. Les polices de la nouvelle home seront limitées à cette route ; les données de démonstration seront identifiées comme illustratives.",
+      "stoppedAt": "Attente des composants staging ; préparer copie ciblée et build sans modifier backend/base."
+    },
+    {
+      "at": "2026-09-28 16:14:26 CEST",
+      "note": "Décision utilisateur reçue et appliquée au lot : tous CTA inscription vers /register, sans modal ni préremplissage. Les 4 fichiers de préremplissage préparés ont été écartés dans non-retenu-prefill, jamais copiés dans le dépôt actif. Composant home ajusté par le sous-agent.",
+      "stoppedAt": "Finaliser uniquement homepage, composants landing et logo ; inscription, onboarding et backend inchangés."
+    },
+    {
+      "at": "2026-09-28 16:15:34 CEST",
+      "note": "Décision CTA consignée aussi dans 05_ETAT_ET_REPRISE.md. Page racine avec polices scoping local et logo préparés ; arbre SVG, données et CSS créés en staging. Suppression du modal en cours avant copie. Vérifications prévues en lecture seule, aucun test créant un compte ou envoyant un e-mail.",
+      "stoppedAt": "Agent frontend finalise LandingArbre.tsx sans modal ; relecture SVG/CSS indépendante en cours."
+    },
+    {
+      "at": "2026-09-28 16:16:10 CEST",
+      "note": "Intégration ciblée effectuée avec autorisation de sandbox : 7 fichiers installés (page.tsx, 5 composants/données/styles landing, logo). Fichier existant sauvegardé dans before/. Aucune modification register/onboarding/backend. Aperçu local Next.js lancé sur 127.0.0.1:3006 ; contrôle TypeScript en cours.",
+      "stoppedAt": "Vérifier TypeScript puis rendu et liens de la nouvelle home sur navigateur ; pas de version activée en production."
+    },
+    {
+      "at": "2026-09-28 16:17:55 CEST",
+      "note": "TypeScript complet réussi. QA navigateur : polices Fraunces/Instrument Sans correctement calculées, 0 formulaire, tous CTA pointent vers /register. Défaut d’hydratation dû aux arrondis trigonométriques et deux détails SVG mobile/focus repérés puis corrigés : précision 3 décimales, viewBox élargi, focus première forme path.",
+      "stoppedAt": "Recharger aperçu après corrections, contrôler console et responsive avant archive/compilation Linux."
+    },
+    {
+      "at": "2026-09-28 16:21:14 CEST",
+      "note": "Demande mobile friendly ajoutée. Vérification réelle à 375 × 812 : largeur document 375, sans débordement horizontal, en-tête compact et cartes en une colonne ; correction SVG sans erreur dans un onglet neuf. Tous les CTA mènent à /register, test de navigation effectué sans soumission.",
+      "stoppedAt": "Finir le contrôle tactile des détails de l’arbre et FAQ ; préparer archive source et version candidate Linux."
+    },
+    {
+      "at": "2026-09-28 16:22:30 CEST",
+      "note": "Archive source de 75 fichiers (sans .env ni dépendances macOS) et scripts transférés sur Hostinger. Relecture indépendante confirme : seuls page.tsx + 5 fichiers landing + logo diffèrent, aucune action DB.",
+      "stoppedAt": "Lancer compilation de versions/20260928-home-arbre, current reste versions/20260921-brevet-def-label jusqu’aux contrôles."
+    },
+    {
+      "at": "2026-09-28 16:23:06 CEST",
+      "note": "QA mobile terminée à 320 et 375 px : aucun débordement, FAQ ouvrable, fiche arbre en panneau bas fermable, menu compact utilisable. Console nouvel onglet : 0 erreur ; inscription accessible sans modal. Build Linux en cours, les contrôles TypeScript serveur ont réussi.",
+      "stoppedAt": "Attendre fin build optimisé ; lancer les smokes lecture seule sur la version candidate avant bascule atomique."
+    },
+    {
+      "at": "2026-09-28 16:23:53 CEST",
+      "note": "Compilation Linux, lint et TypeScript réussis ; candidate versions/20260928-home-arbre créée, build r6fxXo2h-I-T9b-iHpHsU. Contrôle historique connexion/API/Sharp en cours ; homepage spécifique à vérifier ensuite.",
+      "stoppedAt": "Exécuter verify-home.cjs sur la candidate, contrôler résultats historiques puis activer si tous passent."
+    },
+    {
+      "at": "2026-09-28 16:26:10 CEST",
+      "note": "Smokes initiaux non concluants : processus candidat Ready mais TCP 127.0.0.1 refusé, confirmé par serveur HTTP vide sur autre port (ECONNREFUSED). Aucun défaut applicatif démontré. Préparation d’un transport de test par socket Unix, uniquement pour les scripts QA ; fichiers applicatifs inchangés.",
+      "stoppedAt": "Relancer les mêmes assertions HTTP via socket Unix privé, puis activer seulement après succès."
+    },
+    {
+      "at": "2026-09-28 16:27:32 CEST",
+      "note": "Candidate validée : smoke connexion/API/villes/Sharp réussi et homepage réussie (26 assets). Les smokes utilisent un socket Unix privé car TCP loopback refusé ; mêmes assertions, aucune modification applicative. Current relu identique à versions/20260921-brevet-def-label. Activation autorisée par la demande utilisateur live.",
+      "stoppedAt": "Basculer atomiquement current vers versions/20260928-home-arbre (build r6fxXo2h-I-T9b-iHpHsU), puis vérifier site public."
+    },
+    {
+      "at": "2026-09-28 16:27:51 CEST",
+      "note": "Bascule atomique effectuée, current=versions/20260928-home-arbre ; build r6fxXo2h-I-T9b-iHpHsU. Ancienne cible conservée dans .previous-target. Backend toujours versions/20260921-profile-schools-r2.",
+      "stoppedAt": "Vérification HTTP publique et rendu navigateur de la version publiée en cours."
+    },
+    {
+      "at": "2026-09-28 16:29:21 CEST",
+      "note": "Production confirmée : home HTTP 200, 26 assets identiques à la candidate, no-store et register/login accessibles. Navigateur public 1280 et 375 px sans erreur console ni débordement ; clic Créer mon profil confirmé sur /register avec formulaire existant, sans soumission. Captures live-desktop.png et live-mobile.png enregistrées.",
+      "stoppedAt": "Travail produit terminé ; finaliser les preuves, relever Git, fermer le serveur local et rendre le journal LIBRE."
+    }
+  ],
+  "productionBefore": {
+    "frontendCurrent": "versions/20260921-brevet-def-label",
+    "frontendBuildId": "YcLgbCm833jUBenTkA30s",
+    "backendCurrent": "versions/20260921-profile-schools-r2"
+  },
+  "finishedAt": "2026-09-28 16:30:37 CEST",
+  "gitAfter": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 66,
+    "untrackedEntries": 56,
+    "untrackedFiles": 84
+  },
+  "productionAfter": {
+    "frontendCurrent": "versions/20260928-home-arbre",
+    "frontendBuildId": "r6fxXo2h-I-T9b-iHpHsU",
+    "backendCurrent": "versions/20260921-profile-schools-r2"
+  },
+  "decisions": [
+    "CTA directement vers /register ; modal et préremplissage du prototype supprimés",
+    "Se connecter vers /login ; exploration arbre, ancres et FAQ conservées",
+    "Mobile friendly : 320 et 375 px validés",
+    "Fraunces/Instrument Sans uniquement sur home ; typographie autres pages inchangée"
+  ],
+  "limitations": [
+    "Données de démonstration de la home indiquées comme illustratives",
+    "Rendu contrôlé par viewport navigateur ; pas de test sur téléphone physique",
+    "Aucun e-mail envoyé et aucune écriture en base pour les contrôles"
+  ],
+  "qaTransport": "TCP loopback refusé par hébergement ; mêmes assertions relancées via socket Unix privé avec qa-unix-transport.cjs. Aucun hook dans application publiée.",
+  "sourceFilesChanged": [
+    "frontend/public/images/landing/mali-wuli-arbre.png",
+    "frontend/src/app/page.tsx",
+    "frontend/src/components/landing/LandingArbre.module.css",
+    "frontend/src/components/landing/LandingArbre.tsx",
+    "frontend/src/components/landing/LandingTree.tsx",
+    "frontend/src/components/landing/landing-data.ts",
+    "frontend/src/components/landing/tree-geometry.ts"
+  ],
+  "previousJournalEntriesPreserved": true
+}

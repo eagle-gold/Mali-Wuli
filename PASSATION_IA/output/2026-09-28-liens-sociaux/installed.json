@@ -1,0 +1,72 @@
+[
+  {
+    "path": "backend/prisma/migrations/20260928220000_profile_social_links/migration.sql",
+    "before": null,
+    "after": "4589bd57ab81031d583431eba8e8477d572a220d47367debc7a1c918a3fbdf0b"
+  },
+  {
+    "path": "backend/prisma/schema.prisma",
+    "before": "cbe15e9c334519ac8e58908602224b2b30f2528d23bf55b41597a4403cbb0d4f",
+    "after": "7f9e40ab21377155bd0ff48553b50c5b34a4f625e122a554ef6b5ec7f6d86fe5"
+  },
+  {
+    "path": "backend/src/lib/liens-sociaux.ts",
+    "before": null,
+    "after": "c2979850b15d25249c33ae9425586bf62d5b61956e750e60580ed5d184b7f3cf"
+  },
+  {
+    "path": "backend/src/routes/onboarding.routes.ts",
+    "before": "c5bc5cb60e39faddcd3877997e2f3fed04d0e5969d71f2f26856ef51a72a27d1",
+    "after": "45f7eef240927b72706443be7d9dfa88bf4cddf4b772e00479e4120f9c0384f1"
+  },
+  {
+    "path": "backend/src/routes/profile-social-links.test.ts",
+    "before": null,
+    "after": "b8a54f5920a1582c98931b743addb28db3d7a88643d99e126f42c0dba1811668"
+  },
+  {
+    "path": "backend/src/routes/user.routes.ts",
+    "before": "1c8c541ef1d40f19323436600f2c9b9627c38ac625fdb03ede66e8b34374f096",
+    "after": "9fac13ed222fba1e2a1a1dfbd7e4fe8e8fc8281c095f79abec7354f1d9a72656"
+  },
+  {
+    "path": "frontend/src/components/directory/ProfilPublic.tsx",
+    "before": "d29fe9c14e97612b73cf8cd97b6b1178e8236342bf19d9b0d961e26f06bf7af9",
+    "after": "5071e3eb8caf35b027fdf2ac4510286fe044da84a34884f36f8daa9e028a27fc"
+  },
+  {
+    "path": "frontend/src/components/directory/types.ts",
+    "before": "7f716a6354fb61ba42bad7dde5e535490030c7a6fe7c95c5bafb59f09d2ffbdc",
+    "after": "11f54493f69ff29de81be91c1c1f934c42a41348d7e6c8a61a26cc2f6f91a259"
+  },
+  {
+    "path": "frontend/src/components/onboarding/StepInformations.tsx",
+    "before": "df1e56742f8fa549e50c27a341b5a376c2de7196fb3e4e0d3f48577a41bfc04f",
+    "after": "25f148c28a6293be9f5d7a93c83b8869db0ed7476b1e5ce1a45aea54ff746dff"
+  },
+  {
+    "path": "frontend/src/components/profile/LiensSociauxProfil.tsx",
+    "before": null,
+    "after": "133304bca617400bc92cd7b41769b1210323225f6e5c7ce034b3f67832bbe281"
+  },
+  {
+    "path": "frontend/src/components/profile/ProfilMembre.tsx",
+    "before": "88d1cb1ef120672e0205a59d1eeb17941e4b7eece069c36fb46005d62ae44a07",
+    "after": "af732be0fc2571f1e65b6ec3fdad19bfd69866f894144134fb8f05289b85de26"
+  },
+  {
+    "path": "frontend/src/lib/reseaux-sociaux.ts",
+    "before": null,
+    "after": "70874cbc91966af24788b3ea62dddb7302c78fef327642d991886f73b4b2302c"
+  },
+  {
+    "path": "frontend/src/types/index.ts",
+    "before": "52729c89492a6b12ad1d817683b03c342cc4a06fb8ec8a68b97ea059419d193a",
+    "after": "45a60fa4134d046a268ce693d13b0e75ccfe277f713c7a13d643fa25d0e7dfb3"
+  },
+  {
+    "path": "frontend/src/types/profile.ts",
+    "before": "5360b0082f2cd2182e5b4f282564934e863d9748dd633045268dfc3de7ddc9f5",
+    "after": "670e90695e5ebaf1377ccda0ec72f9e07585761e3200c56e6f4963bfddcc614d"
+  }
+]

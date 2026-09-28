@@ -1,0 +1,149 @@
+{
+  "status": "PASS",
+  "phase": "before",
+  "routes": [
+    {
+      "route": "home",
+      "samples": [
+        {
+          "http_code": 200,
+          "size_download": 73031,
+          "time_starttransfer": 0.779897,
+          "time_total": 1.263829,
+          "time_appconnect": 0.415709
+        },
+        {
+          "http_code": 200,
+          "size_download": 73031,
+          "time_starttransfer": 0.749597,
+          "time_total": 1.127492,
+          "time_appconnect": 0.392037
+        },
+        {
+          "http_code": 200,
+          "size_download": 73031,
+          "time_starttransfer": 0.941767,
+          "time_total": 1.342512,
+          "time_appconnect": 0.496897
+        }
+      ],
+      "medianTtfbMs": 779.9,
+      "medianTotalMs": 1263.8
+    },
+    {
+      "route": "login",
+      "samples": [
+        {
+          "http_code": 200,
+          "size_download": 12426,
+          "time_starttransfer": 0.829909,
+          "time_total": 0.830263,
+          "time_appconnect": 0.391026
+        },
+        {
+          "http_code": 200,
+          "size_download": 12426,
+          "time_starttransfer": 0.734012,
+          "time_total": 0.835106,
+          "time_appconnect": 0.378285
+        },
+        {
+          "http_code": 200,
+          "size_download": 12426,
+          "time_starttransfer": 0.882272,
+          "time_total": 0.918049,
+          "time_appconnect": 0.510632
+        }
+      ],
+      "medianTtfbMs": 829.9,
+      "medianTotalMs": 835.1
+    },
+    {
+      "route": "profile-shell",
+      "samples": [
+        {
+          "http_code": 200,
+          "size_download": 10658,
+          "time_starttransfer": 0.972819,
+          "time_total": 0.998931,
+          "time_appconnect": 0.609764
+        },
+        {
+          "http_code": 200,
+          "size_download": 10658,
+          "time_starttransfer": 0.824696,
+          "time_total": 0.851477,
+          "time_appconnect": 0.478813
+        },
+        {
+          "http_code": 200,
+          "size_download": 10658,
+          "time_starttransfer": 1.049679,
+          "time_total": 1.13252,
+          "time_appconnect": 0.683882
+        }
+      ],
+      "medianTtfbMs": 972.8,
+      "medianTotalMs": 998.9
+    },
+    {
+      "route": "countries",
+      "samples": [
+        {
+          "http_code": 200,
+          "size_download": 18150,
+          "time_starttransfer": 0.777816,
+          "time_total": 0.936397,
+          "time_appconnect": 0.424488
+        },
+        {
+          "http_code": 200,
+          "size_download": 18150,
+          "time_starttransfer": 0.65342,
+          "time_total": 0.850806,
+          "time_appconnect": 0.462819
+        },
+        {
+          "http_code": 200,
+          "size_download": 18150,
+          "time_starttransfer": 0.971176,
+          "time_total": 1.267544,
+          "time_appconnect": 0.65029
+        }
+      ],
+      "medianTtfbMs": 777.8,
+      "medianTotalMs": 936.4
+    },
+    {
+      "route": "health",
+      "samples": [
+        {
+          "http_code": 200,
+          "size_download": 71,
+          "time_starttransfer": 0.055673,
+          "time_total": 0.055848,
+          "time_appconnect": 0.043402
+        },
+        {
+          "http_code": 200,
+          "size_download": 71,
+          "time_starttransfer": 0.181585,
+          "time_total": 0.181832,
+          "time_appconnect": 0.169094
+        },
+        {
+          "http_code": 200,
+          "size_download": 71,
+          "time_starttransfer": 0.047699,
+          "time_total": 0.047884,
+          "time_appconnect": 0.032264
+        }
+      ],
+      "medianTtfbMs": 55.7,
+      "medianTotalMs": 55.8
+    }
+  ],
+  "limitations": [
+    "3 anonymous cold-connection curl samples per route, no compressed negotiation (edge returns403 to local compressed curl); not browser Core Web Vitals, variation includes network/TLS."
+  ]
+}

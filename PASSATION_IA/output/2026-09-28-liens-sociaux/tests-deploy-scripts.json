@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "groups": 7,
+  "checks": [
+    "exact reviewed additive SQL, schema and 14 historical checksums",
+    "migration guard rejects missing, duplicate, altered, failed or rolled-back migration records",
+    "real MariaDB NULL spelling accepted, other schema changes refused",
+    "18 counts, account roles/sessions, role grants and legacy LinkedIn fingerprints preserved",
+    "candidate migration sources reject history drift and additional migrations",
+    "activation requires preserved DB, matching built sources and complete current candidate QA",
+    "all scripts parse; mutation commands isolated from read-only gates"
+  ],
+  "networkRequests": 0,
+  "databaseRequests": 0,
+  "remoteWrites": 0,
+  "applicationWrites": 0
+}

@@ -1,0 +1,94 @@
+{
+  "status": "EN COURS",
+  "startedAt": "2026-09-28 17:05:05 CEST",
+  "gitBefore": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 67,
+    "untrackedEntries": 57,
+    "untrackedFiles": 85
+  },
+  "previousEntriesSha256": "a97bece6f4a9e40382195b50becd117292f0a7e7379d43c1fe7112e18d2c8173",
+  "steps": [
+    {
+      "at": "2026-09-28 17:10:02 CEST",
+      "note": "Contrat API associations fixé ; trois lots délégués sans chevauchement (backend, annuaire/fiches, admin/onboarding/profil). Types partagés créés. Extension annuaire personnes et lien Contacter vers conversation préparés en staging. Onboarding associatif indépendant du snapshot pour préserver formations et mentorat.",
+      "stoppedAt": "Terminer tests filtres/personnes, attendre service et migration associations, puis intégrer pour compilation. Aucun changement production ni base."
+    },
+    {
+      "at": "2026-09-28 17:13:59 CEST",
+      "note": "Extension annuaire personnes terminée en staging : recherche prénom/nom, filtres établissement/promotion/aides, compteurs réels, profil public avec affiliations validées uniquement et lien messagerie. Dix tests unitaires/handlers préparés sans DB. Migration associations relue additive, validation de droits revue.",
+      "stoppedAt": "Attente derniers fichiers sous-agents pour intégration ciblée puis génération Prisma, compilation et tests sans base."
+    },
+    {
+      "at": "2026-09-28 17:17:44 CEST",
+      "note": "Backend intégré, client Prisma généré localement ; TypeScript backend réussi. 29 tests handlers/auth/annuaire/onboarding réussis sans DB. Les 20 fichiers frontend sont intégrés, TypeScript en cours. Recherche et cartes harmonisées avec la formation filtrée ; aucune production modifiée.",
+      "stoppedAt": "Vérifier build frontend puis visuels et flux admin/membre/responsable via API de fixtures en mémoire. Complément accès associations gérées depuis profil en cours."
+    },
+    {
+      "at": "2026-09-28 17:21:06 CEST",
+      "note": "Compilation frontend locale réussie après extraction des cartes hors page Next ; 7 contrôles annuaire et 14 groupes admin/onboarding/profil réussis. Accès responsable indépendant de son affiliation ajouté. Documentation migration/reprise préparée ; build local explicitement non déployable (API fixtures).",
+      "stoppedAt": "Lancer aperçu local et API fictive en mémoire, vérifier visuellement les flux et mobile. Aucune migration exécutée."
+    },
+    {
+      "at": "2026-09-28 17:26:50 CEST",
+      "note": "QA navigateur sur API fictive réussie : filtre pays, affiliation demandée puis absente du profil public, responsable depuis son profil, validation et apparition du membre dans associations publiques, création admin avec responsable, photo chargée ; fiche contrôlée à largeur CSS 320 sans débordement.",
+      "stoppedAt": "Achever proposition depuis onboarding puis contrôle admin, intégrer deux corrections mineures de présentation, relancer compilations/tests ciblés et clôturer traces. Aucun effet externe."
+    },
+    {
+      "at": "2026-09-28 17:30:42 CEST",
+      "note": "Décision utilisateur reçue : « Oui, migrer et mettre en ligne ». Autorisation de migration additive et publication backend/frontend. Relevé SSH lecture seule : base u668963025_maliwuli, frontend menu-synergies / DPia9wiu4OeyoZRNtEXYH, backend profile-schools-r2 ; 10 migrations appliquées.",
+      "stoppedAt": "Préparer sauvegarde et candidates Linux, vérifier sources distantes, appliquer uniquement la migration associations puis publier backend/frontend et contrôler HTTPS."
+    },
+    {
+      "at": "2026-09-28 17:32:36 CEST",
+      "note": "Sources comparées à la production : 148 fichiers identiques à la sauvegarde de début. Archives de 174 fichiers transférées ; revue indépendante conforme, sans secrets/build local. Sauvegarde complète MySQL privée lancée.",
+      "stoppedAt": "Attendre sauvegarde vérifiée, compiler deux candidates Linux puis migration additive unique."
+    },
+    {
+      "at": "2026-09-28 17:33:13 CEST",
+      "note": "Sauvegarde complète réussie : before.sql.gz, 31 533 042 octets, empreinte conservée. Base compte 2 utilisateurs, 2 profils, 9 formations, 0 associations/affiliations. Préparation backend arrêtée sans mutation active : uploads absents sous nodejs car UPLOAD_DIR pointe vers le dossier partagé du domaine ; cible correcte identifiée.",
+      "stoppedAt": "Reprendre compilation backend avec uploads partagés explicites ; compiler frontend puis vérifier seule migration attendue avant application."
+    },
+    {
+      "at": "2026-09-28 17:36:05 CEST",
+      "note": "Compilations Linux frontend et backend réussies. Frontend build oEfW-e-0s4HeQEgov9CNS. Comptage complet de référence obtenu en lecture seule ; contrôle des migrations et candidate avant bascule.",
+      "stoppedAt": "Vérifier les 10 empreintes des migrations appliquées et la seule migration en attente ; tester la candidate frontend, puis migrer."
+    },
+    {
+      "at": "2026-09-28 17:37:07 CEST",
+      "note": "Garde de migration réussi : 10 checksums appliqués identiques, seule 20260928180000_association_directory en attente. Candidate frontend validée. Migration autorisée lancée sur u668963025_maliwuli ; attente du résultat.",
+      "stoppedAt": "Lire migration-deploy.txt et confirmer le statut ; contrôler schéma et services en lecture seule avant toute bascule."
+    },
+    {
+      "at": "2026-09-28 17:37:16 CEST",
+      "note": "Migration 20260928180000_association_directory appliquée avec succès sur u668963025_maliwuli. Candidate frontend : 46 assets, 25 bundles, routes, menus et recommandations validés ; home et inscription identiques au relevé préalable.",
+      "stoppedAt": "Exécuter le contrôle backend readonly après migration sur candidate ; puis basculer backend et frontend si contrôle réussi."
+    },
+    {
+      "at": "2026-09-28 17:37:46 CEST",
+      "note": "Contrôle MySQL et services réels réussi : nouveaux champs, indexes, enum, migration/checksum, filtres personnes et associations. Comptages existants inchangés. Seule limite : fiche association réelle non testable car catalogue vide ; parcours déjà validé avec fixtures.",
+      "stoppedAt": "Activer backend avec current attendu profile-schools-r2, vérifier santé et routes anonymes ; puis activer frontend."
+    },
+    {
+      "at": "2026-09-28 17:38:00 CEST",
+      "note": "Backend activé : current versions/20260921-profile-schools-r2 → versions/20260928-annuaire-associations, restart.txt mis à jour ; uploads partagés conservés.",
+      "stoppedAt": "Vérifier santé publique et routes API anonymes, puis activer frontend candidate oEfW-e-0s4HeQEgov9CNS."
+    },
+    {
+      "at": "2026-09-28 17:38:22 CEST",
+      "note": "API publiée saine, base connectée ; routes associations/onboarding/personnes protégées (401 anonyme). Frontend activé : menu-synergies / DPia9wiu4OeyoZRNtEXYH → versions/20260928-annuaire-associations / oEfW-e-0s4HeQEgov9CNS.",
+      "stoppedAt": "Contrôler le site public et comparer ses 46 assets à la candidate ; relever état final et terminer passation."
+    },
+    {
+      "at": "2026-09-28 17:39:16 CEST",
+      "note": "Contrôle public : routes et bundles de la nouvelle version servis, JavaScript/CSS/polices identiques à la candidate. Comparaison binaire diffère uniquement sur deux logos PNG ; diagnostic CDN/encodage en cours. Navigation anonyme /annuaire renvoie bien vers login.",
+      "stoppedAt": "Identifier la différence des logos publics (headers, dimensions, pixels) puis finaliser comparaison et passation."
+    },
+    {
+      "at": "2026-09-28 17:41:51 CEST",
+      "note": "Contrôle public final réussi : 46 assets, 25 bundles et routes vérifiés ; scripts/styles/polices identiques, deux PNG recompressés sans perte avec SHA pixels identiques. API saine. Aperçus locaux arrêtés, onglets QA fermés et viewport rétabli.",
+      "stoppedAt": "Finaliser guide 05, reprise locale et verification.json ; relever Git final puis clôturer session LIBRE."
+    }
+  ]
+}

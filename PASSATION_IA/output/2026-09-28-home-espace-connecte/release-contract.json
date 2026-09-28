@@ -1,0 +1,22 @@
+{
+  "release": "20260928-home-session-r2",
+  "previousFrontend": "20260928-suppressions-droits",
+  "backendRelease": "20260928-suppressions-droits",
+  "baselineBuildId": "cNI0N04igTlrU9KwyDz4k",
+  "frontendOnly": true,
+  "migrationAllowed": false,
+  "databaseAccess": false,
+  "frontendFiles": 127,
+  "backendFiles": 103,
+  "baselineManifestSha256": "284d387880eb5b5ce490a3c4e060c0d70f84594c0fc9198fd356d07796c666b6",
+  "sourceManifestSha256": "07ecd42575413517979695e1b204f69ca70343fa79b7bfa0c5a65c0becc16920",
+  "frontendArchiveSha256": "c746a2ed4a87a9365652b608160af5458e30824b9ed1410dec648deae5870922",
+  "changedFrontendFiles": [
+    "frontend/src/app/(auth)/login/page.tsx",
+    "frontend/src/app/(auth)/register/details/page.tsx",
+    "frontend/src/app/(auth)/verify-email/page.tsx",
+    "frontend/src/components/MaliWuliHeader.tsx",
+    "frontend/src/hooks/useSessionAccueil.ts",
+    "frontend/src/lib/session.ts"
+  ]
+}

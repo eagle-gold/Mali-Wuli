@@ -1,0 +1,9 @@
+{
+  "status": "passed",
+  "groups": 7,
+  "networkRequests": 0,
+  "databaseWrites": 0,
+  "limitations": [
+    "Mock API and SSR; mobile geometry checked separately in browser"
+  ]
+}

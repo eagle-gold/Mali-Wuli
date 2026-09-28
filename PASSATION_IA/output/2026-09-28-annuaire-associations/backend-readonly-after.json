@@ -1,0 +1,303 @@
+{
+  "kind": "association-directory-readonly",
+  "mode": "post",
+  "migration": "20260928180000_association_directory",
+  "checkedAt": "2026-09-28T15:37:19.463Z",
+  "status": "WARN",
+  "counts": {
+    "User": 2,
+    "Profil": 2,
+    "Formation": 9,
+    "Experience": 2,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "AssociationSuggestion": 0,
+    "Etablissement": 143458,
+    "Publication": 1,
+    "Notification": 0,
+    "Message": 0
+  },
+  "checks": [
+    {
+      "name": "required-existing-tables",
+      "ok": true
+    },
+    {
+      "name": "count-preserved-User",
+      "ok": true
+    },
+    {
+      "name": "count-not-decreased-User",
+      "ok": true
+    },
+    {
+      "name": "count-preserved-Profil",
+      "ok": true
+    },
+    {
+      "name": "count-not-decreased-Profil",
+      "ok": true
+    },
+    {
+      "name": "count-preserved-Formation",
+      "ok": true
+    },
+    {
+      "name": "count-not-decreased-Formation",
+      "ok": true
+    },
+    {
+      "name": "count-preserved-Experience",
+      "ok": true
+    },
+    {
+      "name": "count-not-decreased-Experience",
+      "ok": true
+    },
+    {
+      "name": "count-preserved-Association",
+      "ok": true
+    },
+    {
+      "name": "count-not-decreased-Association",
+      "ok": true
+    },
+    {
+      "name": "count-preserved-AssociationMembre",
+      "ok": true
+    },
+    {
+      "name": "count-not-decreased-AssociationMembre",
+      "ok": true
+    },
+    {
+      "name": "count-preserved-AssociationSuggestion",
+      "ok": true
+    },
+    {
+      "name": "count-not-decreased-AssociationSuggestion",
+      "ok": true
+    },
+    {
+      "name": "count-preserved-Etablissement",
+      "ok": true
+    },
+    {
+      "name": "count-not-decreased-Etablissement",
+      "ok": true
+    },
+    {
+      "name": "count-preserved-Publication",
+      "ok": true
+    },
+    {
+      "name": "count-not-decreased-Publication",
+      "ok": true
+    },
+    {
+      "name": "count-preserved-Notification",
+      "ok": true
+    },
+    {
+      "name": "count-not-decreased-Notification",
+      "ok": true
+    },
+    {
+      "name": "count-preserved-Message",
+      "ok": true
+    },
+    {
+      "name": "count-not-decreased-Message",
+      "ok": true
+    },
+    {
+      "name": "suggestion-table-present",
+      "ok": true
+    },
+    {
+      "name": "column-Association-ville",
+      "ok": true
+    },
+    {
+      "name": "column-Association-vocation",
+      "ok": true
+    },
+    {
+      "name": "column-Association-emailContact",
+      "ok": true
+    },
+    {
+      "name": "column-Association-photo",
+      "ok": true
+    },
+    {
+      "name": "column-Association-photoCouverture",
+      "ok": true
+    },
+    {
+      "name": "column-Association-dateCreation",
+      "ok": true
+    },
+    {
+      "name": "column-Association-description",
+      "ok": true
+    },
+    {
+      "name": "column-Association-site",
+      "ok": true
+    },
+    {
+      "name": "affiliation-refuse-enum",
+      "ok": true
+    },
+    {
+      "name": "suggestion-status-enum",
+      "ok": true
+    },
+    {
+      "name": "suggestion-fields",
+      "ok": true
+    },
+    {
+      "name": "additive-indexes",
+      "ok": true
+    },
+    {
+      "name": "suggestion-foreign-key",
+      "ok": true
+    },
+    {
+      "name": "migration-applied",
+      "ok": true
+    },
+    {
+      "name": "migration-checksum",
+      "ok": true
+    },
+    {
+      "name": "no-unresolved-migration",
+      "ok": true
+    },
+    {
+      "name": "existing-valid-viewer-available",
+      "ok": true
+    },
+    {
+      "name": "association-directory-service",
+      "ok": true,
+      "details": {
+        "returned": 0,
+        "total": 0,
+        "totalGlobal": 0
+      }
+    },
+    {
+      "name": "personal-and-managed-associations",
+      "ok": true,
+      "details": {
+        "own": 0,
+        "managed": 0
+      }
+    },
+    {
+      "name": "admin-suggestion-and-responsible-queries",
+      "ok": true,
+      "details": {
+        "suggestionsReturned": 0,
+        "candidatesReturned": 1
+      }
+    },
+    {
+      "name": "association-empty-safe-joins",
+      "ok": true
+    },
+    {
+      "name": "mysql-json-filter-semantics",
+      "ok": true
+    },
+    {
+      "name": "person-directory-filter-and-profile-queries",
+      "ok": true,
+      "details": {
+        "cases": 6,
+        "returnedProfiles": 0
+      }
+    }
+  ],
+  "warnings": [
+    "DETAIL_SKIPPED_NO_ACTIVE_ASSOCIATION"
+  ],
+  "databaseConfigurationSource": "EXPLICIT_ENV_FILE",
+  "prismaVersion": "5.21.1",
+  "schemaSha256": "ea77b7d3a2b68cb474a0a52fa4c92089228ca134f3b6ed076c892da247a4fb8f",
+  "countComparisons": [
+    {
+      "table": "User",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "table": "Profil",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "table": "Formation",
+      "before": 9,
+      "after": 9,
+      "delta": 0
+    },
+    {
+      "table": "Experience",
+      "before": 2,
+      "after": 2,
+      "delta": 0
+    },
+    {
+      "table": "Association",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "AssociationMembre",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "AssociationSuggestion",
+      "before": null,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "Etablissement",
+      "before": 143458,
+      "after": 143458,
+      "delta": 0
+    },
+    {
+      "table": "Publication",
+      "before": 1,
+      "after": 1,
+      "delta": 0
+    },
+    {
+      "table": "Notification",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    },
+    {
+      "table": "Message",
+      "before": 0,
+      "after": 0,
+      "delta": 0
+    }
+  ],
+  "migrationSqlSha256": "3beb325e757b66e63d36a934b15ab8c22a453fbbe71e2f05f6671a848c5435ac",
+  "viewerKind": "EXISTING_ADMIN"
+}

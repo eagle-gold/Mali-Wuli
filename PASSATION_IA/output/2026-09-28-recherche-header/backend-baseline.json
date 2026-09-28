@@ -1,0 +1,38 @@
+{
+  "kind": "event-photos-readonly",
+  "mode": "baseline",
+  "migration": "20260928190000_event_photos",
+  "checkedAt": "2026-09-28T16:11:24.113Z",
+  "status": "PASS",
+  "counts": {
+    "User": 2,
+    "Profil": 2,
+    "Formation": 9,
+    "Experience": 2,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "AssociationSuggestion": 0,
+    "Etablissement": 143458,
+    "Publication": 1,
+    "Notification": 0,
+    "Message": 0,
+    "Evenement": 0,
+    "EvenementParticipant": 0,
+    "EvenementPhoto": null
+  },
+  "checks": [
+    {
+      "name": "database-target",
+      "ok": true
+    },
+    {
+      "name": "existing-tables-present",
+      "ok": true
+    }
+  ],
+  "warnings": [],
+  "databaseConfigurationSource": "EXPLICIT_ENV_FILE",
+  "database": "u668963025_maliwuli",
+  "prismaVersion": "5.21.1",
+  "schemaSha256": "ea77b7d3a2b68cb474a0a52fa4c92089228ca134f3b6ed076c892da247a4fb8f"
+}

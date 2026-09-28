@@ -1,0 +1,75 @@
+{
+  "before": {
+    "symptom": "Accueil affiche les boutons visiteurs sans effacer la session",
+    "dashboardReturn": true
+  },
+  "checks": [
+    {
+      "name": "education-page1",
+      "counts": [
+        "26",
+        "9",
+        "6",
+        "3",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "name": "education-page2",
+      "counts": [
+        "0",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "name": "associations",
+      "cards": [
+        "ATAmadou TounkaraCoordinateur associatifBamako, MaliLycée Horizon de Bamako · promo 2018Créer une associationMentoratVolontaireVoir le profilContacterProposer une synergie",
+        "MTMariam TraoréResponsable d'associationBamako, MaliLycée Horizon de Bamako · promo 2019Vie associativeMentoratVolontaireVoir le profilContacterProposer une synergie",
+        "MSMoussa SissokoModérateur du réseauParis, FranceLycée Horizon de Bamako · promo 2019Voir le profilContacterProposer une synergie",
+        "SKSamba KeitaEntrepreneur dans l'agroalimentaireBamako, MaliUniversité des Talents — Paris · promo 2018EntrepreneuriatVolontaireVoir le profilContacterProposer une synergie",
+        "FCFatou CoulibalyÉtudiante en économieLille, FranceInstitut des Initiatives — Dakar · promo 2027Voir le profilContacterProposer une synergie",
+        "ODOumar DialloIngénieur en énergieDakar, SénégalLycée Horizon de Bamako · promo 2020OrientationUn stageVolontaireVoir le profilContacterProposer une synergie",
+        "AKAminata KonéDesigner de servicesMontréal, CanadaUniversité des Talents — Paris · promo 2021Un emploiDesignVolontaireVoir le profilContacterProposer une synergie",
+        "CSCheick SanogoEn recherche d'une première expérienceParis, FranceInstitut des Initiatives — Dakar · promo 2024Voir le profilContacterProposer une synergie"
+      ]
+    },
+    {
+      "name": "home-connected",
+      "registerLinks": 0,
+      "loginLinks": 0,
+      "sessionState": "authenticated"
+    },
+    {
+      "name": "reload-and-return-dashboard",
+      "passed": true
+    },
+    {
+      "name": "home-mobile-320",
+      "scrollWidth": 320,
+      "width": 320,
+      "connected": true
+    },
+    {
+      "name": "home-mobile-final",
+      "scrollWidth": 320,
+      "width": 320,
+      "monEspace": "/dashboard"
+    },
+    {
+      "name": "logout-visitor-home",
+      "sessionState": "visitor",
+      "registerHref": "/register"
+    }
+  ],
+  "scope": "API locale fictive en RAM ; aucun compte réel, DB ou mail",
+  "status": "PASS"
+}

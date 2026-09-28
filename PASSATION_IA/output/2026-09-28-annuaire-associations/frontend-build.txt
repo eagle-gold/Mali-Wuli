@@ -1,0 +1,61 @@
+
+> mali-wuli-frontend@1.0.0 build
+> next build
+
+   ▲ Next.js 15.5.24
+   - Environments: .env.local
+   - Experiments (use with caution):
+     · cpus: 1
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 2.9s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/6) ...
+   Generating static pages (1/6) 
+   Generating static pages (2/6) 
+   Generating static pages (4/6) 
+ ✓ Generating static pages (6/6)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS  Revalidate  Expire
+┌ ƒ /                                    11.8 kB         118 kB
+├ ƒ /_not-found                            995 B         104 kB
+├ ƒ /admin                                3.6 kB         127 kB
+├ ƒ /admin/associations                   4.7 kB         128 kB
+├ ƒ /agenda                               4.7 kB         141 kB
+├ ƒ /annuaire                            6.19 kB         134 kB
+├ ƒ /api/education/institutions            144 B         103 kB
+├ ƒ /api/education/programmes              144 B         103 kB
+├ ƒ /api/education/reference               144 B         103 kB
+├ ƒ /api/locations/cities                  144 B         103 kB
+├ ○ /api/locations/countries               144 B         103 kB          1d      1y
+├ ƒ /associations/[id]                    4.9 kB         133 kB
+├ ƒ /cercles                               144 B         103 kB
+├ ƒ /dashboard                           11.1 kB         148 kB
+├ ƒ /education                           4.11 kB         128 kB
+├ ƒ /education/etablissements/[id]       4.93 kB         128 kB
+├ ƒ /evenements                          5.12 kB         138 kB
+├ ƒ /forgot-password                     1.73 kB         125 kB
+├ ƒ /login                               4.68 kB         128 kB
+├ ƒ /membres/[id]                        3.06 kB         135 kB
+├ ƒ /messages                            6.73 kB         140 kB
+├ ƒ /offres                              5.75 kB         139 kB
+├ ƒ /onboarding                          35.4 kB         160 kB
+├ ƒ /profil                              11.1 kB         139 kB
+├ ƒ /register                             1.8 kB         122 kB
+├ ƒ /register/details                    3.32 kB         123 kB
+├ ƒ /reset-password                      2.52 kB         126 kB
+├ ƒ /synergies                            4.5 kB         138 kB
+├ ƒ /verify-email                        2.23 kB         122 kB
+└ ƒ /volontaires                          5.6 kB         129 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/1255-fc6c00ab2f765339.js      46.4 kB
+  ├ chunks/4bd1b696-f785427dddbba9fb.js  54.2 kB
+  └ other shared chunks (total)          1.95 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

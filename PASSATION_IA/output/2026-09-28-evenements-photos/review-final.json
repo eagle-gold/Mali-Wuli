@@ -1,0 +1,261 @@
+{
+  "status": "PASS",
+  "reviewedAt": "2026-09-28T16:01:54.091404+00:00",
+  "scope": "Relecture finale locale en lecture seule. Seul ce rapport est écrit ; aucun SSH ni accès à une base.",
+  "manifest": {
+    "path": "installed.json",
+    "fileCount": 26,
+    "backendFiles": 6,
+    "frontendFiles": 20,
+    "allHashesMatch": true,
+    "checks": [
+      {
+        "path": "backend/prisma/schema.prisma",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "backend/src/middlewares/upload.middleware.ts",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "backend/src/routes/evenement.routes.test.ts",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "backend/src/routes/evenement.routes.ts",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "backend/src/services/evenement.service.ts",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "backend/prisma/migrations/20260928190000_event_photos/migration.sql",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/types/evenements.ts",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/lib/evenements.test.ts",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/lib/evenements.ts",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/components/evenements/FormulaireEvenement.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/components/evenements/ListeEvenements.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/components/evenements/EvenementUi.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/components/evenements/photos-upload.ts",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/components/evenements/Events.module.css",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/components/evenements/FicheEvenement.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/components/evenements/AlbumEvenement.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/components/evenements/ParticipantsEvenement.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/components/evenements/FormulaireEvenement.module.css",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/components/feed/ActualiteFeed.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/app/(admin)/admin/page.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/app/(admin)/admin/evenements/AdministrationEvenements.module.css",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/app/(admin)/admin/evenements/page.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/app/(platform)/evenements/page.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/app/(platform)/agenda/page.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/app/(platform)/evenements/proposer/page.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      },
+      {
+        "path": "frontend/src/app/(platform)/evenements/[id]/page.tsx",
+        "beforeMatches": true,
+        "installedMatches": true,
+        "stagingMatches": true
+      }
+    ]
+  },
+  "preservation": {
+    "beforeSnapshotFilesCompared": 170,
+    "unrelatedSnapshotChanges": [],
+    "limitation": "Comparaison des fichiers présents dans le snapshot before, pas reconstitution de fichiers extérieurs au snapshot."
+  },
+  "migration": {
+    "path": "backend/prisma/migrations/20260928190000_event_photos/migration.sql",
+    "sha256": "1e7e87ed7f408597b3769c0630b08dd54591131e19cb2f75ad88a68414f42c0e",
+    "schemaOnlyDiffMatchesSql": true,
+    "schemaComparisonSource": "before/backend/prisma/schema.prisma vers schéma local intégré ; prisma migrate diff utilise uniquement --*-schema-datamodel",
+    "changedModels": [
+      "Profil",
+      "Evenement"
+    ],
+    "addedModels": [
+      "EvenementPhoto"
+    ],
+    "removedModels": [],
+    "addsOnly": true,
+    "changes": "Sept colonnes Evenement, dont refuse=false ; EvenementPhoto et indexes. Aucune mise à jour de lignes. FK Evenement CASCADE ; auteur Profil RESTRICT. Suppression applicative des photos/participants précède Evenement.",
+    "applied": false,
+    "realDatabaseInspected": false
+  },
+  "tests": {
+    "eventsBackend": {
+      "passed": 16,
+      "file": "backend/src/routes/evenement.routes.test.ts",
+      "mode": "Vrais handlers/auth/service, delegates métier injectés en mémoire ; seul lookup auth prisma.user.findUnique remplacé puis restauré. Effets de notification simulés. Multer et signatures binaires réels sur fichiers temporaires locaux.",
+      "realDatabaseWrites": 0,
+      "realNotifications": 0,
+      "externalNetworkCalls": 0
+    },
+    "regressions": {
+      "passed": 29,
+      "evidence": "regression-tests.txt",
+      "filesReviewed": [
+        "backend/src/routes/association.routes.test.ts",
+        "backend/src/routes/user-directory.test.ts",
+        "backend/src/services/annuaire.test.ts",
+        "backend/src/services/onboarding-school-records.test.ts"
+      ],
+      "mode": "Prisma remplacé par mocks/delegates pour tous les chemins testés ; onboarding utilise HTTP loopback vers Express de test, transaction en mémoire.",
+      "realDatabaseWrites": 0,
+      "externalNetworkCalls": 0
+    },
+    "datesIcs": {
+      "passed": 4,
+      "evidence": "dates-tests.txt",
+      "mode": "Fonctions pures dates/fuseaux/ICS."
+    },
+    "formAdmin": {
+      "groupsPassed": 14,
+      "evidence": "form-admin-tests.txt",
+      "script": "verify-event-form-admin.cjs",
+      "mode": "API et hooks injectés, VM refuse les imports non simulés, aucun HTTP/DB."
+    },
+    "listDetailAlbum": {
+      "groupsPassed": 9,
+      "evidence": "events-ui-tests.txt",
+      "script": "verify-events-ui.cjs",
+      "mode": "API, hooks, router simulés ; 14 actions simulées, réseau et DB absents."
+    },
+    "browserFixtures": {
+      "scripts": [
+        "qa-fixtures.cjs",
+        "qa-events.cjs"
+      ],
+      "mode": "Serveur HTTP loopback 127.0.0.1:4307 ; personnes, inscriptions et uploads en RAM. Imports Node http/crypto et module local qa-events, aucun Prisma, connecteur mail ni persistance DB.",
+      "realDatabaseWrites": 0
+    },
+    "executionEvidenceBoundary": "Relecture des sources testées, des résultats enregistrés et des commandes de cette sous-tâche ; aucune vérification de la base de production. Ne pas assimiler les mocks à un essai transactionnel MySQL réel. Aucun script smoke/import/réconciliation de données réelles n’a été exécuté dans ce lot de contrôles."
+  },
+  "publication": {
+    "deployed": false,
+    "migrationExecuted": false,
+    "needsUserAuthorizationBeforeMigrationOrPublication": true
+  },
+  "secretsIncluded": false,
+  "postMigrationVerifier": {
+    "path": "verify-events-readonly.cjs",
+    "sha256": "952d1d09ccf4060b1f54c34f08c3d51a01350a5ec34ded07ef88dbfb32d3ea9e",
+    "localValidation": [
+      "node --check",
+      "--help",
+      "readonlyClient bloque create, $executeRaw, $transaction et remplacement des méthodes"
+    ],
+    "mainExecuted": false,
+    "databaseAccessed": false,
+    "httpOrSshUsed": false,
+    "mode": "baseline ou post, backend absolu explicite ; aucun profil ni événement de fixture créé"
+  }
+}

@@ -1,0 +1,24 @@
+// Calls fixture dispatch directly. No listen(), network or database.
+const assert=require('node:assert/strict');
+const qa=require('./qa-fixtures.cjs');
+async function login(name){const data=await qa.dispatch('POST','/api/auth/login',new URLSearchParams(),{email:name+'@example.test',motDePasse:'qa-test'},{headers:{}});return{headers:{authorization:'Bearer '+data.token}}}
+const call=(req,method,url,body={})=>{const u=new URL(url,'http://fixture.invalid');return qa.dispatch(method,u.pathname,u.searchParams,body,req)};
+let checks=0;const pass=t=>{checks++;console.log('PASS '+t)};
+(async()=>{
+ qa.reset();const awa=await login('membre'),samba=await login('samba'),manager=await login('manager'),admin=await login('admin'),legacy=await login('moderateur');
+ let posts=(await call(awa,'GET','/api/publications')).publications;
+ assert.equal(posts.find(p=>p.id==='qa-post-membre').peutSupprimer,true);assert.equal(posts.find(p=>p.id==='qa-post-other').peutSupprimer,false);
+ const foreign=posts.find(p=>p.id==='qa-post-other');assert.equal(foreign.commentaires.find(c=>c.id==='qa-comment-own').peutSupprimer,true);assert.equal(foreign.commentaires.find(c=>c.id==='qa-comment-stranger').peutSupprimer,false);
+ await assert.rejects(call(awa,'DELETE','/api/publications/qa-post-other'),e=>e.status===403);
+ await assert.rejects(call(awa,'DELETE','/api/publications/qa-post-other/commentaires/qa-comment-stranger'),e=>e.status===403);
+ await assert.rejects(call(awa,'DELETE','/api/publications/qa-post-echec'),e=>e.status===403);assert.ok(qa.snapshot().publications.some(p=>p.id==='qa-post-echec'));
+ assert.equal((await call(awa,'DELETE','/api/publications/qa-post-other/commentaires/qa-comment-own')).nbCommentaires,1);posts=(await call(awa,'GET','/api/publications')).publications;assert.equal(posts.find(p=>p.id==='qa-post-other').nbCommentaires,1);
+ await call(awa,'DELETE','/api/publications/qa-post-membre/commentaires/qa-comment-other');posts=(await call(awa,'GET','/api/publications')).publications;assert.equal(posts.find(p=>p.id==='qa-post-membre').nbCommentaires,0);
+ await call(awa,'DELETE','/api/publications/qa-post-membre');assert.equal(qa.snapshot().publications.length,2);
+ const created=await call(awa,'POST','/api/publications',{contenu:'Nouvelle publication fictive',intention:'OFFRE',thematique:'Emploi'});assert.equal(created.publication.peutSupprimer,true);await call(awa,'DELETE','/api/publications/'+created.publication.id);
+ const legacyPosts=(await call(legacy,'GET','/api/publications')).publications;assert.equal(legacyPosts.find(p=>p.id==='qa-post-other').peutSupprimer,false);await call(admin,'DELETE','/api/publications/qa-post-other');pass('posts/comments: own flags, post owner cascade, strangers denied, simulated revoked403 retained, new publication removable, legacy has no new implicit grant');
+ const a=await call(manager,'GET','/api/associations/qa-asso-bamako');assert.equal(a.association.peutSupprimer,true);await assert.rejects(call(awa,'DELETE','/api/associations/qa-asso-bamako'),e=>e.status===403);await call(manager,'DELETE','/api/associations/qa-asso-bamako');assert.ok(!qa.snapshot().affiliations.some(a=>a.associationId==='qa-asso-bamako'));assert.ok(!qa.snapshot().associations.some(a=>a.id==='qa-asso-bamako'));await assert.rejects(call(manager,'GET','/api/associations/qa-asso-bamako'),e=>e.status===404);pass('association responsible deletes fiche and affiliations, unrelated member403');
+ const offers=await call(awa,'GET','/api/offres?vue=mes-offres');assert.equal(offers.compteurs.mesOffres,1);assert.equal(offers.offres[0].peutSupprimer,true);await call(awa,'DELETE','/api/offres/'+offers.offres[0].id);assert.equal((await call(awa,'GET','/api/offres?vue=mes-offres')).compteurs.mesOffres,0);await assert.rejects(call(awa,'DELETE','/api/offres/qa-offre-communication'),e=>e.status===403);await call(samba,'DELETE','/api/offres/qa-offre-communication');pass('pending own offer deletable, unrelated member denied, offers-domain grant permitted, counts refreshed');
+ const events=await call(manager,'GET','/api/evenements?statut=mes&periode=tous');const pending=events.evenements.find(e=>e.statut==='EN_ATTENTE');assert.ok(pending?.peutSupprimer);await call(manager,'DELETE','/api/evenements/'+pending.id);assert.equal((await call(manager,'GET','/api/evenements?statut=mes&periode=tous')).compteurs.mesPropositions,events.compteurs.mesPropositions-1);await assert.rejects(call(awa,'DELETE','/api/evenements/qa-event-forum'),e=>e.status===403);await call(admin,'DELETE','/api/evenements/qa-event-forum');pass('pending event owner and domain manager delete; unrelated member403; count reflects removal');
+ qa.reset();console.log(JSON.stringify({checks,transport:'direct RAM dispatch',network:false,database:false}));
+})().catch(e=>{console.error(e);process.exitCode=1});

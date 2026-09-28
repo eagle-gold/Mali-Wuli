@@ -1,0 +1,30 @@
+{
+  "at": "2026-09-28T17:33:50.454Z",
+  "database": "u668963025_maliwuli",
+  "backup": "/home/u668963025/private-backups/20260928-roles-actions/before.sql.gz",
+  "bytes": 31534306,
+  "uncompressedBytes": 192658599,
+  "gzipIntegrity": true,
+  "sha256": "6e44298cb79039d3d40945c26c8e22272fd79c55076b53a52ffc2096fa1c849c",
+  "counts": {
+    "User": 2,
+    "Profil": 2,
+    "Formation": 9,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "Evenement": 0,
+    "EvenementParticipant": 0,
+    "Offre": 0,
+    "OffreEnregistrement": 0,
+    "CandidatureOffre": 0,
+    "Message": 0,
+    "Conversation": 0
+  },
+  "usersRoleFingerprint": "312e0933c6615e3fff777903dd3f561926351a947711aa27d0d899977a7fe135",
+  "warning": null,
+  "databaseWrites": 0,
+  "limitations": [
+    "Counts/fingerprint and dump are separate read snapshots; concurrent live writes require review.",
+    "Gzip integrity is checked; this is not a restoration rehearsal."
+  ]
+}

@@ -1,0 +1,1019 @@
+{
+  "at": "2026-09-28T19:00:20.447Z",
+  "vantagePoint": "Hostinger SSH process \u2192 public HTTPS CDN via curl --compressed; fresh curl process per resource, not browser CWV",
+  "target": "/home/u668963025/domains/mali-wuli.com/hbuilds/versions/20260928-liens-sociaux/nodejs",
+  "buildId": "MF940TX4N8sLGFRsT_gyN",
+  "pages": [
+    {
+      "route": "/",
+      "status": 200,
+      "wireBytes": 15074,
+      "decodedBytes": 73031,
+      "ttfb": 0.160011,
+      "seconds": 0.160594,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "link": "</_next/static/media/e4af272ccee01ff0-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/eaead17c7dbfcd5d-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/26d0ba92e140f0dc-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/af4bf8399d1aacdf-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </images/landing/mali-wuli-arbre.png>; rel=preload; as=\"image\"",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "DYNAMIC"
+      },
+      "resourcePaths": [
+        "/_next/static/css/57d473662c0dd701.css",
+        "/_next/static/css/b54f2e1c24237153.css",
+        "/_next/static/chunks/webpack-aa2fcc2a527845b7.js",
+        "/_next/static/chunks/4bd1b696-f785427dddbba9fb.js",
+        "/_next/static/chunks/1255-fc6c00ab2f765339.js",
+        "/_next/static/chunks/main-app-3d0bb32ad78c3fa3.js",
+        "/_next/static/chunks/3369-30d74840250e72f4.js",
+        "/_next/static/chunks/2619-3c9e02e22d10480a.js",
+        "/_next/static/chunks/app/page-b5ebd331c4ecb5d7.js",
+        "/_next/static/chunks/polyfills-42372ed130431b0a.js",
+        "/images/landing/mali-wuli-arbre.png",
+        "/_next/static/media/e4af272ccee01ff0-s.p.woff2",
+        "/_next/static/media/eaead17c7dbfcd5d-s.p.woff2",
+        "/_next/static/media/26d0ba92e140f0dc-s.p.woff2",
+        "/_next/static/media/af4bf8399d1aacdf-s.p.woff2"
+      ],
+      "preloads": [
+        "<link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-aa2fcc2a527845b7.js\"/>"
+      ],
+      "noModulePaths": [
+        "/_next/static/chunks/polyfills-42372ed130431b0a.js"
+      ],
+      "httpPreloads": "</_next/static/media/e4af272ccee01ff0-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/eaead17c7dbfcd5d-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/26d0ba92e140f0dc-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/af4bf8399d1aacdf-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </images/landing/mali-wuli-arbre.png>; rel=preload; as=\"image\""
+    },
+    {
+      "route": "/login",
+      "status": 200,
+      "wireBytes": 5002,
+      "decodedBytes": 12426,
+      "ttfb": 0.028473,
+      "seconds": 0.028731,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "link": "</_next/static/media/e4af272ccee01ff0-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/eaead17c7dbfcd5d-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </images/logo-mali-wuli.png>; rel=preload; as=\"image\"",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "DYNAMIC"
+      },
+      "resourcePaths": [
+        "/_next/static/css/57d473662c0dd701.css",
+        "/_next/static/chunks/webpack-aa2fcc2a527845b7.js",
+        "/_next/static/chunks/4bd1b696-f785427dddbba9fb.js",
+        "/_next/static/chunks/1255-fc6c00ab2f765339.js",
+        "/_next/static/chunks/main-app-3d0bb32ad78c3fa3.js",
+        "/_next/static/chunks/3369-30d74840250e72f4.js",
+        "/_next/static/chunks/2619-3c9e02e22d10480a.js",
+        "/_next/static/chunks/2143-d1adb3359eee68ae.js",
+        "/_next/static/chunks/6770-d3c260c456b48a28.js",
+        "/_next/static/chunks/1423-b66bd74c1b7e9c92.js",
+        "/_next/static/chunks/app/(platform)/layout-ab7051e6b68909fc.js",
+        "/_next/static/chunks/app/(auth)/login/page-e303920c07da8ac5.js",
+        "/_next/static/chunks/polyfills-42372ed130431b0a.js",
+        "/images/logo-mali-wuli.png",
+        "/_next/static/media/e4af272ccee01ff0-s.p.woff2",
+        "/_next/static/media/eaead17c7dbfcd5d-s.p.woff2"
+      ],
+      "preloads": [
+        "<link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-aa2fcc2a527845b7.js\"/>"
+      ],
+      "noModulePaths": [
+        "/_next/static/chunks/polyfills-42372ed130431b0a.js"
+      ],
+      "httpPreloads": "</_next/static/media/e4af272ccee01ff0-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/eaead17c7dbfcd5d-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </images/logo-mali-wuli.png>; rel=preload; as=\"image\""
+    },
+    {
+      "route": "/profil",
+      "status": 200,
+      "wireBytes": 3875,
+      "decodedBytes": 10658,
+      "ttfb": 0.023601,
+      "seconds": 0.024621,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "link": "</_next/static/media/e4af272ccee01ff0-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/eaead17c7dbfcd5d-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\"",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "DYNAMIC"
+      },
+      "resourcePaths": [
+        "/_next/static/css/57d473662c0dd701.css",
+        "/_next/static/chunks/webpack-aa2fcc2a527845b7.js",
+        "/_next/static/chunks/4bd1b696-f785427dddbba9fb.js",
+        "/_next/static/chunks/1255-fc6c00ab2f765339.js",
+        "/_next/static/chunks/main-app-3d0bb32ad78c3fa3.js",
+        "/_next/static/chunks/3369-30d74840250e72f4.js",
+        "/_next/static/chunks/2619-3c9e02e22d10480a.js",
+        "/_next/static/chunks/2143-d1adb3359eee68ae.js",
+        "/_next/static/chunks/6770-d3c260c456b48a28.js",
+        "/_next/static/chunks/1423-b66bd74c1b7e9c92.js",
+        "/_next/static/chunks/app/(platform)/layout-ab7051e6b68909fc.js",
+        "/_next/static/chunks/6303-e2327a27c062842e.js",
+        "/_next/static/chunks/app/(platform)/profil/page-c5cc94d14996beb5.js",
+        "/_next/static/chunks/polyfills-42372ed130431b0a.js",
+        "/_next/static/media/e4af272ccee01ff0-s.p.woff2",
+        "/_next/static/media/eaead17c7dbfcd5d-s.p.woff2"
+      ],
+      "preloads": [
+        "<link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-aa2fcc2a527845b7.js\"/>"
+      ],
+      "noModulePaths": [
+        "/_next/static/chunks/polyfills-42372ed130431b0a.js"
+      ],
+      "httpPreloads": "</_next/static/media/e4af272ccee01ff0-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/eaead17c7dbfcd5d-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\""
+    },
+    {
+      "route": "/onboarding",
+      "status": 200,
+      "wireBytes": 6157,
+      "decodedBytes": 17515,
+      "ttfb": 0.026002,
+      "seconds": 0.026511,
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "link": "</_next/static/media/e4af272ccee01ff0-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/eaead17c7dbfcd5d-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </images/logo-mali-wuli.png>; rel=preload; as=\"image\"",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "DYNAMIC"
+      },
+      "resourcePaths": [
+        "/_next/static/css/57d473662c0dd701.css",
+        "/_next/static/css/1b0831eec1276bd7.css",
+        "/_next/static/chunks/webpack-aa2fcc2a527845b7.js",
+        "/_next/static/chunks/4bd1b696-f785427dddbba9fb.js",
+        "/_next/static/chunks/1255-fc6c00ab2f765339.js",
+        "/_next/static/chunks/main-app-3d0bb32ad78c3fa3.js",
+        "/_next/static/chunks/3369-30d74840250e72f4.js",
+        "/_next/static/chunks/2619-3c9e02e22d10480a.js",
+        "/_next/static/chunks/2143-d1adb3359eee68ae.js",
+        "/_next/static/chunks/6770-d3c260c456b48a28.js",
+        "/_next/static/chunks/1423-b66bd74c1b7e9c92.js",
+        "/_next/static/chunks/app/(platform)/layout-ab7051e6b68909fc.js",
+        "/_next/static/chunks/6303-e2327a27c062842e.js",
+        "/_next/static/chunks/app/(auth)/onboarding/page-27361bc778a65ad6.js",
+        "/_next/static/chunks/polyfills-42372ed130431b0a.js",
+        "/images/logo-mali-wuli.png",
+        "/_next/static/media/e4af272ccee01ff0-s.p.woff2",
+        "/_next/static/media/eaead17c7dbfcd5d-s.p.woff2"
+      ],
+      "preloads": [
+        "<link rel=\"preload\" as=\"script\" fetchPriority=\"low\" href=\"/_next/static/chunks/webpack-aa2fcc2a527845b7.js\"/>"
+      ],
+      "noModulePaths": [
+        "/_next/static/chunks/polyfills-42372ed130431b0a.js"
+      ],
+      "httpPreloads": "</_next/static/media/e4af272ccee01ff0-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/eaead17c7dbfcd5d-s.p.woff2>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </images/logo-mali-wuli.png>; rel=preload; as=\"image\""
+    }
+  ],
+  "resources": [
+    {
+      "path": "/images/landing/mali-wuli-arbre.png",
+      "status": 200,
+      "wireBytes": 602699,
+      "ttfb": 0.015978,
+      "seconds": 0.018472,
+      "speed": 33483277,
+      "decodedBytes": 602699,
+      "sha256": "5bbb1c57d6fdf4f9642a1d4d4e7119e52fc94abf38cfaa68f0889758722bf7cf",
+      "headers": {
+        "content-type": "image/png",
+        "content-length": "602699",
+        "cache-control": "max-age=31536000, public",
+        "age": "1473",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "HIT"
+      },
+      "dimensions": {
+        "width": 1280,
+        "height": 1280,
+        "format": "png"
+      }
+    },
+    {
+      "path": "/images/logo-mali-wuli.png",
+      "status": 200,
+      "wireBytes": 146449,
+      "ttfb": 0.042013,
+      "seconds": 0.042906,
+      "speed": 3486880,
+      "decodedBytes": 146449,
+      "sha256": "a18765d91ead24982bc4fe9e72606165c24194d1fa542e66ad0fb86a866a0251",
+      "headers": {
+        "content-type": "image/png",
+        "content-length": "146449",
+        "cache-control": "public, max-age=0",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "EXPIRED"
+      },
+      "dimensions": {
+        "width": 512,
+        "height": 512,
+        "format": "png"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/4bd1b696-f785427dddbba9fb.js",
+      "status": 200,
+      "wireBytes": 72192,
+      "ttfb": 0.021409,
+      "seconds": 0.02679,
+      "speed": 2776615,
+      "decodedBytes": 173020,
+      "sha256": "51a7146e32f6a18a96676813fd791cd1b0265c675292acb31196720ca9e79726",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"2a3dc-1a0e95837ad\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/1255-fc6c00ab2f765339.js",
+      "status": 200,
+      "wireBytes": 66565,
+      "ttfb": 0.01493,
+      "seconds": 0.016158,
+      "speed": 4160312,
+      "decodedBytes": 173688,
+      "sha256": "e21be50b85d04ad36b43be5a422703844403ff99a574e0cfd4a7e1295a995b88",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"2a678-1a0e95837ad\"",
+        "content-encoding": "br",
+        "age": "54",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "HIT"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/app/(auth)/onboarding/page-27361bc778a65ad6.js",
+      "status": 200,
+      "wireBytes": 56138,
+      "ttfb": 0.02063,
+      "seconds": 0.022083,
+      "speed": 2551727,
+      "decodedBytes": 138110,
+      "sha256": "76b6ad936486ddabfa5c9a0992bd4d7735dbcc86a503ac8648f0173b7b08bd5a",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"21b7e-1a0e95837ac\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/polyfills-42372ed130431b0a.js",
+      "status": 200,
+      "wireBytes": 50416,
+      "ttfb": 0.018037,
+      "seconds": 0.022324,
+      "speed": 2291636,
+      "decodedBytes": 112594,
+      "sha256": "0973c1d64c88adc8e3c950410cb58b288f72118d5965b78049438deb8f2f9683",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"1b7d2-1a0e95837aa\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/media/e4af272ccee01ff0-s.p.woff2",
+      "status": 200,
+      "wireBytes": 48432,
+      "ttfb": 0.014532,
+      "seconds": 0.014914,
+      "speed": 3459428,
+      "decodedBytes": 48432,
+      "sha256": "c940764593d0fe5d596be327ca7558855e018039fb78509aa21921fd3644c3e4",
+      "headers": {
+        "content-type": "font/woff2",
+        "content-length": "48432",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 21 Sep 2026 14:51:41 GMT",
+        "etag": "W/\"bd30-1a0c4738b9c\"",
+        "age": "554803",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "HIT"
+      }
+    },
+    {
+      "path": "/_next/static/media/eaead17c7dbfcd5d-s.p.woff2",
+      "status": 200,
+      "wireBytes": 38460,
+      "ttfb": 0.013884,
+      "seconds": 0.014173,
+      "speed": 2747142,
+      "decodedBytes": 38460,
+      "sha256": "5d91eb5d522a03081946c44c8ca17c902230dfed5f0f9b5014262135d47b15b2",
+      "headers": {
+        "content-type": "font/woff2",
+        "content-length": "38460",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 21 Sep 2026 14:51:41 GMT",
+        "etag": "W/\"963c-1a0c4738b9c\"",
+        "age": "564893",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "HIT"
+      }
+    },
+    {
+      "path": "/_next/static/media/af4bf8399d1aacdf-s.p.woff2",
+      "status": 200,
+      "wireBytes": 36560,
+      "ttfb": 0.019115,
+      "seconds": 0.0194,
+      "speed": 1924210,
+      "decodedBytes": 36560,
+      "sha256": "88e17be075f1be50ab67b057b99e3701b828f44ed28f9452df6c02645bb0cba9",
+      "headers": {
+        "content-type": "font/woff2",
+        "content-length": "36560",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"8ed0-1a0e95837a6\"",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "EXPIRED"
+      }
+    },
+    {
+      "path": "/_next/static/media/26d0ba92e140f0dc-s.p.woff2",
+      "status": 200,
+      "wireBytes": 29904,
+      "ttfb": 0.018533,
+      "seconds": 0.019293,
+      "speed": 1573894,
+      "decodedBytes": 29904,
+      "sha256": "6219bc4bfdfc5d9b2201dcdf046218b122a758f932e25ed5f168f929b7ca2311",
+      "headers": {
+        "content-type": "font/woff2",
+        "content-length": "29904",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"74d0-1a0e95837aa\"",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "EXPIRED"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/3369-30d74840250e72f4.js",
+      "status": 200,
+      "wireBytes": 22953,
+      "ttfb": 0.01939,
+      "seconds": 0.019836,
+      "speed": 1208052,
+      "decodedBytes": 46951,
+      "sha256": "46ad0599147a16f0b8a69db71bef082a3a5df7fcdeb2801395f4f1a5faf4f9ed",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"b767-1a0e95837ad\"",
+        "content-encoding": "br",
+        "age": "54",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "HIT"
+      }
+    },
+    {
+      "path": "/_next/static/css/1b0831eec1276bd7.css",
+      "status": 200,
+      "wireBytes": 20103,
+      "ttfb": 0.018612,
+      "seconds": 0.019234,
+      "speed": 1058052,
+      "decodedBytes": 56565,
+      "sha256": "a7b289fa63db6291ca2652f94119dd4e38496745c7a74a8a2f743f86c3d21205",
+      "headers": {
+        "content-type": "text/css; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"dcf5-1a0e95837ac\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/2143-d1adb3359eee68ae.js",
+      "status": 200,
+      "wireBytes": 17623,
+      "ttfb": 0.019168,
+      "seconds": 0.01975,
+      "speed": 927526,
+      "decodedBytes": 42346,
+      "sha256": "8616ceaba3364a9a7709980b869b515874f4a890aff941835ad73cdad55af488",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"a56a-1a0e95837ad\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/css/57d473662c0dd701.css",
+      "status": 200,
+      "wireBytes": 17161,
+      "ttfb": 0.01461,
+      "seconds": 0.015109,
+      "speed": 1144066,
+      "decodedBytes": 69610,
+      "sha256": "8c2a8f3b9be28d794add2929968116a8fe2868db52462d91ffbc074223db2d4c",
+      "headers": {
+        "content-type": "text/css; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"10fea-1a0e95837ac\"",
+        "content-encoding": "br",
+        "age": "54",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "HIT"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/app/page-b5ebd331c4ecb5d7.js",
+      "status": 200,
+      "wireBytes": 17110,
+      "ttfb": 0.01482,
+      "seconds": 0.015338,
+      "speed": 1140666,
+      "decodedBytes": 40041,
+      "sha256": "7c49b8c39a3fc52fe0213351a35b7ff7c271168f4af0abdb7cfcd224cc37d5a3",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"9c69-1a0e95837ab\"",
+        "content-encoding": "br",
+        "age": "54",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "HIT"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/app/(platform)/profil/page-c5cc94d14996beb5.js",
+      "status": 200,
+      "wireBytes": 16929,
+      "ttfb": 0.019861,
+      "seconds": 0.020395,
+      "speed": 846450,
+      "decodedBytes": 41489,
+      "sha256": "86ba37411ff717cc9934f9b8e05f8478e0c3177d76f00c2ccb78f2570f25fe5d",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"a211-1a0e95837ac\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/1423-b66bd74c1b7e9c92.js",
+      "status": 200,
+      "wireBytes": 10924,
+      "ttfb": 0.01786,
+      "seconds": 0.018214,
+      "speed": 606888,
+      "decodedBytes": 26280,
+      "sha256": "8bec5ad8ec8bc99aa30d8bc1884c2098de79db8b4ce65b790e561291f30c3729",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"66a8-1a0e95837ad\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/6770-d3c260c456b48a28.js",
+      "status": 200,
+      "wireBytes": 8605,
+      "ttfb": 0.02083,
+      "seconds": 0.021102,
+      "speed": 409761,
+      "decodedBytes": 18745,
+      "sha256": "a0d0ae6c66256b4c038c9fec80e090f383d77006100da504cce41dae137edb63",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"4939-1a0e95837ad\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/css/b54f2e1c24237153.css",
+      "status": 200,
+      "wireBytes": 8259,
+      "ttfb": 0.014267,
+      "seconds": 0.014611,
+      "speed": 589928,
+      "decodedBytes": 27060,
+      "sha256": "17c008b990baff2b2bb335733982e8cf98082210891c9a061896067d1fb9d908",
+      "headers": {
+        "content-type": "text/css; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"69b4-1a0e95837ac\"",
+        "content-encoding": "br",
+        "age": "54",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "HIT"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/app/(auth)/login/page-e303920c07da8ac5.js",
+      "status": 200,
+      "wireBytes": 6407,
+      "ttfb": 0.017786,
+      "seconds": 0.018039,
+      "speed": 355944,
+      "decodedBytes": 16163,
+      "sha256": "058c5bd1c3be9ad1c99825a2e75c0b9a388c828a45d59cf4129dda60958c80ab",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"3f23-1a0e95837ab\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/6303-e2327a27c062842e.js",
+      "status": 200,
+      "wireBytes": 6133,
+      "ttfb": 0.019109,
+      "seconds": 0.019413,
+      "speed": 322789,
+      "decodedBytes": 16485,
+      "sha256": "aabde3b565422b651ad74f71914de1d19851fa5dac6c79749d9a6432aaffd5f2",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"4065-1a0e95837ad\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/2619-3c9e02e22d10480a.js",
+      "status": 200,
+      "wireBytes": 3884,
+      "ttfb": 0.01783,
+      "seconds": 0.018001,
+      "speed": 215777,
+      "decodedBytes": 8538,
+      "sha256": "7fe044bde88179fcddab68e119ff3f40e55f3a0ecd8cec7fc420b14c9f350f9b",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"215a-1a0e95837ad\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/webpack-aa2fcc2a527845b7.js",
+      "status": 200,
+      "wireBytes": 1867,
+      "ttfb": 0.017262,
+      "seconds": 0.017404,
+      "speed": 109823,
+      "decodedBytes": 3458,
+      "sha256": "5cac7222c864bc7d5f21a53db7d47328d51d7b63be8620878fd6745ba64ab32a",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"d82-1a0e95837ac\"",
+        "content-encoding": "br",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/app/(platform)/layout-ab7051e6b68909fc.js",
+      "status": 200,
+      "wireBytes": 1322,
+      "ttfb": 0.01131,
+      "seconds": 0.011432,
+      "speed": 120181,
+      "decodedBytes": 2575,
+      "sha256": "06041f509913879cde8aeabbe977ce1142bd3b6b584069af08460878c13db600",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"a0f-1a0e95837ac\"",
+        "content-encoding": "br",
+        "age": "53",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "HIT"
+      }
+    },
+    {
+      "path": "/_next/static/chunks/main-app-3d0bb32ad78c3fa3.js",
+      "status": 200,
+      "wireBytes": 231,
+      "ttfb": 0.015408,
+      "seconds": 0.015567,
+      "speed": 15400,
+      "decodedBytes": 560,
+      "sha256": "2d00c556af83b4a83c76d28af11b517a4412175e35fc1895c1e5102a208fcc1c",
+      "headers": {
+        "content-type": "application/javascript; charset=UTF-8",
+        "content-length": "231",
+        "cache-control": "public, max-age=31536000, immutable",
+        "last-modified": "Mon, 28 Sep 2026 18:47:47 GMT",
+        "etag": "W/\"230-1a0e95837aa\"",
+        "content-encoding": "br",
+        "age": "54",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "HIT"
+      }
+    }
+  ],
+  "fontSources": [
+    {
+      "css": "/_next/static/css/57d473662c0dd701.css",
+      "family": "Inter",
+      "url": "/_next/static/media/ba9851c3c22cd980-s.woff2",
+      "display": "swap",
+      "weight": "100 900",
+      "unicodeRange": "u+0460-052f,u+1c80-1c8a,u+20b4,u+2de0-2dff,u+a640-a69f,u+fe2e-fe2f"
+    },
+    {
+      "css": "/_next/static/css/57d473662c0dd701.css",
+      "family": "Inter",
+      "url": "/_next/static/media/21350d82a1f187e9-s.woff2",
+      "display": "swap",
+      "weight": "100 900",
+      "unicodeRange": "u+0301,u+0400-045f,u+0490-0491,u+04b0-04b1,u+2116"
+    },
+    {
+      "css": "/_next/static/css/57d473662c0dd701.css",
+      "family": "Inter",
+      "url": "/_next/static/media/c5fe6dc8356a8c31-s.woff2",
+      "display": "swap",
+      "weight": "100 900",
+      "unicodeRange": "u+1f??"
+    },
+    {
+      "css": "/_next/static/css/57d473662c0dd701.css",
+      "family": "Inter",
+      "url": "/_next/static/media/19cfc7226ec3afaa-s.woff2",
+      "display": "swap",
+      "weight": "100 900",
+      "unicodeRange": "u+0370-0377,u+037a-037f,u+0384-038a,u+038c,u+038e-03a1,u+03a3-03ff"
+    },
+    {
+      "css": "/_next/static/css/57d473662c0dd701.css",
+      "family": "Inter",
+      "url": "/_next/static/media/df0a9ae256c0569c-s.woff2",
+      "display": "swap",
+      "weight": "100 900",
+      "unicodeRange": "u+0102-0103,u+0110-0111,u+0128-0129,u+0168-0169,u+01a0-01a1,u+01af-01b0,u+0300-0301,u+0303-0304,u+0308-0309,u+0323,u+0329,u+1ea0-1ef9,u+20ab"
+    },
+    {
+      "css": "/_next/static/css/57d473662c0dd701.css",
+      "family": "Inter",
+      "url": "/_next/static/media/8e9860b6e62d6359-s.woff2",
+      "display": "swap",
+      "weight": "100 900",
+      "unicodeRange": "u+0100-02ba,u+02bd-02c5,u+02c7-02cc,u+02ce-02d7,u+02dd-02ff,u+0304,u+0308,u+0329,u+1d00-1dbf,u+1e00-1e9f,u+1ef2-1eff,u+2020,u+20a0-20ab,u+20ad-20c0,u+2113,u+2c60-2c7f,u+a720-a7ff"
+    },
+    {
+      "css": "/_next/static/css/57d473662c0dd701.css",
+      "family": "Inter",
+      "url": "/_next/static/media/e4af272ccee01ff0-s.p.woff2",
+      "display": "swap",
+      "weight": "100 900",
+      "unicodeRange": "u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd"
+    },
+    {
+      "css": "/_next/static/css/57d473662c0dd701.css",
+      "family": "Playfair Display",
+      "url": "/_next/static/media/47f136985ef5b5cb-s.woff2",
+      "display": "swap",
+      "weight": "400 900",
+      "unicodeRange": "u+0301,u+0400-045f,u+0490-0491,u+04b0-04b1,u+2116"
+    },
+    {
+      "css": "/_next/static/css/57d473662c0dd701.css",
+      "family": "Playfair Display",
+      "url": "/_next/static/media/4ead58c4dcc3f285-s.woff2",
+      "display": "swap",
+      "weight": "400 900",
+      "unicodeRange": "u+0102-0103,u+0110-0111,u+0128-0129,u+0168-0169,u+01a0-01a1,u+01af-01b0,u+0300-0301,u+0303-0304,u+0308-0309,u+0323,u+0329,u+1ea0-1ef9,u+20ab"
+    },
+    {
+      "css": "/_next/static/css/57d473662c0dd701.css",
+      "family": "Playfair Display",
+      "url": "/_next/static/media/28a2004cf8372660-s.woff2",
+      "display": "swap",
+      "weight": "400 900",
+      "unicodeRange": "u+0100-02ba,u+02bd-02c5,u+02c7-02cc,u+02ce-02d7,u+02dd-02ff,u+0304,u+0308,u+0329,u+1d00-1dbf,u+1e00-1e9f,u+1ef2-1eff,u+2020,u+20a0-20ab,u+20ad-20c0,u+2113,u+2c60-2c7f,u+a720-a7ff"
+    },
+    {
+      "css": "/_next/static/css/57d473662c0dd701.css",
+      "family": "Playfair Display",
+      "url": "/_next/static/media/eaead17c7dbfcd5d-s.p.woff2",
+      "display": "swap",
+      "weight": "400 900",
+      "unicodeRange": "u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Fraunces",
+      "url": "/_next/static/media/fb526027db1fc1ae-s.woff2",
+      "display": "swap",
+      "weight": "600",
+      "unicodeRange": "u+0102-0103,u+0110-0111,u+0128-0129,u+0168-0169,u+01a0-01a1,u+01af-01b0,u+0300-0301,u+0303-0304,u+0308-0309,u+0323,u+0329,u+1ea0-1ef9,u+20ab"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Fraunces",
+      "url": "/_next/static/media/4da3161b738b07dd-s.woff2",
+      "display": "swap",
+      "weight": "600",
+      "unicodeRange": "u+0100-02ba,u+02bd-02c5,u+02c7-02cc,u+02ce-02d7,u+02dd-02ff,u+0304,u+0308,u+0329,u+1d00-1dbf,u+1e00-1e9f,u+1ef2-1eff,u+2020,u+20a0-20ab,u+20ad-20c0,u+2113,u+2c60-2c7f,u+a720-a7ff"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Fraunces",
+      "url": "/_next/static/media/af4bf8399d1aacdf-s.p.woff2",
+      "display": "swap",
+      "weight": "600",
+      "unicodeRange": "u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Fraunces",
+      "url": "/_next/static/media/fb526027db1fc1ae-s.woff2",
+      "display": "swap",
+      "weight": "700",
+      "unicodeRange": "u+0102-0103,u+0110-0111,u+0128-0129,u+0168-0169,u+01a0-01a1,u+01af-01b0,u+0300-0301,u+0303-0304,u+0308-0309,u+0323,u+0329,u+1ea0-1ef9,u+20ab"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Fraunces",
+      "url": "/_next/static/media/4da3161b738b07dd-s.woff2",
+      "display": "swap",
+      "weight": "700",
+      "unicodeRange": "u+0100-02ba,u+02bd-02c5,u+02c7-02cc,u+02ce-02d7,u+02dd-02ff,u+0304,u+0308,u+0329,u+1d00-1dbf,u+1e00-1e9f,u+1ef2-1eff,u+2020,u+20a0-20ab,u+20ad-20c0,u+2113,u+2c60-2c7f,u+a720-a7ff"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Fraunces",
+      "url": "/_next/static/media/af4bf8399d1aacdf-s.p.woff2",
+      "display": "swap",
+      "weight": "700",
+      "unicodeRange": "u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Instrument Sans",
+      "url": "/_next/static/media/adb45196eddef626-s.woff2",
+      "display": "swap",
+      "weight": "400",
+      "unicodeRange": "u+0100-02ba,u+02bd-02c5,u+02c7-02cc,u+02ce-02d7,u+02dd-02ff,u+0304,u+0308,u+0329,u+1d00-1dbf,u+1e00-1e9f,u+1ef2-1eff,u+2020,u+20a0-20ab,u+20ad-20c0,u+2113,u+2c60-2c7f,u+a720-a7ff"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Instrument Sans",
+      "url": "/_next/static/media/26d0ba92e140f0dc-s.p.woff2",
+      "display": "swap",
+      "weight": "400",
+      "unicodeRange": "u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Instrument Sans",
+      "url": "/_next/static/media/adb45196eddef626-s.woff2",
+      "display": "swap",
+      "weight": "500",
+      "unicodeRange": "u+0100-02ba,u+02bd-02c5,u+02c7-02cc,u+02ce-02d7,u+02dd-02ff,u+0304,u+0308,u+0329,u+1d00-1dbf,u+1e00-1e9f,u+1ef2-1eff,u+2020,u+20a0-20ab,u+20ad-20c0,u+2113,u+2c60-2c7f,u+a720-a7ff"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Instrument Sans",
+      "url": "/_next/static/media/26d0ba92e140f0dc-s.p.woff2",
+      "display": "swap",
+      "weight": "500",
+      "unicodeRange": "u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Instrument Sans",
+      "url": "/_next/static/media/adb45196eddef626-s.woff2",
+      "display": "swap",
+      "weight": "600",
+      "unicodeRange": "u+0100-02ba,u+02bd-02c5,u+02c7-02cc,u+02ce-02d7,u+02dd-02ff,u+0304,u+0308,u+0329,u+1d00-1dbf,u+1e00-1e9f,u+1ef2-1eff,u+2020,u+20a0-20ab,u+20ad-20c0,u+2113,u+2c60-2c7f,u+a720-a7ff"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Instrument Sans",
+      "url": "/_next/static/media/26d0ba92e140f0dc-s.p.woff2",
+      "display": "swap",
+      "weight": "600",
+      "unicodeRange": "u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Instrument Sans",
+      "url": "/_next/static/media/adb45196eddef626-s.woff2",
+      "display": "swap",
+      "weight": "700",
+      "unicodeRange": "u+0100-02ba,u+02bd-02c5,u+02c7-02cc,u+02ce-02d7,u+02dd-02ff,u+0304,u+0308,u+0329,u+1d00-1dbf,u+1e00-1e9f,u+1ef2-1eff,u+2020,u+20a0-20ab,u+20ad-20c0,u+2113,u+2c60-2c7f,u+a720-a7ff"
+    },
+    {
+      "css": "/_next/static/css/b54f2e1c24237153.css",
+      "family": "Instrument Sans",
+      "url": "/_next/static/media/26d0ba92e140f0dc-s.p.woff2",
+      "display": "swap",
+      "weight": "700",
+      "unicodeRange": "u+00??,u+0131,u+0152-0153,u+02bb-02bc,u+02c6,u+02da,u+02dc,u+0304,u+0308,u+0329,u+2000-206f,u+20ac,u+2122,u+2191,u+2193,u+2212,u+2215,u+feff,u+fffd"
+    }
+  ],
+  "staticFonts": [
+    {
+      "file": "19cfc7226ec3afaa-s.woff2",
+      "bytes": 19044
+    },
+    {
+      "file": "21350d82a1f187e9-s.woff2",
+      "bytes": 18744
+    },
+    {
+      "file": "26d0ba92e140f0dc-s.p.woff2",
+      "bytes": 29904
+    },
+    {
+      "file": "28a2004cf8372660-s.woff2",
+      "bytes": 20980
+    },
+    {
+      "file": "47f136985ef5b5cb-s.woff2",
+      "bytes": 21144
+    },
+    {
+      "file": "4da3161b738b07dd-s.woff2",
+      "bytes": 33640
+    },
+    {
+      "file": "4ead58c4dcc3f285-s.woff2",
+      "bytes": 9056
+    },
+    {
+      "file": "8e9860b6e62d6359-s.woff2",
+      "bytes": 85272
+    },
+    {
+      "file": "adb45196eddef626-s.woff2",
+      "bytes": 11092
+    },
+    {
+      "file": "af4bf8399d1aacdf-s.p.woff2",
+      "bytes": 36560
+    },
+    {
+      "file": "ba9851c3c22cd980-s.woff2",
+      "bytes": 25844
+    },
+    {
+      "file": "c5fe6dc8356a8c31-s.woff2",
+      "bytes": 11272
+    },
+    {
+      "file": "df0a9ae256c0569c-s.woff2",
+      "bytes": 10280
+    },
+    {
+      "file": "e4af272ccee01ff0-s.p.woff2",
+      "bytes": 48432
+    },
+    {
+      "file": "eaead17c7dbfcd5d-s.p.woff2",
+      "bytes": 38460
+    },
+    {
+      "file": "fb526027db1fc1ae-s.woff2",
+      "bytes": 11536
+    }
+  ],
+  "largestChunks": [
+    {
+      "file": "chunks/1255-fc6c00ab2f765339.js",
+      "bytes": 173688
+    },
+    {
+      "file": "chunks/4bd1b696-f785427dddbba9fb.js",
+      "bytes": 173020
+    },
+    {
+      "file": "chunks/framework-f31701c9d93f12a4.js",
+      "bytes": 139835
+    },
+    {
+      "file": "chunks/app/(auth)/onboarding/page-27361bc778a65ad6.js",
+      "bytes": 138110
+    },
+    {
+      "file": "chunks/main-ad041aa8a0967938.js",
+      "bytes": 126212
+    },
+    {
+      "file": "chunks/polyfills-42372ed130431b0a.js",
+      "bytes": 112594
+    },
+    {
+      "file": "chunks/app/(platform)/dashboard/page-cb849a0928621536.js",
+      "bytes": 48305
+    },
+    {
+      "file": "chunks/3369-30d74840250e72f4.js",
+      "bytes": 46951
+    },
+    {
+      "file": "chunks/app/(platform)/offres/page-dd572e843deae68d.js",
+      "bytes": 43498
+    },
+    {
+      "file": "chunks/2143-d1adb3359eee68ae.js",
+      "bytes": 42346
+    },
+    {
+      "file": "chunks/app/(platform)/profil/page-c5cc94d14996beb5.js",
+      "bytes": 41489
+    },
+    {
+      "file": "chunks/app/page-b5ebd331c4ecb5d7.js",
+      "bytes": 40041
+    },
+    {
+      "file": "chunks/app/(platform)/evenements/proposer/page-3398a64faffc4a4f.js",
+      "bytes": 29351
+    },
+    {
+      "file": "chunks/app/(platform)/evenements/[id]/page-3a5d538bd1b29793.js",
+      "bytes": 28997
+    },
+    {
+      "file": "chunks/1423-b66bd74c1b7e9c92.js",
+      "bytes": 26280
+    },
+    {
+      "file": "chunks/app/(platform)/offres/deposer/page-bb01a0c784e83d66.js",
+      "bytes": 24459
+    },
+    {
+      "file": "chunks/app/(platform)/messages/page-674a76854cb83628.js",
+      "bytes": 23936
+    },
+    {
+      "file": "chunks/app/(admin)/admin/offres/page-cf1e5881bc98ebf8.js",
+      "bytes": 21605
+    }
+  ],
+  "sourceHashes": {
+    "src/app/layout.tsx": "e2df7fa2c62967cff30ffc134bd2ab0cdac8bcc90f6f790af6b5c108b4a123a7",
+    "src/app/page.tsx": "7305f09e253f7053e5cbba88e3cfeaccd89deb3a4b6932f5e389103bfe777602",
+    "src/components/MaliWuliHeader.tsx": "8748c43abcd20a4735f0a8f63ebb5d4c327d22228885af54016d27a1c9b4f39f",
+    "src/components/landing/LandingArbre.tsx": "73c4c9d8387c538cc4dc759b6f8b6acba4b319e470bbaf34f6b7c38733507e0d",
+    "next.config.js": "58f245762e9754f6fef1c5eb9765a1c417b187acf1b3216c26a813b0520c8d75",
+    "tailwind.config.ts": "e6dba660601d8a56af934a7ab1cb52b8affdbe51bbafe7f136d221a96d0e40ea"
+  },
+  "databaseRequests": 0,
+  "remoteWrites": 0
+}

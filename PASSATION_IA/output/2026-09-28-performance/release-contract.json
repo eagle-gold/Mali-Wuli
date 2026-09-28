@@ -1,0 +1,28 @@
+{
+  "release": "20260928-performance",
+  "previousRelease": "20260928-liens-sociaux",
+  "previousFrontend": "20260928-liens-sociaux",
+  "previousBackend": "20260928-liens-sociaux",
+  "baselineBuildId": "MF940TX4N8sLGFRsT_gyN",
+  "database": "u668963025_maliwuli",
+  "migrationAllowed": false,
+  "schemaSha256": "7f9e40ab21377155bd0ff48553b50c5b34a4f625e122a554ef6b5ec7f6d86fe5",
+  "migrations": {
+    "20260919000000_production_baseline": "cce2ac6952f274f7b635723ea5f12b5906c35ce8967ed8d7a4cd61ce9614e963",
+    "20260920000000_social_realtime_mysql": "80631dea47bcb51046a1fc3b23e40c29412eeac437b855167ec3371026a3b61c",
+    "20260920010000_onboarding_mentorat": "f110deabb5f61e1fe3ad2c611445c929137bb819db2e006d813663f769e315a7",
+    "20260920020000_community_features_mysql": "567066e767bf218e35129fc037f375943095bf47f927a5fda34944f4f6e7f099",
+    "20260920030000_password_reset_codes": "4305efa25267845f1f32d0f5e1e44df73d5a978c9971064c7c098b67a90c946d",
+    "20260920040000_onboarding_snapshot": "6d6a7a460933a120c8c3baa635646b8ee76dab7038175f29fbddc9e8b43a25b5",
+    "20260920050000_community_long_urls": "0cac845f1ac5053d5902669e3e75d13e548fc4c61313c2f8f49bb1a1b7a85861",
+    "20260920060000_auth_session_version": "d4b0915b5d5cec58a122a9809ff599aa2daeb231b10bebae1176745b4fb457fa",
+    "20260920070000_login_otp_codes": "78b378b0cd3621d9f5acb8d61af58eed67daad1821df85ec8b496de30b21cfd2",
+    "20260921000000_school_curriculum_diplomas": "aea82cd2800da468e412d1b2c4e8d0880bbcb4985bcc8d1e9ea573d4473c33d1",
+    "20260928180000_association_directory": "3beb325e757b66e63d36a934b15ab8c22a453fbbe71e2f05f6671a848c5435ac",
+    "20260928190000_event_photos": "1e7e87ed7f408597b3769c0630b08dd54591131e19cb2f75ad88a68414f42c0e",
+    "20260928200000_job_applications": "4678ab0e7711924097e75dc0198b78bb026ce5145dce1d046585d5acff2195fd",
+    "20260928210000_delegated_roles": "67d8f0e24b2630378e2a28aa6724568afb85282a29168e4545c3946bd2942945",
+    "20260928220000_profile_social_links": "4589bd57ab81031d583431eba8e8477d572a220d47367debc7a1c918a3fbdf0b"
+  },
+  "baselineManifestSha256": "5a33bd43b7d7b119517eaef7f0a714ee960b033d989f6a7114b320f83ce87f6d"
+}

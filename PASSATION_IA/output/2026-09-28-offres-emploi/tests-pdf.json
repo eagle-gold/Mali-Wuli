@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checks": {
+    "profil-candidature-exemple.pdf": {
+      "pages": 1,
+      "characters": [
+        929
+      ]
+    },
+    "profil-candidature-long.pdf": {
+      "pages": 6,
+      "characters": [
+        2819,
+        3343,
+        3331,
+        3331,
+        3334,
+        264
+      ]
+    }
+  }
+}

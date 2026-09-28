@@ -1,0 +1,61 @@
+{
+  "at": "2026-09-28T15:39:16.788Z",
+  "images": [
+    {
+      "path": "/images/landing/mali-wuli-arbre.png",
+      "status": 200,
+      "headers": {
+        "content-length": "602699",
+        "content-type": "image/png",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS",
+        "x-hcdn-request-id": "53b1ea0433b4d6727dfdbb2c0d6bf179-int-edge5"
+      },
+      "source": {
+        "format": "png",
+        "width": 1280,
+        "height": 1280,
+        "bytes": 896030,
+        "sha256": "aeae554ff170406648069b59186bcc59f835a57c39030e25db0c903713c4ed9f",
+        "pixelSha256": "08b8aa2e14d2319914c705e4533b28c3bd3d05fac7d3b21559d689e42dfc42e9"
+      },
+      "public": {
+        "format": "png",
+        "width": 1280,
+        "height": 1280,
+        "bytes": 602699,
+        "sha256": "5bbb1c57d6fdf4f9642a1d4d4e7119e52fc94abf38cfaa68f0889758722bf7cf",
+        "pixelSha256": "08b8aa2e14d2319914c705e4533b28c3bd3d05fac7d3b21559d689e42dfc42e9"
+      },
+      "samePixels": true
+    },
+    {
+      "path": "/images/logo-mali-wuli.png",
+      "status": 200,
+      "headers": {
+        "content-length": "146449",
+        "content-type": "image/png",
+        "server": "hcdn",
+        "x-hcdn-cache-status": "MISS",
+        "x-hcdn-request-id": "aace9e38ea3f6254c4151e0d2a39ca1f-int-edge5"
+      },
+      "source": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "bytes": 171168,
+        "sha256": "608bf62ba790f79e9bc53ad8a13a3a6e06e17a19a0864d3eff5c78d8c56164d8",
+        "pixelSha256": "0ef1277703a6f9925ceadd86d0c9dcc2a2afc5252ef8af8f02c6d45f3a59c7fe"
+      },
+      "public": {
+        "format": "png",
+        "width": 512,
+        "height": 512,
+        "bytes": 146449,
+        "sha256": "a18765d91ead24982bc4fe9e72606165c24194d1fa542e66ad0fb86a866a0251",
+        "pixelSha256": "0ef1277703a6f9925ceadd86d0c9dcc2a2afc5252ef8af8f02c6d45f3a59c7fe"
+      },
+      "samePixels": true
+    }
+  ]
+}

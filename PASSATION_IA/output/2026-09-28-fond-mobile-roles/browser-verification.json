@@ -1,0 +1,753 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T17:19:26.782Z",
+  "scope": "Local frontend with in-memory fixture API only",
+  "geometry": [
+    {
+      "label": "register-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Créer votre compte"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/register",
+      "width": 320
+    },
+    {
+      "label": "verify-email-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Confirmez votre e-mail"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/verify-email",
+      "width": 320
+    },
+    {
+      "label": "register-details-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Finalisez votre compte"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/register/details",
+      "width": 320
+    },
+    {
+      "label": "/forgot-password-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Mot de passe oublié"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/forgot-password",
+      "width": 320
+    },
+    {
+      "label": "/reset-password-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Choisissez un nouveau mot de passe"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/reset-password",
+      "width": 320
+    },
+    {
+      "label": "/-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "L’arbre grandit avec chacun de nous."
+      ],
+      "overflow": [
+        {
+          "right": 322,
+          "tag": "DIV",
+          "text": "L’arbre de la diasporaLe tronc représente le Mali, les branc",
+          "width": 324
+        },
+        {
+          "right": 322,
+          "tag": "svg",
+          "text": "L’arbre de la diasporaLe tronc représente le Mali, les branc",
+          "width": 324
+        }
+      ],
+      "scrollWidth": 320,
+      "url": "/",
+      "width": 320
+    },
+    {
+      "label": "dashboard-admin-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/dashboard",
+      "width": 320
+    },
+    {
+      "label": "menu-admin-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/dashboard",
+      "width": 320
+    },
+    {
+      "label": "admin-320-loaded",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Administration"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/admin",
+      "width": 320
+    },
+    {
+      "label": "admin-membres-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Membres et rôles"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/admin/membres",
+      "width": 320
+    },
+    {
+      "label": "confirmation-role-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Membres et rôles"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/admin/membres",
+      "width": 320
+    },
+    {
+      "label": "admin-membres-desktop",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Membres et rôles"
+      ],
+      "overflow": [],
+      "scrollWidth": 1280,
+      "url": "/admin/membres",
+      "width": 1280
+    },
+    {
+      "label": "/annuaire-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Annuaire"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/annuaire",
+      "width": 320
+    },
+    {
+      "label": "/associations/qa-asso-bamako-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Les Jeunes Bâtisseurs"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/associations/qa-asso-bamako",
+      "width": 320
+    },
+    {
+      "label": "/profil-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Amadou Tounkara"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/profil",
+      "width": 320
+    },
+    {
+      "label": "/membres/qa-membre-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Awa Diarra"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/membres/qa-membre",
+      "width": 320
+    },
+    {
+      "label": "/education-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Établissements"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/education",
+      "width": 320
+    },
+    {
+      "label": "/education/etablissements/qa-school-bamako-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Lycée Horizon de Bamako"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/education/etablissements/qa-school-bamako",
+      "width": 320
+    },
+    {
+      "label": "/evenements-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Événements"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/evenements",
+      "width": 320
+    },
+    {
+      "label": "/evenements/proposer-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Proposer un événement"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/evenements/proposer",
+      "width": 320
+    },
+    {
+      "label": "/offres-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Offres d’emploi"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/offres",
+      "width": 320
+    },
+    {
+      "label": "/offres/deposer-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Déposer une offre"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/offres/deposer",
+      "width": 320
+    },
+    {
+      "label": "/evenements/qa-event-forum-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Forum emploi Bamako"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/evenements/qa-event-forum",
+      "width": 320
+    },
+    {
+      "label": "/evenements/qa-event-rentree-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Soirée de rentrée des étudiants"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/evenements/qa-event-rentree",
+      "width": 320
+    },
+    {
+      "label": "/volontaires-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Volontaires"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/volontaires",
+      "width": 320
+    },
+    {
+      "label": "/agenda-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Mon agenda"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/agenda",
+      "width": 320
+    },
+    {
+      "label": "/messages-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Messages"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/messages",
+      "width": 320
+    },
+    {
+      "label": "/admin/associations-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Administration des associations"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/admin/associations",
+      "width": 320
+    },
+    {
+      "label": "/admin/evenements-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Événements à valider"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/admin/evenements",
+      "width": 320
+    },
+    {
+      "label": "/admin/offres-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Offres à valider"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/admin/offres",
+      "width": 320
+    },
+    {
+      "label": "onboarding-formations-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Votre parcours de formation"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/onboarding",
+      "width": 320
+    },
+    {
+      "label": "onboarding-school-form-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Votre parcours de formation"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/onboarding",
+      "width": 320
+    },
+    {
+      "label": "onboarding-informations-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Vos informations personnelles"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/onboarding",
+      "width": 320
+    },
+    {
+      "label": "onboarding-experiences-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/onboarding",
+      "width": 320
+    },
+    {
+      "label": "onboarding-mentorat-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Souhaitez-vous être volontaire pour le mentorat ?"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/onboarding",
+      "width": 320
+    },
+    {
+      "label": "onboarding-associations-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Vos associations"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/onboarding",
+      "width": 320
+    },
+    {
+      "label": "onboarding-mentorat-expanded-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Souhaitez-vous être volontaire pour le mentorat ?"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/onboarding",
+      "width": 320
+    },
+    {
+      "label": "/dashboard-375",
+      "background": "rgb(244, 236, 221)",
+      "headings": [],
+      "overflow": [],
+      "scrollWidth": 375,
+      "url": "/dashboard",
+      "width": 375
+    },
+    {
+      "label": "/annuaire-375",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Annuaire"
+      ],
+      "overflow": [],
+      "scrollWidth": 375,
+      "url": "/annuaire",
+      "width": 375
+    },
+    {
+      "label": "/profil-375",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Amadou Tounkara"
+      ],
+      "overflow": [],
+      "scrollWidth": 375,
+      "url": "/profil",
+      "width": 375
+    },
+    {
+      "label": "/evenements-375",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Événements"
+      ],
+      "overflow": [],
+      "scrollWidth": 375,
+      "url": "/evenements",
+      "width": 375
+    },
+    {
+      "label": "/offres-375",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Offres d’emploi"
+      ],
+      "overflow": [],
+      "scrollWidth": 375,
+      "url": "/offres",
+      "width": 375
+    },
+    {
+      "label": "/messages-375",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Messages"
+      ],
+      "overflow": [],
+      "scrollWidth": 375,
+      "url": "/messages",
+      "width": 375
+    },
+    {
+      "label": "/admin/membres-375",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Membres et rôles"
+      ],
+      "overflow": [],
+      "scrollWidth": 375,
+      "url": "/admin/membres",
+      "width": 375
+    },
+    {
+      "label": "/annuaire-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Annuaire"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/annuaire",
+      "width": 768
+    },
+    {
+      "label": "/associations/qa-asso-bamako-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Les Jeunes Bâtisseurs"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/associations/qa-asso-bamako",
+      "width": 768
+    },
+    {
+      "label": "/profil-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Amadou Tounkara"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/profil",
+      "width": 768
+    },
+    {
+      "label": "/membres/qa-membre-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Awa Diarra"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/membres/qa-membre",
+      "width": 768
+    },
+    {
+      "label": "/education-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Établissements"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/education",
+      "width": 768
+    },
+    {
+      "label": "/education/etablissements/qa-school-bamako-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Lycée Horizon de Bamako"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/education/etablissements/qa-school-bamako",
+      "width": 768
+    },
+    {
+      "label": "/evenements-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Événements"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/evenements",
+      "width": 768
+    },
+    {
+      "label": "/evenements/proposer-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Proposer un événement"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/evenements/proposer",
+      "width": 768
+    },
+    {
+      "label": "/offres-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Offres d’emploi"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/offres",
+      "width": 768
+    },
+    {
+      "label": "/offres/deposer-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Déposer une offre"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/offres/deposer",
+      "width": 768
+    },
+    {
+      "label": "/evenements/qa-event-forum-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Forum emploi Bamako"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/evenements/qa-event-forum",
+      "width": 768
+    },
+    {
+      "label": "/evenements/qa-event-rentree-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Soirée de rentrée des étudiants"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/evenements/qa-event-rentree",
+      "width": 768
+    },
+    {
+      "label": "/volontaires-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Volontaires"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/volontaires",
+      "width": 768
+    },
+    {
+      "label": "/agenda-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Mon agenda"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/agenda",
+      "width": 768
+    },
+    {
+      "label": "/messages-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Messages"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/messages",
+      "width": 768
+    },
+    {
+      "label": "/admin/associations-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Administration des associations"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/admin/associations",
+      "width": 768
+    },
+    {
+      "label": "/admin/evenements-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Événements à valider"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/admin/evenements",
+      "width": 768
+    },
+    {
+      "label": "/admin/offres-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Offres à valider"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/admin/offres",
+      "width": 768
+    },
+    {
+      "label": "/admin/membres-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Membres et rôles"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/admin/membres",
+      "width": 768
+    },
+    {
+      "label": "/admin-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Administration"
+      ],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/admin",
+      "width": 768
+    },
+    {
+      "label": "/dashboard-768",
+      "background": "rgb(244, 236, 221)",
+      "headings": [],
+      "overflow": [],
+      "scrollWidth": 768,
+      "url": "/dashboard",
+      "width": 768
+    },
+    {
+      "label": "mobile-search-result-320",
+      "background": "rgb(244, 236, 221)",
+      "headings": [
+        "Annuaire"
+      ],
+      "overflow": [],
+      "scrollWidth": 320,
+      "url": "/annuaire",
+      "width": 320
+    }
+  ],
+  "roleScenarios": [
+    "owner protected",
+    "member search",
+    "confirm assign global moderator then remove in memory",
+    "moderator overview available without roles/associations/stats",
+    "moderator roles page denied",
+    "ordinary member admin navigation absent and admin page denied",
+    "mobile header search navigates to filtered directory"
+  ],
+  "databaseWrites": 0,
+  "realRolesChanged": 0,
+  "realEmails": 0,
+  "limitations": [
+    "Fixtures validate UI; authorization uses separate real-handler tests and guarded read-only production service checks.",
+    "Physical mobile keyboard and Safari not exercised.",
+    "Landing SVG has intentional local clipping; document width remains viewport width."
+  ]
+}

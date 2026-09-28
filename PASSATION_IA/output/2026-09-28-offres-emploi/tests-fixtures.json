@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "checks": [
+    "six published offers, three application modes, two pending proposals and role restriction",
+    "CORS allows PUT, handler reads PUT bodies and favorites remain idempotent",
+    "internal application creates a single readable conversation and profile link",
+    "email success and first-attempt failure are simulated; explicit retry succeeds without SMTP",
+    "PDF preview handler returns the local fictitious PDF as binary, not JSON",
+    "creation and edition always await moderation, including administrator offers",
+    "moderation requires a fresh revision; obsolete decisions return 409 without publishing changed content"
+  ],
+  "serverStarted": false,
+  "networkCalls": 0,
+  "databaseWrites": 0,
+  "realEmails": 0
+}

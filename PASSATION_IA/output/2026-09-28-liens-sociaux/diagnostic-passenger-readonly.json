@@ -1,0 +1,89 @@
+{
+  "at": "2026-09-28T18:52:49.382Z",
+  "files": [
+    {
+      "path": "/home/u668963025/domains/mali-wuli.com",
+      "kind": "directory",
+      "realpath": "/home/u668963025/domains/mali-wuli.com",
+      "mtime": "2026-09-20T14:58:52.062Z",
+      "mode": "755"
+    },
+    {
+      "path": "/home/u668963025/domains/mali-wuli.com/public_html",
+      "kind": "directory",
+      "realpath": "/home/u668963025/domains/mali-wuli.com/public_html",
+      "mtime": "2026-09-20T14:58:52.404Z",
+      "mode": "755"
+    },
+    {
+      "path": "/home/u668963025/domains/mali-wuli.com/nodejs",
+      "error": "ENOENT"
+    },
+    {
+      "path": "/home/u668963025/domains/mali-wuli.com/hbuilds/current",
+      "kind": "symlink",
+      "target": "versions/20260928-liens-sociaux",
+      "realpath": "/home/u668963025/domains/mali-wuli.com/hbuilds/versions/20260928-liens-sociaux",
+      "mtime": "2026-09-28T18:50:38.396Z",
+      "mode": "777"
+    },
+    {
+      "path": "/home/u668963025/domains/mali-wuli.com/hbuilds/current/nodejs",
+      "kind": "directory",
+      "realpath": "/home/u668963025/domains/mali-wuli.com/hbuilds/versions/20260928-liens-sociaux/nodejs",
+      "mtime": "2026-09-28T18:48:19.418Z",
+      "mode": "700"
+    },
+    {
+      "path": "/home/u668963025/domains/mali-wuli.com/hbuilds/current/nodejs/tmp/restart.txt",
+      "kind": "file",
+      "realpath": "/home/u668963025/domains/mali-wuli.com/hbuilds/versions/20260928-liens-sociaux/nodejs/tmp/restart.txt",
+      "mtime": "2026-09-28T18:50:38.400Z",
+      "mode": "600"
+    },
+    {
+      "path": "/home/u668963025/domains/mali-wuli.com/hbuilds/versions/20260928-home-session-r2/nodejs/tmp/restart.txt",
+      "kind": "file",
+      "realpath": "/home/u668963025/domains/mali-wuli.com/hbuilds/versions/20260928-home-session-r2/nodejs/tmp/restart.txt",
+      "mtime": "2026-09-28T18:35:34.856Z",
+      "mode": "600"
+    },
+    {
+      "path": "/home/u668963025/domains/mali-wuli.com/public_html/.htaccess",
+      "kind": "file",
+      "realpath": "/home/u668963025/domains/mali-wuli.com/public_html/.htaccess",
+      "mtime": "2026-09-20T14:58:52.996Z",
+      "mode": "644"
+    },
+    {
+      "path": "/home/u668963025/domains/mali-wuli.com/.htaccess",
+      "error": "ENOENT"
+    },
+    {
+      "path": "/home/u668963025/domains/mali-wuli.com/hbuilds/.htaccess",
+      "error": "ENOENT"
+    }
+  ],
+  "directives": [
+    {
+      "path": "/home/u668963025/domains/mali-wuli.com/public_html/.htaccess",
+      "lines": [
+        "PassengerAppRoot /home/u668963025/domains/mali-wuli.com/hbuilds/current/nodejs",
+        "PassengerAppType node",
+        "PassengerNodejs /opt/alt/alt-nodejs22/root/bin/node",
+        "PassengerStartupFile server.js",
+        "PassengerRestartDir /home/u668963025/domains/mali-wuli.com/hbuilds/current/nodejs/tmp"
+      ]
+    }
+  ],
+  "processes": [
+    {
+      "pid": "1969107",
+      "comm": "next-server (v1",
+      "cwd": "/home/u668963025/domains/mali-wuli.com/hbuilds/versions/20260928-home-session-r2/nodejs",
+      "exe": "/opt/alt/alt-nodejs22/root/usr/bin/node"
+    }
+  ],
+  "remoteWrites": 0,
+  "passengerConfig": "/opt/passenger/bin/passenger-config"
+}

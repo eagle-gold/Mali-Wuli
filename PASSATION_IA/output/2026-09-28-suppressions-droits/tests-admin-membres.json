@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "scope": "staged admin-membres.service.ts, admin.routes.ts, admin-roles.test.ts over current backend sources",
+  "tests": 18,
+  "failed": 0,
+  "typecheck": "PASS: TypeScript --noEmit over complete backend overlay",
+  "testCommand": "NODE_ENV=test MAIL_DISABLED=true DATABASE_URL=mysql://qa:qa@127.0.0.1:1/qa node --import /Users/ibrahimakonate/Documents/ChatGPT/MALI-WULI-hostinger-integration/backend/node_modules/tsx/dist/loader.mjs --test output/2026-09-28-suppressions-droits/.verification-admin/backend/src/routes/admin-roles.test.ts",
+  "coverage": [
+    "MEMBRES role reads catalogue/list but cannot assign any role",
+    "Account action protects self, principal, legacy ADMIN, MODERATEUR and all known/unknown grants from delegates",
+    "Suspension preserves account data, revokes old JWT/OTP/sockets, sends no email and is idempotent with a current revision",
+    "Restoration requires SUSPENDU and returns EN_ATTENTE; validation route refuses suspended accounts",
+    "Strict payload, missing target, stale revision including status, CAS failure and OTP rollback without side effects",
+    "Concurrent requests produce one transition; actor permissions are checked inside the service transaction",
+    "Previous owner-only role, domain boundaries, grants and effective /users/me tests remain passing"
+  ],
+  "databaseQueries": 0,
+  "realAccountMutations": 0,
+  "realEmails": 0,
+  "httpRequests": 0,
+  "sshCalls": 0,
+  "notes": "Handlers, middleware and services execute with in-memory Prisma delegates and simulated effects. Two expected generic error logs correspond to deliberate OTP failure tests.",
+  "sourceSha256": {
+    "backend/src/services/admin-membres.service.ts": "dfef04d87a58d13609b0d4ebe922a4c388bbccc5353ff0487af6696b573bff22",
+    "backend/src/routes/admin.routes.ts": "5c664d8d3d0a4bb10cda1903306d7a2843c37dc472f1df7b1d7a1e7d43f434a2",
+    "backend/src/routes/admin-roles.test.ts": "017eb24de1d52a89f9936c87bdc9bbcbb36f1ec7ea20e4293f19ce26cdf48cfd"
+  },
+  "tapLog": "backend-admin-tests.tap"
+}

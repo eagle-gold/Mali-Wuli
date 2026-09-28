@@ -1,0 +1,13 @@
+{
+  "status": "deployed-and-verified",
+  "release": "20260921-brevet-def-label",
+  "frontendBuildId": "YcLgbCm833jUBenTkA30s",
+  "publicOnboardingBundle": "/_next/static/chunks/app/(auth)/onboarding/page-5f245a216d2052d7.js",
+  "buildAndTypeCheck": "passed",
+  "deploymentSmoke": "passed",
+  "labels": [
+    "Ajouter le brevet / DEF",
+    "Brevet / DEF"
+  ],
+  "scope": "four presentation strings only; no stored data or options changed"
+}

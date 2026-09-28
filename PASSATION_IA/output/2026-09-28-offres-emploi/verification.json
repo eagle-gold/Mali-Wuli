@@ -1,0 +1,87 @@
+{
+  "status": "passed",
+  "finishedAt": "2026-09-28T18:58:48.583910+02:00",
+  "request": "Offres d’emploi avec trois modes de candidature et modération",
+  "filesChanged": 29,
+  "tests": {
+    "backend": 61,
+    "backendOffres": 17,
+    "frontendGroups": 19,
+    "fixturesGroups": 7,
+    "emailStubChecks": 8,
+    "pdfShortPages": 1,
+    "pdfLongPages": 6,
+    "pdfLinux": "passed",
+    "typescript": "passed",
+    "linuxBuilds": "passed",
+    "databaseReadOnlyChecks": 81,
+    "sourceHashes": 214,
+    "publicAssets": 60,
+    "publicBundles": 34
+  },
+  "deployment": {
+    "frontendCurrent": "versions/20260928-offres-emploi",
+    "backendCurrent": "versions/20260928-offres-emploi",
+    "buildCurrent": "R-M49imb1rXepiN59auq5",
+    "frontendPrevious": "versions/20260928-parcours-recents",
+    "backendPrevious": "versions/20260928-evenements-photos",
+    "buildPrevious": "OsGa4wg5bN0eLzWW4pzBH",
+    "migration": "20260928200000_job_applications",
+    "database": "u668963025_maliwuli",
+    "backupBytes": 31533640,
+    "existingCountsPreserved": true,
+    "realTestApplications": 0,
+    "realTestEmails": 0,
+    "rollback": "anciennes versions conservées ; aucune suppression de données automatique"
+  },
+  "browser": {
+    "environment": "fixtures locales en mémoire",
+    "checks": [
+      "filtre pays France -> une offre et lien externe correct",
+      "Mali Wuli : confirmation puis conversation avec lien profil cliquable",
+      "EMAIL : aperçu PDF protégé puis succès simulé",
+      "dépôt offre EMAIL -> attente -> admin publication,3 à2 en attente",
+      "largeur320 : formulaire, liste/détail, dialogue candidature et admin sans débordement"
+    ],
+    "screenshots": [
+      "offres-verifiees.png",
+      "mobile-candidature.png"
+    ],
+    "cleanup": "serveurs3006/4307 arrêtés, onglet QA fermé, viewport rétabli",
+    "productionMutations": 0,
+    "realEmails": 0
+  },
+  "gitFinal": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedModified": 68,
+    "untrackedEntries": 82,
+    "untrackedFiles": 146,
+    "at": "2026-09-28T18:57:33.651764+02:00"
+  },
+  "limitations": [
+    "Aucune offre réelle présente lors du contrôle DB ; parcours métier sur fixtures RAM.",
+    "SMTP vérifié en connexion/authentification ; réception d’une candidature réelle non exercée.",
+    "SMTP ambigu conserve EN_COURS et exige vérification opérationnelle avant tout renvoi.",
+    "Pas de téléphone physique ni essai de restauration MySQL."
+  ],
+  "evidence": [
+    "tests-backend.json",
+    "tests-offres-ui.json",
+    "tests-offres-admin.json",
+    "tests-fixtures.json",
+    "tests-email.json",
+    "tests-pdf.json",
+    "pdf-linux.json",
+    "browser-verification.json",
+    "database-before.json",
+    "migration-guard.json",
+    "migration.log",
+    "database-after.json",
+    "candidate-source-check.json",
+    "frontend-candidate.json",
+    "frontend-public.json",
+    "api-public.json",
+    "remote-final.txt"
+  ]
+}

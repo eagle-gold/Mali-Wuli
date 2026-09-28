@@ -1,0 +1,27 @@
+{
+  "createdAt": "2026-09-21T12:48:02.720122+00:00",
+  "cause": "Production client compiled with http://localhost:8004/api",
+  "fixedApi": "https://floralwhite-ram-987223.hostingersite.com/api",
+  "buildId": "D5Y49YXuGTsQ1vtPSLhkk",
+  "build": "passed including lint and TypeScript",
+  "localEndpointsInClientBundle": false,
+  "archive": "mali-wuli-frontend-login-fix.zip",
+  "sha256": "42332249eb7e8aa588480186375c80d59b6887eb14b24fb9db3a999cfe07832d",
+  "deployment": "completed",
+  "deployedAt": "2026-09-21T13:03:17.820537+00:00",
+  "productionBuildId": "XGOw8i75GGrmJMTJi7r9t",
+  "release": "/home/u668963025/domains/mali-wuli.com/hbuilds/versions/20260921-login-api-fix",
+  "previousRelease": "versions/202609211118-cache-safe",
+  "productionLoginBundle": "/_next/static/chunks/app/(auth)/login/page-a438444580da36fb.js",
+  "productionChecks": [
+    "public API in served JavaScript",
+    "no localhost URL in served login JavaScript",
+    "HTML cache-control no-store",
+    "CDN DYNAMIC",
+    "browser request reaches code entry using reserved nonexistent address; no real email sent",
+    "Paris and Bamako search",
+    "Castors unique from backend",
+    "Linux image optimization"
+  ],
+  "emailDelivery": "not tested"
+}

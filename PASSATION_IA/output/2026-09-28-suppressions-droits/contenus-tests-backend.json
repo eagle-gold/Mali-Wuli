@@ -1,0 +1,70 @@
+{
+  "lot": "suppressions-droits-contenus",
+  "date": "2026-09-28",
+  "typecheck": {
+    "commande": "node node_modules/typescript/bin/tsc --noEmit",
+    "exitCode": 0
+  },
+  "tests": {
+    "reussis": 63,
+    "echecs": 0,
+    "suites": [
+      "publication-suppression.test.ts",
+      "association.routes.test.ts",
+      "offre.routes.test.ts",
+      "evenement.routes.test.ts"
+    ],
+    "preuve": "tests-backend.tap",
+    "runner": "reproduce-backend-tests.sh"
+  },
+  "io": {
+    "baseReelle": false,
+    "reseau": false,
+    "smtp": false,
+    "fichiersUploadReels": false,
+    "garde": "tests-backend-guard.cjs"
+  },
+  "migration": false,
+  "fichiers": [
+    {
+      "path": "src/routes/publication.routes.ts",
+      "sha256": "b51e94450cc24a40da36bba38030db38ba59e22b558e4bbe0146cdb3856acf1c"
+    },
+    {
+      "path": "src/services/publication-suppression.service.ts",
+      "sha256": "5abf2b6a7f974cbba439d644fe262729b40884510ee866e19c6eb3cc50abbe50"
+    },
+    {
+      "path": "src/routes/association.routes.ts",
+      "sha256": "4fe13758f2818ce02ffcf6be6c5e73540139800251afacf26eb8de5bc73b16c6"
+    },
+    {
+      "path": "src/services/association.service.ts",
+      "sha256": "b0ba68d515faadd9d03d4967c2f22dcee644e076ef8547ec33ecc5937aefe5af"
+    },
+    {
+      "path": "src/services/offre.service.ts",
+      "sha256": "64f2a02962bcd9ab16eb293e1bd4834eeb41a7244e06fec8e2e62ea0ff909b69"
+    },
+    {
+      "path": "src/services/evenement.service.ts",
+      "sha256": "10f41d2db7e5378f02e6e897d36f38f521ad75f0d26581fd52486def838ee58c"
+    },
+    {
+      "path": "src/routes/publication-suppression.test.ts",
+      "sha256": "06d4bef4e84b53d30268cc8b47f6377253d6865f4c11504987c2906c81fd94f7"
+    },
+    {
+      "path": "src/routes/association.routes.test.ts",
+      "sha256": "6a598d44994bfa08cb1d694a21826b5cd8875c22f21eddf58ccbb028ba75f763"
+    },
+    {
+      "path": "src/routes/offre.routes.test.ts",
+      "sha256": "840140e49c4a99cee8dc54ead3ab9428ef624d1afeb5eab151108dacdd668ed4"
+    },
+    {
+      "path": "src/routes/evenement.routes.test.ts",
+      "sha256": "58240cf3b4dfa785ce42abcc4822f0e081c925188420dc926c4dd060d9180c3b"
+    }
+  ]
+}

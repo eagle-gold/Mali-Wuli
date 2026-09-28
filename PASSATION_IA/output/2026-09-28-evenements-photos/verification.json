@@ -1,0 +1,102 @@
+{
+  "status": "LOCAL_READY_AWAITING_MIGRATION_DEPLOY_APPROVAL",
+  "startedAt": "2026-09-28 17:44:01 CEST",
+  "gitBefore": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 68,
+    "untrackedEntries": 67,
+    "untrackedFiles": 106
+  },
+  "previousEntriesSha256": "699ae9e8588b3b339915d9c3cf37fb6f3b70116ac1e4eb970b2a398b4f37fab2",
+  "steps": [
+    {
+      "at": "2026-09-28 17:49:00 CEST",
+      "note": "Contrat API et rôles fixés, lots backend/liste-détail/formulaire-admin délégués. Helpers dates avec fuseaux/DST et export calendrier prêts : 4 tests réussis. Liens agenda/fil et accès admin préparés en staging.",
+      "stoppedAt": "Terminer fixtures QA événements, puis intégrer backend/frontend et vérifier types/tests ; aucune migration ni publication de ce lot."
+    },
+    {
+      "at": "2026-09-28 17:53:50 CEST",
+      "note": "Schéma et migration additive relus, droits album contrôlés avant upload et sauvegarde. Formulaire, liste et administration écrits en staging ; fixtures QA lancées en mémoire sur 4307. Relecture a relevé deux compatibilités à corriger : capacité lors édition concurrente et ancien hybride sans lien.",
+      "stoppedAt": "Corrections ciblées déléguées, intégration du lot en attente du gel des fichiers ; aucune migration ou mise en ligne."
+    },
+    {
+      "at": "2026-09-28 17:54:25 CEST",
+      "note": "Backend intégré : 6 fichiers, client Prisma généré sans migration. TypeScript strict et 16 tests réels handlers/service/médias simulés réussis. Édition capacité transactionnelle et compatibilité ancien HYBRIDE corrigées.",
+      "stoppedAt": "Backend prêt, attendre fin frontend pour build complet et QA visuelle. Base réelle inchangée."
+    },
+    {
+      "at": "2026-09-28 17:59:53 CEST",
+      "note": "Frontend intégré (20 fichiers), compilation réussie. Essais navigateur : filtre France 2 événements, inscription puis ajout de 2 images par participante, attribution Awa et album ouvrable ; création avec couverture et programme, fuseau Paris correct, proposition en attente. Formulaire CSS320 sans débordement.",
+      "stoppedAt": "Validation admin du scénario local et album passé/mobile à terminer ; téléchargement ICS déclenché mais capture download IAB expirée, contenu couvert par tests unitaires."
+    },
+    {
+      "at": "2026-09-28 18:01:35 CEST",
+      "note": "QA navigateur terminée : création/couverture/programme, validation admin et passage 3→2 en attente, fiche publiée, album futur 2 photos et passé 1 photo par participante. Largeurs CSS320 formulaire/liste/admin/album sans débordement. 14 groupes formulaire-admin et 9 groupes événements UI passent. Accord migration/publication demandé pour ce nouveau lot.",
+      "stoppedAt": "Implémentation vérifiée localement ; attendre accord explicite migration/publication événements. Préparer les preuves et la procédure de publication."
+    }
+  ],
+  "localChecks": {
+    "backendTypeScript": "PASS",
+    "prismaGenerate": "PASS - client local, aucune migration",
+    "backendEvents": {
+      "passed": 16,
+      "database": "mock",
+      "realMiddleware": true
+    },
+    "regressions": {
+      "passed": 29,
+      "evidence": "regression-tests.txt"
+    },
+    "datesIcs": {
+      "passed": 4,
+      "evidence": "dates-tests.txt"
+    },
+    "migrationApplied": false,
+    "deployed": false,
+    "frontendBuild": "PASS - QA API127.0.0.1:4307, jamais déployer ce build",
+    "formAdmin": {
+      "groups": 14,
+      "evidence": "form-admin-tests.txt"
+    },
+    "eventsUi": {
+      "groups": 9,
+      "evidence": "events-ui-tests.txt"
+    },
+    "browser": {
+      "proposalCoverProgram": "PASS",
+      "adminValidation": "PASS",
+      "memberRsvpPhotoUpload": "PASS - 2 images",
+      "pastParticipantPhotoUpload": "PASS - 1 image",
+      "countryFilter": "PASS - France 2 résultats",
+      "responsiveCss320": [
+        "liste",
+        "formulaire",
+        "fiche-album",
+        "admin"
+      ],
+      "ics": "contenu unitaire PASS ; clic déclenché ; capture download IAB timeout"
+    }
+  },
+  "endedAt": "2026-09-28 18:05:27 CEST",
+  "gitAfter": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 68,
+    "untrackedEntries": 75,
+    "untrackedFiles": 125
+  },
+  "applicationFiles": 26,
+  "packagedSources": 193,
+  "externalActions": [],
+  "migrationApplied": false,
+  "deployed": false,
+  "qaServersStopped": true,
+  "browserViewportReset": true,
+  "sshReadonlyAttempt": "BatchMode session expired, authentication denied; no remote command executed",
+  "postMigrationVerifierRootReview": {
+    "change": "Added SELECT DATABASE() target assertion u668963025_maliwuli",
+    "sha256": "175f75fef2f37bd35f5ab40e98814a2457a2f26f4d30d95fe73319518971e7f7",
+    "executedAgainstDb": false
+  }
+}

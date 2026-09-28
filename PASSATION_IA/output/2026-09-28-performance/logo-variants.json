@@ -1,0 +1,111 @@
+{
+  "at": "2026-09-28T19:02:28.433Z",
+  "method": "Sharp Lanczos3 resize, WebP lossless; Exact decoded visible RGBA equality at each target size, including alpha; RGB values at alpha=0 are canonicalized to zero (invisible). No claim of original-resolution equality after downsampling.",
+  "originalsUnchanged": true,
+  "groups": [
+    {
+      "name": "landing",
+      "source": "/images/landing/mali-wuli-arbre.png",
+      "sourceBytes": 896030,
+      "sourceSha256": "aeae554ff170406648069b59186bcc59f835a57c39030e25db0c903713c4ed9f",
+      "sourceWidth": 1280,
+      "sourceHeight": 1280,
+      "variants": [
+        {
+          "width": 48,
+          "height": 48,
+          "url": "/images/optimized/mali-wuli-arbre-48-7270efc8d2.webp",
+          "bytes": 3746,
+          "sha256": "7270efc8d206eae7e804851e9bd7bdded544a8fe62c95546277d15b0f1ae0ab3",
+          "referencePixelSha256": "71d8a7f82cedcf80122445fe09cd53ce1e67ed98838c977bd085099436bc491c",
+          "decodedPixelSha256": "71d8a7f82cedcf80122445fe09cd53ce1e67ed98838c977bd085099436bc491c",
+          "pixelEqual": true,
+          "alphaPreserved": true,
+          "invisibleRgbCanonicalized": true
+        },
+        {
+          "width": 96,
+          "height": 96,
+          "url": "/images/optimized/mali-wuli-arbre-96-ac67b3de00.webp",
+          "bytes": 11418,
+          "sha256": "ac67b3de00b9d3ffbd814391939fb1058da5e6d3e5d01b5262d74547c3cc882c",
+          "referencePixelSha256": "d6d35e5858ba7b28d9137852e2742dfefb172aa79ac8557755c627672ec3785f",
+          "decodedPixelSha256": "d6d35e5858ba7b28d9137852e2742dfefb172aa79ac8557755c627672ec3785f",
+          "pixelEqual": true,
+          "alphaPreserved": true,
+          "invisibleRgbCanonicalized": true
+        },
+        {
+          "width": 144,
+          "height": 144,
+          "url": "/images/optimized/mali-wuli-arbre-144-c64cd3448f.webp",
+          "bytes": 18730,
+          "sha256": "c64cd3448f9fbb5b18c037c5692e7cb3a5ffba912d36684c22b7c1947315d7e2",
+          "referencePixelSha256": "d07381de3cfe9bf7681d1ebbc28c9975a886de8d3a31fc6ee606f9ae9456d746",
+          "decodedPixelSha256": "d07381de3cfe9bf7681d1ebbc28c9975a886de8d3a31fc6ee606f9ae9456d746",
+          "pixelEqual": true,
+          "alphaPreserved": true,
+          "invisibleRgbCanonicalized": true
+        }
+      ]
+    },
+    {
+      "name": "header",
+      "source": "/images/logo-mali-wuli.png",
+      "sourceBytes": 171168,
+      "sourceSha256": "608bf62ba790f79e9bc53ad8a13a3a6e06e17a19a0864d3eff5c78d8c56164d8",
+      "sourceWidth": 512,
+      "sourceHeight": 512,
+      "variants": [
+        {
+          "width": 64,
+          "height": 64,
+          "url": "/images/optimized/logo-mali-wuli-64-a9fea92c35.webp",
+          "bytes": 6004,
+          "sha256": "a9fea92c354965bad646117e6214810d6a66b144214010d143f2972e6b5f54d3",
+          "referencePixelSha256": "7de15f40489fdff8f5eb3b8a39f3daae0c358d3ae7641aff504719dc524b9aaa",
+          "decodedPixelSha256": "7de15f40489fdff8f5eb3b8a39f3daae0c358d3ae7641aff504719dc524b9aaa",
+          "pixelEqual": true,
+          "alphaPreserved": true,
+          "invisibleRgbCanonicalized": true
+        },
+        {
+          "width": 128,
+          "height": 128,
+          "url": "/images/optimized/logo-mali-wuli-128-d2b3b2f296.webp",
+          "bytes": 15962,
+          "sha256": "d2b3b2f29664fe123c67bc509fe9848d8f404ca79f922412c76696ae6b6cb18f",
+          "referencePixelSha256": "ee0cd9d4bb6466fd3b43ff226910b4b9d0561940c8e662687f66489391f12419",
+          "decodedPixelSha256": "ee0cd9d4bb6466fd3b43ff226910b4b9d0561940c8e662687f66489391f12419",
+          "pixelEqual": true,
+          "alphaPreserved": true,
+          "invisibleRgbCanonicalized": true
+        },
+        {
+          "width": 192,
+          "height": 192,
+          "url": "/images/optimized/logo-mali-wuli-192-a20ec012bd.webp",
+          "bytes": 27806,
+          "sha256": "a20ec012bdb7764fc267446554e28061a9c22f08666a163e1a94b2083e3cd15b",
+          "referencePixelSha256": "d26d58fadafd0689cbc28bebd1ee499ebbdc0a2f6c648e899c32a46155244f92",
+          "decodedPixelSha256": "d26d58fadafd0689cbc28bebd1ee499ebbdc0a2f6c648e899c32a46155244f92",
+          "pixelEqual": true,
+          "alphaPreserved": true,
+          "invisibleRgbCanonicalized": true
+        },
+        {
+          "width": 288,
+          "height": 288,
+          "url": "/images/optimized/logo-mali-wuli-288-f92be6a04c.webp",
+          "bytes": 47940,
+          "sha256": "f92be6a04c4f7a81a34b2c211d5a295e3bc26fd4f8ba959fae48cb783bc88153",
+          "referencePixelSha256": "97d2cf22fac69afea8e653f8391a657a7b0cdd9a665e069c690ddb580cf1d5c1",
+          "decodedPixelSha256": "97d2cf22fac69afea8e653f8391a657a7b0cdd9a665e069c690ddb580cf1d5c1",
+          "pixelEqual": true,
+          "alphaPreserved": true,
+          "invisibleRgbCanonicalized": true
+        }
+      ]
+    }
+  ]
+}

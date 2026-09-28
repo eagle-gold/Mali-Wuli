@@ -1,0 +1,22 @@
+{
+  "at": "2026-09-28T17:04:43.323Z",
+  "database": "u668963025_maliwuli",
+  "databaseWrites": 0,
+  "principalFound": true,
+  "principal": {
+    "role": "ADMIN",
+    "statut": "VALIDE",
+    "emailVerifie": true
+  },
+  "roles": [
+    {
+      "role": "MEMBRE",
+      "count": 1
+    },
+    {
+      "role": "ADMIN",
+      "count": 1
+    }
+  ],
+  "otherAdmins": 0
+}

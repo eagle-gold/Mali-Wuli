@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "kind": "social-links-sources-and-targets",
+  "at": "2026-09-28T18:47:05.695Z",
+  "phase": "before",
+  "release": "20260928-liens-sociaux",
+  "targets": {
+    "frontend": "versions/20260928-home-session-r2",
+    "backend": "versions/20260928-suppressions-droits"
+  },
+  "files": 230,
+  "manifestSha256": "07ecd42575413517979695e1b204f69ca70343fa79b7bfa0c5a65c0becc16920",
+  "databaseRequests": 0,
+  "databaseWrites": 0,
+  "remoteWrites": 0
+}

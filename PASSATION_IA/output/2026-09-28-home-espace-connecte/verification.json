@@ -1,0 +1,46 @@
+{
+  "status": "published_verified",
+  "completedAt": "2026-09-28 20:37:05 CEST",
+  "frontend": "versions/20260928-home-session-r2",
+  "backend": "versions/20260928-suppressions-droits",
+  "previousFrontend": "versions/20260928-suppressions-droits",
+  "buildId": "ZbOkxHyHSm-qkR0dR9Qeh",
+  "previousBuildId": "cNI0N04igTlrU9KwyDz4k",
+  "changedFiles": 6,
+  "sourceFiles": 230,
+  "sessionTestGroups": 13,
+  "deliveryGuardTests": 10,
+  "packageTests": 5,
+  "typescript": "PASS",
+  "linuxBuild": "PASS",
+  "publicRoutes": 25,
+  "publicAssets": 62,
+  "databaseRequests": 0,
+  "databaseWrites": 0,
+  "migrations": 0,
+  "backendUnchanged": true,
+  "externalActions": [
+    "Frontend current activé, Passenger redémarré, version précédente conservée"
+  ],
+  "browserProof": "browser-qa.json",
+  "proofs": [
+    "production-before.json",
+    "frontend-candidate.json",
+    "frontend-public.json",
+    "activation.json",
+    "installed.json"
+  ],
+  "gitFinal": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedModified": 69,
+    "untrackedEntries": 88,
+    "untrackedFiles": 162
+  },
+  "limitations": [
+    "Compte fictif et API RAM pour interactions ; aucune session réelle inspectée",
+    "pageshow/visibilitychange reproduits en mémoire, cause exacte de capture utilisateur non confirmée",
+    "Pas de téléphone physique/Safari",
+    "Origines www/apex distinctes inchangées ; utilisateur confirme apex"
+  ]
+}

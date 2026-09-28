@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "checks": [
+    "activate-frontend.sh: shell syntax and frontend-only targets",
+    "build-frontend.sh: shell syntax and frontend-only targets",
+    "audit-production-readonly.cjs: JavaScript syntax",
+    "verify-api-public.cjs: JavaScript syntax",
+    "verify-delivery-guards.test.cjs: JavaScript syntax",
+    "verify-frontend-overlay.cjs: JavaScript syntax",
+    "verify-release.cjs: JavaScript syntax",
+    "verify-session-home.cjs: JavaScript syntax",
+    "verify-sources-readonly.cjs: JavaScript syntax",
+    "package-frontend.py: Python syntax",
+    "verify-package-fixtures.py: Python syntax"
+  ],
+  "buildsExecuted": 0,
+  "deploymentsExecuted": 0,
+  "databaseRequests": 0
+}

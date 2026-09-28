@@ -1,0 +1,52 @@
+{
+  "status": "READY_BLOCKED_SSH_AUTH",
+  "release": "20260928-profil-typographie",
+  "scope": "frontend-only",
+  "previousFrontend": "20260928-liens-sociaux",
+  "previousBackend": "20260928-liens-sociaux",
+  "baselineBuildId": "MF940TX4N8sLGFRsT_gyN",
+  "localBuildId": "UHrlbdC1p9OICO0jujnco",
+  "sources": {
+    "total": 235,
+    "frontend": 129,
+    "backend": 106,
+    "changed": [
+      "frontend/src/components/profile/AssociationsProfil.tsx",
+      "frontend/src/components/profile/LiensSociauxProfil.tsx",
+      "frontend/src/components/profile/ProfilMembre.tsx"
+    ],
+    "added": 0,
+    "removed": 0
+  },
+  "archive": {
+    "path": "frontend-source.tar.gz",
+    "sha256": "92939bb04d1ccb7e9c5a7bbeb961cddbf17fd9fc8717cda2604f1353b6703d69"
+  },
+  "checks": {
+    "staticTypography": "PASS",
+    "frontendTypeScript": "PASS",
+    "localProductionBuild": "PASS",
+    "authenticatedFixtureBrowserDesktop": "PASS",
+    "authenticatedFixtureBrowserMobile": "PASS",
+    "horizontalOverflow": false,
+    "publicAnonymousBaseline": "PASS",
+    "publicBaselineRoutes": 3,
+    "publicBaselineAssets": 34,
+    "packageGuard": "PASS",
+    "scriptSyntax": "PASS",
+    "remoteLinuxCandidate": "PENDING",
+    "publicPostActivation": "PENDING"
+  },
+  "blockedBy": "Hostinger SSH requires the authorized password; all configured local keys were rejected and the prior multiplexed socket had expired.",
+  "database": {
+    "migrationAllowed": false,
+    "requests": 0,
+    "writes": 0
+  },
+  "externalActions": {
+    "httpReads": true,
+    "remoteWrites": 0,
+    "deployment": false,
+    "currentChanged": false
+  }
+}

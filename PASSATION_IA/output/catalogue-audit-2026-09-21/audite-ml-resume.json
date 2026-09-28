@@ -1,0 +1,56 @@
+{
+  "pays": "ML",
+  "mode": "lecture-seule",
+  "exportTotal": 141941,
+  "fichesMali": 20270,
+  "fichesMaliActives": 20270,
+  "types": {
+    "UNIVERSITE": 70,
+    "FONDAMENTALE": 19854,
+    "ECOLE_SUPERIEURE": 43,
+    "LYCEE": 303
+  },
+  "sources": {
+    "ror": 9,
+    "hipo": 1,
+    "hotosm-mali-education": 10301,
+    "unicef-men-mali-schools-2013": 9307,
+    "ipef-dakar": 7,
+    "legrandfrere-mali": 25,
+    "whed": 5,
+    "linkedin-organisations": 1,
+    "dgi-mali": 1,
+    "cscmd-officiel": 1,
+    "overture-places-mali": 52,
+    "fabert-mali": 2,
+    "ecoles-mali": 3,
+    "campus-mali-api": 20,
+    "aefe": 1,
+    "journal-officiel-mali": 2,
+    "maarif-mali": 5,
+    "ocha-men-mali-schools-2023": 8612,
+    "enko-kalanso-kodonso": 2,
+    "wikidata": 6
+  },
+  "coordonneesDisponibles": 11660,
+  "candidats": 19419,
+  "categories": {
+    "forte-concordance": 31,
+    "ambigu": 2398,
+    "exclu-fusion-automatique": 16990
+  },
+  "groupesTresDenses": [],
+  "methodologie": [
+    "Index noms et alias exacts, noms de campus sans cycle, tokens génériques retirés en mode candidat seulement.",
+    "Recherche globale au Mali, regroupements de plus de 300 homonymes limités à même ville et signalés.",
+    "Variantes typographiques même ville et voisinage géographique.",
+    "Forte concordance : identifiant unique de provenance partagé + nom cohérent, ou nom discriminant distinct de la localité + sources disjointes + distance <=40m sans contradiction de branche/statut/administration/confession. Un code de cluster seul ne constitue pas une preuve.",
+    "Aucune fusion : noms/alias seuls et absence de coordonnées restent ambigus. Codes distincts ne prouvent pas un établissement distinct si cycles scolaires différents.",
+    "Une forte concordance reste une priorité d’examen, pas un doublon certifié ni un ordre de fusion. Les noms réduits à une localité sont ambigus même à coordonnées identiques."
+  ],
+  "limites": [
+    "Les noms totalement différents sans identifiant partagé ne peuvent pas être systématiquement rapprochés.",
+    "Les coordonnées peuvent être des centroïdes approximatifs : inspecter les provenances avant fusion.",
+    "Un même domaine peut désigner plusieurs composantes d’une université."
+  ]
+}

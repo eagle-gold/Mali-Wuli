@@ -1,0 +1,98 @@
+[
+  {
+    "path": "frontend/src/app/(auth)/forgot-password/page.tsx",
+    "sha256": "7abad824ed52b3c0386886edfdcc2918eeffd82503a933dbe3b0e9dd310b4d16"
+  },
+  {
+    "path": "frontend/src/app/(auth)/layout.tsx",
+    "sha256": "5e834ff10e37b98b463d643013fe566a1304bb1492e8f2d7330671c7a3b38150"
+  },
+  {
+    "path": "frontend/src/app/(auth)/login/page.tsx",
+    "sha256": "e5ebb45a9118ceab95ce8f0e2597b40c1a5532966310a32f4cbc4b6e4eaab58f"
+  },
+  {
+    "path": "frontend/src/app/(auth)/onboarding/page.tsx",
+    "sha256": "90047fd19990b625adf207dbd9f3cb2275cad22f84e1e82f3c398a417419faa3"
+  },
+  {
+    "path": "frontend/src/app/(auth)/register/details/page.tsx",
+    "sha256": "c9eff4962953aa76b1df4e5b7c60010e0df16a89d1b8234f98f6a89d5bbdbe5b"
+  },
+  {
+    "path": "frontend/src/app/(auth)/register/page.tsx",
+    "sha256": "e0c919a26c4e5a908f38c6ad045796e287a2be96ab866506ef51e1dcafe5a38c"
+  },
+  {
+    "path": "frontend/src/app/(auth)/reset-password/page.tsx",
+    "sha256": "fcc64a783b6c00406ee6767893fc3f213ba053571a50968a2cea57bccdfef323"
+  },
+  {
+    "path": "frontend/src/app/(auth)/verify-email/page.tsx",
+    "sha256": "c8d9fd6c01bf2e5d5c416a167c78ebefad58e9690afadbfeaad4f4c4e566ab1c"
+  },
+  {
+    "path": "frontend/src/app/(platform)/agenda/page.tsx",
+    "sha256": "80e6d9dd37358ae0788d76f9b7ef8a0d260a0b9dda53ff9418a1fee59744767f"
+  },
+  {
+    "path": "frontend/src/app/(platform)/layout.tsx",
+    "sha256": "7e5490ff770edda98bf9ed47094e99bf209a5256cb26ec6c56274e1303967159"
+  },
+  {
+    "path": "frontend/src/app/(platform)/volontaires/page.tsx",
+    "sha256": "51a77e55a5dde5c379244e2a2e6e8a7b5937aaa420af7e917f1037ed866e2b8c"
+  },
+  {
+    "path": "frontend/src/app/globals.css",
+    "sha256": "796f0c57508923ff32400414c47d8fd8189575db666df9c825d962b5fa939e55"
+  },
+  {
+    "path": "frontend/src/components/auth/PlatformAuthGuard.tsx",
+    "sha256": "9207c20bca3a47b019d49eebe7ca6b518c1c7a6d02c53e5ff464ea22b133614a"
+  },
+  {
+    "path": "frontend/src/components/directory/Directory.module.css",
+    "sha256": "18a4d51812a9caebfb8b71837422e5ef4876b616327324f08863b0d5cfc0d0b6"
+  },
+  {
+    "path": "frontend/src/components/education/CatalogueEtablissements.tsx",
+    "sha256": "e683feacd53b4358a97745463a7ce809abf456461a6ceacdec680d435ee57c4b"
+  },
+  {
+    "path": "frontend/src/components/education/FicheEtablissement.tsx",
+    "sha256": "f0b805e5606d3c5c7273533580739f59608e0d9a5eba15c5808002b481a47c23"
+  },
+  {
+    "path": "frontend/src/components/evenements/Events.module.css",
+    "sha256": "e758ae87c48b1cee2828e28ae0afc687d63ef2834e88f50172c3ef11f8efed35"
+  },
+  {
+    "path": "frontend/src/components/evenements/FormulaireEvenement.module.css",
+    "sha256": "2290876410c86eac01b76209f9ac243646ae33e78d06cd292bf7ed99a3b047d8"
+  },
+  {
+    "path": "frontend/src/components/feed/ActualiteFeed.tsx",
+    "sha256": "6a81d8174c2ea8a5f5bffcfac75cc97b89246d8c3a01713a0c294facde19ce58"
+  },
+  {
+    "path": "frontend/src/components/landing/LandingArbre.module.css",
+    "sha256": "c6ab56f495de908107d6165006b0e80a76e2b25a69550ffdd023f1a40d240346"
+  },
+  {
+    "path": "frontend/src/components/messages/Messagerie.tsx",
+    "sha256": "9e35d6956d8c09ca68f81381efd0a3dd74e2b8dc6c73b17f8b15a02ea9d350dc"
+  },
+  {
+    "path": "frontend/src/components/offres/Offres.module.css",
+    "sha256": "444e858d72e5cd8a2ba7d52ab81c32f6077d7b097b724e9a4693052c05e97a18"
+  },
+  {
+    "path": "frontend/src/components/onboarding/StepMentorat.tsx",
+    "sha256": "86637f85062eb6f8a687e55963b863cfc14d4681416e2f8f7f99ed68073d9768"
+  },
+  {
+    "path": "frontend/src/components/profile/ProfilMembre.tsx",
+    "sha256": "de8983814d181689cf68aaa9a9d9c85c8dcab953d315c9c019c0a75ad8e65717"
+  }
+]

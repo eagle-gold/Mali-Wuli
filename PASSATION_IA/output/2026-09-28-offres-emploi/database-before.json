@@ -1,0 +1,20 @@
+{
+  "at": "2026-09-28T16:52:25.684Z",
+  "database": "u668963025_maliwuli",
+  "backup": "/home/u668963025/private-backups/20260928-offres-emploi/before.sql.gz",
+  "bytes": 31533640,
+  "sha256": "09a3342371c90d187526ec25aeb19771434cefa6a766ee833372869df8dce498",
+  "counts": {
+    "User": 2,
+    "Profil": 2,
+    "Formation": 9,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "Evenement": 0,
+    "EvenementParticipant": 0,
+    "Offre": 0,
+    "Message": 0,
+    "Conversation": 0
+  },
+  "warning": null
+}

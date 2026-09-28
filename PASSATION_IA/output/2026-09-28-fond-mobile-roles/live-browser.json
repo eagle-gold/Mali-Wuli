@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T17:22:01.610Z",
+  "homepage": {
+    "body": "rgb(244, 236, 221)",
+    "pageToken": "#f4ecdd",
+    "scrollWidth": 1280,
+    "width": 1280
+  },
+  "login": {
+    "body": "rgb(244, 236, 221)",
+    "pageToken": "#f4ecdd",
+    "scrollWidth": 375,
+    "url": "/login",
+    "width": 375
+  },
+  "authenticated": false,
+  "mutations": 0
+}

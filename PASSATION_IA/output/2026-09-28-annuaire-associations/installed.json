@@ -1,0 +1,126 @@
+{
+  "backend/prisma/schema.prisma": {
+    "before": "0eed7f66482b8574d946c394fb6301e034f8fa2eaf039bffec00c3a7beb5a480",
+    "after": "ea77b7d3a2b68cb474a0a52fa4c92089228ca134f3b6ed076c892da247a4fb8f"
+  },
+  "backend/src/index.ts": {
+    "before": "95284b5d36a6e1488b3c82141a55beb9f4dc95a4079105ca5f4b933254daac5e",
+    "after": "680c8fb6b02f5cf4ecc450c1b5539d26ea9dce4b81a833452a831abccf2675e3"
+  },
+  "backend/src/routes/user.routes.ts": {
+    "before": "df1ada956091855d9c134d332521037cebba26fbc29d7d639198232498060b2c",
+    "after": "3c0981a14ccdecba9e3950f779cce754ee9154a6d009289481b06c38c1f29a82"
+  },
+  "backend/src/routes/association.routes.ts": {
+    "before": null,
+    "after": "b69caae9e4117a71c5356519bba7a994ea1962455a2fa17b75f6767a8f7d26f0"
+  },
+  "backend/src/routes/user-directory.test.ts": {
+    "before": null,
+    "after": "bc8a57fded7dbb005fafd992e20af5eb5810e018799838a75c407f70a8135473"
+  },
+  "backend/src/routes/association.routes.test.ts": {
+    "before": null,
+    "after": "b2116632a8a775d9d5f8adc7f6f383b2c8e5f2c85228b1966d731bc9bc711239"
+  },
+  "backend/src/services/annuaire.test.ts": {
+    "before": null,
+    "after": "bf3625bd31856697d347c25d963ae5c6e2b035d9a1f5d629f3d2b255e46b9901"
+  },
+  "backend/src/services/association.service.ts": {
+    "before": null,
+    "after": "12c4a8c42870eca33ddd6588fc70d40c7a9f2a6b31c01a9715b3a400f02c7e5a"
+  },
+  "backend/src/services/annuaire.ts": {
+    "before": null,
+    "after": "0a83753bf68a9e137fc017653a43762a0c543d86fd8aba1f3cdf04d888c11057"
+  },
+  "backend/prisma/migrations/20260928180000_association_directory/migration.sql": {
+    "before": null,
+    "after": "3beb325e757b66e63d36a934b15ab8c22a453fbbe71e2f05f6671a848c5435ac"
+  },
+  "frontend/src/types/associations.ts": {
+    "before": null,
+    "after": "ae69161750018da78fea08e1d76335ad412aa52058d466d368325c7f620c767d"
+  },
+  "frontend/src/components/associations/BoutonAffiliation.tsx": {
+    "before": null,
+    "after": "d0b6d784e0851b433fe0cdfc1c2edc83c3943834921212e5f47750f4ff613734"
+  },
+  "frontend/src/components/associations/FicheAssociation.tsx": {
+    "before": null,
+    "after": "941e71ee356475f77c0d5648a4639fb12d9f9237f7d48ad183ae5e8cc5ef1446"
+  },
+  "frontend/src/components/associations/ProposerAssociation.tsx": {
+    "before": null,
+    "after": "9a78ae267d4d79108233d05e2ce461367a07b8eb4b5eef55e4c79beff6966535"
+  },
+  "frontend/src/components/messages/Messagerie.tsx": {
+    "before": "96891c8b59ae4ecbdde82e53f7932517b810b87d6775fa867852345c0ad50335",
+    "after": "017d6d07c4a9ea066eb570f402665ab57fddc6022bb8ab721c34e9e4d88e3a01"
+  },
+  "frontend/src/components/directory/Directory.module.css": {
+    "before": null,
+    "after": "8e45cd5bbcf044bfefd76f185197693f8678dea3317fd334cc074d92c97d4417"
+  },
+  "frontend/src/components/directory/ProfilPublic.tsx": {
+    "before": null,
+    "after": "708206c7b3f4b2a266f520325f1b338ce27293a740e6e559ff09e639f7b57cc7"
+  },
+  "frontend/src/components/directory/types.ts": {
+    "before": null,
+    "after": "7f716a6354fb61ba42bad7dde5e535490030c7a6fe7c95c5bafb59f09d2ffbdc"
+  },
+  "frontend/src/components/directory/DirectoryUi.tsx": {
+    "before": null,
+    "after": "ec4391d0e3c2fa1274cab22567a3ed99704d873daccd95252457e256fdc363f2"
+  },
+  "frontend/src/components/profile/ProfilMembre.tsx": {
+    "before": "edf76e8cfa975cc43e2db7a24eb75e5cd93b754ce34663d39b98cb53a2f44c6f",
+    "after": "d8b8c20b44cff9851c6b567d2e3f72c0497ba3a90d21ed0bfcaa3a9adf2c63f2"
+  },
+  "frontend/src/components/profile/AssociationsProfil.tsx": {
+    "before": null,
+    "after": "9080518507d7a2bbb7b8cd8d8bbd0da8f45a4ac5ca158e47464c8c299d220749"
+  },
+  "frontend/src/components/onboarding/StepAssociations.tsx": {
+    "before": null,
+    "after": "1149528363525c3b84075b85b55e0d763482fc196dc0659f0218b2301a5d0da8"
+  },
+  "frontend/src/components/onboarding/StepIndicator.tsx": {
+    "before": "73800aa908d8fcedbe11b4c3a2bdd0c860cebc35739ae14d35f29e281b400a7d",
+    "after": "4607b1ef7b2b3fc38f6a7d4ff7ba1db625ea154aaef52396ff967b174e860ec1"
+  },
+  "frontend/src/components/onboarding/StepMentorat.tsx": {
+    "before": "30191636c688df2f86ad9fd2572238fb97e3d23fa0a7422dfbd5085d66232627",
+    "after": "251415e9d82096d9e99961c8afe675bd29765a78767d36fbf2aa48200427f87d"
+  },
+  "frontend/src/app/(admin)/admin/page.tsx": {
+    "before": "3294874ddce1e04974125bbcc32e85de2cb71f317762c7d88d6c6ec20c39f3e4",
+    "after": "f98f4fe0c48f1996dd195dc35e0f593f71d1b373d6be47e5112607e53e41bcc9"
+  },
+  "frontend/src/app/(admin)/admin/associations/page.tsx": {
+    "before": null,
+    "after": "47b3789593ff6514ff4df0a020bf097c61236ecf953229668ab1dd119c8118f6"
+  },
+  "frontend/src/app/(auth)/onboarding/page.tsx": {
+    "before": "9514b2564a74f8ce2733321d81af3272c527ffb499f571767b80a3d6b14d558d",
+    "after": "ef05709a5c7a8e1e12972817047a5b8e9410f0554c0e0999a79f1806a308f394"
+  },
+  "frontend/src/app/(platform)/annuaire/page.tsx": {
+    "before": "e2eff9a45785d1692b80f2f4fcb76096f948c2d60f9d7536543e3dab531f3897",
+    "after": "81104f0d03e8a563a27a4b4061d8a0eb6703f1b70040ce277b4a580675f63289"
+  },
+  "frontend/src/app/(platform)/membres/[id]/page.tsx": {
+    "before": null,
+    "after": "a768ee0be3e09dce01246c88bb081524d21adf44fac78787076f22568a9bbe5c"
+  },
+  "frontend/src/app/(platform)/associations/[id]/page.tsx": {
+    "before": null,
+    "after": "9e10da52f1260a111de2660649912c3ca42cc6ec1f67f545c32e8da93e971fc6"
+  },
+  "frontend/src/components/directory/CartesAnnuaire.tsx": {
+    "before": null,
+    "after": "7949b6e8d32c1b107cee12af3dac9888ccaef59826daba16a929b59d165988d6"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "status": "passed",
+  "sourceRoot": "/Users/ibrahimakonate/Documents/ChatGPT/Mali Wuli/output/2026-09-28-frontend-sans-cercles/staging/src",
+  "checks": [
+    "profile-ignores-legacy-circle-payload",
+    "suggestions-and-events-render",
+    "three-feed-filters",
+    "desktop-and-mobile-member-navigation",
+    "panel-request-result-alignment"
+  ],
+  "mockedRequests": [
+    "/publications",
+    "/users/me",
+    "/evenements",
+    "/synergies/suggestions"
+  ],
+  "networkCalls": 0,
+  "databaseWrites": 0,
+  "filesWrittenByTest": 0,
+  "limitations": [
+    "SSR uses fixture hooks and mock Next components",
+    "No browser geometry or notification checks"
+  ]
+}

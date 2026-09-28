@@ -1,0 +1,17 @@
+{
+  "at": "2026-09-28T16:11:34.433Z",
+  "database": "u668963025_maliwuli",
+  "backup": "/home/u668963025/private-backups/20260928-evenements-photos/before.sql.gz",
+  "bytes": 31533348,
+  "sha256": "b545c20342a3cea8fb99be2df8381b821aebe954ac016a8fcb5f42d7ef3f5712",
+  "counts": {
+    "User": 2,
+    "Profil": 2,
+    "Formation": 9,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "Evenement": 0,
+    "EvenementParticipant": 0
+  },
+  "warning": null
+}

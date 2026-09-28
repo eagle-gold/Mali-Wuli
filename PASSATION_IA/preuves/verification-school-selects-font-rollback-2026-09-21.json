@@ -1,0 +1,33 @@
+{
+  "status": "deployed-and-verified",
+  "dateUtc": "2026-09-21T14:25:33.235544+00:00",
+  "release": "20260921-school-selects-font-rollback",
+  "previousRelease": "20260921-licence-label",
+  "frontendBuildId": "Sv9IVQiFGss-bqyfLQmYf",
+  "changes": [
+    "original typography restored, including weights and letter spacing",
+    "school diploma, mention and series datalists replaced by existing selects with Autre",
+    "custom values retained across selection changes and row removal"
+  ],
+  "checks": {
+    "typeCheck": "passed",
+    "linuxBuild": "passed",
+    "deploymentSmoke": "passed",
+    "browserComputedFonts": {
+      "body": "Inter, sans-serif",
+      "heading": "Playfair Display, serif"
+    },
+    "browserInteraction": [
+      "mentions include Autre and Très honorable",
+      "existing Excellence custom mention restored after list -> Autre",
+      "custom series input",
+      "custom diploma input",
+      "other rows retained after diploma removal",
+      "full onboarding save and reopen retains three diplomas and custom values"
+    ],
+    "persistedTableAndSnapshot": "checked matching",
+    "temporaryQaReviewsCreated": 0,
+    "temporaryQaAccount": "deleted",
+    "browserSession": "logged out and test tab closed"
+  }
+}

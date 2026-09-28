@@ -1,0 +1,267 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T19:00:00.397Z",
+  "current": "versions/20260928-liens-sociaux",
+  "validEstablishments": 141941,
+  "connectionLimit": "default",
+  "results": [
+    {
+      "label": "catalogue.valid.count",
+      "wallMs": 76.3,
+      "responseBytes": 6,
+      "queries": [
+        {
+          "durationMs": 44,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        }
+      ]
+    },
+    {
+      "label": "countries.distinct.existing",
+      "wallMs": 344.2,
+      "rows": 200,
+      "responseBytes": 9119,
+      "queries": [
+        {
+          "durationMs": 244,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 2,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        }
+      ]
+    },
+    {
+      "label": "countries.groupby.proposed",
+      "wallMs": 64.8,
+      "rows": 200,
+      "responseBytes": 3601,
+      "queries": [
+        {
+          "durationMs": 62,
+          "sqlDistinct": false,
+          "sqlGroupBy": true,
+          "sqlLimit": false
+        }
+      ]
+    },
+    {
+      "label": "cities.global.distinct.existing",
+      "wallMs": 1199.3,
+      "rows": 32813,
+      "responseBytes": 797112,
+      "queries": [
+        {
+          "durationMs": 989,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        }
+      ]
+    },
+    {
+      "label": "cities.global.groupby.proposed",
+      "wallMs": 292.7,
+      "rows": 32810,
+      "responseBytes": 2145781,
+      "queries": [
+        {
+          "durationMs": 171,
+          "sqlDistinct": false,
+          "sqlGroupBy": true,
+          "sqlLimit": false
+        }
+      ]
+    },
+    {
+      "label": "cities.ML.distinct.existing",
+      "wallMs": 170.4,
+      "rows": 5227,
+      "responseBytes": 113774,
+      "queries": [
+        {
+          "durationMs": 140,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        }
+      ]
+    },
+    {
+      "label": "cities.ML.groupby.proposed",
+      "wallMs": 77.8,
+      "rows": 5227,
+      "responseBytes": 316222,
+      "queries": [
+        {
+          "durationMs": 63,
+          "sqlDistinct": false,
+          "sqlGroupBy": true,
+          "sqlLimit": false
+        }
+      ]
+    },
+    {
+      "label": "auth.fresh-db-check",
+      "wallMs": 1.6,
+      "responseBytes": 152,
+      "queries": [
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": true
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        }
+      ]
+    },
+    {
+      "label": "users.me.actual-complete-reader",
+      "wallMs": 12.2,
+      "responseBytes": 12319,
+      "queries": [
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": true
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        }
+      ]
+    },
+    {
+      "label": "users.me.session.proposed-query",
+      "wallMs": 1.7,
+      "responseBytes": 383,
+      "queries": [
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": true
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        },
+        {
+          "durationMs": 0,
+          "sqlDistinct": false,
+          "sqlGroupBy": false,
+          "sqlLimit": false
+        }
+      ]
+    }
+  ],
+  "databaseWrites": 0,
+  "realSessionsCreated": 0,
+  "privateValuesPrinted": false,
+  "limitations": [
+    "One read per query shape; warm cache and concurrent load affect absolute times.",
+    "Metrics contain no profile identity or URLs; response sizes are measured in memory.",
+    "Proposed groupBy payload includes grouping keys, unlike final API serialization."
+  ]
+}

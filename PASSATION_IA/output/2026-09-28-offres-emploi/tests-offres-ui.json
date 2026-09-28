@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "checks": [
+    "external-link-no-mutation-safe-protocol-and-private-owner-expired-states",
+    "bookmark-idempotent-PUT-and-DELETE-use-server-state",
+    "internal-application-requires-explicit-consent-and-links-returned-conversation",
+    "email-recipient-fallback-profile-disclosure-and-authenticated-PDF-blob-preview",
+    "email-pending-GET-only-failed-explicit-retry-and-network-ambiguity-blocks-resend",
+    "revision-bound-consent-POST-PDF-and-409-refresh-without-automatic-resend",
+    "five-filters-saved-own-views-pagination-and-admin-visibility",
+    "stale-list-and-detail-responses-never-replace-new-selection-or-filter",
+    "deep-link-preserved-list-disappearance-reconciled-refresh-keeps-dialog-until-revocation"
+  ],
+  "simulatedActions": 18,
+  "networkCalls": 0,
+  "databaseWrites": 0,
+  "limitations": [
+    "React hooks and API are fixtures; native dialog behavior, responsive geometry and browser navigation checked separately",
+    "No actual e-mail, PDF service, external navigation or database operation"
+  ]
+}

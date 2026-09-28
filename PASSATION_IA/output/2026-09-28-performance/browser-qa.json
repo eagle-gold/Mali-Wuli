@@ -1,0 +1,46 @@
+{
+  "date": "2026-09-28T21:41:00+02:00",
+  "scope": "typographie + performance + recherche établissements",
+  "environment": {
+    "frontend": "http://127.0.0.1:3006",
+    "api": "fixtures RAM http://127.0.0.1:4307",
+    "database": "aucune",
+    "email": "aucun"
+  },
+  "checks": {
+    "session_shell": {
+      "status": "PASS",
+      "evidence": "L’en-tête authentifié reste présent pendant Dashboard -> Profil -> Annuaire -> Profil."
+    },
+    "profile_progressive_loading": {
+      "status": "PASS",
+      "evidence": "Le profil complet et ses sections sont visibles à 200 ms alors que les suggestions, retardées artificiellement de 4000 ms, affichent encore leur état de chargement."
+    },
+    "session_requests": {
+      "status": "PASS",
+      "navigations": 3,
+      "session_endpoint_calls": 3,
+      "session_delay_ms": 1500,
+      "evidence": "Une requête GET /api/users/me/session par navigation, sans seconde requête complète ajoutée par l’en-tête."
+    },
+    "education_search": {
+      "status": "PASS",
+      "evidence": "Barre de recherche visible avec bouton explicite."
+    },
+    "education_country_city_dependency": {
+      "status": "PASS",
+      "evidence": "Le sélecteur Ville est désactivé tant qu’aucun pays n’est choisi et annonce « Choisissez d’abord un pays »."
+    },
+    "mobile_390": {
+      "status": "PASS",
+      "viewport": { "width": 390, "height": 844 },
+      "document_client_width": 390,
+      "document_scroll_width": 390,
+      "horizontal_overflow": false
+    }
+  },
+  "notes": [
+    "Le serveur Next est en mode développement : React peut doubler certains appels de composants sous Strict Mode ; le compteur de session reste exactement à un appel par navigation.",
+    "Les données sont entièrement fictives et conservées en mémoire."
+  ]
+}

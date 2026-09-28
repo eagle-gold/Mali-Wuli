@@ -1,0 +1,128 @@
+{
+  "db": {
+    "db": "u668963025_maliwuli",
+    "version": "11.8.9-MariaDB-log"
+  },
+  "columns": [
+    {
+      "COLUMN_NAME": "id",
+      "DATA_TYPE": "varchar",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "NO"
+    },
+    {
+      "COLUMN_NAME": "titre",
+      "DATA_TYPE": "varchar",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "NO"
+    },
+    {
+      "COLUMN_NAME": "description",
+      "DATA_TYPE": "text",
+      "COLUMN_TYPE": "text",
+      "IS_NULLABLE": "NO"
+    },
+    {
+      "COLUMN_NAME": "type",
+      "DATA_TYPE": "varchar",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "NO"
+    },
+    {
+      "COLUMN_NAME": "lieu",
+      "DATA_TYPE": "varchar",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "YES"
+    },
+    {
+      "COLUMN_NAME": "lienVideo",
+      "DATA_TYPE": "text",
+      "COLUMN_TYPE": "text",
+      "IS_NULLABLE": "YES"
+    },
+    {
+      "COLUMN_NAME": "dateDebut",
+      "DATA_TYPE": "datetime",
+      "COLUMN_TYPE": "datetime(3)",
+      "IS_NULLABLE": "NO"
+    },
+    {
+      "COLUMN_NAME": "dateFin",
+      "DATA_TYPE": "datetime",
+      "COLUMN_TYPE": "datetime(3)",
+      "IS_NULLABLE": "YES"
+    },
+    {
+      "COLUMN_NAME": "capacite",
+      "DATA_TYPE": "int",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "YES"
+    },
+    {
+      "COLUMN_NAME": "organisateurId",
+      "DATA_TYPE": "varchar",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "NO"
+    },
+    {
+      "COLUMN_NAME": "valide",
+      "DATA_TYPE": "tinyint",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO"
+    },
+    {
+      "COLUMN_NAME": "createdAt",
+      "DATA_TYPE": "datetime",
+      "COLUMN_TYPE": "datetime(3)",
+      "IS_NULLABLE": "NO"
+    },
+    {
+      "COLUMN_NAME": "fuseauHoraire",
+      "DATA_TYPE": "varchar",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "YES"
+    },
+    {
+      "COLUMN_NAME": "pays",
+      "DATA_TYPE": "varchar",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "YES"
+    },
+    {
+      "COLUMN_NAME": "photoCouverture",
+      "DATA_TYPE": "text",
+      "COLUMN_TYPE": "text",
+      "IS_NULLABLE": "YES"
+    },
+    {
+      "COLUMN_NAME": "programme",
+      "DATA_TYPE": "longtext",
+      "COLUMN_TYPE": "longtext",
+      "IS_NULLABLE": "YES"
+    },
+    {
+      "COLUMN_NAME": "refuse",
+      "DATA_TYPE": "tinyint",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO"
+    },
+    {
+      "COLUMN_NAME": "resume",
+      "DATA_TYPE": "text",
+      "COLUMN_TYPE": "text",
+      "IS_NULLABLE": "YES"
+    },
+    {
+      "COLUMN_NAME": "ville",
+      "DATA_TYPE": "varchar",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "YES"
+    }
+  ],
+  "create": [
+    {
+      "Table": "Evenement",
+      "Create Table": "CREATE TABLE `Evenement` (\n  `id` varchar(191) NOT NULL,\n  `titre` varchar(191) NOT NULL,\n  `description` text NOT NULL,\n  `type` varchar(191) NOT NULL,\n  `lieu` varchar(191) DEFAULT NULL,\n  `lienVideo` text DEFAULT NULL,\n  `dateDebut` datetime(3) NOT NULL,\n  `dateFin` datetime(3) DEFAULT NULL,\n  `capacite` int(11) DEFAULT NULL,\n  `organisateurId` varchar(191) NOT NULL,\n  `valide` tinyint(1) NOT NULL DEFAULT 0,\n  `createdAt` datetime(3) NOT NULL DEFAULT current_timestamp(3),\n  `fuseauHoraire` varchar(191) DEFAULT NULL,\n  `pays` varchar(191) DEFAULT NULL,\n  `photoCouverture` text DEFAULT NULL,\n  `programme` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`programme`)),\n  `refuse` tinyint(1) NOT NULL DEFAULT 0,\n  `resume` text DEFAULT NULL,\n  `ville` varchar(191) DEFAULT NULL,\n  PRIMARY KEY (`id`),\n  KEY `Evenement_valide_dateDebut_idx` (`valide`,`dateDebut`),\n  KEY `Evenement_organisateurId_idx` (`organisateurId`),\n  KEY `Evenement_valide_refuse_dateDebut_idx` (`valide`,`refuse`,`dateDebut`),\n  KEY `Evenement_pays_ville_idx` (`pays`,`ville`)\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci"
+    }
+  ]
+}

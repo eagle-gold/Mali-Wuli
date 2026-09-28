@@ -1,0 +1,306 @@
+[
+  {
+    "path": "next-env.d.ts",
+    "sha256": "85ae5aee75f011967cf2d25cbc342f62d69314e9d925f7f4aa3456fc2cffcca6"
+  },
+  {
+    "path": "next.config.js",
+    "sha256": "58f245762e9754f6fef1c5eb9765a1c417b187acf1b3216c26a813b0520c8d75"
+  },
+  {
+    "path": "package-lock.json",
+    "sha256": "c87bfc6a22b1cbc3b3bc47193746cdaefb06d03a13d229c2dba94a8eb717ca16"
+  },
+  {
+    "path": "package.json",
+    "sha256": "9333d06a1384080839077e12e4d25096acbc4f947c8a13623d4109d95f9599de"
+  },
+  {
+    "path": "postcss.config.js",
+    "sha256": "fa650b380adfabb151a0b352f7135e107e6352345f899060f1c5c231228f94bf"
+  },
+  {
+    "path": "public/images/landing/mali-wuli-arbre.png",
+    "sha256": "aeae554ff170406648069b59186bcc59f835a57c39030e25db0c903713c4ed9f"
+  },
+  {
+    "path": "public/images/logo-mali-wuli.png",
+    "sha256": "608bf62ba790f79e9bc53ad8a13a3a6e06e17a19a0864d3eff5c78d8c56164d8"
+  },
+  {
+    "path": "src/app/(admin)/admin/page.tsx",
+    "sha256": "3294874ddce1e04974125bbcc32e85de2cb71f317762c7d88d6c6ec20c39f3e4"
+  },
+  {
+    "path": "src/app/(auth)/forgot-password/page.tsx",
+    "sha256": "9f849224094b167b8287393b5f157d1034a35490c3d566a8bc91cd44626d402e"
+  },
+  {
+    "path": "src/app/(auth)/layout.tsx",
+    "sha256": "dcd35965e7d90bfee2653c5c06a87c6849451c44a650a2d6f04975ca4b9dab86"
+  },
+  {
+    "path": "src/app/(auth)/login/page.tsx",
+    "sha256": "36b90616229d8b3bc3b1d4857233aec6537effe2199532f48713a54ab60e5bac"
+  },
+  {
+    "path": "src/app/(auth)/onboarding/page.tsx",
+    "sha256": "9514b2564a74f8ce2733321d81af3272c527ffb499f571767b80a3d6b14d558d"
+  },
+  {
+    "path": "src/app/(auth)/register/details/page.tsx",
+    "sha256": "ed896318f61c824f7dcb6cfb5df1a2831588b178e4bf7a6694ad95bc9e739e1c"
+  },
+  {
+    "path": "src/app/(auth)/register/page.tsx",
+    "sha256": "365797a78955a7c892052339be1baf3dd3d1b8f7a85028c639945772e68cc040"
+  },
+  {
+    "path": "src/app/(auth)/reset-password/page.tsx",
+    "sha256": "f67cbe06ba2691c8f4a3d8d3bba21f38b759afa794c67f0d8347df952c2b7e4c"
+  },
+  {
+    "path": "src/app/(auth)/verify-email/page.tsx",
+    "sha256": "13bfc68e69341afce0d9fff4624649aae256a0796afd26977851b26c0c17d3d7"
+  },
+  {
+    "path": "src/app/(platform)/agenda/page.tsx",
+    "sha256": "9bcb8eccc8b4bf8ca5b9b4594f5307aa89b6412ff39fac8921534f2a63c3c739"
+  },
+  {
+    "path": "src/app/(platform)/annuaire/page.tsx",
+    "sha256": "e2eff9a45785d1692b80f2f4fcb76096f948c2d60f9d7536543e3dab531f3897"
+  },
+  {
+    "path": "src/app/(platform)/cercles/page.tsx",
+    "sha256": "24697a3423c855e0f6a70fb495e27a5e9923d2667a946a7df9008195031a1039"
+  },
+  {
+    "path": "src/app/(platform)/dashboard/page.tsx",
+    "sha256": "52a488c9732025b24c0bb14af69ab2ff0bba73ed583b785a2b2c25bb81372425"
+  },
+  {
+    "path": "src/app/(platform)/education/etablissements/[id]/page.tsx",
+    "sha256": "ee3694adfaa846248649769294e4875fc7ce128072240c3639396471170b2496"
+  },
+  {
+    "path": "src/app/(platform)/education/page.tsx",
+    "sha256": "a248e8143c33260a80831f82122909270299ffe67e18e625c11773b657ad1065"
+  },
+  {
+    "path": "src/app/(platform)/evenements/page.tsx",
+    "sha256": "8115495d7e0cd362af1e65e7da5a7e79aeecc729a59fe03634d354cabc7540ec"
+  },
+  {
+    "path": "src/app/(platform)/layout.tsx",
+    "sha256": "6af63d416698d65825bf44ae79a9230668ea5aa8e40c419c34d30e66a9e42ba9"
+  },
+  {
+    "path": "src/app/(platform)/messages/page.tsx",
+    "sha256": "c5838338f32c55e18ec3cb2e315840df2bfe68447aee293a2a8a70bb28d60936"
+  },
+  {
+    "path": "src/app/(platform)/offres/page.tsx",
+    "sha256": "922263cf4596fae5dbbb95fab235bc288003b7292a4146c481dd6634ab042a10"
+  },
+  {
+    "path": "src/app/(platform)/profil/page.tsx",
+    "sha256": "86d91bbdfd4ee86ddf905edbb599bdc5a7fafa92442951dc501ae8807d9aa321"
+  },
+  {
+    "path": "src/app/(platform)/synergies/page.tsx",
+    "sha256": "bfca7eb9c5bacf0c0a38995b68e1b0d0cd7f47973570b3df5b0a8a80f717b007"
+  },
+  {
+    "path": "src/app/(platform)/volontaires/page.tsx",
+    "sha256": "24f7e7d6eb271ca8986481ad581142ac11691d6b0cee47ee2f01eea286c19472"
+  },
+  {
+    "path": "src/app/api/education/institutions/route.ts",
+    "sha256": "8d29a3e782fe16351fce6c11056f1340cdc8d4d8747b47f770c1ed86b8186aeb"
+  },
+  {
+    "path": "src/app/api/education/programmes/route.ts",
+    "sha256": "2517457cff934f32a714d5079f80cf3fa46786f4536fdfdb741968d4a0179497"
+  },
+  {
+    "path": "src/app/api/education/reference/route.ts",
+    "sha256": "6757e3ba9705a3737672940bd303b8b8f292cc57e168df2ad969fda3ad244749"
+  },
+  {
+    "path": "src/app/api/locations/cities/route.ts",
+    "sha256": "27c2afcc133ce25dc5aaf25249601e8c8d5111ef6bd6bb2b63333af42428737c"
+  },
+  {
+    "path": "src/app/api/locations/countries/route.ts",
+    "sha256": "d73796a8a58a9fcc7259de30cf021e0c9f6c09e64541bd1014fff14923b8ca10"
+  },
+  {
+    "path": "src/app/globals.css",
+    "sha256": "2e7c8fb1aba18d2b4f337511bacf621eb1b9ba28609f58e31ef001b79cfa9c08"
+  },
+  {
+    "path": "src/app/layout.tsx",
+    "sha256": "e2df7fa2c62967cff30ffc134bd2ab0cdac8bcc90f6f790af6b5c108b4a123a7"
+  },
+  {
+    "path": "src/app/page.tsx",
+    "sha256": "7305f09e253f7053e5cbba88e3cfeaccd89deb3a4b6932f5e389103bfe777602"
+  },
+  {
+    "path": "src/components/MaliWuliHeader.tsx",
+    "sha256": "0fa7201a8546984f50bde2c942a7fed451362e48534017e9af56e9b4e262c025"
+  },
+  {
+    "path": "src/components/auth/PlatformAuthGuard.tsx",
+    "sha256": "fcb0164cf9c09fa1b0462971f9fd21c060a544743d6576edb488887174e91f6e"
+  },
+  {
+    "path": "src/components/community/CommunityUi.tsx",
+    "sha256": "8d4def1ec89a840e89322f70d4bebea813980c7045ba18995fc4acefb37babc9"
+  },
+  {
+    "path": "src/components/education/CatalogueEtablissements.tsx",
+    "sha256": "79ee8f29e2095b251ebb44ef7681a73273d486e51f2292e3dc87244683af3a93"
+  },
+  {
+    "path": "src/components/education/FicheEtablissement.tsx",
+    "sha256": "3f46242b1baeb59e57238d9d71cb6b4da6922ba44eecb04ba55684855694916d"
+  },
+  {
+    "path": "src/components/education/NoteEtoiles.tsx",
+    "sha256": "ca6d6d1b11dd131eed4aa91ad9419524c426b62a3fd928719c026e3574069773"
+  },
+  {
+    "path": "src/components/education/types-etablissements.ts",
+    "sha256": "a5ba4153e034782cfe3f371834c66d8929cbd024aacbfdb1eac1943bac8cd219"
+  },
+  {
+    "path": "src/components/feed/ActualiteFeed.tsx",
+    "sha256": "f4dfa5dae36b434f112d70064acfba1489419beb8178bf2f36efd3f82d0eb986"
+  },
+  {
+    "path": "src/components/landing/LandingArbre.module.css",
+    "sha256": "2cf47cd0eb8e12a0abd36b4a6a241b9229dcec33f9a51702487a7ffabd881ebd"
+  },
+  {
+    "path": "src/components/landing/LandingArbre.tsx",
+    "sha256": "5a3a0965dd1b8016b3e53e30a88ff1f208446f56a0ee145441a6aea6d623e269"
+  },
+  {
+    "path": "src/components/landing/LandingTree.tsx",
+    "sha256": "003f4bf1849a06195d268ea11d78467bee6515633a633ca56a984ef0d4b7b067"
+  },
+  {
+    "path": "src/components/landing/landing-data.ts",
+    "sha256": "2106f54a76bee45d7cbd4e116284a17da1fdf15f7a8399b1ed004082bf2d8926"
+  },
+  {
+    "path": "src/components/landing/tree-geometry.ts",
+    "sha256": "4c5b98a0f9a9816fc259ca933e97f19320ce4c751ccd8093a96be6dfb6fdb883"
+  },
+  {
+    "path": "src/components/messages/Messagerie.tsx",
+    "sha256": "96891c8b59ae4ecbdde82e53f7932517b810b87d6775fa867852345c0ad50335"
+  },
+  {
+    "path": "src/components/notifications/NotificationsPopover.tsx",
+    "sha256": "43e784b1e61a355a7c5cb48a799e9aaa4172164e376597248357db02a4a91a4a"
+  },
+  {
+    "path": "src/components/onboarding/SearchCombobox.tsx",
+    "sha256": "620f8a282e532ea92f1b2332a0d23f8751846e7538a0583ccdf61ea0b977bd13"
+  },
+  {
+    "path": "src/components/onboarding/StarRating.tsx",
+    "sha256": "5928f7598ac0bca601e3ba3dbde9bcc476b7956f5f9ba5db82d12716ef356e4f"
+  },
+  {
+    "path": "src/components/onboarding/StepExperiences.tsx",
+    "sha256": "50239005b9e899ec04e19ac69eca3bec73ebabb63394a34ee8b9c7859f287074"
+  },
+  {
+    "path": "src/components/onboarding/StepFormations.tsx",
+    "sha256": "93976529d16ef3ba2229de77f73fb95edf58273d333690fa57665038710dc955"
+  },
+  {
+    "path": "src/components/onboarding/StepIndicator.tsx",
+    "sha256": "73800aa908d8fcedbe11b4c3a2bdd0c860cebc35739ae14d35f29e281b400a7d"
+  },
+  {
+    "path": "src/components/onboarding/StepInformations.tsx",
+    "sha256": "df1e56742f8fa549e50c27a341b5a376c2de7196fb3e4e0d3f48577a41bfc04f"
+  },
+  {
+    "path": "src/components/onboarding/StepMentorat.tsx",
+    "sha256": "30191636c688df2f86ad9fd2572238fb97e3d23fa0a7422dfbd5085d66232627"
+  },
+  {
+    "path": "src/components/profile/ProfilMembre.tsx",
+    "sha256": "edf76e8cfa975cc43e2db7a24eb75e5cd93b754ce34663d39b98cb53a2f44c6f"
+  },
+  {
+    "path": "src/hooks/useCountries.ts",
+    "sha256": "0ac69fc70b25c4470901d2568731778d90460cb293b516d3970d6b65033b3b06"
+  },
+  {
+    "path": "src/hooks/useSocket.ts",
+    "sha256": "87d781db55fabbe8053079f47a647ea33ef3da5faf350c6d126ea3e9d93b2691"
+  },
+  {
+    "path": "src/lib/api.ts",
+    "sha256": "85737bcfb6456b4ccef87c93b68ba1c26a856fc542d7d0460c75402e4ed10290"
+  },
+  {
+    "path": "src/lib/community.ts",
+    "sha256": "5e404468729c6729c86fa2050037d939b3e3a2b6f572beb3bdaade01b683cab4"
+  },
+  {
+    "path": "src/lib/education/parcours-scolaire.test.ts",
+    "sha256": "3e137b1972f8b0dfe4ac08d7725ec79dda2b3e249bfff67c9bd54afaab6aed71"
+  },
+  {
+    "path": "src/lib/education/parcours-scolaire.ts",
+    "sha256": "427c6da93e0e8bb4e1f8b384de420a288fc263b2dcef0ec0d9dbb7e36c2491e4"
+  },
+  {
+    "path": "src/lib/education/reference.ts",
+    "sha256": "90e86d640320e6e46c3836c59011470214d1c6b360de34546952b0f8e33f2a4d"
+  },
+  {
+    "path": "src/lib/education/suivi.ts",
+    "sha256": "e4bcd49724f56f3f7228a2fddd0c01c12ed82bd820e1a7d56ef09bdca76f579d"
+  },
+  {
+    "path": "src/lib/media.ts",
+    "sha256": "4b1fd273668c2ccb5cff8ea8e50a22a0c95c3a2a71239bb3f9eb9d7940acdd7f"
+  },
+  {
+    "path": "src/lib/notifications.ts",
+    "sha256": "9205d7e69e7c8fae0bdfef2fdd6c6fe45f3f1623bee43afa46019005a789e676"
+  },
+  {
+    "path": "src/lib/periode.ts",
+    "sha256": "942d003bcff28f193e250246fcd37e45e08ec4d5c41bd163e6a42ca6e8c1922d"
+  },
+  {
+    "path": "src/types/api.ts",
+    "sha256": "3b33b8fa54c17e65c0a2978bdafa1f14ccc3a56cd4ca36138695c5f8bd9c9cd9"
+  },
+  {
+    "path": "src/types/index.ts",
+    "sha256": "68433e79b1cf7a4e0ed0055985072f0dc75a81a9144c25f5ad142ce4ba2227f8"
+  },
+  {
+    "path": "src/types/profile.ts",
+    "sha256": "c9cff7257734f9346f08c698f0eb4b4b23518c03d771ad15e606e790d90cf5a5"
+  },
+  {
+    "path": "tailwind.config.ts",
+    "sha256": "e6dba660601d8a56af934a7ab1cb52b8affdbe51bbafe7f136d221a96d0e40ea"
+  },
+  {
+    "path": "tsconfig.json",
+    "sha256": "1c739283a10f88279fe8dc936de18d9e2737b76db8a12cb00869cf628ed0e9d8"
+  }
+]

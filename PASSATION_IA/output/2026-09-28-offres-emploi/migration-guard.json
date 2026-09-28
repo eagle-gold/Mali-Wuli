@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T16:51:41.219Z",
+  "database": "u668963025_maliwuli",
+  "appliedCount": 12,
+  "pending": [
+    "20260928200000_job_applications"
+  ],
+  "historicalChecksumsVerified": 12,
+  "migrationSha256": "4678ab0e7711924097e75dc0198b78bb026ce5145dce1d046585d5acff2195fd",
+  "currentTargetsUnchanged": true,
+  "newSchemaAbsent": true,
+  "databaseWrites": 0
+}

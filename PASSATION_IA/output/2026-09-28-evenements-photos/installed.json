@@ -1,0 +1,106 @@
+{
+  "backend/prisma/schema.prisma": {
+    "before": "ea77b7d3a2b68cb474a0a52fa4c92089228ca134f3b6ed076c892da247a4fb8f",
+    "after": "b517f4ae4e58528ce10b0da824b2ffd6e44bc0ec6d52a63ce1388cb703115662"
+  },
+  "backend/src/middlewares/upload.middleware.ts": {
+    "before": "0f984aea420c89bb5785d934067ff99827178dbc29c3b648f9fa9c331277986b",
+    "after": "ae84ee6bab1473b879806a226033ceb44f2584268cc04dd8b653375c3846bb12"
+  },
+  "backend/src/routes/evenement.routes.test.ts": {
+    "before": null,
+    "after": "271d559a43128b1d51e8fd4d01d22cb98794fc75afd3fab57419248c3c51f958"
+  },
+  "backend/src/routes/evenement.routes.ts": {
+    "before": "de034f9f3e40f59564c7281c61bd49d875e7ffa21fedddb154d3ae0e597d9915",
+    "after": "f8769bc6fd59ce909173e3b8d35586fb4488301ae1767a55801caef6b001a49f"
+  },
+  "backend/src/services/evenement.service.ts": {
+    "before": null,
+    "after": "4da794157b7902b5da95027c593a430f17f7924fa25b520d0d3f1eb698721480"
+  },
+  "backend/prisma/migrations/20260928190000_event_photos/migration.sql": {
+    "before": null,
+    "after": "1e7e87ed7f408597b3769c0630b08dd54591131e19cb2f75ad88a68414f42c0e"
+  },
+  "frontend/src/types/evenements.ts": {
+    "before": null,
+    "after": "3cd09741f8d190a7159e636e05698470412bf702ccbf423464ca917ee9ad60ff"
+  },
+  "frontend/src/lib/evenements.test.ts": {
+    "before": null,
+    "after": "e331e09bb038c7d451cdad5f85ac1a3f5670999976c0a2764822f6a52b72d335"
+  },
+  "frontend/src/lib/evenements.ts": {
+    "before": null,
+    "after": "ec2d16d40d4104454f611f5a1b9e685fb62cad794c595b1629f79e9fa21047d4"
+  },
+  "frontend/src/components/evenements/FormulaireEvenement.tsx": {
+    "before": null,
+    "after": "099261c88914e9d2c2ff85c489ff7096e4f7324b373e0b246649c8de95aefaa5"
+  },
+  "frontend/src/components/evenements/ListeEvenements.tsx": {
+    "before": null,
+    "after": "77eaf96469d06bf24cf4245168e86c222fbe776e2e3b62a6a197aee40b89813b"
+  },
+  "frontend/src/components/evenements/EvenementUi.tsx": {
+    "before": null,
+    "after": "771b531143cb800efca55e735da213cedac0f20e4918c7e72396a46fa0f33748"
+  },
+  "frontend/src/components/evenements/photos-upload.ts": {
+    "before": null,
+    "after": "59c16d905831c00eeb98b518e719fca05a4f22e378e7ce3a0146b1be56e64cc5"
+  },
+  "frontend/src/components/evenements/Events.module.css": {
+    "before": null,
+    "after": "5448b0313aed0a52b1e1dc6d38fee331e60c14a51a3682804d31749fd56e8008"
+  },
+  "frontend/src/components/evenements/FicheEvenement.tsx": {
+    "before": null,
+    "after": "654c8d79656363176f6e91f39936e84c00239177c81f76b5e1ae6af9ecb87a54"
+  },
+  "frontend/src/components/evenements/AlbumEvenement.tsx": {
+    "before": null,
+    "after": "22c2584772d0d67ec9652424d04635b67f4a402e9065fc5fc9a53d67468da87d"
+  },
+  "frontend/src/components/evenements/ParticipantsEvenement.tsx": {
+    "before": null,
+    "after": "8636bd585b8f62e6c13109ac6800bb8a4214827e30b2b3a3cb97c63d4685818a"
+  },
+  "frontend/src/components/evenements/FormulaireEvenement.module.css": {
+    "before": null,
+    "after": "bc11b33b8eea27268057a195c8ea8378f899501532013ccb1b0814dbbd63f852"
+  },
+  "frontend/src/components/feed/ActualiteFeed.tsx": {
+    "before": "f4dfa5dae36b434f112d70064acfba1489419beb8178bf2f36efd3f82d0eb986",
+    "after": "a4124afb454d673e8ca419c220826a42d67fdce51358e71854676525c7feb523"
+  },
+  "frontend/src/app/(admin)/admin/page.tsx": {
+    "before": "f98f4fe0c48f1996dd195dc35e0f593f71d1b373d6be47e5112607e53e41bcc9",
+    "after": "949dfae151f1a6c6d952791457d255d94bbd72255cff2467b5c1cf952dbe83ee"
+  },
+  "frontend/src/app/(admin)/admin/evenements/AdministrationEvenements.module.css": {
+    "before": null,
+    "after": "79f47735c6fe93241ced1a88c024b578c67dafeae06b4cc1ece2c49caad8677f"
+  },
+  "frontend/src/app/(admin)/admin/evenements/page.tsx": {
+    "before": null,
+    "after": "7e9f8194e662238e70ad014c7035592f5bc705e7daa36722658226de25f31b86"
+  },
+  "frontend/src/app/(platform)/evenements/page.tsx": {
+    "before": "8115495d7e0cd362af1e65e7da5a7e79aeecc729a59fe03634d354cabc7540ec",
+    "after": "6bd96ccc84d4f71328451cd55c5274c78c9f7de438bc70411f34da0934c689c5"
+  },
+  "frontend/src/app/(platform)/agenda/page.tsx": {
+    "before": "9bcb8eccc8b4bf8ca5b9b4594f5307aa89b6412ff39fac8921534f2a63c3c739",
+    "after": "c7adcbd2297581c9606848c19142cd09ba2e20a67883c3121ffe20f7c1470478"
+  },
+  "frontend/src/app/(platform)/evenements/proposer/page.tsx": {
+    "before": null,
+    "after": "ca36fe63d220d38407937e0307a2d9f94f172d18a72b6008608bf5d5b877c018"
+  },
+  "frontend/src/app/(platform)/evenements/[id]/page.tsx": {
+    "before": null,
+    "after": "4c967acc4452d010518c9996539122ef508c7e88792b5623c6826940cfe7493e"
+  }
+}

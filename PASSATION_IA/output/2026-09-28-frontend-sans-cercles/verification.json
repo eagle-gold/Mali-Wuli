@@ -1,0 +1,160 @@
+{
+  "status": "TERMINÉ",
+  "startedAt": "2026-09-28 16:38:50 CEST",
+  "gitBefore": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 66,
+    "untrackedEntries": 56,
+    "untrackedFiles": 84
+  },
+  "previousEntriesSha256": "9af19c4e864f87a75a182af64016f6eb3d4ae97a855ac96e2bdccedf0ac517ce",
+  "steps": [
+    {
+      "at": "2026-09-28 16:40:48 CEST",
+      "note": "Staging préparé : navigation, page cercles remplacée par redirection /dashboard, annuaire, onboarding et types nettoyés. Sous-agents ont retiré les dépendances du fil et du profil, TypeScript overlays valide. Vérification des notifications historiques en cours.",
+      "stoppedAt": "Finaliser notifications puis relire et installer les fichiers staging ; conserver le rôle serveur historique uniquement comme type de compatibilité."
+    },
+    {
+      "at": "2026-09-28 16:41:33 CEST",
+      "note": "Retrait du fil et profil relu : filtres/panneaux/API/listener supprimés, synergies et événements préservés. Anciennes notifications cercle à masquer aussi ; ajustement du compteur et du clic Tout lire pour ne pas modifier les notifications masquées. Décision produit mise à jour dans 05.",
+      "stoppedAt": "Agent finalise helper notifications et contrôles ; prochaine étape installation ciblée puis TypeScript."
+    },
+    {
+      "at": "2026-09-28 16:42:24 CEST",
+      "note": "Dix fichiers frontend installés après comparaison aux sauvegardes : cercles retirés navigation/fil/profil/annuaire/onboarding/types et page convertie en redirection. Backend conservé. Notifications en staging séparé.",
+      "stoppedAt": "Installer et tester le filtre de notifications lorsqu’il sera prêt, puis compiler."
+    },
+    {
+      "at": "2026-09-28 16:46:24 CEST",
+      "note": "Douze fichiers frontend installés et relus. TypeScript complet valide, 8 scénarios notifications et 5 contrôles SSR/effets simulés réussis. Archive 76 fichiers : seuls les 12 fichiers prévus diffèrent de la version publiée.",
+      "stoppedAt": "Sources prêtes ; transférer et compiler la candidate Linux 20260928-frontend-sans-cercles, puis vérifier avant bascule."
+    },
+    {
+      "at": "2026-09-28 16:46:43 CEST",
+      "note": "Archive source et script de contrôle transférés sur Hostinger ; current encore attendu sur home-paris8.",
+      "stoppedAt": "Lancer compilation Linux puis contrôler candidate et redirection."
+    },
+    {
+      "at": "2026-09-28 16:47:25 CEST",
+      "note": "Compilation Linux en cours, TypeScript serveur passé. Inventaire final : seules références conservées sont le type de rôle serveur et le filtre masquant les notifications historiques. Aucune interface ni requête dédiée aux cercles.",
+      "stoppedAt": "Attente fin build et contrôle HTTP candidate ; current non modifié."
+    },
+    {
+      "at": "2026-09-28 16:48:01 CEST",
+      "note": "Build Linux réussi (yakfUqeRsqCXhAgwW4gvC), contrôles pages/ressources/bundles réussis ; contrôle redirection stricte échoue car Next rend la redirection de page dans un flux HTTP 200. Candidate non activée.",
+      "stoppedAt": "Ajouter une redirection explicite /cercles dans next.config.js pour garantir HTTP 307 ; reconstruire puis refaire le contrôle."
+    },
+    {
+      "at": "2026-09-28 16:48:49 CEST",
+      "note": "Redirection temporaire serveur ajoutée dans next.config.js ; archive corrigée transférée, 13 fichiers diffèrent de la production. Nouvelle candidate r2, premier build conservé et jamais activé.",
+      "stoppedAt": "Compiler candidate r2 puis répéter les contrôles, dont HTTP 307 attendu sur /cercles."
+    },
+    {
+      "at": "2026-09-28 16:50:22 CEST",
+      "note": "Candidate r2 entièrement validée : build j0CKbKg2B4_1p7LIJYq-o, 26 assets et 18 bundles membres vérifiés ; /cercles redirige correctement vers /dashboard. Current relu versions/20260928-home-paris8.",
+      "stoppedAt": "Activer candidate validée avec garde-fou current puis contrôler HTTPS public."
+    },
+    {
+      "at": "2026-09-28 16:50:27 CEST",
+      "note": "Bascule atomique effectuée : current versions/20260928-frontend-sans-cercles-r2, build j0CKbKg2B4_1p7LIJYq-o ; backend toujours versions/20260921-profile-schools-r2.",
+      "stoppedAt": "Vérification HTTPS publique à effectuer puis clôturer traces."
+    },
+    {
+      "at": "2026-09-28 16:51:37 CEST",
+      "note": "Contrôle HTTPS public réussi : pages et 26 ressources accessibles, 18 bundles membres sans fonctionnalité cercle, /cercles redirige vers /dashboard. Assets publics identiques à la candidate.",
+      "stoppedAt": "Déploiement vérifié ; compléter état Git final et rendre le journal LIBRE."
+    }
+  ],
+  "productionBefore": {
+    "frontendCurrent": "versions/20260928-home-paris8",
+    "frontendBuildId": "6kWRIfnkU5zQUYQGMeVaJ",
+    "backendCurrent": "versions/20260921-profile-schools-r2"
+  },
+  "scope": {
+    "remove": [
+      "navigation",
+      "page fonctionnelle cercles",
+      "filtres et cartes du fil",
+      "cartes et recommandations profil",
+      "badges annuaire",
+      "mentions onboarding",
+      "appels API et listener dédiés",
+      "notifications de cercles dans frontend"
+    ],
+    "keep": [
+      "backend et données existantes",
+      "rôle serveur historique comme compatibilité de type",
+      "ancien chemin /cercles en redirection /dashboard"
+    ]
+  },
+  "sourceFiles": 76,
+  "changedFiles": [
+    "next.config.js",
+    "src/app/(auth)/onboarding/page.tsx",
+    "src/app/(platform)/annuaire/page.tsx",
+    "src/app/(platform)/cercles/page.tsx",
+    "src/components/MaliWuliHeader.tsx",
+    "src/components/feed/ActualiteFeed.tsx",
+    "src/components/notifications/NotificationsPopover.tsx",
+    "src/components/onboarding/StepMentorat.tsx",
+    "src/components/profile/ProfilMembre.tsx",
+    "src/lib/notifications.ts",
+    "src/types/api.ts",
+    "src/types/index.ts",
+    "src/types/profile.ts"
+  ],
+  "localChecks": {
+    "typescript": "passed",
+    "notificationScenarios": 8,
+    "uiScenarios": 5
+  },
+  "gitAfter": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 67,
+    "untrackedEntries": 57,
+    "untrackedFiles": 85
+  },
+  "previousEntriesPreserved": true,
+  "firstCandidate": {
+    "release": "20260928-frontend-sans-cercles",
+    "buildId": "yakfUqeRsqCXhAgwW4gvC",
+    "activated": false,
+    "result": "build passed; strict HTTP redirect check failed"
+  },
+  "candidate": {
+    "release": "20260928-frontend-sans-cercles-r2",
+    "buildId": "j0CKbKg2B4_1p7LIJYq-o",
+    "checks": "passed",
+    "assets": 26,
+    "memberBundles": 18
+  },
+  "finishedAt": "2026-09-28 16:52:25 CEST",
+  "productionAfter": {
+    "frontendCurrent": "versions/20260928-frontend-sans-cercles-r2",
+    "frontendBuildId": "j0CKbKg2B4_1p7LIJYq-o",
+    "backendCurrent": "versions/20260921-profile-schools-r2"
+  },
+  "publicChecks": {
+    "status": "passed",
+    "assets": 26,
+    "memberBundles": 18,
+    "sameAssetsAsCandidate": true
+  },
+  "databaseActions": "aucune",
+  "limitations": [
+    "Tests UI SSR/effets et notifications simulés ; aucun test connecté avec compte réel, ni écriture base.",
+    "Le compteur filtré lit 1 à N pages de notifications, faute de filtre backend."
+  ],
+  "checksEvidence": [
+    "notification-tests.log",
+    "ui-check.json",
+    "candidate-check.json",
+    "live-check.json",
+    "build.log",
+    "activation.txt",
+    "source-manifest.json",
+    "source-diff.json"
+  ]
+}

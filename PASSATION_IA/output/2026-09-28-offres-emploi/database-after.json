@@ -1,0 +1,421 @@
+{
+  "status": "WARN",
+  "at": "2026-09-28T16:53:26.494Z",
+  "kind": "job-applications-post-migration-readonly",
+  "migration": "20260928200000_job_applications",
+  "checks": [
+    {
+      "name": "BACKUP_DATABASE_TARGET",
+      "ok": true
+    },
+    {
+      "name": "BACKUP_METADATA_VALID",
+      "ok": true
+    },
+    {
+      "name": "TABLES_PRESENT",
+      "ok": true
+    },
+    {
+      "name": "NEW_TABLES_ENGINE_AND_COLLATION",
+      "ok": true
+    },
+    {
+      "name": "COUNT_UNCHANGED_USER",
+      "ok": true,
+      "details": {
+        "before": 2,
+        "after": 2
+      }
+    },
+    {
+      "name": "COUNT_UNCHANGED_PROFIL",
+      "ok": true,
+      "details": {
+        "before": 2,
+        "after": 2
+      }
+    },
+    {
+      "name": "COUNT_UNCHANGED_FORMATION",
+      "ok": true,
+      "details": {
+        "before": 9,
+        "after": 9
+      }
+    },
+    {
+      "name": "COUNT_UNCHANGED_ASSOCIATION",
+      "ok": true,
+      "details": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "COUNT_UNCHANGED_ASSOCIATIONMEMBRE",
+      "ok": true,
+      "details": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "COUNT_UNCHANGED_EVENEMENT",
+      "ok": true,
+      "details": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "COUNT_UNCHANGED_EVENEMENTPARTICIPANT",
+      "ok": true,
+      "details": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "COUNT_UNCHANGED_OFFRE",
+      "ok": true,
+      "details": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "COUNT_UNCHANGED_MESSAGE",
+      "ok": true,
+      "details": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "COUNT_UNCHANGED_CONVERSATION",
+      "ok": true,
+      "details": {
+        "before": 0,
+        "after": 0
+      }
+    },
+    {
+      "name": "NEW_TABLE_EMPTY_OFFREENREGISTREMENT",
+      "ok": true
+    },
+    {
+      "name": "NEW_TABLE_EMPTY_CANDIDATUREOFFRE",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_OFFRE_MODECANDIDATURE",
+      "ok": true
+    },
+    {
+      "name": "ENUM_OFFRE_MODECANDIDATURE",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_OFFRE_MODETRAVAIL",
+      "ok": true
+    },
+    {
+      "name": "ENUM_OFFRE_MODETRAVAIL",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_OFFRE_STATUTMODERATION",
+      "ok": true
+    },
+    {
+      "name": "ENUM_OFFRE_STATUTMODERATION",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_OFFRE_PROFILRECHERCHE",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_OFFRE_SALAIRE",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_OFFRE_RECOMMANDATIONPOSSIBLE",
+      "ok": true
+    },
+    {
+      "name": "RECOMMENDATION_DEFAULT_FALSE",
+      "ok": true
+    },
+    {
+      "name": "LEGACY_OFFER_COLUMNS_PRESENT",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_OFFREENREGISTREMENT_OFFREID",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_OFFREENREGISTREMENT_PROFILID",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_OFFREENREGISTREMENT_CREATEDAT",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_ID",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_OFFREID",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_PROFILID",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_TENTATIVEID",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_CONVERSATIONID",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_MESSAGEID",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_ERREURCODE",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_MESSAGE",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_CREATEDAT",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_UPDATEDAT",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_ENVOYEEAT",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_TENTATIVES",
+      "ok": true
+    },
+    {
+      "name": "ATTEMPTS_DEFAULT_ONE",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_MODECANDIDATURE",
+      "ok": true
+    },
+    {
+      "name": "ENUM_APPLICATION_MODECANDIDATURE",
+      "ok": true
+    },
+    {
+      "name": "COLUMN_CANDIDATUREOFFRE_STATUT",
+      "ok": true
+    },
+    {
+      "name": "ENUM_APPLICATION_STATUT",
+      "ok": true
+    },
+    {
+      "name": "APPLICATION_STATUS_DEFAULT",
+      "ok": true
+    },
+    {
+      "name": "INDEX_OFFRE_OFFRE_STATUTMODERATION_DATEEXPIRATION_CREATEDAT_IDX",
+      "ok": true
+    },
+    {
+      "name": "INDEX_OFFRE_OFFRE_MODETRAVAIL_PAYS_VILLE_IDX",
+      "ok": true
+    },
+    {
+      "name": "INDEX_OFFREENREGISTREMENT_PRIMARY",
+      "ok": true
+    },
+    {
+      "name": "INDEX_OFFREENREGISTREMENT_OFFREENREGISTREMENT_PROFILID_CREATEDAT_IDX",
+      "ok": true
+    },
+    {
+      "name": "INDEX_CANDIDATUREOFFRE_PRIMARY",
+      "ok": true
+    },
+    {
+      "name": "INDEX_CANDIDATUREOFFRE_CANDIDATUREOFFRE_TENTATIVEID_KEY",
+      "ok": true
+    },
+    {
+      "name": "INDEX_CANDIDATUREOFFRE_CANDIDATUREOFFRE_OFFREID_PROFILID_KEY",
+      "ok": true
+    },
+    {
+      "name": "INDEX_CANDIDATUREOFFRE_CANDIDATUREOFFRE_PROFILID_CREATEDAT_IDX",
+      "ok": true
+    },
+    {
+      "name": "INDEX_CANDIDATUREOFFRE_CANDIDATUREOFFRE_OFFREID_STATUT_IDX",
+      "ok": true
+    },
+    {
+      "name": "FK_OFFREENREGISTREMENT_OFFREID",
+      "ok": true
+    },
+    {
+      "name": "FK_OFFREENREGISTREMENT_PROFILID",
+      "ok": true
+    },
+    {
+      "name": "FK_CANDIDATUREOFFRE_OFFREID",
+      "ok": true
+    },
+    {
+      "name": "FK_CANDIDATUREOFFRE_PROFILID",
+      "ok": true
+    },
+    {
+      "name": "LEGACY_BACKFILL_EXACT_AND_NEW_DEFAULTS",
+      "ok": true,
+      "details": {
+        "mismatches": 0,
+        "legacyOffers": 0
+      }
+    },
+    {
+      "name": "GENERATED_CLIENT_JOINS",
+      "ok": true
+    },
+    {
+      "name": "SERVICE_ACTIVE_LIST",
+      "ok": true
+    },
+    {
+      "name": "SERVICE_FACETS_AND_REVISIONS",
+      "ok": true
+    },
+    {
+      "name": "SERVICE_OWN_LIST",
+      "ok": true
+    },
+    {
+      "name": "SERVICE_SAVED_LIST",
+      "ok": true
+    },
+    {
+      "name": "SERVICE_PENDING_LIST",
+      "ok": true
+    },
+    {
+      "name": "SERVICE_NON_MODERATOR_DENIED",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_USER",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_PROFIL",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_FORMATION",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_ASSOCIATION",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_ASSOCIATIONMEMBRE",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_EVENEMENT",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_EVENEMENTPARTICIPANT",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_OFFRE",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_MESSAGE",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_CONVERSATION",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_OFFREENREGISTREMENT",
+      "ok": true
+    },
+    {
+      "name": "READ_COUNT_UNCHANGED_CANDIDATUREOFFRE",
+      "ok": true
+    }
+  ],
+  "warnings": [
+    "DETAIL_SKIPPED_NO_ACCESSIBLE_OFFER"
+  ],
+  "databaseWrites": 0,
+  "backupSha256": "09a3342371c90d187526ec25aeb19771434cefa6a766ee833372869df8dce498",
+  "migrations": {
+    "database": "u668963025_maliwuli",
+    "appliedCount": 13,
+    "pending": [],
+    "historicalChecksumsVerified": 12,
+    "migrationSha256": "4678ab0e7711924097e75dc0198b78bb026ce5145dce1d046585d5acff2195fd"
+  },
+  "counts": {
+    "User": 2,
+    "Profil": 2,
+    "Formation": 9,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "Evenement": 0,
+    "EvenementParticipant": 0,
+    "Offre": 0,
+    "Message": 0,
+    "Conversation": 0,
+    "OffreEnregistrement": 0,
+    "CandidatureOffre": 0
+  },
+  "countsAfterReads": {
+    "User": 2,
+    "Profil": 2,
+    "Formation": 9,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "Evenement": 0,
+    "EvenementParticipant": 0,
+    "Offre": 0,
+    "Message": 0,
+    "Conversation": 0,
+    "OffreEnregistrement": 0,
+    "CandidatureOffre": 0
+  },
+  "limitations": [
+    "Strict checks intended before activation; concurrent live writes may fail a count comparison and require review.",
+    "Backup JSON counts prove row totals, not identity or byte equality of historical records.",
+    "No real application, email, PDF generation, notification or HTTP authentication was exercised."
+  ]
+}

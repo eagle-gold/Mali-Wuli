@@ -1,0 +1,26 @@
+[
+  {
+    "path": "frontend/src/app/(auth)/login/page.tsx",
+    "sha256": "fc52a4d63627e5a5382660725c48f184326cc1daa5a59e03ae0a7daa97b52b1b"
+  },
+  {
+    "path": "frontend/src/app/(auth)/register/details/page.tsx",
+    "sha256": "dd7b679d4e48edd79526de4d2f82a06a75eb50e1b8adad303d2c2943b33125ed"
+  },
+  {
+    "path": "frontend/src/app/(auth)/verify-email/page.tsx",
+    "sha256": "ea7be12236d27fe35fb2b4c64bf37a9c6287f47899d662e19c7d15ee838817e5"
+  },
+  {
+    "path": "frontend/src/components/MaliWuliHeader.tsx",
+    "sha256": "8748c43abcd20a4735f0a8f63ebb5d4c327d22228885af54016d27a1c9b4f39f"
+  },
+  {
+    "path": "frontend/src/hooks/useSessionAccueil.ts",
+    "sha256": "1f02a576bc166ebbadb9a33b33a5e2a3e613734ecffbdbc208f63ac38e2013cf"
+  },
+  {
+    "path": "frontend/src/lib/session.ts",
+    "sha256": "cdcd9a04824a92450eec431155db70089b943dc8e8ae8f90ab2312ea0ac111bc"
+  }
+]

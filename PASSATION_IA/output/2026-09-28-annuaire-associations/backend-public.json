@@ -1,0 +1,25 @@
+{
+  "checkedAt": "2026-09-28T15:38:04.010Z",
+  "status": "PASS",
+  "health": {
+    "status": "OK",
+    "database": "OK",
+    "app": "Mali Wuli API",
+    "version": "1.1.0"
+  },
+  "anonymousRoutes": [
+    {
+      "route": "/associations",
+      "status": 401
+    },
+    {
+      "route": "/onboarding/associations",
+      "status": 401
+    },
+    {
+      "route": "/users/annuaire",
+      "status": 401
+    }
+  ],
+  "databaseWrites": 0
+}

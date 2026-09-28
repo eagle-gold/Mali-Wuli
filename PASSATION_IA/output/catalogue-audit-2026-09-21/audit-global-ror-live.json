@@ -1,0 +1,471 @@
+[
+  {
+    "id": "0395sep02",
+    "names": [
+      {
+        "lang": "fr",
+        "types": [
+          "alias"
+        ],
+        "value": "Collège de Clermont"
+      },
+      {
+        "lang": "fr",
+        "types": [
+          "ror_display",
+          "label"
+        ],
+        "value": "Lycée Louis-le-Grand"
+      }
+    ],
+    "locations": [
+      {
+        "geonames_details": {
+          "continent_code": "EU",
+          "continent_name": "Europe",
+          "country_code": "FR",
+          "country_name": "France",
+          "country_subdivision_code": "IDF",
+          "country_subdivision_name": "Île-de-France",
+          "lat": 48.85341,
+          "lng": 2.3488,
+          "name": "Paris"
+        },
+        "geonames_id": 2988507
+      }
+    ],
+    "links": [
+      {
+        "type": "website",
+        "value": "https://louislegrand.fr"
+      },
+      {
+        "type": "wikipedia",
+        "value": "https://en.wikipedia.org/wiki/Lyc%C3%A9e_Louis-le-Grand"
+      }
+    ],
+    "relationships": [],
+    "status": "active"
+  },
+  {
+    "id": "04jscf286",
+    "names": [
+      {
+        "lang": null,
+        "types": [
+          "acronym"
+        ],
+        "value": "OU"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "ror_display",
+          "label"
+        ],
+        "value": "Ottawa University"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "alias"
+        ],
+        "value": "Roger Williams University"
+      }
+    ],
+    "locations": [
+      {
+        "geonames_details": {
+          "continent_code": "NA",
+          "continent_name": "North America",
+          "country_code": "US",
+          "country_name": "United States",
+          "country_subdivision_code": "KS",
+          "country_subdivision_name": "Kansas",
+          "lat": 38.61557,
+          "lng": -95.26775,
+          "name": "Ottawa"
+        },
+        "geonames_id": 4276816
+      }
+    ],
+    "links": [
+      {
+        "type": "website",
+        "value": "http://www.ottawa.edu/"
+      },
+      {
+        "type": "wikipedia",
+        "value": "http://en.wikipedia.org/wiki/Ottawa_University"
+      }
+    ],
+    "relationships": [],
+    "status": "active"
+  },
+  {
+    "id": "05gmsjx02",
+    "names": [
+      {
+        "lang": "en",
+        "types": [
+          "alias"
+        ],
+        "value": "Bethel University"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "ror_display",
+          "label"
+        ],
+        "value": "Shorter College"
+      }
+    ],
+    "locations": [
+      {
+        "geonames_details": {
+          "continent_code": "NA",
+          "continent_name": "North America",
+          "country_code": "US",
+          "country_name": "United States",
+          "country_subdivision_code": "AR",
+          "country_subdivision_name": "Arkansas",
+          "lat": 34.76954,
+          "lng": -92.26709,
+          "name": "North Little Rock"
+        },
+        "geonames_id": 4124112
+      }
+    ],
+    "links": [
+      {
+        "type": "website",
+        "value": "https://www.shortercollege.edu/"
+      },
+      {
+        "type": "wikipedia",
+        "value": "https://en.wikipedia.org/wiki/Shorter_College_(Arkansas)"
+      }
+    ],
+    "relationships": [],
+    "status": "active"
+  },
+  {
+    "id": "05wnc7373",
+    "names": [
+      {
+        "lang": "en",
+        "types": [
+          "alias"
+        ],
+        "value": "Bethel College"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "ror_display",
+          "label"
+        ],
+        "value": "Bethel University"
+      }
+    ],
+    "locations": [
+      {
+        "geonames_details": {
+          "continent_code": "NA",
+          "continent_name": "North America",
+          "country_code": "US",
+          "country_name": "United States",
+          "country_subdivision_code": "TN",
+          "country_subdivision_name": "Tennessee",
+          "lat": 36.13256,
+          "lng": -88.51866,
+          "name": "McKenzie"
+        },
+        "geonames_id": 4640736
+      }
+    ],
+    "links": [
+      {
+        "type": "website",
+        "value": "http://www.bethelu.edu/"
+      },
+      {
+        "type": "wikipedia",
+        "value": "https://en.wikipedia.org/wiki/Bethel_University_(Tennessee)"
+      }
+    ],
+    "relationships": [],
+    "status": "active"
+  },
+  {
+    "id": "02faxbd19",
+    "names": [
+      {
+        "lang": "en",
+        "types": [
+          "alias"
+        ],
+        "value": "Bethel College and Seminary"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "alias"
+        ],
+        "value": "Bethel Junior College"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "ror_display",
+          "label"
+        ],
+        "value": "Bethel University"
+      }
+    ],
+    "locations": [
+      {
+        "geonames_details": {
+          "continent_code": "NA",
+          "continent_name": "North America",
+          "country_code": "US",
+          "country_name": "United States",
+          "country_subdivision_code": "MN",
+          "country_subdivision_name": "Minnesota",
+          "lat": 45.05024,
+          "lng": -93.15661,
+          "name": "Arden Hills"
+        },
+        "geonames_id": 5016553
+      }
+    ],
+    "links": [
+      {
+        "type": "website",
+        "value": "https://www.bethel.edu/"
+      },
+      {
+        "type": "wikipedia",
+        "value": "http://en.wikipedia.org/wiki/Bethel_University_(Minnesota)"
+      }
+    ],
+    "relationships": [
+      {
+        "label": "Private Academic Library Network of Indiana, Inc. (PALNI)",
+        "type": "related",
+        "id": "https://ror.org/05dch6316"
+      }
+    ],
+    "status": "active"
+  },
+  {
+    "id": "03ykmm292",
+    "names": [
+      {
+        "lang": null,
+        "types": [
+          "acronym"
+        ],
+        "value": "ABC"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "ror_display",
+          "label"
+        ],
+        "value": "Advanced Barber College & Hair Design"
+      }
+    ],
+    "locations": [
+      {
+        "geonames_details": {
+          "continent_code": "NA",
+          "continent_name": "North America",
+          "country_code": "US",
+          "country_name": "United States",
+          "country_subdivision_code": "TX",
+          "country_subdivision_name": "Texas",
+          "lat": 26.15952,
+          "lng": -97.99084,
+          "name": "Weslaco"
+        },
+        "geonames_id": 4740629
+      }
+    ],
+    "links": [
+      {
+        "type": "website",
+        "value": "http://abcrgv.com/"
+      }
+    ],
+    "relationships": [],
+    "status": "active"
+  },
+  {
+    "id": "02thhxe24",
+    "names": [
+      {
+        "lang": null,
+        "types": [
+          "acronym"
+        ],
+        "value": "ABC"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "ror_display",
+          "label"
+        ],
+        "value": "Alaska Bible College"
+      }
+    ],
+    "locations": [
+      {
+        "geonames_details": {
+          "continent_code": "NA",
+          "continent_name": "North America",
+          "country_code": "US",
+          "country_name": "United States",
+          "country_subdivision_code": "AK",
+          "country_subdivision_name": "Alaska",
+          "lat": 61.59941,
+          "lng": -149.11456,
+          "name": "Palmer"
+        },
+        "geonames_id": 5871146
+      }
+    ],
+    "links": [
+      {
+        "type": "website",
+        "value": "http://www.akbible.edu/"
+      },
+      {
+        "type": "wikipedia",
+        "value": "https://en.wikipedia.org/wiki/Alaska_Bible_College"
+      }
+    ],
+    "relationships": [],
+    "status": "active"
+  },
+  {
+    "id": "007735r88",
+    "names": [
+      {
+        "lang": null,
+        "types": [
+          "acronym"
+        ],
+        "value": "ABC"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "ror_display",
+          "label"
+        ],
+        "value": "Arlington Baptist College"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "alias"
+        ],
+        "value": "Arlington Baptist University"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "alias"
+        ],
+        "value": "Bible Baptist Seminary"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "alias"
+        ],
+        "value": "Fundamental Baptist Bible Institute"
+      }
+    ],
+    "locations": [
+      {
+        "geonames_details": {
+          "continent_code": "NA",
+          "continent_name": "North America",
+          "country_code": "US",
+          "country_name": "United States",
+          "country_subdivision_code": "TX",
+          "country_subdivision_name": "Texas",
+          "lat": 32.73569,
+          "lng": -97.10807,
+          "name": "Arlington"
+        },
+        "geonames_id": 4671240
+      }
+    ],
+    "links": [
+      {
+        "type": "website",
+        "value": "https://www.abu.edu/"
+      },
+      {
+        "type": "wikipedia",
+        "value": "https://en.wikipedia.org/wiki/Arlington_Baptist_College"
+      }
+    ],
+    "relationships": [],
+    "status": "active"
+  },
+  {
+    "id": "02fad4q52",
+    "names": [
+      {
+        "lang": null,
+        "types": [
+          "acronym"
+        ],
+        "value": "ABC"
+      },
+      {
+        "lang": "en",
+        "types": [
+          "ror_display",
+          "label"
+        ],
+        "value": "Appalachian Bible College"
+      }
+    ],
+    "locations": [
+      {
+        "geonames_details": {
+          "continent_code": "NA",
+          "continent_name": "North America",
+          "country_code": "US",
+          "country_name": "United States",
+          "country_subdivision_code": "WV",
+          "country_subdivision_name": "West Virginia",
+          "lat": 37.89539,
+          "lng": -81.16427,
+          "name": "Mount Hope"
+        },
+        "geonames_id": 4815582
+      }
+    ],
+    "links": [
+      {
+        "type": "website",
+        "value": "https://abc.edu/"
+      },
+      {
+        "type": "wikipedia",
+        "value": "https://en.wikipedia.org/wiki/Appalachian_Bible_College"
+      }
+    ],
+    "relationships": [],
+    "status": "active"
+  }
+]

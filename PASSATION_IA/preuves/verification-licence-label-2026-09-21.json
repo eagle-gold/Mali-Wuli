@@ -1,0 +1,30 @@
+{
+  "status": "deployed-and-verified",
+  "release": "20260921-licence-label",
+  "frontendBuildId": "J213pLviPCUQ6TLDOnHdb",
+  "dateUtc": "2026-09-21T14:09:50.606631+00:00",
+  "existingRegressionTestsPassed": 9,
+  "linuxBuild": "passed",
+  "deploymentSmoke": "passed",
+  "publicProgrammeSearch": [
+    {
+      "query": "L1 - Chimie",
+      "label": "Licence - Chimie",
+      "catalogueIdPreserved": true,
+      "passed": true
+    },
+    {
+      "query": "Licence - Chimie",
+      "label": "Licence - Chimie",
+      "catalogueIdPreserved": true,
+      "passed": true
+    },
+    {
+      "query": "Licence — 1re année - Chimie",
+      "label": "Licence - Chimie",
+      "catalogueIdPreserved": true,
+      "passed": true
+    }
+  ],
+  "restartNote": "Premier contrôle HTTP503 pendant redémarrage; login et recherches HTTP200 ensuite."
+}

@@ -1,0 +1,64 @@
+{
+  "subject": "Adoption du protocole de traces",
+  "startedAt": "2026-09-26 22:07:51 CEST",
+  "status": "TERMINÉ",
+  "activeRepository": "/Users/ibrahimakonate/Documents/ChatGPT/MALI-WULI-hostinger-integration",
+  "gitBefore": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 66,
+    "untrackedEntries": 55,
+    "untrackedFiles": 78
+  },
+  "previousEntriesSha256": "9196f136059d0bbf719d300dc3f7d0efee425aa3939e36c605018e7967e93177",
+  "externalActions": [],
+  "applicationModified": false,
+  "checks": [
+    {
+      "check": "sourceFingerprint",
+      "command": "python3 PASSATION_IA/verifier_sources.py",
+      "referenceFiles": 150,
+      "changed": 0,
+      "missing": 0,
+      "result": "passed"
+    },
+    {
+      "check": "localLinks",
+      "count": 32,
+      "result": "passed"
+    },
+    {
+      "check": "shellSyntaxOnly",
+      "blocks": 17,
+      "result": "passed"
+    },
+    {
+      "check": "previousAgentEntriesSha256",
+      "result": "passed"
+    },
+    {
+      "check": "gitStateUnchanged",
+      "result": "passed"
+    }
+  ],
+  "completedAt": "2026-09-26 22:10:05 CEST",
+  "gitAfter": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedDirty": 66,
+    "untrackedEntries": 55,
+    "untrackedFiles": 78
+  },
+  "previousEntriesPreserved": true,
+  "commits": [],
+  "productionRechecked": false,
+  "documentationFiles": [
+    "PASSATION_IA/JOURNAL_REPRISE.md",
+    "PASSATION_IA/LIRE_EN_PREMIER.md",
+    "PASSATION_IA/01_DEMARRER_ET_TRAVAILLER.md",
+    "PASSATION_IA/03_BACKEND_DONNEES_ET_CATALOGUE.md",
+    "PASSATION_IA/04_EXPLOITATION_DEPLOIEMENT.md",
+    "PASSATION_IA/05_ETAT_ET_REPRISE.md",
+    "PASSATION_IA/PROMPT_REPRISE.txt"
+  ]
+}

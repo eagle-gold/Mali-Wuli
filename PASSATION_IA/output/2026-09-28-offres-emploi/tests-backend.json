@@ -1,0 +1,150 @@
+{
+  "date": "2026-09-28T16:49:11.756461+00:00",
+  "source": "/Users/ibrahimakonate/Documents/ChatGPT/MALI-WULI-hostinger-integration/backend",
+  "scope": "Régressions backend avec données en mémoire exclusivement",
+  "guards": {
+    "prismaRequests": "blocked",
+    "socketConnections": "blocked",
+    "httpFetch": "blocked",
+    "smtpTransport": "blocked",
+    "uploadDirectory": "temporary outside repository, removed after tests"
+  },
+  "suites": [
+    {
+      "file": "src/routes/offre.routes.test.ts",
+      "sha256": "8e594ac000da32d0ad3b8ac376a3b62528164326217a84d49d49e2ac9700424d",
+      "exitCode": 0,
+      "totals": {
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "tests-backend-offre.routes.tap"
+    },
+    {
+      "file": "src/routes/association.routes.test.ts",
+      "sha256": "b2116632a8a775d9d5f8adc7f6f383b2c8e5f2c85228b1966d731bc9bc711239",
+      "exitCode": 0,
+      "totals": {
+        "tests": 12,
+        "pass": 12,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "tests-backend-association.routes.tap"
+    },
+    {
+      "file": "src/routes/evenement.routes.test.ts",
+      "sha256": "271d559a43128b1d51e8fd4d01d22cb98794fc75afd3fab57419248c3c51f958",
+      "exitCode": 0,
+      "totals": {
+        "tests": 16,
+        "pass": 16,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "tests-backend-evenement.routes.tap"
+    },
+    {
+      "file": "src/routes/user-directory.test.ts",
+      "sha256": "bc8a57fded7dbb005fafd992e20af5eb5810e018799838a75c407f70a8135473",
+      "exitCode": 0,
+      "totals": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "tests-backend-user-directory.tap"
+    },
+    {
+      "file": "src/services/annuaire.test.ts",
+      "sha256": "bf3625bd31856697d347c25d963ae5c6e2b035d9a1f5d629f3d2b255e46b9901",
+      "exitCode": 0,
+      "totals": {
+        "tests": 6,
+        "pass": 6,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "tests-backend-annuaire.tap"
+    },
+    {
+      "file": "src/services/onboarding-school-records.test.ts",
+      "sha256": "9cb73134e441ff94e1c533e7263438ba66a80ffc54278919eae8152b508516a3",
+      "exitCode": 0,
+      "totals": {
+        "tests": 6,
+        "pass": 6,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "log": "tests-backend-onboarding-school-records.tap"
+    }
+  ],
+  "totals": {
+    "tests": 61,
+    "pass": 61,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "excluded": [
+    {
+      "file": "src/services/onboarding-school-records.test.ts",
+      "test": "POST persiste les deux diplômes et GET les restitue avec et sans snapshot; insertion scolaire exclue",
+      "reason": "Opens a localhost HTTP server; excluded to obey no-network constraint."
+    }
+  ],
+  "repositoryModified": false,
+  "realDatabaseUsed": false,
+  "networkUsed": false,
+  "mailSent": false,
+  "guardEvidence": {
+    "initialFilterDidNotExcludeSocketTest": true,
+    "blockedBeforeListen": true,
+    "networkOccurred": false,
+    "initialLog": "tests-backend-onboarding-school-records-guard-triggered.tap",
+    "rerun": "--test-skip-pattern=POST persiste"
+  },
+  "status": "passed",
+  "explicitlyExcludedTests": 1,
+  "exclusionNote": "Node --test-skip-pattern omits this test from TAP totals; it is listed in excluded.",
+  "targetedContractReview": {
+    "pdf": {
+      "signature": "genererProfilCandidaturePdf(profilId:string):Promise<Buffer>",
+      "inMemory": true,
+      "ownProfileEnforcedByRoute": true,
+      "emailShared": true,
+      "phoneRequiresTelephoneVisible": true,
+      "professionalFieldsOnly": true
+    },
+    "email": {
+      "signatureCompatible": true,
+      "sender": "Mali Wuli <contact@mali-wuli.com>",
+      "replyToCandidate": true,
+      "attachmentPdf": true,
+      "htmlEscaped": true,
+      "fileAndUrlAccessDisabled": true,
+      "mailDisabledCode": "MAIL_DISABLED"
+    },
+    "finding": {
+      "file": "src/services/profil-candidature.service.ts",
+      "description": "PDF uses any valid HTTP(S) FRONTEND_URL as profile-link origin, unlike canonical mali-wuli.com URL in candidature service. A legacy localhost config can create an unusable PDF link. Reported to root; no repository change."
+    }
+  },
+  "reviewedSourceHashes": {
+    "src/services/profil-candidature.service.ts": "ef0f82fe01f36085f033747320f02f33a7b698c243ca37b09aad5da7b191742e",
+    "src/services/email.service.ts": "7a2ee2a567b5d2881039708fdd30deb175ed07b82bd8fc1efa0f936fc458e98e",
+    "src/services/candidature.service.ts": "fe93d42cee6fee8d5618acc23850d2fbcb2b0fc464b863ddfd5d97ef8b3b7506",
+    "src/services/offre.service.ts": "4ab45f5008deb4d02d14050473a2255eb815e1d2d914d264da7f8f699df1e816",
+    "src/routes/offre.routes.ts": "6f92293c11a9e339fd73f37ff2f363f2f481607eec178121bcb4dc165e4f2ec3"
+  }
+}

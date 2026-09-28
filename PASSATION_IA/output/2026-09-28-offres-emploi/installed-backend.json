@@ -1,0 +1,8 @@
+[
+  "backend/prisma/schema.prisma",
+  "backend/prisma/migrations/20260928200000_job_applications/migration.sql",
+  "backend/src/routes/offre.routes.ts",
+  "backend/src/routes/offre.routes.test.ts",
+  "backend/src/services/offre.service.ts",
+  "backend/src/services/candidature.service.ts"
+]

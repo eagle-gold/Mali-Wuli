@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "completedAt": "2026-09-28 19:40:22 CEST",
+  "release": "20260928-roles-actions",
+  "frontendBuildId": "FuGDWQkQpcBCevVL404El",
+  "previousFrontendAndBackend": "versions/20260928-fond-mobile-roles",
+  "currentFrontendAndBackend": "versions/20260928-roles-actions",
+  "database": "u668963025_maliwuli",
+  "migration": {
+    "applied": "20260928210000_delegated_roles",
+    "total": 14,
+    "effect": "New empty UserRoleGrant table and FK; no backfill or existing user mutation",
+    "sha256": "67d8f0e24b2630378e2a28aa6724568afb85282a29168e4545c3946bd2942945"
+  },
+  "backup": {
+    "path": "/home/u668963025/private-backups/20260928-roles-actions/before.sql.gz",
+    "bytes": 31534306,
+    "gzipIntegrity": true
+  },
+  "realRoleChanges": 0,
+  "realEmails": 0,
+  "tests": {
+    "backend": 70,
+    "frontendGroups": 11,
+    "typescriptAndLinuxBuilds": "PASS",
+    "sourceHashes": 222,
+    "publicRoutes": 25,
+    "publicAssets": 66,
+    "publicBundles": 39,
+    "browser": "Cumulative assignment, reopening, delegated overview, offers access and refusals; geometry 320/375/768/1280, no overflow"
+  },
+  "filesChanged": 36,
+  "gitFinal": {
+    "branch": "ibrahima-catalogue-scolaire-partage",
+    "head": "0d01264b98b460863d90cafeb8c50b7d345cd37f",
+    "trackedModified": 69,
+    "untrackedEntries": 86,
+    "untrackedFiles": 154
+  },
+  "evidence": [
+    "tests-backend.json",
+    "tests-frontend-roles.log",
+    "tests-deploy-scripts.json",
+    "audit-independant.md",
+    "browser-verification.json",
+    "live-browser.json",
+    "database-before.json",
+    "migration-precheck.json",
+    "migration-guard.json",
+    "migration.log",
+    "database-after.json",
+    "frontend-candidate.json",
+    "frontend-public.json",
+    "api-public.json",
+    "published-source-check.json"
+  ],
+  "limitations": [
+    "No grants assigned to real accounts during testing.",
+    "Interactive tests used a RAM fixture API, real DB service checked read-only.",
+    "Physical phone/Safari and real concurrent MySQL mutations not exercised.",
+    "No eligible ordinary account for postmigration read-only denial scenario; tested by backend mocks.",
+    "Backup gzip/SHA verified; restoration not rehearsed."
+  ],
+  "cleanup": "QA servers stopped, two temporary tabs closed, viewport reset; no commit or push."
+}

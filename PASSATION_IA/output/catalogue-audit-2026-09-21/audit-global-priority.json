@@ -1,0 +1,728 @@
+[
+  {
+    "paysCode": "FR",
+    "ids": [
+      "fr-uai-0750655e",
+      "ror-0395sep02"
+    ],
+    "statut": "doublon_confirme_par_faisceau_concordant",
+    "priorite": 100,
+    "motif": "Même nom complet distinctif, même ville Paris, même site institutionnel louislegrand.fr ; une fiche annuaire UAI et une fiche ROR. La classification UNIVERSITE de la fiche ROR est incohérente avec le lycée.",
+    "signaux": [
+      "nom_ou_alias_et_hote_web_identiques",
+      "nom_ou_alias_et_ville_identiques",
+      "url_web_complete_identique"
+    ],
+    "nomsCommuns": [
+      "lycee louis le grand"
+    ],
+    "nomPrincipalIdentique": true,
+    "villeIdentique": true,
+    "distanceMetres": 688.44,
+    "codesPostauxCommuns": [],
+    "vigilances": [
+      "niveaux_differents",
+      "types_differents"
+    ],
+    "fiches": [
+      {
+        "id": "fr-uai-0750655e",
+        "nom": "Lycée Louis Le Grand",
+        "paysCode": "FR",
+        "ville": "Paris",
+        "type": "LYCEE",
+        "siteWeb": "https://www.louislegrand.fr",
+        "latitude": "48.848018",
+        "longitude": "2.344176",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 6
+        },
+        "alias": [
+          "Lycée Louis Le Grand (Paris 5e Arrondissement - 75)"
+        ],
+        "niveaux": [
+          "SECONDAIRE",
+          "SUPERIEUR"
+        ],
+        "sources": [
+          {
+            "code": "esr-fr",
+            "identifiantExterne": "0750655E",
+            "urlSource": "https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-cartographie_formations_parcoursup/",
+            "donneesBrutes": {}
+          },
+          {
+            "code": "education-fr",
+            "identifiantExterne": "0750655E",
+            "urlSource": "https://data.education.gouv.fr/explore/dataset/fr-en-annuaire-education/",
+            "donneesBrutes": {
+              "uai": "0750655E",
+              "codeNature": "300",
+              "codeCommune": "75105",
+              "codePostal": "75005",
+              "adresse": "123 rue Saint-Jacques"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ror-0395sep02",
+        "nom": "Lycée Louis-le-Grand",
+        "paysCode": "FR",
+        "ville": "Paris",
+        "type": "UNIVERSITE",
+        "siteWeb": "https://louislegrand.fr",
+        "latitude": "48.85341",
+        "longitude": "2.3488",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [
+          "Collège de Clermont"
+        ],
+        "niveaux": [
+          "SUPERIEUR"
+        ],
+        "sources": [
+          {
+            "code": "ror",
+            "identifiantExterne": "0395sep02",
+            "urlSource": "https://ror.org/0395sep02",
+            "donneesBrutes": {}
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "paysCode": "FR",
+    "ids": [
+      "fr-esr-uai-0841204c",
+      "fr-uai-0840077c"
+    ],
+    "statut": "anomalie_de_rattachement_source",
+    "priorite": 95,
+    "motif": "Un identifiant officiel figure sur deux fiches via deux sources ; la fiche agrégée porte aussi d’autres identifiants. Examiner le rattachement des sources/programmes avant toute fusion.",
+    "signaux": [
+      "identifiant_officiel_commun:UAI:0840077C"
+    ],
+    "nomsCommuns": [],
+    "nomPrincipalIdentique": false,
+    "villeIdentique": true,
+    "distanceMetres": null,
+    "codesPostauxCommuns": [],
+    "vigilances": [
+      "niveaux_differents",
+      "types_differents"
+    ],
+    "fiches": [
+      {
+        "id": "fr-esr-uai-0841204c",
+        "nom": "Groupe Belmont (Avignon - 84)",
+        "paysCode": "FR",
+        "ville": "Avignon",
+        "type": "ECOLE_SUPERIEURE",
+        "siteWeb": "https://groupe-belmont.fr/",
+        "latitude": null,
+        "longitude": null,
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 16
+        },
+        "alias": [
+          "Groupe Belmont (Aix-en-Provence - 13)"
+        ],
+        "niveaux": [
+          "SUPERIEUR"
+        ],
+        "sources": [
+          {
+            "code": "esr-fr",
+            "identifiantExterne": "0841204C",
+            "urlSource": "https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-cartographie_formations_parcoursup/",
+            "donneesBrutes": {}
+          },
+          {
+            "code": "esr-fr",
+            "identifiantExterne": "0134428T",
+            "urlSource": "https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-cartographie_formations_parcoursup/",
+            "donneesBrutes": {}
+          },
+          {
+            "code": "esr-fr",
+            "identifiantExterne": "0840077C",
+            "urlSource": "https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-cartographie_formations_parcoursup/",
+            "donneesBrutes": {}
+          }
+        ]
+      },
+      {
+        "id": "fr-uai-0840077c",
+        "nom": "GROUPE BELMONT (LP PR HC)",
+        "paysCode": "FR",
+        "ville": "Avignon",
+        "type": "LYCEE",
+        "siteWeb": null,
+        "latitude": "43.915511",
+        "longitude": "4.88585",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "SECONDAIRE"
+        ],
+        "sources": [
+          {
+            "code": "education-fr",
+            "identifiantExterne": "0840077C",
+            "urlSource": "https://data.education.gouv.fr/explore/dataset/fr-en-annuaire-education/",
+            "donneesBrutes": {
+              "uai": "0840077C",
+              "codeNature": "320",
+              "codeCommune": "84007",
+              "codePostal": "84140",
+              "adresse": "95 allée camille CLAUDEL"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "paysCode": "FR",
+    "ids": [
+      "fr-uai-0120031u",
+      "fr-uai-0121157t"
+    ],
+    "statut": "anomalie_de_rattachement_source",
+    "priorite": 95,
+    "motif": "Un identifiant officiel figure sur deux fiches via deux sources ; la fiche agrégée porte aussi d’autres identifiants. Examiner le rattachement des sources/programmes avant toute fusion.",
+    "signaux": [
+      "identifiant_officiel_commun:UAI:0120031U"
+    ],
+    "nomsCommuns": [],
+    "nomPrincipalIdentique": false,
+    "villeIdentique": true,
+    "distanceMetres": 68.18,
+    "codesPostauxCommuns": [
+      "12200"
+    ],
+    "vigilances": [
+      "UAI_annuaire_education_distincts"
+    ],
+    "fiches": [
+      {
+        "id": "fr-uai-0120031u",
+        "nom": "Lycée général et technologique Raymond Savignac",
+        "paysCode": "FR",
+        "ville": "Villefranche-de-Rouergue",
+        "type": "LYCEE",
+        "siteWeb": "https://raymond-savignac.mon-ent-occitanie.fr",
+        "latitude": "44.354642",
+        "longitude": "2.037049",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "PROFESSIONNEL",
+          "SECONDAIRE",
+          "SUPERIEUR"
+        ],
+        "sources": [
+          {
+            "code": "education-fr",
+            "identifiantExterne": "0120031U",
+            "urlSource": "https://data.education.gouv.fr/explore/dataset/fr-en-annuaire-education/",
+            "donneesBrutes": {
+              "uai": "0120031U",
+              "codeNature": "300",
+              "codeCommune": "12300",
+              "codePostal": "12200",
+              "adresse": "1 rue Agnès Savignac"
+            }
+          }
+        ]
+      },
+      {
+        "id": "fr-uai-0121157t",
+        "nom": "Lycée professionnel Raymond Savignac",
+        "paysCode": "FR",
+        "ville": "Villefranche-de-Rouergue",
+        "type": "LYCEE",
+        "siteWeb": "http://raymond-savignac.entmip.fr",
+        "latitude": "44.355253",
+        "longitude": "2.037121",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 2
+        },
+        "alias": [
+          "Lycée professionnel Raymond Savignac - CFA Public Education Nationale (Villefranche-de-Rouergue - 12)",
+          "Lycée Raymond Savignac (Villefranche-de-Rouergue - 12)"
+        ],
+        "niveaux": [
+          "PROFESSIONNEL",
+          "SECONDAIRE",
+          "SUPERIEUR"
+        ],
+        "sources": [
+          {
+            "code": "esr-fr",
+            "identifiantExterne": "0121157T",
+            "urlSource": "https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-cartographie_formations_parcoursup/",
+            "donneesBrutes": {}
+          },
+          {
+            "code": "esr-fr",
+            "identifiantExterne": "0120031U",
+            "urlSource": "https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-cartographie_formations_parcoursup/",
+            "donneesBrutes": {}
+          },
+          {
+            "code": "education-fr",
+            "identifiantExterne": "0121157T",
+            "urlSource": "https://data.education.gouv.fr/explore/dataset/fr-en-annuaire-education/",
+            "donneesBrutes": {
+              "uai": "0121157T",
+              "codeNature": "320",
+              "codeCommune": "12300",
+              "codePostal": "12200",
+              "adresse": "1 rue Agnès Savignac"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "paysCode": "CA",
+    "ids": [
+      "ca-statcan-1754a1299d570a520ca2",
+      "ca-statcan-245bebeeac140c7e13a5"
+    ],
+    "statut": "candidat_tres_fort_non_confirme",
+    "priorite": 90,
+    "motif": "Même nom complet, ville, code postal, niveaux et coordonnées à moins de 30 m dans Statcan. Vérifier les adresses/identifiants administratifs complets (absents de cet export) avant fusion.",
+    "signaux": [
+      "nom_ou_alias_et_ville_identiques"
+    ],
+    "nomsCommuns": [
+      "alpha ii alternative school"
+    ],
+    "nomPrincipalIdentique": true,
+    "villeIdentique": true,
+    "distanceMetres": 25.36,
+    "codesPostauxCommuns": [
+      "m6h1m9"
+    ],
+    "vigilances": [],
+    "fiches": [
+      {
+        "id": "ca-statcan-1754a1299d570a520ca2",
+        "nom": "ALPHA II Alternative School",
+        "paysCode": "CA",
+        "ville": "Toronto",
+        "type": "LYCEE",
+        "siteWeb": null,
+        "latitude": "43.65902",
+        "longitude": "-79.4353",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "SECONDAIRE"
+        ],
+        "sources": [
+          {
+            "code": "statcan-odef",
+            "identifiantExterne": "1754a1299d570a520ca2",
+            "urlSource": "https://open.canada.ca/data/fr/dataset/4dd64c98-b12a-49c7-be29-21c77d22b675",
+            "donneesBrutes": {
+              "codePostal": "M6H1M9"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ca-statcan-245bebeeac140c7e13a5",
+        "nom": "ALPHA II Alternative School",
+        "paysCode": "CA",
+        "ville": "Toronto",
+        "type": "LYCEE",
+        "siteWeb": null,
+        "latitude": "43.65909",
+        "longitude": "-79.435",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "SECONDAIRE"
+        ],
+        "sources": [
+          {
+            "code": "statcan-odef",
+            "identifiantExterne": "245bebeeac140c7e13a5",
+            "urlSource": "https://open.canada.ca/data/fr/dataset/4dd64c98-b12a-49c7-be29-21c77d22b675",
+            "donneesBrutes": {
+              "codePostal": "M6H1M9"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "paysCode": "CA",
+    "ids": [
+      "ca-statcan-298da220e93af662a371",
+      "ca-statcan-a484e27cf549e0e7bfdd"
+    ],
+    "statut": "candidat_tres_fort_non_confirme",
+    "priorite": 90,
+    "motif": "Même nom complet, ville, code postal, niveaux et coordonnées à moins de 30 m dans Statcan. Vérifier les adresses/identifiants administratifs complets (absents de cet export) avant fusion.",
+    "signaux": [
+      "nom_ou_alias_et_ville_identiques"
+    ],
+    "nomsCommuns": [
+      "cardinal carter academy for the arts"
+    ],
+    "nomPrincipalIdentique": true,
+    "villeIdentique": true,
+    "distanceMetres": 8.11,
+    "codesPostauxCommuns": [
+      "m2n3c8"
+    ],
+    "vigilances": [],
+    "fiches": [
+      {
+        "id": "ca-statcan-298da220e93af662a371",
+        "nom": "Cardinal Carter Academy for the Arts",
+        "paysCode": "CA",
+        "ville": "Toronto",
+        "type": "LYCEE",
+        "siteWeb": null,
+        "latitude": "43.76381",
+        "longitude": "-79.4097",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "SECONDAIRE"
+        ],
+        "sources": [
+          {
+            "code": "statcan-odef",
+            "identifiantExterne": "298da220e93af662a371",
+            "urlSource": "https://open.canada.ca/data/fr/dataset/4dd64c98-b12a-49c7-be29-21c77d22b675",
+            "donneesBrutes": {
+              "codePostal": "M2N3C8"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ca-statcan-a484e27cf549e0e7bfdd",
+        "nom": "Cardinal Carter Academy for the Arts",
+        "paysCode": "CA",
+        "ville": "Toronto",
+        "type": "LYCEE",
+        "siteWeb": null,
+        "latitude": "43.76382",
+        "longitude": "-79.4096",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "SECONDAIRE"
+        ],
+        "sources": [
+          {
+            "code": "statcan-odef",
+            "identifiantExterne": "a484e27cf549e0e7bfdd",
+            "urlSource": "https://open.canada.ca/data/fr/dataset/4dd64c98-b12a-49c7-be29-21c77d22b675",
+            "donneesBrutes": {
+              "codePostal": "M2N3C8"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "paysCode": "CA",
+    "ids": [
+      "ca-statcan-34ec14e2ed4d2fa82b9f",
+      "ca-statcan-9621ae29b261a5fb13b2"
+    ],
+    "statut": "candidat_tres_fort_non_confirme",
+    "priorite": 90,
+    "motif": "Même nom complet, ville, code postal, niveaux et coordonnées à moins de 30 m dans Statcan. Vérifier les adresses/identifiants administratifs complets (absents de cet export) avant fusion.",
+    "signaux": [
+      "nom_ou_alias_et_ville_identiques"
+    ],
+    "nomsCommuns": [
+      "ecole secondaire catholique algonquin"
+    ],
+    "nomPrincipalIdentique": true,
+    "villeIdentique": true,
+    "distanceMetres": 17.75,
+    "codesPostauxCommuns": [
+      "p1b4w8"
+    ],
+    "vigilances": [],
+    "fiches": [
+      {
+        "id": "ca-statcan-34ec14e2ed4d2fa82b9f",
+        "nom": "École secondaire catholique Algonquin",
+        "paysCode": "CA",
+        "ville": "North Bay",
+        "type": "LYCEE",
+        "siteWeb": null,
+        "latitude": "46.31815",
+        "longitude": "-79.4664",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "SECONDAIRE"
+        ],
+        "sources": [
+          {
+            "code": "statcan-odef",
+            "identifiantExterne": "34ec14e2ed4d2fa82b9f",
+            "urlSource": "https://open.canada.ca/data/fr/dataset/4dd64c98-b12a-49c7-be29-21c77d22b675",
+            "donneesBrutes": {
+              "codePostal": "P1B4W8"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ca-statcan-9621ae29b261a5fb13b2",
+        "nom": "École secondaire catholique Algonquin",
+        "paysCode": "CA",
+        "ville": "North Bay",
+        "type": "LYCEE",
+        "siteWeb": null,
+        "latitude": "46.31807",
+        "longitude": "-79.4662",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "SECONDAIRE"
+        ],
+        "sources": [
+          {
+            "code": "statcan-odef",
+            "identifiantExterne": "9621ae29b261a5fb13b2",
+            "urlSource": "https://open.canada.ca/data/fr/dataset/4dd64c98-b12a-49c7-be29-21c77d22b675",
+            "donneesBrutes": {
+              "codePostal": "P1B4W8"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "paysCode": "CA",
+    "ids": [
+      "ca-statcan-d7d78ea50d2ea9b219af",
+      "ca-statcan-e8ecb265229b604748ab"
+    ],
+    "statut": "candidat_tres_fort_non_confirme",
+    "priorite": 90,
+    "motif": "Même nom complet, ville, code postal, niveaux et coordonnées à moins de 30 m dans Statcan. Vérifier les adresses/identifiants administratifs complets (absents de cet export) avant fusion.",
+    "signaux": [
+      "nom_ou_alias_et_ville_identiques"
+    ],
+    "nomsCommuns": [
+      "college des technologies de l information de montreal"
+    ],
+    "nomPrincipalIdentique": true,
+    "villeIdentique": true,
+    "distanceMetres": 0.0,
+    "codesPostauxCommuns": [
+      "h3b3v8"
+    ],
+    "vigilances": [],
+    "fiches": [
+      {
+        "id": "ca-statcan-d7d78ea50d2ea9b219af",
+        "nom": "Collège des Technologies de l'Information de Montréal",
+        "paysCode": "CA",
+        "ville": "Montréal",
+        "type": "ECOLE_SUPERIEURE",
+        "siteWeb": null,
+        "latitude": "45.503141",
+        "longitude": "-73.569217",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "PROFESSIONNEL",
+          "SUPERIEUR"
+        ],
+        "sources": [
+          {
+            "code": "statcan-odef",
+            "identifiantExterne": "d7d78ea50d2ea9b219af",
+            "urlSource": "https://open.canada.ca/data/fr/dataset/4dd64c98-b12a-49c7-be29-21c77d22b675",
+            "donneesBrutes": {
+              "codePostal": "H3B3V8"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ca-statcan-e8ecb265229b604748ab",
+        "nom": "Collège des Technologies de l'Information de Montréal",
+        "paysCode": "CA",
+        "ville": "Montréal",
+        "type": "ECOLE_SUPERIEURE",
+        "siteWeb": null,
+        "latitude": "45.503141",
+        "longitude": "-73.569217",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "PROFESSIONNEL",
+          "SUPERIEUR"
+        ],
+        "sources": [
+          {
+            "code": "statcan-odef",
+            "identifiantExterne": "e8ecb265229b604748ab",
+            "urlSource": "https://open.canada.ca/data/fr/dataset/4dd64c98-b12a-49c7-be29-21c77d22b675",
+            "donneesBrutes": {
+              "codePostal": "H3B3V8"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "paysCode": "CA",
+    "ids": [
+      "ca-statcan-fa0afcf32114a3acc46e",
+      "ca-statcan-fe68fa8786e0cead5f7b"
+    ],
+    "statut": "candidat_tres_fort_non_confirme",
+    "priorite": 90,
+    "motif": "Même nom complet, ville, code postal, niveaux et coordonnées à moins de 30 m dans Statcan. Vérifier les adresses/identifiants administratifs complets (absents de cet export) avant fusion.",
+    "signaux": [
+      "nom_ou_alias_et_ville_identiques"
+    ],
+    "nomsCommuns": [
+      "klc college healthcare business education kingston"
+    ],
+    "nomPrincipalIdentique": true,
+    "villeIdentique": true,
+    "distanceMetres": 0.0,
+    "codesPostauxCommuns": [
+      "k7m8h9"
+    ],
+    "vigilances": [],
+    "fiches": [
+      {
+        "id": "ca-statcan-fa0afcf32114a3acc46e",
+        "nom": "KLC College Healthcare Business Education-Kingston",
+        "paysCode": "CA",
+        "ville": "Kingston",
+        "type": "ECOLE_SUPERIEURE",
+        "siteWeb": null,
+        "latitude": "44.249137",
+        "longitude": "-76.57257",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "PROFESSIONNEL",
+          "SUPERIEUR"
+        ],
+        "sources": [
+          {
+            "code": "statcan-odef",
+            "identifiantExterne": "fa0afcf32114a3acc46e",
+            "urlSource": "https://open.canada.ca/data/fr/dataset/4dd64c98-b12a-49c7-be29-21c77d22b675",
+            "donneesBrutes": {
+              "codePostal": "K7M8H9"
+            }
+          }
+        ]
+      },
+      {
+        "id": "ca-statcan-fe68fa8786e0cead5f7b",
+        "nom": "KLC College:Healthcare- Business- Education-Kingston",
+        "paysCode": "CA",
+        "ville": "Kingston",
+        "type": "ECOLE_SUPERIEURE",
+        "siteWeb": null,
+        "latitude": "44.249137",
+        "longitude": "-76.57257",
+        "_count": {
+          "formations": 0,
+          "avis": 0,
+          "programmes": 0
+        },
+        "alias": [],
+        "niveaux": [
+          "PROFESSIONNEL",
+          "SUPERIEUR"
+        ],
+        "sources": [
+          {
+            "code": "statcan-odef",
+            "identifiantExterne": "fe68fa8786e0cead5f7b",
+            "urlSource": "https://open.canada.ca/data/fr/dataset/4dd64c98-b12a-49c7-be29-21c77d22b675",
+            "donneesBrutes": {
+              "codePostal": "K7M8H9"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

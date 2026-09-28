@@ -1,0 +1,242 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T18:43:37.435Z",
+  "release": "20260928-liens-sociaux",
+  "kind": "production-baseline-readonly",
+  "targets": {
+    "frontend": "versions/20260928-home-session-r2",
+    "backend": "versions/20260928-suppressions-droits"
+  },
+  "buildId": "ZbOkxHyHSm-qkR0dR9Qeh",
+  "sourceFiles": 230,
+  "migrations": [
+    {
+      "name": "20260919000000_production_baseline",
+      "sha256": "cce2ac6952f274f7b635723ea5f12b5906c35ce8967ed8d7a4cd61ce9614e963"
+    },
+    {
+      "name": "20260920000000_social_realtime_mysql",
+      "sha256": "80631dea47bcb51046a1fc3b23e40c29412eeac437b855167ec3371026a3b61c"
+    },
+    {
+      "name": "20260920010000_onboarding_mentorat",
+      "sha256": "f110deabb5f61e1fe3ad2c611445c929137bb819db2e006d813663f769e315a7"
+    },
+    {
+      "name": "20260920020000_community_features_mysql",
+      "sha256": "567066e767bf218e35129fc037f375943095bf47f927a5fda34944f4f6e7f099"
+    },
+    {
+      "name": "20260920030000_password_reset_codes",
+      "sha256": "4305efa25267845f1f32d0f5e1e44df73d5a978c9971064c7c098b67a90c946d"
+    },
+    {
+      "name": "20260920040000_onboarding_snapshot",
+      "sha256": "6d6a7a460933a120c8c3baa635646b8ee76dab7038175f29fbddc9e8b43a25b5"
+    },
+    {
+      "name": "20260920050000_community_long_urls",
+      "sha256": "0cac845f1ac5053d5902669e3e75d13e548fc4c61313c2f8f49bb1a1b7a85861"
+    },
+    {
+      "name": "20260920060000_auth_session_version",
+      "sha256": "d4b0915b5d5cec58a122a9809ff599aa2daeb231b10bebae1176745b4fb457fa"
+    },
+    {
+      "name": "20260920070000_login_otp_codes",
+      "sha256": "78b378b0cd3621d9f5acb8d61af58eed67daad1821df85ec8b496de30b21cfd2"
+    },
+    {
+      "name": "20260921000000_school_curriculum_diplomas",
+      "sha256": "aea82cd2800da468e412d1b2c4e8d0880bbcb4985bcc8d1e9ea573d4473c33d1"
+    },
+    {
+      "name": "20260928180000_association_directory",
+      "sha256": "3beb325e757b66e63d36a934b15ab8c22a453fbbe71e2f05f6671a848c5435ac"
+    },
+    {
+      "name": "20260928190000_event_photos",
+      "sha256": "1e7e87ed7f408597b3769c0630b08dd54591131e19cb2f75ad88a68414f42c0e"
+    },
+    {
+      "name": "20260928200000_job_applications",
+      "sha256": "4678ab0e7711924097e75dc0198b78bb026ce5145dce1d046585d5acff2195fd"
+    },
+    {
+      "name": "20260928210000_delegated_roles",
+      "sha256": "67d8f0e24b2630378e2a28aa6724568afb85282a29168e4545c3946bd2942945"
+    }
+  ],
+  "profileColumns": [
+    {
+      "COLUMN_NAME": "id",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLLATION_NAME": "utf8mb4_unicode_ci",
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "userId",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": null,
+      "COLLATION_NAME": "utf8mb4_unicode_ci",
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "telephone",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLLATION_NAME": "utf8mb4_unicode_ci",
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "pays",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLLATION_NAME": "utf8mb4_unicode_ci",
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "ville",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLLATION_NAME": "utf8mb4_unicode_ci",
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "situation",
+      "COLUMN_TYPE": "enum('ETUDIANT','PROFESSIONNEL','ENTREPRENEUR','EN_RECHERCHE')",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLLATION_NAME": "utf8mb4_unicode_ci",
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "titre",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLLATION_NAME": "utf8mb4_unicode_ci",
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "bio",
+      "COLUMN_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLLATION_NAME": "utf8mb4_unicode_ci",
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "photo",
+      "COLUMN_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLLATION_NAME": "utf8mb4_unicode_ci",
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "linkedin",
+      "COLUMN_TYPE": "varchar(191)",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLLATION_NAME": "utf8mb4_unicode_ci",
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "emailVisible",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "0",
+      "COLLATION_NAME": null,
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "telephoneVisible",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "0",
+      "COLLATION_NAME": null,
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "estVolontaire",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "0",
+      "COLLATION_NAME": null,
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "onboardingEtape",
+      "COLUMN_TYPE": "int(11)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "0",
+      "COLLATION_NAME": null,
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "onboardingFini",
+      "COLUMN_TYPE": "tinyint(1)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "0",
+      "COLLATION_NAME": null,
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "createdAt",
+      "COLUMN_TYPE": "datetime(3)",
+      "IS_NULLABLE": "NO",
+      "COLUMN_DEFAULT": "current_timestamp(3)",
+      "COLLATION_NAME": null,
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "photoCouverture",
+      "COLUMN_TYPE": "text",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLLATION_NAME": "utf8mb4_unicode_ci",
+      "EXTRA": ""
+    },
+    {
+      "COLUMN_NAME": "onboardingDonnees",
+      "COLUMN_TYPE": "longtext",
+      "IS_NULLABLE": "YES",
+      "COLUMN_DEFAULT": "NULL",
+      "COLLATION_NAME": "utf8mb4_bin",
+      "EXTRA": ""
+    }
+  ],
+  "counts": {
+    "User": 2,
+    "UserRoleGrant": 0,
+    "Profil": 2,
+    "Formation": 9,
+    "Etablissement": 143458,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "Evenement": 0,
+    "EvenementParticipant": 0,
+    "Offre": 0,
+    "OffreEnregistrement": 0,
+    "CandidatureOffre": 0,
+    "Message": 0,
+    "Conversation": 0,
+    "Publication": 1,
+    "CommentairePublication": 1,
+    "ReactionPublication": 1,
+    "EvenementPhoto": 0
+  },
+  "usersRoleFingerprint": "312e0933c6615e3fff777903dd3f561926351a947711aa27d0d899977a7fe135",
+  "roleGrantsFingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "profileLinksFingerprint": "20f3f456e13f27bf7fb1287459ccc0fdb4416ca25141b6942887cf968bf958de",
+  "profilesWithLinkedin": 0,
+  "databaseWrites": 0,
+  "remoteWrites": 0
+}

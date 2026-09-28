@@ -1,0 +1,15 @@
+{
+  "at": "2026-09-28T15:32:01.300Z",
+  "database": "u668963025_maliwuli",
+  "backup": "/home/u668963025/private-backups/20260928-annuaire-associations/before.sql.gz",
+  "bytes": 31533042,
+  "sha256": "3ebbf89d92b81f61ada694dedf5a00c0358ef6d386bb3a3137cf994bddf566df",
+  "counts": {
+    "User": 2,
+    "Profil": 2,
+    "Formation": 9,
+    "Association": 0,
+    "AssociationMembre": 0
+  },
+  "warning": null
+}

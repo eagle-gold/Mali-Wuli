@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "groups": 3,
+  "checks": [
+    "seven variants match resized original visible RGBA and alpha; original files unchanged",
+    "SSR logos keep alt, dimensions and responsive classes with native srcSet, no runtime optimizer",
+    "landing diff is strictly logo import and element; animations, session and styling unchanged"
+  ],
+  "applicationWrites": 0,
+  "databaseRequests": 0
+}

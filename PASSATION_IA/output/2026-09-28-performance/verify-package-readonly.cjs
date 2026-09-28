@@ -1,0 +1,11 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const hash=b=>crypto.createHash('sha256').update(b).digest('hex');
+const c=JSON.parse(fs.readFileSync(path.join(__dirname,'release-contract.json'),'utf8'));
+const p=JSON.parse(fs.readFileSync(path.join(__dirname,'package-contract.json'),'utf8'));
+const [part,archive]=process.argv.slice(2);assert(['frontend','backend'].includes(part)&&path.isAbsolute(archive));
+assert.equal(c.release,'20260928-performance');assert.equal(c.migrationAllowed,false);assert.equal(p.release,c.release);
+assert.equal(hash(fs.readFileSync(path.join(__dirname,'release-contract.json'))),p.releaseContractSha256);
+assert.equal(hash(fs.readFileSync(path.join(__dirname,'source-manifest.json'))),p.manifestSha256);
+assert.equal(hash(fs.readFileSync(archive)),p.archives[part]);
+console.log(JSON.stringify({status:'PASS',kind:'package',part,release:c.release}));

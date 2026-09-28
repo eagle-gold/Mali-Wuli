@@ -1,0 +1,74 @@
+{
+  "status": "passed",
+  "mode": "public",
+  "baselineOnly": true,
+  "base": "https://mali-wuli.com",
+  "checks": [
+    "homepage-tree-sections-navigation-and-registration-flow-preserved",
+    "all-route-javascript-css-font-and-image-assets-return-http-200"
+  ],
+  "routesChecked": [
+    "/",
+    "/register",
+    "/login"
+  ],
+  "assetsChecked": 34,
+  "memberBundlesChecked": 14,
+  "semanticSignatures": {
+    "/": {
+      "text": "3100c89e0abd62e8eeea3e9f82b4f64c7aefbe1f37f469be91ce6e7dbadebac2",
+      "links": "227c3e11e2bf0073f4b667b35cdea8ab4dfd4dfd3538e47b67cf6b3edef4a14d",
+      "fields": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "geometry": "9c4266483af471e4df96a73c14b8d8221c8a6d441e5542a17127c179d6bd2a45"
+    },
+    "/register": {
+      "text": "3f3ae2e60189785788dbf14addfbcc6198a9dd91a32181e120514a6ecc71c97d",
+      "links": "2d1f6be797b63fffd6cbe15e4486f18463ec410f1e7233fa730c7a8a069d6488",
+      "fields": "3a0a76ed13984bc971f1e83bf9c22fc0d4f931ff07ef078f14ce1789762c622a",
+      "geometry": "6f8558948384f7734e1fd19840e84aeed1ea0f09f32e9947a702e6bf62bf3ffd"
+    }
+  },
+  "assetHashes": {
+    "/_next/static/chunks/1255-fc6c00ab2f765339.js": "e21be50b85d04ad36b43be5a422703844403ff99a574e0cfd4a7e1295a995b88",
+    "/_next/static/chunks/1423-2bd71cd83108ab30.js": "ec5f0680c62c990f906ca8b510fa24b8a86a025ffdc216a8726aa414b25ae8e3",
+    "/_next/static/chunks/2143-d1adb3359eee68ae.js": "8616ceaba3364a9a7709980b869b515874f4a890aff941835ad73cdad55af488",
+    "/_next/static/chunks/2619-3c9e02e22d10480a.js": "7fe044bde88179fcddab68e119ff3f40e55f3a0ecd8cec7fc420b14c9f350f9b",
+    "/_next/static/chunks/3369-30d74840250e72f4.js": "46ad0599147a16f0b8a69db71bef082a3a5df7fcdeb2801395f4f1a5faf4f9ed",
+    "/_next/static/chunks/4320-a457f26bd27acbe8.js": "a0398223e20a4dfef6023a4e2bcc0b1033a83bf80e5a1fe6e5dfb28a953e1a9b",
+    "/_next/static/chunks/4bd1b696-f785427dddbba9fb.js": "51a7146e32f6a18a96676813fd791cd1b0265c675292acb31196720ca9e79726",
+    "/_next/static/chunks/app/(auth)/login/page-574175ca787302cc.js": "93a1ac67370658a78ae1c75010a377e7db839f1bebb673f349da707b4e60bbec",
+    "/_next/static/chunks/app/(auth)/register/page-1aa27525e81f0333.js": "765a57cb7ea8f030e36d0ff2e4e383467d4f98d94ef9d67b7624fbec5ecb9301",
+    "/_next/static/chunks/app/(platform)/layout-aefc17801e991419.js": "36b2fadc75d7070e1f061c697054bde576c702f986eb7af62ca12dabd0ecd7b9",
+    "/_next/static/chunks/app/page-5facf248bae0d3ed.js": "a1c56f31a3ddf27ff31e67fc17de8900dd3deb773b3f5c4de10084104f68c30f",
+    "/_next/static/chunks/main-app-967ac7be2eeffca6.js": "ab9eb80440e70522d42e92f28b4575ded49ed49de8dc93d0b0658a89b0aacdea",
+    "/_next/static/chunks/polyfills-42372ed130431b0a.js": "0973c1d64c88adc8e3c950410cb58b288f72118d5965b78049438deb8f2f9683",
+    "/_next/static/chunks/webpack-5d65e704484e7230.js": "74d1eb99d0dad7b7cda1a678a4c766aae6cb5ab25421209d05e7cf624fab7c6c",
+    "/_next/static/css/8b093c7dc2e94df3.css": "f81ec43803f001e063454ba2d48257d13f1ee195587f2c685e21f7f5fc00e086",
+    "/_next/static/css/fa06ea19fa1bd3f8.css": "69c2b1f19ed0b371100149cb445ca220b28d5c0bcf107c98922e79d409518b8c",
+    "/_next/static/media/19cfc7226ec3afaa-s.woff2": "46dd4cdca58c26ae87cc6927657bf83b2e8abfc39ffd0ab176e301a8d28d22bf",
+    "/_next/static/media/21350d82a1f187e9-s.woff2": "aebf2ab4a4ce6810d73c1ac7be7cafb4e5ec4cee2d6db5fb3e09691747ec4bd6",
+    "/_next/static/media/26d0ba92e140f0dc-s.p.woff2": "6219bc4bfdfc5d9b2201dcdf046218b122a758f932e25ed5f168f929b7ca2311",
+    "/_next/static/media/28a2004cf8372660-s.woff2": "5628567856d60d714e7a35bcac9e3de08b336d63b12138f61b970990a1ee9547",
+    "/_next/static/media/47f136985ef5b5cb-s.woff2": "d7f9db9b1034978ebebdf7312aa4aee55dff3ef6039e7ff71413780bd4a05558",
+    "/_next/static/media/4da3161b738b07dd-s.woff2": "f1451edd6434085c4f9f3a8b4a674182dd7d6acccf53bfced19fd167f0705a06",
+    "/_next/static/media/4ead58c4dcc3f285-s.woff2": "8fa67d5f0ab2a1d0b924729a0411a069b384d7a236edd96a6767ef342a6d048f",
+    "/_next/static/media/8e9860b6e62d6359-s.woff2": "a28eb6d3ccb534ae0c94ca999371df024aab60b08c3c8a5720ee9e32fa0faaa2",
+    "/_next/static/media/adb45196eddef626-s.woff2": "21fac8da552a915e7a9fb84c5afaeb85d35507b2616346d592e78128c1cfe3e0",
+    "/_next/static/media/af4bf8399d1aacdf-s.p.woff2": "88e17be075f1be50ab67b057b99e3701b828f44ed28f9452df6c02645bb0cba9",
+    "/_next/static/media/ba9851c3c22cd980-s.woff2": "fccca918fea40089dacadc7045861314d1a6bc91f1f323cc1eeb22ebcdb321b5",
+    "/_next/static/media/c5fe6dc8356a8c31-s.woff2": "a2e2c783ca6f9c20486e81e72a279203e86730bbf8f01ff6a5ee9dbd09e1c271",
+    "/_next/static/media/df0a9ae256c0569c-s.woff2": "8db00ff46c67b22cda8bed865acf7077651cac8d2841d5b40980556b48961931",
+    "/_next/static/media/e4af272ccee01ff0-s.p.woff2": "c940764593d0fe5d596be327ca7558855e018039fb78509aa21921fd3644c3e4",
+    "/_next/static/media/eaead17c7dbfcd5d-s.p.woff2": "5d91eb5d522a03081946c44c8ca17c902230dfed5f0f9b5014262135d47b15b2",
+    "/_next/static/media/fb526027db1fc1ae-s.woff2": "250cc2966c658fb6d336731de9d82a8129025e9839c20c253bbc477852f6cf4f",
+    "/images/landing/mali-wuli-arbre.png": "5bbb1c57d6fdf4f9642a1d4d4e7119e52fc94abf38cfaa68f0889758722bf7cf",
+    "/images/logo-mali-wuli.png": "a18765d91ead24982bc4fe9e72606165c24194d1fa542e66ad0fb86a866a0251"
+  },
+  "databaseWrites": 0,
+  "authenticatedRequests": 0,
+  "limitations": [
+    "Protected pages tested as route shells and downloaded bundles, not as authenticated member/admin sessions",
+    "Synthetic detail URLs only verify route delivery; no real association, member or event data is requested",
+    "Client JavaScript is not executed; interactive behavior and API permissions have separate fixture tests"
+  ]
+}

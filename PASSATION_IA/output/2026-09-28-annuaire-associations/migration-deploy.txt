@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "at": "2026-09-28T15:36:59.582Z",
+  "database": "u668963025_maliwuli",
+  "appliedCount": 10,
+  "pending": [
+    "20260928180000_association_directory"
+  ],
+  "allAppliedChecksumsMatch": true,
+  "currentTargetsUnchanged": true
+}
+Environment variables loaded from .env
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": MySQL database "u668963025_maliwuli" at "localhost:3306"
+
+11 migrations found in prisma/migrations
+
+Applying migration `20260928180000_association_directory`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260928180000_association_directory/
+    └─ migration.sql
+      
+All migrations have been successfully applied.

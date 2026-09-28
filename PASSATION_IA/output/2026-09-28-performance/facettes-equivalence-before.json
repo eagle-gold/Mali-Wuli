@@ -1,0 +1,181 @@
+{
+  "status": "PASS",
+  "databaseWrites": 0,
+  "result": [
+    {
+      "label": "global.existing",
+      "wallMs": 1109.2,
+      "rows": 32813,
+      "bytes": 797112
+    },
+    {
+      "label": "global.binary-group",
+      "wallMs": 356.9,
+      "rows": 32813,
+      "bytes": 797121
+    },
+    {
+      "label": "global.equivalence",
+      "sameCount": true,
+      "sameMultiset": false,
+      "exactOrder": false,
+      "differentPairs": [
+        [
+          "ADMIRAL",
+          "ABERDEEN"
+        ],
+        [
+          "AGUEL HOC",
+          "ADMIRAL"
+        ],
+        [
+          "AL Kharroub",
+          "AGUEL HOC"
+        ],
+        [
+          "ALEXANDER",
+          "AL Kharroub"
+        ],
+        [
+          "ALONSA",
+          "ALAMEDA"
+        ],
+        [
+          "ALTONA",
+          "ALEXANDER"
+        ],
+        [
+          "ANEROID",
+          "ALLAN"
+        ],
+        [
+          "ANNAHEIM",
+          "ALONSA"
+        ]
+      ]
+    },
+    {
+      "label": "global.normalized-options",
+      "identical": true,
+      "variantsChanged": 140,
+      "examples": [
+        "Aberdeen",
+        "Alameda",
+        "Allan",
+        "Austin",
+        "Beauval",
+        "Bellegarde",
+        "Brandon",
+        "Burlington"
+      ]
+    },
+    {
+      "label": "ML.existing",
+      "wallMs": 165.5,
+      "rows": 5227,
+      "bytes": 113774
+    },
+    {
+      "label": "ML.binary-group",
+      "wallMs": 120.4,
+      "rows": 5227,
+      "bytes": 113774
+    },
+    {
+      "label": "ML.equivalence",
+      "sameCount": true,
+      "sameMultiset": true,
+      "exactOrder": true,
+      "differentPairs": []
+    },
+    {
+      "label": "ML.normalized-options",
+      "identical": true,
+      "variantsChanged": 0,
+      "examples": []
+    },
+    {
+      "label": "FR.existing",
+      "wallMs": 581.7,
+      "rows": 20536,
+      "bytes": 518532
+    },
+    {
+      "label": "FR.binary-group",
+      "wallMs": 238.5,
+      "rows": 20536,
+      "bytes": 518543
+    },
+    {
+      "label": "FR.equivalence",
+      "sameCount": true,
+      "sameMultiset": false,
+      "exactOrder": false,
+      "differentPairs": [
+        [
+          "Decize",
+          "Dechy"
+        ],
+        [
+          "Degré",
+          "Decize"
+        ],
+        [
+          "Dehlingen",
+          "Degré"
+        ],
+        [
+          "Delettes",
+          "Dehlingen"
+        ],
+        [
+          "Delincourt",
+          "Delettes"
+        ],
+        [
+          "Delle",
+          "Delincourt"
+        ],
+        [
+          "Delme",
+          "Delle"
+        ],
+        [
+          "Deluz",
+          "Delme"
+        ]
+      ]
+    },
+    {
+      "label": "FR.normalized-options",
+      "identical": true,
+      "variantsChanged": 30,
+      "examples": [
+        "Déchy",
+        "Echirolles",
+        "Egletons",
+        "Emerainville",
+        "Epernay",
+        "Epinay-sur-Seine",
+        "Evreux",
+        "L'Ile-Saint-Denis"
+      ]
+    },
+    {
+      "label": "countries.existing",
+      "wallMs": 279.9,
+      "rows": 200,
+      "bytes": 9119
+    },
+    {
+      "label": "countries.exists",
+      "wallMs": 62.1,
+      "rows": 200,
+      "bytes": 6519
+    },
+    {
+      "label": "countries.equivalence",
+      "identical": true
+    }
+  ]
+}

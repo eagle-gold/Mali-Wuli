@@ -1,0 +1,7 @@
+[
+  "frontend/src/components/directory/ProfilPublic.tsx",
+  "frontend/src/components/onboarding/StepFormations.tsx",
+  "frontend/src/components/profile/ProfilMembre.tsx",
+  "frontend/src/lib/education/parcours-scolaire.test.ts",
+  "frontend/src/lib/periode.ts"
+]

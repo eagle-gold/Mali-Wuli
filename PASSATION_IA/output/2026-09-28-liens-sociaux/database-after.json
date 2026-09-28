@@ -1,0 +1,216 @@
+{
+  "status": "PASS",
+  "kind": "social-links-preservation-readonly",
+  "phase": "after",
+  "at": "2026-09-28T18:50:53.652Z",
+  "release": "20260928-liens-sociaux",
+  "database": "u668963025_maliwuli",
+  "appliedCount": 15,
+  "pending": [],
+  "historicalChecksumsVerified": 14,
+  "migrationSha256": "4589bd57ab81031d583431eba8e8477d572a220d47367debc7a1c918a3fbdf0b",
+  "targets": {
+    "frontend": "versions/20260928-liens-sociaux",
+    "backend": "versions/20260928-liens-sociaux"
+  },
+  "profileColumns": [
+    {
+      "name": "id",
+      "type": "varchar(191)",
+      "nullable": "NO",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "userId",
+      "type": "varchar(191)",
+      "nullable": "NO",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "telephone",
+      "type": "varchar(191)",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "pays",
+      "type": "varchar(191)",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "ville",
+      "type": "varchar(191)",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "situation",
+      "type": "enum('etudiant','professionnel','entrepreneur','en_recherche')",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "titre",
+      "type": "varchar(191)",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "bio",
+      "type": "text",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "photo",
+      "type": "text",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "linkedin",
+      "type": "varchar(500)",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "emailVisible",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "0",
+      "collation": null,
+      "extra": ""
+    },
+    {
+      "name": "telephoneVisible",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "0",
+      "collation": null,
+      "extra": ""
+    },
+    {
+      "name": "estVolontaire",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "0",
+      "collation": null,
+      "extra": ""
+    },
+    {
+      "name": "onboardingEtape",
+      "type": "int(11)",
+      "nullable": "NO",
+      "default": "0",
+      "collation": null,
+      "extra": ""
+    },
+    {
+      "name": "onboardingFini",
+      "type": "tinyint(1)",
+      "nullable": "NO",
+      "default": "0",
+      "collation": null,
+      "extra": ""
+    },
+    {
+      "name": "createdAt",
+      "type": "datetime(3)",
+      "nullable": "NO",
+      "default": "current_timestamp(3)",
+      "collation": null,
+      "extra": ""
+    },
+    {
+      "name": "photoCouverture",
+      "type": "text",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "onboardingDonnees",
+      "type": "longtext",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_bin",
+      "extra": ""
+    },
+    {
+      "name": "facebook",
+      "type": "varchar(500)",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "instagram",
+      "type": "varchar(500)",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    },
+    {
+      "name": "tiktok",
+      "type": "varchar(500)",
+      "nullable": "YES",
+      "default": null,
+      "collation": "utf8mb4_unicode_ci",
+      "extra": ""
+    }
+  ],
+  "counts": {
+    "User": 2,
+    "UserRoleGrant": 0,
+    "Profil": 2,
+    "Formation": 9,
+    "Etablissement": 143458,
+    "Association": 0,
+    "AssociationMembre": 0,
+    "Evenement": 0,
+    "EvenementParticipant": 0,
+    "Offre": 0,
+    "OffreEnregistrement": 0,
+    "CandidatureOffre": 0,
+    "Message": 0,
+    "Conversation": 0,
+    "Publication": 1,
+    "CommentairePublication": 1,
+    "ReactionPublication": 1,
+    "EvenementPhoto": 0
+  },
+  "usersRoleFingerprint": "312e0933c6615e3fff777903dd3f561926351a947711aa27d0d899977a7fe135",
+  "roleGrantsFingerprint": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "profileLinksFingerprint": "20f3f456e13f27bf7fb1287459ccc0fdb4416ca25141b6942887cf968bf958de",
+  "profilesWithLinkedin": 0,
+  "newSocialValues": 0,
+  "preserved": true,
+  "databaseWrites": 0,
+  "limitations": [
+    "Concurrent legitimate member edits cause a strict failure requiring review; do not overwrite the baseline to hide a difference."
+  ]
+}

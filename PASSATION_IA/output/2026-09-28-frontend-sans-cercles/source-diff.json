@@ -1,0 +1,21 @@
+{
+  "modified": [
+    "next.config.js",
+    "src/app/(auth)/onboarding/page.tsx",
+    "src/app/(platform)/annuaire/page.tsx",
+    "src/app/(platform)/cercles/page.tsx",
+    "src/components/MaliWuliHeader.tsx",
+    "src/components/feed/ActualiteFeed.tsx",
+    "src/components/notifications/NotificationsPopover.tsx",
+    "src/components/onboarding/StepMentorat.tsx",
+    "src/components/profile/ProfilMembre.tsx",
+    "src/types/api.ts",
+    "src/types/index.ts",
+    "src/types/profile.ts"
+  ],
+  "added": [
+    "src/lib/notifications.ts"
+  ],
+  "removed": [],
+  "totalFiles": 76
+}

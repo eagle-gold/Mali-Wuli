@@ -1,0 +1,45 @@
+{
+  "status": "deployed-and-verified",
+  "url": "https://mali-wuli.com",
+  "release": "20260921-profile-schools-r2",
+  "frontendBuildId": "thSlHCfJFPE0_Px37_Hh6",
+  "migration": "20260921000000_school_curriculum_diplomas",
+  "databaseBackup": "backend hbuilds/backups/profile-schools-20260921/before.sql",
+  "databaseBackupBytes": 192648002,
+  "checks": {
+    "frontendRegressionTests": 9,
+    "backendRegressionTests": 7,
+    "isolatedServerHttpPrismaScenarios": 7,
+    "linuxBuilds": "passed",
+    "publicLoginRegisterHomeHeaders": "member links absent",
+    "mobilePublicMenu": "only account access",
+    "profileName": "first and last name rendered",
+    "cover": "multipart persistence, invalid MIME rejected without replacing previous image",
+    "responsiveProfileWidths": [
+      320,
+      390
+    ],
+    "fontComputed": "Source Sans 3",
+    "schoolCurriculumRace": "ML to FR immediate diploma additions use DNB and Baccalauréat général",
+    "schoolDiplomasRoundTrip": "brevet 2014 plus bac 2019 in 2012–2019 record; snapshot and relational fallback",
+    "catalogueUniqueQueries": [
+      "angelo",
+      "lutins",
+      "liber"
+    ],
+    "draftCatalogueIdentitiesUpdated": 1,
+    "temporaryQaAccountsRemaining": 0
+  },
+  "changes": [
+    "public navigation hidden before authentication",
+    "global typography",
+    "unified school and lycée with multiple diplomas",
+    "independent school curriculum",
+    "ascending chronological sorting",
+    "school insertion answers excluded",
+    "Licence year labels",
+    "first/last name profile heading",
+    "editable cover",
+    "targeted catalogue deduplication preserving sources and links"
+  ]
+}

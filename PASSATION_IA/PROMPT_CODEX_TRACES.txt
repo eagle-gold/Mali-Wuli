@@ -1,0 +1,29 @@
+Tu travailles sur le projet Mali Wuli. Un autre agent (Claude) peut reprendre après toi sans voir ta conversation : il ne connaîtra ton travail que par ce que tu laisses sur le disque. Tes traces sont donc obligatoires.
+
+AVANT DE COMMENCER
+1. Lis /Users/ibrahimakonate/Documents/ChatGPT/Mali Wuli/PASSATION_IA/JOURNAL_REPRISE.md en entier, puis LIRE_EN_PREMIER.md et les documents numérotés utiles à la demande.
+2. Si la ligne « Statut courant » indique EN COURS par un autre agent, arrête-toi et demande à l'utilisateur avant de toucher au code.
+3. Remplace la ligne « Statut courant » par : EN COURS — Codex, <date heure>, <sujet>.
+4. Ajoute en haut de « Entrées » une nouvelle entrée selon le modèle du journal, avec l'état Git au début (branche, HEAD, nombre de fichiers modifiés et non suivis dans /Users/ibrahimakonate/Documents/ChatGPT/MALI-WULI-hostinger-integration).
+
+PENDANT LE TRAVAIL
+- Mets à jour ton entrée à chaque étape significative (fichier terminé, test passé, décision de l'utilisateur), pas seulement à la fin : une session peut s'interrompre à tout moment.
+- Le champ « Arrêté à » doit toujours permettre de reprendre : étape exacte, fichier et fonction en cours, ce qui est à moitié fait.
+- Note immédiatement toute action à effet externe : déploiement (nom de version, build ID, cible « current » précédente et nouvelle), migration, import, fusion, script qui écrit en base, base visée. Écris « aucune » s'il n'y en a pas.
+- Note chaque décision de l'utilisateur, surtout si elle remplace une décision de la passation.
+- Pour un déploiement ou une vérification importante, garde les preuves dans un nouveau dossier daté /Users/ibrahimakonate/Documents/ChatGPT/Mali Wuli/output/<AAAA-MM-JJ>-<sujet>/ (verification.json court) et cite-le dans l'entrée.
+
+RÈGLES DU DÉPÔT
+- Préserve les modifications non commitées et les fichiers non suivis : pas de git reset --hard, git clean, restauration globale, stash global ni remplacement par un clone.
+- Si tu commites, fais des commits ciblés avec un message explicite, et note leur hash dans le journal. Ne pousse pas et ne déploie pas sans demande explicite de l'utilisateur.
+- Ne lance aucun import, fusion, nettoyage ou smoke qui écrit en base sans avoir vérifié ses effets et la base visée, et sans accord de l'utilisateur.
+- N'écris jamais de secret (mot de passe, .env, token, DATABASE_URL) dans le journal ni dans output/.
+- Ne modifie pas les entrées des autres agents ; ajoute une correction datée si besoin.
+
+EN FIN DE SESSION (ou si tu dois t'arrêter)
+1. Complète ton entrée : Statut (TERMINÉ ou INTERROMPU), fichiers touchés, fait et vérifié / non vérifié, arrêté à, prochaine action.
+2. Relève l'état Git final (HEAD, nombre de modifiés / non suivis) dans l'entrée.
+3. Remplace la ligne « Statut courant » par : LIBRE — dernière session terminée : Codex, <date heure>.
+4. Si une décision produit ou une procédure a changé, ajoute-le aussi dans 05_ETAT_ET_REPRISE.md en marquant l'ancienne décision comme remplacée.
+
+Travaille en français, avec des réponses courtes et concrètes.

@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "route": "/health",
+      "status": 200
+    },
+    {
+      "route": "/users/me",
+      "status": 401
+    },
+    {
+      "route": "/associations",
+      "status": 401
+    },
+    {
+      "route": "/education/etablissements",
+      "status": 401
+    },
+    {
+      "route": "/admin/roles",
+      "status": 401
+    },
+    {
+      "route": "/admin/membres",
+      "status": 401
+    },
+    {
+      "route": "/admin/inscriptions",
+      "status": 401
+    },
+    {
+      "route": "/admin/notifications",
+      "status": 401
+    },
+    {
+      "route": "/admin/signalements",
+      "status": 401
+    },
+    {
+      "route": "/offres",
+      "status": 401
+    },
+    {
+      "route": "/offres/verification-readonly",
+      "status": 401
+    },
+    {
+      "route": "/offres/verification-readonly/profil-candidature.pdf",
+      "status": 401
+    }
+  ],
+  "databaseWrites": 0,
+  "authenticatedRequests": 0,
+  "realApplications": 0,
+  "realEmails": 0
+}

@@ -1,0 +1,10 @@
+{
+  "release": "20260928-performance",
+  "files": 246,
+  "manifestSha256": "075f6f9927ef1fc5a28bf641870b3e46bfbcd2657ba283e3e2197e8b8abd28c7",
+  "releaseContractSha256": "94b319ce6325d1e0f9c5fc727b1e731d0d4da1ddc184716b44862b418b33adc8",
+  "archives": {
+    "frontend": "038d79c80f642a42a5849e548c764935b7719cd92ce5bdbbc7e8413aa1af8863",
+    "backend": "4f56f29d5c65f81c27475d5a5fbc221e4d66c80f3b4f47618452487a8050621b"
+  }
+}

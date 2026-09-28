@@ -1,0 +1,3 @@
+Browser tab: 10, Title: "Mali Wuli — Le réseau qui unit les talents du Mali", URL: "http://127.0.0.1:3006/onboarding?etape=formations".
+There has been no change in the accessibility tree.
+The focused UI element is 0 AXWebArea Mali Wuli — Le réseau qui unit les talents du Mali, URL: 127.0.0.1:3006/onboarding?etape=formations

@@ -1,0 +1,64 @@
+{
+  "status": "PASS_WITH_OPERATIONAL_NOTES",
+  "reviewedAt": "2026-09-28T16:10:35.116235+00:00",
+  "scope": "Audit local en lecture seule des scripts de publication événements et archive backend. Aucune commande SSH, sauvegarde, migration ou requête DB exécutée par cette sous-tâche.",
+  "targetDatabase": "u668963025_maliwuli",
+  "files": {
+    "build-backend.sh": {
+      "sha256": "56061ffe0b9010177794d352f249fd576382322801dfcb77df5f60f77af0fbcc",
+      "syntaxValid": true
+    },
+    "backup-before.cjs": {
+      "sha256": "6b5a954005e4c2fd153cf1158752c36f9fb7649759c71f29c9a1aae6f362bc2e",
+      "syntaxValid": true
+    },
+    "guard-migration.cjs": {
+      "sha256": "3990b2a263addba5268c0df09b1038ec552b28c63f205eb98bd612298f5a45f7",
+      "syntaxValid": true
+    },
+    "verify-events-readonly.cjs": {
+      "sha256": "175f75fef2f37bd35f5ab40e98814a2457a2f26f4d30d95fe73319518971e7f7",
+      "syntaxValid": true
+    }
+  },
+  "effects": {
+    "build-backend.sh": "Crée un nouveau dossier versionné, extrait archive, copie .env mode600, lie uploads existants, npm ci puis prisma generate + tsc. Ne modifie pas current, ne démarre pas serveur, ne migre pas DB.",
+    "backup-before.cjs": "SELECT compteurs puis mysqldump single-transaction/quick/skip-lock-tables ; écrit uniquement sauvegarde SQL gzip privée et métadonnées. Nom DB contrôlé via DATABASE_URL ; backup existant bloque écrasement.",
+    "guard-migration.cjs": "SELECT DATABASE et historique Prisma ; vérifie cible, checksums migrations déjà appliquées, seule nouvelle migration attendue, liens current encore sur associations. Aucune migration exécutée.",
+    "verify-events-readonly.cjs": "SELECT cible, colonnes/index/FK, migration/checksum et compteurs ; services purs injectés derrière Proxy read-only ; aucune route, notification, mail, upload ou HTTP."
+  },
+  "archive": {
+    "files": 87,
+    "allMatchActiveBackend": true,
+    "environmentFileIncluded": false,
+    "uploadsIncluded": false,
+    "unsafePaths": false
+  },
+  "migration": {
+    "name": "20260928190000_event_photos",
+    "sha256": "1e7e87ed7f408597b3769c0630b08dd54591131e19cb2f75ad88a68414f42c0e",
+    "archiveMatches": true,
+    "schemaMatches": true,
+    "additive": true,
+    "oldRowsPreserved": true,
+    "notes": "7 colonnes, table EvenementPhoto, indexes/FK ; aucun DELETE/DROP/UPDATE de données. MySQL DDL non transactionnel : si une étape échoue, ne pas relancer aveuglément."
+  },
+  "blockingFindings": [],
+  "operationalNotes": [
+    "Exécuter baseline du vérificateur avant migration pour les 14 tables : backup-before ne compte que 7 tables ; fournir uniquement ses métadonnées à --before produit BASELINE_MISSING pour les autres.",
+    "Le guard vérifie checksum ancien et nom pending ; pour lier aussi le fichier pending approuvé avant mutation, comparer son SHA256 au checksum audité ci-dessus. Archive locale déjà concordante.",
+    "Après sauvegarde complète réussie, vérifier gzip et hash puis guard ; utiliser prisma migrate deploy explicitement. Ne pas utiliser npm run prisma:migrate, qui correspond à migrate dev.",
+    "Après migration, vérifier le candidate avec mode post/baseline ; lire tout WARN. Sans événement/profil accessible, détail ignoré avec WARN, aucune fixture créée. Compteurs peuvent évoluer par activité tierce.",
+    "Basculer current seulement après contrôle candidate réussi ; vérifier ensuite API publiques attendues et permissions anonymes sans POST d’upload/inscription réel.",
+    "Rollback applicatif par anciens liens reste possible car migration additive ; ne pas tenter un DROP destructif pour annuler le schéma."
+  ],
+  "localChecksExecuted": [
+    "sh -n build-backend.sh",
+    "node --check (3 scripts Node)",
+    "lecture archive tar gzip et comparaison SHA256 aux 87 fichiers actifs",
+    "hash migration/schema déjà auditée"
+  ],
+  "databaseQueriesExecuted": false,
+  "sshExecuted": false,
+  "oldJournalOrOutputModified": false
+}

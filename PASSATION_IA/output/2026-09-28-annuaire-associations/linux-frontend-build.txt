@@ -1,0 +1,73 @@
+npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+
+added 423 packages, and audited 424 packages in 13s
+
+167 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+
+> mali-wuli-frontend@1.0.0 build
+> next build
+
+   ▲ Next.js 15.5.24
+   - Experiments (use with caution):
+     · cpus: 1
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 11.4s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/6) ...
+   Generating static pages (1/6) 
+   Generating static pages (2/6) 
+   Generating static pages (4/6) 
+ ✓ Generating static pages (6/6)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS  Revalidate  Expire
+┌ ƒ /                                    11.7 kB         118 kB
+├ ƒ /_not-found                            999 B         104 kB
+├ ƒ /admin                               3.63 kB         127 kB
+├ ƒ /admin/associations                  4.71 kB         128 kB
+├ ƒ /agenda                              4.71 kB         141 kB
+├ ƒ /annuaire                            6.23 kB         134 kB
+├ ƒ /api/education/institutions            144 B         103 kB
+├ ƒ /api/education/programmes              144 B         103 kB
+├ ƒ /api/education/reference               144 B         103 kB
+├ ƒ /api/locations/cities                  144 B         103 kB
+├ ○ /api/locations/countries               144 B         103 kB          1d      1y
+├ ƒ /associations/[id]                   4.93 kB         133 kB
+├ ƒ /cercles                               144 B         103 kB
+├ ƒ /dashboard                           11.1 kB         148 kB
+├ ƒ /education                           4.14 kB         128 kB
+├ ƒ /education/etablissements/[id]       4.95 kB         128 kB
+├ ƒ /evenements                          5.13 kB         138 kB
+├ ƒ /forgot-password                     1.75 kB         125 kB
+├ ƒ /login                               4.69 kB         128 kB
+├ ƒ /membres/[id]                        3.06 kB         135 kB
+├ ƒ /messages                            6.75 kB         140 kB
+├ ƒ /offres                              5.76 kB         139 kB
+├ ƒ /onboarding                          35.4 kB         160 kB
+├ ƒ /profil                              11.1 kB         139 kB
+├ ƒ /register                            1.82 kB         122 kB
+├ ƒ /register/details                    3.35 kB         123 kB
+├ ƒ /reset-password                      2.54 kB         126 kB
+├ ƒ /synergies                           4.52 kB         138 kB
+├ ƒ /verify-email                        2.25 kB         122 kB
+└ ƒ /volontaires                         5.63 kB         129 kB
++ First Load JS shared by all             103 kB
+  ├ chunks/1255-fc6c00ab2f765339.js      46.4 kB
+  ├ chunks/4bd1b696-f785427dddbba9fb.js  54.2 kB
+  └ other shared chunks (total)          1.94 kB
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+oEfW-e-0s4HeQEgov9CNS
