@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-09-28 23:00 UTC (backend restauré après incident ; publication frontend typo+perf encore à faire).
+LIBRE — dernière session : Claude, 2026-09-28 23:40 UTC (frontend typo+perf publié ; backend rétabli).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,19 @@ LIBRE — dernière session : Claude, 2026-09-28 23:00 UTC (backend restauré ap
 ```
 
 ## Entrées
+
+### 2026-09-28 23:40 UTC — Claude — Publication frontend typo+perf (lots Codex)
+- Statut : TERMINÉ
+- Demande de l'utilisateur : publier les lots typographie profil + performance de Codex.
+- Code : arbre frontend `564ace2` (contrôlé par Claude cloud), archive SHA256 `1754eb7124a4b7d8…`. Backend déjà sur l'arbre `db7ac8f` (partie serveur du lot perf) depuis `20260929-restore`.
+- Build (commandes lancées par l'utilisateur, le contrôle de permissions de la session bloquant les déploiements) : `sources/20260929-typo-perf`, npm ci + type-check + build Node 22 avec API/Socket publiques → `versions/20260929-typo-perf/nodejs`, `.env` copié en 600, 7 WebP, 0 `localhost`, BUILD_ID `PPSSBiMlSZkNPRMnYxXIh`.
+- Smoke `verify-login-fix.cjs` impossible : dans la session SSH, les connexions vers un serveur lancé à la main sur 127.0.0.1 sont refusées, y compris avec l'ancienne version → limite de l'environnement, pas de la candidate.
+- Activation : `current` `versions/20260928-liens-sociaux` → `versions/20260929-typo-perf`, `.previous-target` écrit ; restart.txt insuffisant → `kill -TERM` du seul PID 563962 (cwd liens-sociaux vérifié). Nouveau processus sur `20260929-typo-perf`.
+- Vérifié publiquement : BUILD_ID servi `PPSSBiMlSZkNPRMnYxXIh` ; `/`, `/login`, `/register`, `/dashboard`, `/profil`, `/annuaire`, `/education` = 200 ; 12 bundles de /login : 2 contiennent l'API publique, 0 localhost ; « Recevoir mon code » présent. Connexion réelle confirmée par l'utilisateur avant publication.
+- Non vérifié : QA visuelle (Playfair, navigation, mobile 320/390) sur la version publiée.
+- Retour arrière : `.previous-target` = `versions/20260928-liens-sociaux` (conservée), puis kill ciblé du nouveau processus.
+- Actions à effet externe : publication frontend ; aucune écriture en base.
+- Prochaine action : QA visuelle ; e-mails (SMTP absent) ; déplacer les uploads hors de `hbuilds/` ; nettoyer `sources/20260929-typo-perf` si l'espace/inodes redeviennent critiques.
 
 ### 2026-09-28 23:00 UTC — Claude — Rétablissement du backend
 - Statut : TERMINÉ
