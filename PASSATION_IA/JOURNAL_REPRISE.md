@@ -2,12 +2,14 @@
 
 Journal partagé entre les agents (Codex, Claude) qui travaillent sur le projet. **Lire ce fichier avant tout travail, et le mettre à jour pendant et après.** Entrées les plus récentes en haut. Ne jamais supprimer ni réécrire une ancienne entrée : ajouter une correction datée.
 
-Dépôt actif : `/Users/ibrahimakonate/Documents/ChatGPT/MALI-WULI-hostinger-integration`
+Dépôt actif : GitHub privé `https://github.com/Alienmap/mali-wuli`, branche `main` (copie locale : `/Users/ibrahimakonate/Documents/ChatGPT/MALI-WULI-hostinger-integration`, remote `prive`).
+**Depuis le 2026-09-28, ce journal fait foi dans le dépôt (`PASSATION_IA/JOURNAL_REPRISE.md`)** ; le commiter et le pousser avec chaque lot de travail. L'ancienne copie dans le dossier `Mali Wuli` n'est plus tenue à jour.
+Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-EN COURS — Claude, 2026-09-28, sauvegarde du code sur GitHub privé (Codex arrêté : plus de crédits).
+LIBRE — dernière session terminée : Claude, 2026-09-28 (sauvegarde GitHub privé).
 
 ## Modèle d'entrée
 
@@ -29,12 +31,17 @@ EN COURS — Claude, 2026-09-28, sauvegarde du code sur GitHub privé (Codex arr
 ## Entrées
 
 ### 2026-09-28 — Claude — Sauvegarde sur GitHub privé
-- Statut : EN COURS
+- Statut : TERMINÉ
 - Demande de l'utilisateur : Codex n'a plus de crédits ; créer un dépôt GitHub privé, y pousser tout le code actuel (y compris le travail non commité de Codex), pour que Claude cloud reprenne depuis GitHub + SSH.
 - Correction de l'entrée Codex du 2026-09-28 21:28 : session arrêtée par l'utilisateur (crédits épuisés), dernière étape notée 21:41 (QA navigateur sur fixtures). Publication typographie/performance NON faite (SSH non authentifié).
 - État Git au début : branche `ibrahima-catalogue-scolaire-partage`, HEAD `0d01264`, 69 modifiés / 92 non suivis.
 - Contrôles : aucun secret dans les fichiers à publier (`.env` ignorés, exemples factices, secrets de tests = fixtures) ; le remote `origin` `eagle-gold/MALI-WULI` est PUBLIC et n'est pas utilisé.
-- Actions à effet externe : création du dépôt privé et push (voir étape suivante).
+- Fait et vérifié : 4 commits (`cb17d80` backend, `271ff0a` frontend, `820f578` autres fichiers, `8e31c09` passation + preuves) ; `git status` vide ; aucun `.env` suivi. Dépôt `Alienmap/mali-wuli` créé en PRIVATE ; branches poussées : `main` (= `ibrahima-catalogue-scolaire-partage`), `ibrahima-catalogue-scolaire-partage`, `master`, `ibrahima`.
+- Preuves copiées dans `PASSATION_IA/output/` : rapports md/json/txt/png/cjs/sh/log ≤ 5 Mo, sans `staging/`, `before/`, archives `.tar.gz`/`.zip`, `.sql` ni gros exports du catalogue (restent en local dans `Mali Wuli/output/`).
+- Actions à effet externe : création du dépôt privé GitHub + push. Aucun déploiement, aucune migration, aucune base touchée.
+- Reste en attente (hérité de Codex) : publication Hostinger des lots typographie profil et performance (préparés et testés localement, jamais publiés) ; accès SSH à fournir.
+- Arrêté à : fin de la sauvegarde ; reprise possible depuis GitHub.
+- Prochaine action : Claude cloud clone `main`, lit `PASSATION_IA/LIRE_EN_PREMIER.md` et ce journal, puis reprend la publication en attente ou les pages manquantes selon la demande.
 
 ### 2026-09-28 21:28:16 CEST — Codex — Reprise des tâches en attente
 - Statut : EN COURS
