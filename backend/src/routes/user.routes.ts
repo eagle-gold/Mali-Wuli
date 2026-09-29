@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { Router, Response } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
+import { COMMENTAIRE_ACTIF, PUBLICATION_ACTIVE } from "../services/corbeille.service";
 import { roleEffectif, droitsUtilisateur, revisionDroits } from "../lib/roles";
 import { champsLiensSociaux, liensSociauxProfil, modificationsLiensSociaux, selectionLiensSociaux } from "../lib/liens-sociaux";
 import { authenticate, AuthRequest } from "../middlewares/auth.middleware";
@@ -199,8 +200,8 @@ async function lireProfilComplet(userId: string) {
       where: { statut: "ACCEPTE", OR: [{ demandeurId: profilId }, { recepteurId: profilId }] },
     }),
     prisma.rendezVous.count({ where: { volontaire: { profilId }, statut: "ACCEPTE" } }),
-    prisma.publication.count({ where: { auteurId: profilId, visible: true } }),
-    prisma.commentairePublication.count({ where: { auteurId: profilId } }),
+    prisma.publication.count({ where: { auteurId: profilId, visible: true, ...PUBLICATION_ACTIVE } }),
+    prisma.commentairePublication.count({ where: { auteurId: profilId, ...COMMENTAIRE_ACTIF, publication: PUBLICATION_ACTIVE } }),
   ]);
   const nbAvis = user.profil.formations.filter(({ avis }) => avis !== null).length;
   return {
@@ -529,7 +530,12 @@ router.get("/:id", authenticate, async (req: AuthRequest, res: Response) => {
           where: { statut: "VERIFIE", association: { valide: true } },
           select: { association: { select: { id: true, nom: true, description: true, pays: true, ville: true, vocation: true, photo: true, photoCouverture: true, site: true, dateCreation: true } } },
         },
-        _count: { select: { publications: true, commentairesPub: true } },
+        _count: {
+          select: {
+            publications: { where: { visible: true, ...PUBLICATION_ACTIVE } },
+            commentairesPub: { where: { ...COMMENTAIRE_ACTIF, publication: PUBLICATION_ACTIVE } },
+          },
+        },
       },
     });
     if (!profil) return res.status(404).json({ message: "Profil introuvable." });

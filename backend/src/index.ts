@@ -5,12 +5,14 @@ import helmet from "helmet";
 import { createServer } from "http";
 import multer from "multer";
 import { prisma } from "./lib/prisma";
-import { uploadRoot } from "./middlewares/upload.middleware";
+import { supprimerUpload, uploadRoot } from "./middlewares/upload.middleware";
+import { planifierPurgeCorbeille } from "./services/corbeille.service";
 import { initialiserSocket } from "./realtime/socket";
 import adminRoutes from "./routes/admin.routes";
 import associationRoutes, { onboardingAssociationsRouter } from "./routes/association.routes";
 import authRoutes from "./routes/auth.routes";
 import cercleRoutes from "./routes/cercle.routes";
+import corbeilleRoutes from "./routes/corbeille.routes";
 import educationRoutes from "./routes/education.routes";
 import evenementRoutes from "./routes/evenement.routes";
 import messageRoutes from "./routes/message.routes";
@@ -18,6 +20,7 @@ import notificationRoutes from "./routes/notification.routes";
 import offreRoutes from "./routes/offre.routes";
 import onboardingRoutes from "./routes/onboarding.routes";
 import publicationRoutes from "./routes/publication.routes";
+import signalementRoutes from "./routes/signalement.routes";
 import synergieRoutes from "./routes/synergie.routes";
 import userRoutes from "./routes/user.routes";
 import volontaireRoutes from "./routes/volontaire.routes";
@@ -70,6 +73,8 @@ app.use("/api/synergies", synergieRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/publications", publicationRoutes);
+app.use("/api/corbeille", corbeilleRoutes);
+app.use("/api/signalements", signalementRoutes);
 app.use("/api/cercles", cercleRoutes);
 app.use("/api/volontaires", volontaireRoutes);
 app.use("/api/evenements", evenementRoutes);
@@ -134,7 +139,12 @@ if (process.env.NODE_ENV !== "test") {
   });
 }
 
+// Corbeille : purge au démarrage puis toutes les 24 h (non bloquant, erreurs journalisées).
+// Désactivable avec CORBEILLE_PURGE_DISABLED=true (tests, maintenance).
+const arreterPurgeCorbeille = planifierPurgeCorbeille(prisma, supprimerUpload);
+
 async function arreter() {
+  arreterPurgeCorbeille?.();
   io.close();
   httpServer.close();
   await prisma.$disconnect();

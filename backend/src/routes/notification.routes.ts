@@ -2,6 +2,7 @@ import { Router, Response } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import { authenticate, AuthRequest } from "../middlewares/auth.middleware";
+import { filtrerNotificationsContenuSupprime } from "../services/corbeille.service";
 
 const router = Router();
 
@@ -53,7 +54,8 @@ router.get("/", authenticate, async (req: AuthRequest, res: Response) => {
     const hasMore = notifications.length > query.data.limite;
     const donnees = hasMore ? notifications.slice(0, query.data.limite) : notifications;
     return res.json({
-      notifications: donnees,
+      // Masque les notifications liées à une publication/un commentaire en corbeille ou effacé.
+      notifications: await filtrerNotificationsContenuSupprime(prisma, donnees),
       nonLues,
       hasMore,
       nextCursor: hasMore ? donnees[donnees.length - 1]?.id ?? null : null,

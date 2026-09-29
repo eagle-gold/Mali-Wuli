@@ -12,6 +12,7 @@ import {
 import { obtenirSocket } from "../realtime/socket";
 import { creerNotification, creerNotifications } from "../services/notification.service";
 
+import { COMMENTAIRE_ACTIF, marquerNotificationsContenuSupprime, PUBLICATION_ACTIVE } from "../services/corbeille.service";
 import { creerServiceSuppressionsPublications, ErreurSuppressionPublication, peutSupprimerPublication, peutSupprimerCommentaire, type ActeurPublication } from "../services/publication-suppression.service";
 
 /** Injection limitée aux effets et à Prisma pour des tests sans base/fichiers/socket. */
@@ -42,6 +43,7 @@ const COMMENTAIRE_SELECT = {
   createdAt: true,
   auteur: { select: AUTEUR_SELECT },
   reponses: {
+    where: { deletedAt: null },
     orderBy: { createdAt: "asc" as const },
     select: {
       id: true,
@@ -77,12 +79,12 @@ const PUBLICATION_SELECT = {
   auteur: { select: AUTEUR_SELECT },
   reactions: { select: { auteurId: true, type: true } },
   commentaires: {
-    where: { parentId: null },
+    where: { parentId: null, deletedAt: null },
     orderBy: { createdAt: "asc" as const },
     take: 3,
     select: COMMENTAIRE_SELECT,
   },
-  _count: { select: { commentaires: true } },
+  _count: { select: { commentaires: { where: COMMENTAIRE_ACTIF } } },
 } as const;
 
 type PublicationComplete = Prisma.PublicationGetPayload<{ select: typeof PUBLICATION_SELECT }>;
@@ -221,6 +223,7 @@ router.get("/", authenticate, async (req: AuthRequest, res: Response) => {
 
     const filtre: Prisma.PublicationWhereInput = {
       visible: true,
+      ...PUBLICATION_ACTIVE,
       OR: [{ auteurId: profil.id }, { auteur: { user: { statut: "VALIDE" } } }],
     };
 
@@ -337,7 +340,7 @@ router.get("/profil/:profilId", authenticate, async (req: AuthRequest, res: Resp
     const moi = await profilDe(req.userId);
     if (!moi) return res.status(404).json({ message: "Profil introuvable." });
     const publications = await db.publication.findMany({
-      where: { auteurId: profilId.data, visible: true },
+      where: { auteurId: profilId.data, visible: true, ...PUBLICATION_ACTIVE },
       orderBy: [{ createdAt: "desc" }, { id: "desc" }],
       take: 30,
       select: PUBLICATION_SELECT,
@@ -355,13 +358,19 @@ router.delete("/:id", authenticate, async (req: AuthRequest, res: Response) => {
   try {
     const profil = await profilDe(req.userId);
     if (!profil) return res.status(404).json({ message: "Profil introuvable." });
-    const photo = await suppressions.supprimer(id.data, { profilId: profil.id, permissions: req.permissions || [] });
-    try { retirerMedia(photo); } catch { console.error("[publications] Nettoyage média après suppression différé."); }
+    // Suppression logique : le média reste en place jusqu'à la purge de la corbeille (30 jours).
+    const suppression = await suppressions.supprimer(id.data, { profilId: profil.id, permissions: req.permissions || [] });
+    lancerNotification(marquerNotificationsContenuSupprime(db, "publicationId", id.data), "notifications d'une publication supprimée");
     try {
       socket()?.emit("publication_supprimee", { publicationId: id.data });
       socket()?.emit("publication:deleted", { publicationId: id.data });
     } catch { console.error("[publications] Diffusion de la suppression différée."); }
-    return res.json({ message: "Publication supprimée." });
+    return res.json({
+      message: suppression.parAuteur
+        ? "Publication placée dans la corbeille. Vous pouvez la restaurer pendant 30 jours."
+        : "Publication retirée.",
+      corbeille: suppression.parAuteur,
+    });
   } catch (error) {
     if (error instanceof ErreurSuppressionPublication) return res.status(error.statut).json({ message: error.message });
     if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === "P2025") return res.status(404).json({ message: "Publication introuvable." });
@@ -379,7 +388,7 @@ router.patch("/:id", authenticate, async (req: AuthRequest, res: Response) => {
     const profil = await profilDe(req.userId);
     if (!profil) return res.status(404).json({ message: "Profil introuvable." });
     const publication = await db.publication.findFirst({
-      where: { id: id.data, visible: true },
+      where: { id: id.data, visible: true, ...PUBLICATION_ACTIVE },
       select: { id: true, auteurId: true, photoUrl: true, lienUrl: true },
     });
     if (!publication) return res.status(404).json({ message: "Publication introuvable." });
@@ -413,7 +422,7 @@ router.post("/:id/reactions", authenticate, async (req: AuthRequest, res: Respon
     const profil = await profilDe(req.userId);
     if (!profil) return res.status(404).json({ message: "Profil introuvable." });
     const publication = await db.publication.findFirst({
-      where: { id: id.data, visible: true },
+      where: { id: id.data, visible: true, ...PUBLICATION_ACTIVE },
       select: { id: true, auteurId: true, thematique: true },
     });
     if (!publication) return res.status(404).json({ message: "Publication introuvable." });
@@ -474,7 +483,7 @@ router.get("/:id/supporters", authenticate, async (req: AuthRequest, res: Respon
 
   try {
     const publication = await db.publication.findFirst({
-      where: { id: id.data, visible: true },
+      where: { id: id.data, visible: true, ...PUBLICATION_ACTIVE },
       select: { id: true },
     });
     if (!publication) return res.status(404).json({ message: "Publication introuvable." });
@@ -516,7 +525,7 @@ router.get("/:id/reactions", authenticate, async (req: AuthRequest, res: Respons
   if (!id.success || !query.success) return res.status(400).json({ message: "Paramètres invalides." });
   try {
     const publication = await db.publication.findFirst({
-      where: { id: id.data, visible: true },
+      where: { id: id.data, visible: true, ...PUBLICATION_ACTIVE },
       select: { id: true },
     });
     if (!publication) return res.status(404).json({ message: "Publication introuvable." });
@@ -564,10 +573,10 @@ router.get("/:id/commentaires", authenticate, async (req: AuthRequest, res: Resp
   try {
     const profil = await profilDe(req.userId);
     if (!profil) return res.status(404).json({ message: "Profil introuvable." });
-    const publication = await db.publication.findFirst({ where: { id: id.data, visible: true }, select: { id: true, auteurId: true } });
+    const publication = await db.publication.findFirst({ where: { id: id.data, visible: true, ...PUBLICATION_ACTIVE }, select: { id: true, auteurId: true } });
     if (!publication) return res.status(404).json({ message: "Publication introuvable." });
     const commentaires = await db.commentairePublication.findMany({
-      where: { publicationId: id.data },
+      where: { publicationId: id.data, ...COMMENTAIRE_ACTIF },
       orderBy: [{ createdAt: "asc" }, { id: "asc" }],
       select: COMMENTAIRE_PLAT_SELECT,
     });
@@ -589,7 +598,7 @@ router.post("/:id/commentaires", authenticate, async (req: AuthRequest, res: Res
     const profil = await profilDe(req.userId);
     if (!profil) return res.status(404).json({ message: "Profil introuvable." });
     const publication = await db.publication.findFirst({
-      where: { id: id.data, visible: true },
+      where: { id: id.data, visible: true, ...PUBLICATION_ACTIVE },
       select: { id: true, auteurId: true, thematique: true },
     });
     if (!publication) return res.status(404).json({ message: "Publication introuvable." });
@@ -599,7 +608,7 @@ router.post("/:id/commentaires", authenticate, async (req: AuthRequest, res: Res
       parent = await db.commentairePublication.findFirst({
         // Une réponse ne peut viser qu'un commentaire racine. Cela maintient
         // un fil lisible et borne l'arbre à deux niveaux.
-        where: { id: donnees.data.parentId, publicationId: id.data, parentId: null },
+        where: { id: donnees.data.parentId, publicationId: id.data, parentId: null, deletedAt: null },
         select: { id: true, auteurId: true },
       });
       if (!parent) return res.status(400).json({ message: "Commentaire parent invalide." });
@@ -615,7 +624,7 @@ router.post("/:id/commentaires", authenticate, async (req: AuthRequest, res: Res
       select: COMMENTAIRE_SELECT,
     });
     const nbCommentaires = await db.commentairePublication.count({
-      where: { publicationId: id.data },
+      where: { publicationId: id.data, ...COMMENTAIRE_ACTIF },
     });
     const payload = { publicationId: id.data, commentaire, nbCommentaires };
     socket()?.emit("nouveau_commentaire", payload);
@@ -653,7 +662,7 @@ router.patch("/:id/commentaires/:commentaireId", authenticate, async (req: AuthR
     const profil = await profilDe(req.userId);
     if (!profil) return res.status(404).json({ message: "Profil introuvable." });
     const commentaire = await db.commentairePublication.findFirst({
-      where: { id: params.data.commentaireId, publicationId: params.data.id },
+      where: { id: params.data.commentaireId, publicationId: params.data.id, ...COMMENTAIRE_ACTIF, publication: PUBLICATION_ACTIVE },
       select: { id: true, auteurId: true, publication: { select: { auteurId: true } } },
     });
     if (!commentaire) return res.status(404).json({ message: "Commentaire introuvable." });
@@ -684,6 +693,7 @@ router.delete("/:id/commentaires/:commentaireId", authenticate, async (req: Auth
     const profil = await profilDe(req.userId);
     if (!profil) return res.status(404).json({ message: "Profil introuvable." });
     const nbCommentaires = await suppressions.supprimerCommentaire(params.data.id, params.data.commentaireId, { profilId: profil.id, permissions: req.permissions || [] });
+    lancerNotification(marquerNotificationsContenuSupprime(db, "commentaireId", params.data.commentaireId), "notifications d'un commentaire supprimé");
     try {
     socket()?.emit("commentaire_supprime", {
       publicationId: params.data.id,

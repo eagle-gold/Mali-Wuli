@@ -8,6 +8,8 @@ import { authenticate, requireRole, requirePermission, type AuthRequest } from "
 import { revoquerSocketsUtilisateur } from "../realtime/socket";
 import { envoyerEmail } from "../services/email.service";
 import { EMAIL_ADMIN_PRINCIPAL, roleEffectif, droitsUtilisateur } from "../lib/roles";
+import { COMMENTAIRE_ACTIF, PUBLICATION_ACTIVE } from "../services/corbeille.service";
+import { creerServiceSignalements, ErreurSignalement, filtresSignalementsSchema, traitementSignalementSchema, type ServiceSignalements } from "../services/signalement.service";
 import { creerServiceGestionMembres, ErreurGestionMembres, filtresMembres, changementRolesSchema, changementStatutSchema, type ServiceGestionMembres } from "../services/admin-membres.service";
 
 const gestionProduction = creerServiceGestionMembres(prisma, {
@@ -17,8 +19,9 @@ const gestionProduction = creerServiceGestionMembres(prisma, {
     return envoyerEmail({ destinataire: user.email, sujet: valide ? "Votre profil Mali Wuli est validé" : "Mise à jour de votre inscription Mali Wuli", texte, html: `<h1>Mali Wuli</h1><p>${texte.replace(/[<>&]/g, "")}</p>` });
   },
 });
-export function creerRouteurAdmin(gestion: ServiceGestionMembres = gestionProduction) {
+export function creerRouteurAdmin(gestion: ServiceGestionMembres = gestionProduction, options: { signalements?: ServiceSignalements } = {}) {
 const router = Router();
+const signalements = options.signalements || creerServiceSignalements(prisma);
 function traiter(fn: (req: AuthRequest, res: import("express").Response) => Promise<unknown>) {
   return async (req: AuthRequest, res: import("express").Response) => {
     try { return await fn(req, res); }
@@ -111,26 +114,28 @@ router.put("/inscriptions/:id/refuser", ...inscriptionsModerators, traiter(async
 }));
 
 // Le modérateur global traite le contenu et le catalogue. Les rôles et statistiques restent réservés au propriétaire.
-router.get("/signalements", ...signalementsModerators, async (_req, res) => {
+router.get("/signalements", ...signalementsModerators, async (req, res) => {
+  const filtres = filtresSignalementsSchema.safeParse(req.query);
+  if (!filtres.success) return res.status(400).json({ message: "Filtres invalides." });
   try {
-    const signalements = await prisma.signalement.findMany({
-      orderBy: { createdAt: "desc" },
-      take: 200,
-      select: {
-        id: true,
-        cibleType: true,
-        cibleId: true,
-        motif: true,
-        createdAt: true,
-        signaleur: {
-          select: { id: true, user: { select: { prenom: true, nom: true } } },
-        },
-      },
-    });
-    return res.json({ signalements });
+    return res.json(await signalements.lister(filtres.data));
   } catch (error) {
     console.error("[GET /admin/signalements]", error);
     return res.status(500).json({ message: "Impossible de charger les signalements." });
+  }
+});
+
+// Traiter = consulter : la même permission couvre la prise en charge et la clôture.
+router.put("/signalements/:id", ...signalementsModerators, async (req: AuthRequest, res) => {
+  const id = z.string().trim().min(1).max(191).safeParse(req.params.id);
+  const donnees = traitementSignalementSchema.safeParse(req.body);
+  if (!id.success || !donnees.success) return res.status(400).json({ message: "Décision invalide." });
+  try {
+    return res.json(await signalements.traiter(id.data, req.userId!, donnees.data));
+  } catch (error) {
+    if (error instanceof ErreurSignalement) return res.status(error.statut).json({ message: error.message });
+    console.error("[PUT /admin/signalements/:id]", error);
+    return res.status(500).json({ message: "Impossible de traiter ce signalement." });
   }
 });
 
@@ -139,8 +144,8 @@ router.get("/stats", ...adminOnly, async (_req, res) => {
     const [membres, enAttente, publications, commentaires, messages, synergies, rendezVous] = await Promise.all([
       prisma.user.count({ where: { statut: "VALIDE" } }),
       prisma.user.count({ where: { statut: "EN_ATTENTE" } }),
-      prisma.publication.count({ where: { visible: true } }),
-      prisma.commentairePublication.count(),
+      prisma.publication.count({ where: { visible: true, ...PUBLICATION_ACTIVE } }),
+      prisma.commentairePublication.count({ where: { ...COMMENTAIRE_ACTIF, publication: PUBLICATION_ACTIVE } }),
       prisma.message.count(),
       prisma.synergie.count({ where: { statut: "ACCEPTE" } }),
       prisma.rendezVous.count(),

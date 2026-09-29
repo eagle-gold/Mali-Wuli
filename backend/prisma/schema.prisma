@@ -1014,6 +1014,10 @@ model Publication {
   lienImage    String?                  @db.Text
   epingle      Boolean                  @default(false)
   visible      Boolean                  @default(true)
+  // Corbeille : suppression logique, effacement définitif après 30 jours.
+  deletedAt    DateTime?
+  // Profil.id de la personne qui a supprimé (auteur ou modération), sans FK.
+  deletedById  String?
   reactions    ReactionPublication[]
   commentaires CommentairePublication[]
   createdAt    DateTime                 @default(now())
@@ -1022,6 +1026,8 @@ model Publication {
   @@index([auteurId, createdAt])
   @@index([intention, thematique, createdAt])
   @@index([visible, createdAt])
+  @@index([deletedAt])
+  @@index([auteurId, deletedAt])
 }
 
 model ReactionPublication {
@@ -1048,11 +1054,17 @@ model CommentairePublication {
   parentId      String?
   parent        CommentairePublication?  @relation("ReponsesCommentaire", fields: [parentId], references: [id], onDelete: Cascade)
   reponses      CommentairePublication[] @relation("ReponsesCommentaire")
+  // Corbeille : suppression logique, effacement définitif après 30 jours.
+  deletedAt     DateTime?
+  // Profil.id de la personne qui a supprimé (auteur, auteur du post ou modération), sans FK.
+  deletedById   String?
   createdAt     DateTime                 @default(now())
 
   @@index([publicationId, createdAt])
   @@index([auteurId])
   @@index([parentId])
+  @@index([deletedAt])
+  @@index([auteurId, deletedAt])
 }
 
 // =============================================
@@ -1072,6 +1084,7 @@ enum TypeNotification {
   EVENEMENT
   OFFRE
   CERCLE
+  SIGNALEMENT
 }
 
 model Notification {
@@ -1097,16 +1110,35 @@ model Notification {
 // SIGNALEMENTS
 // =============================================
 
+enum StatutSignalement {
+  EN_ATTENTE
+  EN_COURS
+  TRAITE
+  REJETE
+}
+
 model Signalement {
-  id          String   @id @default(cuid())
+  id          String            @id @default(cuid())
   signaleurId String
-  signaleur   Profil   @relation(fields: [signaleurId], references: [id])
+  signaleur   Profil            @relation(fields: [signaleurId], references: [id])
+  // PUBLICATION, COMMENTAIRE, PROFIL, ASSOCIATION, ETABLISSEMENT, EVENEMENT, OFFRE, MESSAGE (contrôlé par le serveur).
   cibleType   String
   cibleId     String
+  // SPAM, HARCELEMENT, CONTENU_INAPPROPRIE, FAUSSE_INFORMATION, USURPATION, AUTRE (contrôlé par le serveur).
   motif       String
-  traite      Boolean  @default(false)
-  noteInterne String?
-  createdAt   DateTime @default(now())
+  details     String?           @db.Text
+  statut      StatutSignalement @default(EN_ATTENTE)
+  // Compatibilité : vrai si et seulement si statut ∈ {TRAITE, REJETE}.
+  traite      Boolean           @default(false)
+  noteInterne String?           @db.Text
+  // User.id de la personne qui a pris en charge ou clos le signalement, sans FK.
+  traiteParId String?
+  traiteLe    DateTime?
+  createdAt   DateTime          @default(now())
+
+  @@index([statut, createdAt])
+  @@index([cibleType, cibleId])
+  @@index([signaleurId, createdAt])
 }
 
 // =============================================
