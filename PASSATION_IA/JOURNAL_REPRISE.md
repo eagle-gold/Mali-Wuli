@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-09-29 (ville = chef-lieu de région au Mali : plan, migration écrite, script, imports, API, interface ; rien d'appliqué ni commité).
+LIBRE — dernière session : Claude, 2026-09-29 (villes Mali = chef-lieu de région, publié).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,16 @@ LIBRE — dernière session : Claude, 2026-09-29 (ville = chef-lieu de région a
 ```
 
 ## Entrées
+
+### 2026-09-29 — Claude — Publication « ville = chef-lieu de région » (Mali)
+- Statut : TERMINÉ (accord explicite du propriétaire : « go », règle chef-lieu de région choisie).
+- Code : `29b68ad` + `395d796` (communeCode VARCHAR(64) : codes provisoires MEN 2023 jusqu'à 27 caractères).
+- Sauvegarde : `~/private-backups/20260929-villes/before.sql.gz` (31 583 612 o, SHA256 24f47b96…, « Dump completed »).
+- Migration `20260929120000_etablissement_localisation` appliquée depuis `versions/20260929-villes2` (après `chmod +x` du schema-engine) : 17 migrations, schéma à jour.
+- Plan `plan-villes-region.json` : simulation 19 527 / 0 échec, puis `--apply` 19 527 appliquées, 0 ignorée. Mali : 10 chefs-lieux (Sikasso 4 236, Ségou 3 168, Koulikoro 2 905, Mopti 2 712, Bamako 2 090, Kayes 1 904, Tombouctou 1 145, Gao 863, Ménaka 373, Kidal 135) + 137 valeurs des 193 fiches BASSE non appliquées ; commune renseignée 19 485, localité 7 655. Journaux : `simulation.json`, `application.json`.
+- Déploiement : backend `20260929-c1` → `20260929-villes2`, frontend `20260929-c1` → `20260929-villes` (BUILD_ID `R_lT-vC_y3-9aXkHfbNjA`). `versions/20260929-villes` backend (non activé, communeCode 24) est obsolète.
+- Vérifié : santé API/base, pages 200, recherche renvoie commune/cercle/région.
+- Restes : 193 BASSE (136 ont une région unique, applicables « ville seule » sur décision) ; 22 communes MEN 2023 à vérifier (Ménaka) ; régions 2023 non utilisées (sources en découpage OCHA) ; plans de fusion antérieurs caducs ; `normalize-mali-establishment-cities.ts`, Wikidata et suggestions libres suivent l'ancienne règle.
 
 ### 2026-09-29 09:30 CEST — Claude — Ville = chef-lieu de région (Mali) : plan, migration, script, imports, API, interface
 - Statut : TERMINÉ
