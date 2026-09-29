@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-09-29 (lot B publié).
+LIBRE — dernière session : Claude, 2026-09-29 00:40 UTC (lot C1 publié, 6 doublons fusionnés ; plan des cycles en préparation).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,18 @@ LIBRE — dernière session : Claude, 2026-09-29 (lot B publié).
 ```
 
 ## Entrées
+
+### 2026-09-29 00:40 UTC — Claude — Typographie, lot C1 (signalements + corbeille), fusion de 6 doublons
+- Statut : TERMINÉ
+- Déploiements (désormais lancés par Claude : règle SSH autorisée dans les réglages utilisateur) :
+  - Frontend `20260929-typo2` (`a216e3e`, BUILD_ID `MfMir3AKBbZfokSlfY-l1`) : `.titre-section`/`.titre-element`, **tailwind.config pointe vers `--font-playfair`/`--font-inter`** (avant, les classes Tailwind retombaient sur une police système), accueil public passé en Playfair/Inter.
+  - Lot C1 backend + frontend `20260929-c1` (`e22d1ae`, `c849727`, BUILD_ID `rfHLB12dLYGAzO7O6-R0i`) : signalements (POST /api/signalements, admin GET/PUT /admin/signalements, notification au signaleur), corbeille 30 jours (suppression logique `deletedAt`, /api/corbeille, purge quotidienne), interfaces Signaler / Corbeille / Admin signalements.
+- Sauvegarde avant migration : `~/private-backups/20260929-c1/before.sql.gz` (31 534 360 o, 192 659 422 o décompressés, SHA256 259732b7…, « Dump completed »).
+- Migration `20260929100000_signalements_corbeille` appliquée via `node node_modules/prisma/build/index.js migrate deploy` (16 migrations, schéma à jour).
+- Catalogue : plan de dédoublonnage Mali (lecture seule) → seulement 5 groupes SURE sur 900 ; la plupart = cycles distincts du registre MEN (codes officiels). Appliqué avec accord du propriétaire : 5 SURE + « Complexe Scolaire Mali Univers » (canonique `ml-complexe-scolaire-mali-univers`, garde sa formation, 4 sources). Simulation puis `--apply` ; 6 fiches désactivées (141 941 → 141 935 actifs). Journaux : `~/private-backups/20260929-c1/dedup/{simulation,application}.json`, plan appliqué `PASSATION_IA/output/2026-09-29-dedup-mali/plan-applique-29-09.json`.
+- Décision du propriétaire : les cycles (1er/2nd/CDPE) d'une même école doivent être fusionnés en une fiche (codes officiels conservés comme sources) → plan-cycles en préparation, application après accord.
+- Dépôt `eagle-gold/MALI-WULI` (public) : l'utilisateur veut y pousser tout, **après passage en privé par son propriétaire** ; ne rien y pousser tant qu'il est public.
+- Règles choisies par défaut (à confirmer par l'utilisateur) : contenu retiré par la modération non restaurable par l'auteur ; traiter un signalement ne retire pas le contenu sans la case dédiée ; 20 signalements / 24 h.
 
 ### 2026-09-29 — Claude — Lot A (serveur) + lot B (interface) publiés
 - Statut : TERMINÉ
