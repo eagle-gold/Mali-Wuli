@@ -1,7 +1,8 @@
 import "dotenv/config";
 import fs from "node:fs";
 import path from "node:path";
-import { Prisma, PrismaClient } from "@prisma/client";
+import { NiveauEducation, Prisma, PrismaClient } from "@prisma/client";
+import { normaliserEducation } from "../education/catalog-service";
 import { fusionnerEtablissementsDansTransaction } from "../education/deduplication-etablissements";
 
 /**
@@ -21,6 +22,15 @@ import { fusionnerEtablissementsDansTransaction } from "../education/deduplicati
  * depuis l’extraction (updatedAt, valide, nom/ville normalisés, pays).
  * Seuls les groupes de classe SURE sont traités.
  *
+ * Plan « cycles » (plan-cycles.json, sousCategorie CYCLES) : les fiches d’un
+ * groupe n’ont pas le même nomNormalise (« X 1er cycle » / « X 2nd cycle ») ;
+ * chaque fiche du plan porte alors son propre nomNormalise/villeNormalisee,
+ * contrôlés à la place de ceux du groupe. miseAJourCanonique peut en plus
+ * renommer le canonique (nom + nomNormalise, ancien libellé conservé en
+ * EtablissementAlias) et ajouter des niveaux. Garde-fous du renommage : groupe
+ * CYCLES uniquement, nomNormalise = normaliserEducation(nom), et chaque mot du
+ * nouveau nom présent dans un nom du groupe (sauf « école », « de », « d »).
+ *
  * Options : --plan <fichier> --journal <fichier> --limit N --apply
  * Exemple : tsx src/scripts/fusion-doublons-plan.ts --limit 1
  */
@@ -28,15 +38,22 @@ import { fusionnerEtablissementsDansTransaction } from "../education/deduplicati
 const DUREE_VALIDITE_MS = 24 * 60 * 60 * 1000;
 const PLAN_PAR_DEFAUT = path.resolve(__dirname, "../../../PASSATION_IA/output/2026-09-29-dedup-mali/plan.json");
 
-type FichePlan = { id: string; nom: string; updatedAt: string };
+type FichePlan = { id: string; nom: string; updatedAt: string; nomNormalise?: string; villeNormalisee?: string };
 type GroupePlan = {
   cle: string;
   nomNormalise: string;
   villeNormalisee: string;
   classe: "SURE" | "A_VERIFIER";
+  sousCategorie?: string | null;
   canoniqueId: string | null;
   fusionnesIds: string[];
-  miseAJourCanonique?: { statut?: "PUBLIC" | "PRIVE"; sigle?: string } | null;
+  miseAJourCanonique?: {
+    statut?: "PUBLIC" | "PRIVE";
+    sigle?: string;
+    nom?: string;
+    nomNormalise?: string;
+    niveaux?: NiveauEducation[];
+  } | null;
   fiches: FichePlan[];
 };
 type Plan = { version: number; extraitLe: string; groupes: GroupePlan[] };
@@ -118,12 +135,48 @@ async function compteurs(ids: string[]) {
   return resultat;
 }
 
+const NIVEAUX_VALIDES = new Set<string>(Object.values(NiveauEducation));
+const MOTS_AJOUTABLES = new Set(["ecole", "de", "d"]);
+
+/**
+ * Garde-fous du renommage (plan « cycles ») : renvoie un message d’erreur ou null.
+ * Le nouveau nom ne peut que retirer des marqueurs de cycle, changer la casse
+ * ou ajouter « École de/d’ » : aucun mot absent des noms du groupe.
+ */
+function controlerRenommage(groupe: GroupePlan) {
+  const maj = groupe.miseAJourCanonique;
+  if (!maj || (maj.nom === undefined && maj.nomNormalise === undefined)) return null;
+  if (groupe.sousCategorie !== "CYCLES") return "renommage réservé aux groupes de sousCategorie CYCLES";
+  if (typeof maj.nom !== "string" || typeof maj.nomNormalise !== "string") return "nom et nomNormalise doivent être fournis ensemble";
+  const nom = maj.nom;
+  if (!nom || nom !== nom.trim() || /\s{2}/.test(nom) || nom.length > 191) return `nom proposé invalide « ${nom} »`;
+  if (normaliserEducation(nom) !== maj.nomNormalise) return `nomNormalise « ${maj.nomNormalise} » ≠ normaliserEducation(nom) « ${normaliserEducation(nom)} »`;
+  if (!maj.nomNormalise) return "nomNormalise vide";
+  const motsGroupe = new Set(groupe.fiches.flatMap((fiche) => [
+    ...normaliserEducation(fiche.nom).split(" "),
+    ...(fiche.nomNormalise ?? "").split(" "),
+  ]));
+  const motsInconnus = maj.nomNormalise.split(" ").filter((mot) => !motsGroupe.has(mot) && !MOTS_AJOUTABLES.has(mot));
+  if (motsInconnus.length) return `nom proposé avec des mots absents du groupe : ${motsInconnus.join(", ")}`;
+  return null;
+}
+
+function controlerNiveaux(groupe: GroupePlan) {
+  const niveaux = groupe.miseAJourCanonique?.niveaux;
+  if (niveaux === undefined) return null;
+  if (!Array.isArray(niveaux) || niveaux.some((niveau) => !NIVEAUX_VALIDES.has(niveau))) return `niveaux invalides : ${JSON.stringify(niveaux)}`;
+  return null;
+}
+
 /** Vérifie qu’une fiche n’a pas bougé depuis l’extraction du plan. */
 function controlerFiche(groupe: GroupePlan, fiche: FichePlan, base: { updatedAt: Date; valide: boolean; paysCode: string; nomNormalise: string; villeNormalisee: string } | undefined) {
   if (!base) return `fiche ${fiche.id} introuvable`;
   if (base.paysCode !== "ML") return `fiche ${fiche.id} : pays ${base.paysCode}`;
   if (!base.valide) return `fiche ${fiche.id} déjà invalide`;
-  if (base.nomNormalise !== groupe.nomNormalise || base.villeNormalisee !== groupe.villeNormalisee) return `fiche ${fiche.id} : nom ou ville modifiés`;
+  // Plan « cycles » : chaque fiche porte son propre nom normalisé (« X 1er cycle », « X 2nd cycle »).
+  const nomAttendu = fiche.nomNormalise ?? groupe.nomNormalise;
+  const villeAttendue = fiche.villeNormalisee ?? groupe.villeNormalisee;
+  if (base.nomNormalise !== nomAttendu || base.villeNormalisee !== villeAttendue) return `fiche ${fiche.id} : nom ou ville modifiés`;
   if (base.updatedAt.getTime() !== new Date(fiche.updatedAt).getTime()) {
     return `fiche ${fiche.id} modifiée depuis le plan (${base.updatedAt.toISOString()} ≠ ${fiche.updatedAt})`;
   }
@@ -145,6 +198,8 @@ async function main() {
       || groupe.fusionnesIds.some((id) => !ids.includes(id) || id === groupe.canoniqueId)) {
       throw new Error(`Plan incohérent pour le groupe ${groupe.cle}.`);
     }
+    const erreurMiseAJour = controlerRenommage(groupe) ?? controlerNiveaux(groupe);
+    if (erreurMiseAJour) throw new Error(`Plan refusé pour le groupe ${groupe.cle} : ${erreurMiseAJour}.`);
   }
   const tousIds = groupesSurs.flatMap((groupe) => [groupe.canoniqueId as string, ...groupe.fusionnesIds]);
   if (new Set(tousIds).size !== tousIds.length) throw new Error("Plan refusé : une fiche apparaît dans plusieurs groupes.");
@@ -191,7 +246,8 @@ async function main() {
   for (const groupe of selection) {
     const canoniqueId = groupe.canoniqueId as string;
     const anciens = groupe.fusionnesIds;
-    const nomCanonique = base.get(canoniqueId)?.nom ?? canoniqueId;
+    // Libellé recopié dans les snapshots : le nouveau nom si le plan renomme le canonique.
+    const nomCanonique = groupe.miseAJourCanonique?.nom ?? base.get(canoniqueId)?.nom ?? canoniqueId;
     const correspondances = new Map(anciens.map((id) => [id, canoniqueId]));
     const entree: EntreeJournal = {
       cle: groupe.cle, canoniqueId, fusionnesIds: anciens, statut: "simule",
@@ -255,7 +311,17 @@ async function main() {
     const miseAJour: Prisma.EtablissementUpdateInput = {};
     if (groupe.miseAJourCanonique?.statut && ficheCanonique?.statut === "INCONNU") miseAJour.statut = groupe.miseAJourCanonique.statut;
     if (groupe.miseAJourCanonique?.sigle && !ficheCanonique?.sigle) miseAJour.sigle = groupe.miseAJourCanonique.sigle;
-    entree.miseAJourCanonique = Object.keys(miseAJour).length ? { ...miseAJour } : null;
+    // Renommage (plan « cycles ») : l’ancien libellé du canonique devient un alias.
+    const ancienNomCanonique = ficheCanonique ? { nom: ficheCanonique.nom, nomNormalise: ficheCanonique.nomNormalise } : null;
+    const renommage = groupe.miseAJourCanonique?.nom && groupe.miseAJourCanonique.nomNormalise && ancienNomCanonique
+      && groupe.miseAJourCanonique.nom !== ancienNomCanonique.nom
+      ? { nom: groupe.miseAJourCanonique.nom, nomNormalise: groupe.miseAJourCanonique.nomNormalise }
+      : null;
+    if (renommage) { miseAJour.nom = renommage.nom; miseAJour.nomNormalise = renommage.nomNormalise; }
+    const niveauxAjoutes = groupe.miseAJourCanonique?.niveaux ?? [];
+    entree.miseAJourCanonique = Object.keys(miseAJour).length || niveauxAjoutes.length
+      ? { ...miseAJour, ...(renommage ? { ancienNom: ancienNomCanonique?.nom } : {}), ...(niveauxAjoutes.length ? { niveaux: niveauxAjoutes } : {}) }
+      : null;
     entree.compteursAvant = await compteurs([canoniqueId, ...anciens]);
 
     if (!appliquer) {
@@ -279,6 +345,21 @@ async function main() {
 
         for (const ancien of anciens) await fusionnerEtablissementsDansTransaction(transaction, canoniqueId, ancien);
         if (Object.keys(miseAJour).length) await transaction.etablissement.update({ where: { id: canoniqueId }, data: miseAJour });
+        if (renommage && ancienNomCanonique && ancienNomCanonique.nomNormalise !== renommage.nomNormalise) {
+          // La recherche (alias.nomNormalise) retrouve encore l’ancien libellé.
+          await transaction.etablissementAlias.upsert({
+            where: { etablissementId_nomNormalise: { etablissementId: canoniqueId, nomNormalise: ancienNomCanonique.nomNormalise } },
+            create: { etablissementId: canoniqueId, nom: ancienNomCanonique.nom, nomNormalise: ancienNomCanonique.nomNormalise },
+            update: {},
+          });
+        }
+        for (const niveau of niveauxAjoutes) {
+          await transaction.etablissementNiveau.upsert({
+            where: { etablissementId_niveau: { etablissementId: canoniqueId, niveau } },
+            create: { etablissementId: canoniqueId, niveau },
+            update: {},
+          });
+        }
 
         for (const modif of modifsSuggestions) {
           const resultat = await transaction.suggestionCatalogue.updateMany({

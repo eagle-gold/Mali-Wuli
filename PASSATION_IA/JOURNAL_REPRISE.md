@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-09-29 00:40 UTC (lot C1 publié, 6 doublons fusionnés ; plan des cycles en préparation).
+LIBRE — dernière session : Claude, 2026-09-29 00:40 UTC (plan-cycles prêt, NON appliqué).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,17 @@ LIBRE — dernière session : Claude, 2026-09-29 00:40 UTC (lot C1 publié, 6 do
 ```
 
 ## Entrées
+
+### 2026-09-29 00:40 UTC — Claude — Plan de fusion des cycles (1er/2nd cycle/CDPE) au Mali
+- Statut : TERMINÉ (plan seulement)
+- Demande de l'utilisateur : construire plan-cycles.json + resume-cycles.md (décision du 29/09 : fusionner les cycles d'une même école) et étendre le script de fusion au renommage.
+- État Git au début : `~/dev/mali-wuli`, branche main, HEAD cb7cab7.
+- Fichiers touchés : `backend/src/scripts/fusion-doublons-plan.ts` (renommage nom/nomNormalise + alias de l'ancien nom, niveaux, contrôle par fiche du nomNormalise/villeNormalisee, garde-fous) ; `PASSATION_IA/output/2026-09-29-dedup-mali/{plan-cycles.json,resume-cycles.md,outils/extract-cycles.js,outils/classify-cycles.js,outils/resume-cycles.js}`.
+- Fait et vérifié : extraction SELECT seule le 2026-09-29T00:22:18Z (20 264 fiches ML valides) ; 525 groupes CYCLES_SURE (544 fiches à désactiver, 211 renommages), 799 CYCLES_A_VERIFIER (dont 346 bloqués seulement par le nom de localité) ; aucune formation/avis/snapshot touché ; `tsc --noEmit` OK ; contrôles du plan rejoués hors ligne.
+- Fait mais non vérifié : simulation du script sur la base (non lancée : le script modifié n'est pas déployé).
+- Actions à effet externe : aucune (aucune écriture en base, aucun --apply, aucun commit).
+- Prochaine action : accord du propriétaire, puis simulation `--plan plan-cycles.json` (régénérer le plan s'il a plus de 24 h).
+- Preuves : `PASSATION_IA/output/2026-09-29-dedup-mali/resume-cycles.md`
 
 ### 2026-09-29 00:40 UTC — Claude — Typographie, lot C1 (signalements + corbeille), fusion de 6 doublons
 - Statut : TERMINÉ
