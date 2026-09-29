@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-09-29 (fusion des cycles + correction des accents appliquées).
+LIBRE — dernière session : Claude, 2026-09-29 (plan des villes du Mali, rien d'appliqué).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,18 @@ LIBRE — dernière session : Claude, 2026-09-29 (fusion des cycles + correction
 ```
 
 ## Entrées
+
+### 2026-09-29 — Claude — Plan de normalisation des villes (Mali)
+- Statut : TERMINÉ (plan seulement)
+- Demande de l'utilisateur : plan (sans écriture) pour que `ville` des établissements ML ne contienne que des communes/villes réelles ; plan-villes.json + resume.md.
+- État Git au début : `~/dev/mali-wuli`, HEAD f5eb6f5.
+- Fichiers touchés : `PASSATION_IA/output/2026-09-29-villes-mali/` (plan-villes.json, referentiel-communes.json, stats.json, resume.md, extract-*.json, outils/). Aucun fichier applicatif, schema.prisma non modifié.
+- Fait et vérifié : extraction SELECT seule 2026-09-29T00:44:02Z (19 720 fiches) ; référentiel 717 communes (695 COD-AB via OSM adm3 + 22 MEN 2023 seul à vérifier) ; `villeNormalisee` distinctes 5 227 → 700 ; HAUTE 18 456 / MOYENNE 1 071 / BASSE 193 ; 7 931 localités conservées ; Bamako gardé comme ville (commune I–VI en détail).
+- Fait mais non vérifié : aucune simulation d'écriture (pas de script d'application écrit).
+- Actions à effet externe : aucune (SELECT seulement, aucun --apply, aucun commit).
+- Décisions en attente : migration additive `localite`/`commune`/`communeCode`/`cercle`/`region` ; règle Bamako ; revue des BASSE ; alignement des imports MEN/OSM avant application.
+- Prochaine action : accord du propriétaire sur la règle + migration, puis script `--plan` avec contrôle par fiche.
+- Preuves : `PASSATION_IA/output/2026-09-29-villes-mali/resume.md`
 
 ### 2026-09-29 — Claude — Fusion des cycles (Mali) et correction des « ? »
 - Statut : TERMINÉ

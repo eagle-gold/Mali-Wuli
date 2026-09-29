@@ -1,0 +1,101 @@
+{
+ "fiches": 19720,
+ "villesDistinctesAvant": 5593,
+ "villeNormaliseeDistinctesAvant": 5227,
+ "singletonsAvant": 3411,
+ "villeNormaliseeDistinctesApres": 700,
+ "singletonsApres": 2,
+ "villeNormaliseeDistinctesApresSiBasseNonAppliquee": 810,
+ "confiance": {
+  "HAUTE": 18456,
+  "MOYENNE": 1071,
+  "BASSE": 193
+ },
+ "statut": {
+  "unanime": 19401,
+  "ville_bamako_sans_commune": 42,
+  "conflit_bamako": 10,
+  "knn_bamako": 30,
+  "ville_egale_commune": 8,
+  "knn_unanime": 17,
+  "conflit_departage_knn": 14,
+  "conflit": 165,
+  "knn_faible": 21,
+  "non_resolu": 12
+ },
+ "changements": 10511,
+ "changementsParConfiance": {
+  "MOYENNE": 795,
+  "HAUTE": 9535,
+  "BASSE": 181
+ },
+ "localiteConservee": 7931,
+ "fichesAvecCommune": 19666,
+ "fichesBamako": 2097,
+ "bamakoParCommune": {
+  "Commune V": 510,
+  "null": 42,
+  "Commune VI": 558,
+  "Commune IV": 360,
+  "Commune III": 148,
+  "Commune II": 171,
+  "Commune I": 308
+ },
+ "fichesAvecFormationQuiChangent": 0,
+ "communesReferentiel": 717,
+ "communesReferentielParOrigine": {
+  "COD-AB via OSM (adm3)": 695,
+  "MEN 2023 seul (absente d'OSM/COD-AB, à vérifier)": 22
+ },
+ "communesUtilisees": 717,
+ "homonymes": 13,
+ "fichesSurCommunesHomonymes": 615,
+ "resolutionRegistres": {
+  "MEN2013:NON": 60,
+  "MEN2013:equivalence": 55,
+  "MEN2013:exact": 9391,
+  "MEN2013:flou": 392,
+  "MEN2013:hors": 7,
+  "MEN2013:prefixe": 92,
+  "MEN2013:variante": 75,
+  "MEN2023:exact": 7471,
+  "MEN2023:exact(nom)": 326,
+  "MEN2023:flou": 482,
+  "MEN2023:prefixe": 158,
+  "MEN2023:variante": 216
+ },
+ "lignesRegistreNonResolues": 60,
+ "lignesMen2023PcodeContredit": 440,
+ "couvertureParSource": {
+  "OSM": {
+   "fiches": 10282,
+   "communeResolue": 10281
+  },
+  "MEN2023": {
+   "fiches": 8106,
+   "communeResolue": 8106
+  },
+  "MEN2013": {
+   "fiches": 9289,
+   "communeResolue": 9232
+  }
+ },
+ "combinaisons": {
+  "MEN2023": 5613,
+  "OSM": 4559,
+  "MEN2013+OSM": 3876,
+  "MEN2013": 3066,
+  "MEN2013+MEN2023+OSM": 1679,
+  "MEN2013+MEN2023": 662,
+  "MEN2023+OSM": 152,
+  "autre": 95,
+  "OSM+autre": 12,
+  "MEN2013+OSM+autre": 4,
+  "MEN2013+autre": 2
+ },
+ "incoherencesParType": {
+  "pcode_men2023_contredit_par_nom": 60,
+  "commune_registre_non_reconnue": 8,
+  "homonymes": 13
+ }
+}
