@@ -14,6 +14,7 @@ import {
   MessageCircle,
   Search,
   ShieldCheck,
+  Trash2,
   UserRound,
   UsersRound,
   X,
@@ -415,6 +416,15 @@ export function MemberHeader() {
               </Link>
             );
           })}
+          <Link
+            href="/corbeille"
+            onClick={() => setMenuOuvert(false)}
+            aria-current={estActif("/corbeille") ? "page" : undefined}
+            className={`flex min-w-0 items-center gap-2 rounded-xl px-2 py-3 text-sm font-semibold ${estActif("/corbeille") ? "bg-white/10 text-[#f4b400]" : "text-[#f4eee1] hover:bg-white/5"}`}
+          >
+            <Trash2 aria-hidden="true" size={20} className="shrink-0" />
+            Corbeille
+          </Link>
           <button type="button" onClick={deconnecter} className="flex items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-semibold text-[#f4eee1] hover:bg-white/5">
             <LogOut aria-hidden="true" size={20} />
             Se déconnecter

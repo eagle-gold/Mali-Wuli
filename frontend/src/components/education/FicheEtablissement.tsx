@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import api from "@/lib/api";
 import { urlMediaBackend } from "@/lib/media";
+import { BoutonSignaler } from "@/components/community/SignalerContenu";
 import NoteEtoiles from "./NoteEtoiles";
 import type { EtablissementDetail, ReponseEtablissementDetail, TonEtablissement } from "./types-etablissements";
 
@@ -53,7 +54,7 @@ export default function FicheEtablissement({ etablissementId }: { etablissementI
 
   return <section className="min-h-[calc(100dvh-112px)] min-w-0 [overflow-wrap:anywhere] bg-[var(--color-page)] px-4 py-6 text-[#2d241d] sm:px-6 sm:py-8 lg:px-10">
     <div className="mx-auto w-full max-w-[1510px]">
-      <Link href="/education" className="inline-flex min-h-11 items-center rounded-lg pr-3 text-sm font-medium text-[#55483b] hover:text-[#0d6738] hover:underline">‹ Tous les établissements</Link>
+      <div className="flex flex-wrap items-center justify-between gap-2"><Link href="/education" className="inline-flex min-h-11 items-center rounded-lg pr-3 text-sm font-medium text-[#55483b] hover:text-[#0d6738] hover:underline">‹ Tous les établissements</Link><BoutonSignaler cibleType="ETABLISSEMENT" cibleId={etablissement.id} libelleCible={`la fiche « ${etablissement.nom} »`} /></div>
       <div className="mt-2 grid gap-6 min-[960px]:grid-cols-[minmax(0,2fr)_minmax(300px,.78fr)] min-[960px]:items-start">
         <div className="min-w-0 space-y-5">
           <article className="overflow-hidden rounded-[18px] border border-[#eadfce] bg-[#fffdf9]">

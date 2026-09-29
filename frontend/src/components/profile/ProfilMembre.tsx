@@ -3,6 +3,7 @@
 import Link from "next/link";
 import AssociationsProfil from "@/components/profile/AssociationsProfil";
 import LiensSociauxProfil from "@/components/profile/LiensSociauxProfil";
+import { BoutonSignaler } from "@/components/community/SignalerContenu";
 import { useSessionMembre } from "@/components/auth/SessionMembreContext";
 import type { MembrePublic } from "@/components/directory/types";
 import type { ReseauxSociaux } from "@/lib/reseaux-sociaux";
@@ -18,6 +19,7 @@ import {
   Pencil,
   Phone,
   RefreshCw,
+  Trash2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -928,13 +930,22 @@ function ProfilProprietaire() {
   return (
     <div className="min-h-full min-w-0 [overflow-wrap:anywhere] bg-[var(--color-page)] px-4 py-6 text-[#292119] sm:px-6 sm:py-8">
       <div className="mx-auto w-full max-w-[1600px]">
-        <Link
-          href="/dashboard"
-          className="mb-5 inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-[#695c4b] transition hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] sm:text-base"
-        >
-          <ArrowLeft aria-hidden="true" size={18} />
-          Retour à l’accueil
-        </Link>
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
+          <Link
+            href="/dashboard"
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-[#695c4b] transition hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] sm:text-base"
+          >
+            <ArrowLeft aria-hidden="true" size={18} />
+            Retour à l’accueil
+          </Link>
+          <Link
+            href="/corbeille"
+            className="inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2 text-xs font-semibold text-[#806f5e] transition hover:bg-[#f5ecdf] hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] sm:text-sm"
+          >
+            <Trash2 aria-hidden="true" size={15} />
+            Corbeille
+          </Link>
+        </div>
 
         <EnTeteProfil
           nomComplet={nomComplet}
@@ -1378,13 +1389,16 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
   return (
     <div className="min-h-full min-w-0 [overflow-wrap:anywhere] bg-[var(--color-page)] px-4 py-6 text-[#292119] sm:px-6 sm:py-8">
       <div className="mx-auto w-full max-w-[1600px]">
-        <Link
-          href="/annuaire"
-          className="mb-5 inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-[#695c4b] transition hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] sm:text-base"
-        >
-          <ArrowLeft aria-hidden="true" size={18} />
-          Retour à l’annuaire
-        </Link>
+        <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
+          <Link
+            href="/annuaire"
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-[#695c4b] transition hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] sm:text-base"
+          >
+            <ArrowLeft aria-hidden="true" size={18} />
+            Retour à l’annuaire
+          </Link>
+          <BoutonSignaler cibleType="PROFIL" cibleId={membre.id} libelleCible={`le profil de ${nomComplet}`} />
+        </div>
 
         <EnTeteProfil
           nomComplet={nomComplet}

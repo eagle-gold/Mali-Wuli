@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-import { ArrowLeft, Send } from "lucide-react";
+import { ArrowLeft, Flag, Send } from "lucide-react";
+import SignalerContenu from "@/components/community/SignalerContenu";
 import {
   FormEvent,
   KeyboardEvent,
@@ -203,6 +204,7 @@ export default function Messagerie() {
   const socket = useSocket();
   const [conversations, setConversations] = useState<ConversationLocale[]>([]);
   const [conversationActiveId, setConversationActiveId] = useState("");
+  const [messageASignaler, setMessageASignaler] = useState<string | null>(null);
   const [recherche, setRecherche] = useState("");
   const [nouveauMessage, setNouveauMessage] = useState(false);
   const [rechercheContact, setRechercheContact] = useState("");
@@ -699,7 +701,21 @@ export default function Messagerie() {
                     <p className={`min-w-0 max-w-[90%] whitespace-pre-wrap [overflow-wrap:anywhere] rounded-[18px] px-5 py-4 text-base leading-relaxed sm:max-w-[76%] sm:px-6 sm:py-5 sm:text-lg lg:text-[22px] ${message.auteur === "moi" ? "bg-[#765131] text-white" : "bg-[#f0e5d0] text-[#2d241d]"}`}>
                       <ContenuMessage contenu={message.contenu} />
                     </p>
-                    <time dateTime={message.envoyeLe} className="mt-2 text-xs text-[#a39583] sm:text-sm">{horodatageDe(message.envoyeLe)}</time>
+                    <div className="mt-2 flex items-center gap-2">
+                      <time dateTime={message.envoyeLe} className="text-xs text-[#a39583] sm:text-sm">{horodatageDe(message.envoyeLe)}</time>
+                      {message.auteur === "autre" && (
+                        <button
+                          type="button"
+                          aria-haspopup="dialog"
+                          aria-label={`Signaler ce message de ${conversationActive.interlocuteur.nom}`}
+                          onClick={() => setMessageASignaler(message.id)}
+                          className="inline-flex min-h-8 items-center gap-1 rounded-md px-1.5 text-xs font-semibold text-[#a39583] transition hover:bg-[#f5ecdf] hover:text-[#a3321f] focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
+                        >
+                          <Flag aria-hidden="true" size={13} />
+                          Signaler
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ))}
                 {erreurEnvoi && <p className="text-right text-sm font-medium text-[#bd592d]" role="alert">{erreurEnvoi}</p>}
@@ -751,6 +767,13 @@ export default function Messagerie() {
           {chargementConversations ? "Chargement…" : "Sélectionnez une conversation."}
         </div>
       )}
+      <SignalerContenu
+        ouvert={Boolean(messageASignaler)}
+        onFermer={() => setMessageASignaler(null)}
+        cibleType="MESSAGE"
+        cibleId={messageASignaler || ""}
+        libelleCible="ce message"
+      />
     </section>
   );
 }

@@ -4,11 +4,13 @@ import Link from "next/link";
 import {
   ArrowRight,
   Check,
+  Flag,
   LoaderCircle,
   MessageCircle,
   MoreHorizontal,
   Pencil,
   Plus,
+  RotateCcw,
   Search,
   Send,
   ThumbsUp,
@@ -29,6 +31,8 @@ import {
 import { useSocket } from "@/hooks/useSocket";
 import api from "@/lib/api";
 import type { ResultatSuppression } from "@/components/community/SupprimerContenu";
+import SignalerContenu from "@/components/community/SignalerContenu";
+import { MESSAGE_CORBEILLE, restaurerDepuisCorbeille } from "@/lib/moderation";
 import { urlMediaBackend } from "@/lib/media";
 import type {
   CommentairePublicationApi,
@@ -588,16 +592,21 @@ function MenuActions({
   libelle,
   peutModifier,
   peutSupprimer,
+  peutSignaler = false,
   onModifier,
   onSupprimer,
+  onSignaler,
   declencheurRef,
   compact = false,
 }: {
   libelle: string;
   peutModifier: boolean;
   peutSupprimer: boolean;
+  /** Proposé quand on n’est pas l’auteur du contenu. */
+  peutSignaler?: boolean;
   onModifier: () => void;
   onSupprimer: () => void;
+  onSignaler?: () => void;
   declencheurRef: RefObject<HTMLButtonElement>;
   compact?: boolean;
 }) {
@@ -631,7 +640,7 @@ function MenuActions({
     };
   }, [fermer, ouvert]);
 
-  if (!peutModifier && !peutSupprimer) return null;
+  if (!peutModifier && !peutSupprimer && !(peutSignaler && onSignaler)) return null;
 
   const naviguer = (event: ReactKeyboardEvent<HTMLDivElement>) => {
     const elements = Array.from(
@@ -711,6 +720,19 @@ function MenuActions({
               Supprimer
             </button>
           )}
+          {peutSignaler && onSignaler && (
+            <button
+              type="button"
+              role="menuitem"
+              tabIndex={-1}
+              aria-haspopup="dialog"
+              onClick={() => choisir(onSignaler)}
+              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-semibold text-[#342a22] hover:bg-[#f5ecdf] focus:bg-[#e2efe7] focus:text-[#0d6738] focus:outline-none"
+            >
+              <Flag aria-hidden="true" size={15} />
+              Signaler
+            </button>
+          )}
         </div>
       )}
     </div>
@@ -722,12 +744,15 @@ function ConfirmationSuppression({
   endpoint,
   titre,
   consequences,
+  avertissement = "Cette action est définitive.",
   onSupprime,
   onAnnuler,
 }: {
   endpoint: string;
   titre: string;
   consequences: string;
+  /** « ira dans la corbeille pendant 30 jours » pour l’auteur, « définitive » sinon. */
+  avertissement?: string;
   onSupprime: (resultat?: ResultatSuppression) => void;
   onAnnuler: () => void;
 }) {
@@ -779,7 +804,7 @@ function ConfirmationSuppression({
     >
       <h3 id={titreId} className="text-sm font-bold text-[#2f261e]">{titre}</h3>
       <p className="mt-1 text-sm text-[#4f4339]">{consequences}</p>
-      <p className="mt-1 text-sm font-semibold text-[#a3321f]">Cette action est définitive.</p>
+      <p className="mt-1 text-sm font-semibold text-[#a3321f]">{avertissement}</p>
       <div className="mt-3 flex flex-wrap gap-2">
         <button
           type="button"
@@ -926,6 +951,7 @@ function CommentaireFil({
   repondre: (parentId: string, auteur: string) => void;
 }) {
   const [mode, setMode] = useState<"lecture" | "edition" | "suppression">("lecture");
+  const [signalementOuvert, setSignalementOuvert] = useState(false);
   const declencheurMenu = useRef<HTMLButtonElement>(null);
   const peutModifier = (commentaire as CommentaireAvecDroits).peutModifier === true;
   const peutSupprimer = commentaire.peutSupprimer === true;
@@ -969,11 +995,21 @@ function CommentaireFil({
                 libelle={`Actions sur le commentaire de ${auteur}`}
                 peutModifier={peutModifier}
                 peutSupprimer={peutSupprimer}
+                peutSignaler={!peutModifier}
                 onModifier={() => setMode("edition")}
                 onSupprimer={() => setMode("suppression")}
+                onSignaler={() => setSignalementOuvert(true)}
                 declencheurRef={declencheurMenu}
               />
             )}
+            <SignalerContenu
+              ouvert={signalementOuvert}
+              onFermer={() => setSignalementOuvert(false)}
+              cibleType="COMMENTAIRE"
+              cibleId={commentaire.id}
+              libelleCible={`le commentaire de ${auteur}`}
+              retourFocus={declencheurMenu}
+            />
           </div>
           {mode === "edition" ? (
             <EditionInline
@@ -1003,7 +1039,9 @@ function CommentaireFil({
               endpoint={endpoint}
               titre="Supprimer ce commentaire ?"
               consequences={commentaire.reponses?.length ? "Le commentaire et ses réponses seront retirés de la publication." : "Le commentaire sera retiré de la publication."}
-              onSupprime={(resultat) => onSupprime(commentaire, resultat)}
+              avertissement={peutModifier ? "Ce commentaire ira dans la corbeille pendant 30 jours : vous pourrez le restaurer." : "Cette action est définitive."}
+              // L’API commentaire ne renvoie pas `corbeille` : la suppression par l’auteur y place toujours l’élément.
+              onSupprime={(resultat) => onSupprime(commentaire, resultat ? { ...resultat, corbeille: resultat.corbeille ?? peutModifier } : undefined)}
               onAnnuler={revenirALaLecture}
             />
           )}
@@ -1029,9 +1067,22 @@ function CommentaireFil({
   );
 }
 
-function CartePublication({ publication, onSupprime, actualiser }: { publication: Publication; onSupprime: (id: string) => void; actualiser: () => void }) {
+type RestaurationRecue = { id: string; publicationId: string; cle: number };
+
+function CartePublication({ publication, onSupprime, actualiser, commentaireRestaure }: {
+  publication: Publication;
+  onSupprime: (id: string, corbeille: boolean) => void;
+  actualiser: () => void;
+  /** Dernier commentaire de cette publication restauré (événement temps réel). */
+  commentaireRestaure?: RestaurationRecue | null;
+}) {
   const commentairesSupprimes = useRef(new Set<string>());
+  /** Identifiants masqués localement par suppression (commentaire + réponses), pour les réafficher après restauration. */
+  const masquesParSuppression = useRef(new Map<string, string[]>());
   const [annonceSuppression, setAnnonceSuppression] = useState("");
+  const [commentaireEnCorbeille, setCommentaireEnCorbeille] = useState<string | null>(null);
+  const [restaurationEnCours, setRestaurationEnCours] = useState(false);
+  const [signalementOuvert, setSignalementOuvert] = useState(false);
   const [modeCarte, setModeCarte] = useState<"lecture" | "edition" | "suppression">("lecture");
   const [texte, setTexte] = useState(publication.texte);
   const declencheurMenuPublication = useRef<HTMLButtonElement>(null);
@@ -1262,8 +1313,8 @@ function CartePublication({ publication, onSupprime, actualiser }: { publication
     }
   };
 
-  const chargerCommentaires = async () => {
-    if (commentairesCharges || chargementCommentaires) return;
+  const chargerCommentaires = async (forcer = false) => {
+    if ((!forcer && commentairesCharges) || chargementCommentaires) return;
     setChargementCommentaires(true);
     setErreurCommentaires("");
     try {
@@ -1299,16 +1350,53 @@ function CartePublication({ publication, onSupprime, actualiser }: { publication
   }, [publication.commentaires, publication.reponses, reponseOuverte]);
 
   const retirerCommentaire = (commentaire: CommentairePublicationApi, resultat?: ResultatSuppression) => {
-    const noter = (element: CommentairePublicationApi) => { commentairesSupprimes.current.add(element.id); element.reponses?.forEach(noter); };
+    const masques: string[] = [];
+    const noter = (element: CommentairePublicationApi) => { commentairesSupprimes.current.add(element.id); masques.push(element.id); element.reponses?.forEach(noter); };
     noter(commentaire);
+    masquesParSuppression.current.set(commentaire.id, masques);
     setCommentaires((actuels) => retirerCommentaires(actuels, commentairesSupprimes.current));
     // Une lecture socket peut avoir déjà reçu le nouveau total avant la réponse DELETE.
     // Sur 404 sans total, la relecture ci-dessous rétablit le compteur sans le soustraire deux fois.
     if (typeof resultat?.nbCommentaires === "number" && Number.isInteger(resultat.nbCommentaires) && resultat.nbCommentaires >= 0) setNombreReponses(resultat.nbCommentaires);
     if (parentReponse && commentairesSupprimes.current.has(parentReponse.id)) setParentReponse(null);
-    setAnnonceSuppression("Le commentaire a été supprimé.");
+    const corbeille = resultat?.corbeille === true;
+    setCommentaireEnCorbeille(corbeille ? commentaire.id : null);
+    setAnnonceSuppression(corbeille ? `${MESSAGE_CORBEILLE}.` : "Le commentaire a été supprimé.");
     actualiser();
   };
+
+  /** Réaffiche un commentaire restauré (ici ou ailleurs) et relit la conversation. */
+  const reafficherCommentaire = useCallback((commentaireId: string) => {
+    const masques = masquesParSuppression.current.get(commentaireId) || [commentaireId];
+    masques.forEach((id) => commentairesSupprimes.current.delete(id));
+    masquesParSuppression.current.delete(commentaireId);
+  }, []);
+
+  const annulerSuppressionCommentaire = async () => {
+    if (!commentaireEnCorbeille || restaurationEnCours) return;
+    setRestaurationEnCours(true);
+    try {
+      await restaurerDepuisCorbeille("commentaire", commentaireEnCorbeille);
+      reafficherCommentaire(commentaireEnCorbeille);
+      setCommentaireEnCorbeille(null);
+      setAnnonceSuppression("Le commentaire a été restauré.");
+      if (commentairesCharges || reponseOuverte) void chargerCommentaires(true);
+      actualiser();
+    } catch (erreur) {
+      setAnnonceSuppression(lireMessageErreur(erreur, "La restauration a échoué. Vous pouvez réessayer depuis la corbeille."));
+    } finally {
+      setRestaurationEnCours(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!commentaireRestaure) return;
+    reafficherCommentaire(commentaireRestaure.id);
+    if (commentaireEnCorbeille === commentaireRestaure.id) { setCommentaireEnCorbeille(null); setAnnonceSuppression("Le commentaire a été restauré."); }
+    if (commentairesCharges || reponseOuverte) void chargerCommentaires(true);
+    // Déclenché uniquement par un nouvel événement de restauration.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [commentaireRestaure?.cle]);
 
   const preparerReponse = (parentId: string, auteur: string) => {
     setParentReponse({ id: parentId, auteur });
@@ -1384,22 +1472,48 @@ function CartePublication({ publication, onSupprime, actualiser }: { publication
             libelle="Actions sur la publication"
             peutModifier={publication.peutModifier}
             peutSupprimer={publication.peutSupprimer}
+            peutSignaler={!publication.peutModifier}
             onModifier={() => setModeCarte("edition")}
             onSupprimer={() => setModeCarte("suppression")}
+            onSignaler={() => setSignalementOuvert(true)}
             declencheurRef={declencheurMenuPublication}
           />
         )}
+        <SignalerContenu
+          ouvert={signalementOuvert}
+          onFermer={() => setSignalementOuvert(false)}
+          cibleType="PUBLICATION"
+          cibleId={publication.id}
+          libelleCible={`la publication de ${publication.auteur}`}
+          retourFocus={declencheurMenuPublication}
+        />
       </header>
       {modeCarte === "suppression" && publication.peutSupprimer && (
         <ConfirmationSuppression
           endpoint={`/publications/${encodeURIComponent(publication.id)}`}
           titre="Supprimer cette publication ?"
           consequences="La publication, ses commentaires et ses réactions seront retirés du fil."
-          onSupprime={() => onSupprime(publication.id)}
+          avertissement={publication.peutModifier ? "Cette publication ira dans la corbeille pendant 30 jours : vous pourrez la restaurer." : "Cette action est définitive."}
+          onSupprime={(resultat) => onSupprime(publication.id, resultat?.corbeille === true)}
           onAnnuler={revenirALaLecturePublication}
         />
       )}
-      {annonceSuppression && <p className="mt-3 text-sm text-[#0d6738]" role="status">{annonceSuppression}</p>}
+      {annonceSuppression && (
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-[#0d6738]" role="status">
+          <span>{annonceSuppression}</span>
+          {commentaireEnCorbeille && (
+            <button
+              type="button"
+              disabled={restaurationEnCours}
+              onClick={() => void annulerSuppressionCommentaire()}
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-[#e4d2b3] bg-white px-3 font-semibold text-[#0d6738] hover:bg-[#f5ecdf] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:cursor-wait disabled:opacity-60"
+            >
+              {restaurationEnCours ? <LoaderCircle aria-hidden="true" size={14} className="animate-spin" /> : <RotateCcw aria-hidden="true" size={14} />}
+              Annuler
+            </button>
+          )}
+        </div>
+      )}
 
       {modeCarte === "edition" ? (
         <EditionInline
@@ -1922,6 +2036,9 @@ export default function ActualiteFeed() {
   const [publications, setPublications] = useState<Publication[]>([]);
   const publicationsSupprimees = useRef(new Set<string>());
   const [annonceSuppression, setAnnonceSuppression] = useState("");
+  const [publicationEnCorbeille, setPublicationEnCorbeille] = useState<string | null>(null);
+  const [restaurationEnCours, setRestaurationEnCours] = useState(false);
+  const [commentaireRestaure, setCommentaireRestaure] = useState<RestaurationRecue | null>(null);
   const [chargementFil, setChargementFil] = useState(true);
   const [erreurFil, setErreurFil] = useState("");
   const [envoiPublication, setEnvoiPublication] = useState(false);
@@ -2054,12 +2171,34 @@ export default function ActualiteFeed() {
       actualiser();
     };
     const suppressions = ["publication_supprimee", "publication:deleted"];
+    // Restauration depuis la corbeille (ici, dans un autre onglet ou par un autre membre).
+    const publicationRestauree = (payload: unknown) => {
+      const id = (payload as { id?: unknown; publicationId?: unknown } | null);
+      const publicationId = typeof id?.publicationId === "string" ? id.publicationId : typeof id?.id === "string" ? id.id : "";
+      if (publicationId) {
+        publicationsSupprimees.current.delete(publicationId);
+        setPublicationEnCorbeille((actuelle) => (actuelle === publicationId ? null : actuelle));
+      }
+      panneauxAActualiser = true;
+      actualiser();
+    };
+    const commentaireRestaureRecu = (payload: unknown) => {
+      const donnees = payload as { id?: unknown; publicationId?: unknown } | null;
+      if (typeof donnees?.id === "string" && typeof donnees.publicationId === "string") {
+        setCommentaireRestaure({ id: donnees.id, publicationId: donnees.publicationId, cle: Date.now() });
+      }
+      actualiser();
+    };
     evenements.forEach((evenement) => socket.on(evenement, actualiser));
     suppressions.forEach((evenement) => socket.on(evenement, suppressionRecue));
+    socket.on("publication:restored", publicationRestauree);
+    socket.on("publication:commentRestored", commentaireRestaureRecu);
     return () => {
       if (actualisationProgrammee) clearTimeout(actualisationProgrammee);
       evenements.forEach((evenement) => socket.off(evenement, actualiser));
       suppressions.forEach((evenement) => socket.off(evenement, suppressionRecue));
+      socket.off("publication:restored", publicationRestauree);
+      socket.off("publication:commentRestored", commentaireRestaureRecu);
     };
   }, [chargerPanneaux, chargerPublications, socket]);
 
@@ -2082,11 +2221,30 @@ export default function ActualiteFeed() {
     };
   }, [chargerPanneaux, socket]);
 
-  const retirerPublication = (id: string) => {
+  const retirerPublication = (id: string, corbeille: boolean) => {
     publicationsSupprimees.current.add(id);
     setPublications((actuelles) => actuelles.filter((publication) => publication.id !== id));
-    setAnnonceSuppression("La publication a été supprimée.");
+    setPublicationEnCorbeille(corbeille ? id : null);
+    setAnnonceSuppression(corbeille ? `${MESSAGE_CORBEILLE}.` : "La publication a été supprimée.");
     void chargerPanneaux(true);
+  };
+
+  const annulerSuppressionPublication = async () => {
+    if (!publicationEnCorbeille || restaurationEnCours) return;
+    const id = publicationEnCorbeille;
+    setRestaurationEnCours(true);
+    try {
+      await restaurerDepuisCorbeille("publication", id);
+      publicationsSupprimees.current.delete(id);
+      setPublicationEnCorbeille(null);
+      setAnnonceSuppression("La publication a été restaurée.");
+      await chargerPublications(true);
+      void chargerPanneaux(true);
+    } catch (erreur) {
+      setAnnonceSuppression(lireMessageErreur(erreur, "La restauration a échoué. Vous pouvez réessayer depuis la corbeille."));
+    } finally {
+      setRestaurationEnCours(false);
+    }
   };
 
   const publier = async (event: FormEvent<HTMLFormElement>) => {
@@ -2369,7 +2527,25 @@ export default function ActualiteFeed() {
               : `${publications.length} publications affichées`}
           </p>
 
-          {annonceSuppression && <p className="rounded-xl border border-[#c8dccd] bg-[#edf4ee] p-3 text-sm text-[#0d6738]" role="status">{annonceSuppression}</p>}
+          {annonceSuppression && (
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-[#c8dccd] bg-[#edf4ee] p-3 text-sm text-[#0d6738]" role="status">
+              <span className="min-w-0 flex-1">{annonceSuppression}</span>
+              {publicationEnCorbeille && (
+                <>
+                  <Link href="/corbeille" className="font-semibold underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-[#0d6738]">Voir la corbeille</Link>
+                  <button
+                    type="button"
+                    disabled={restaurationEnCours}
+                    onClick={() => void annulerSuppressionPublication()}
+                    className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-[#e4d2b3] bg-white px-3 font-semibold text-[#0d6738] hover:bg-[#f5ecdf] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:cursor-wait disabled:opacity-60"
+                  >
+                    {restaurationEnCours ? <LoaderCircle aria-hidden="true" size={14} className="animate-spin" /> : <RotateCcw aria-hidden="true" size={14} />}
+                    Annuler
+                  </button>
+                </>
+              )}
+            </div>
+          )}
           <section aria-label="Publications" className="space-y-4">
             {chargementFil ? (
               Array.from({ length: 3 }).map((_, index) => (
@@ -2422,6 +2598,7 @@ export default function ActualiteFeed() {
                   publication={publication}
                   onSupprime={retirerPublication}
                   actualiser={() => { void chargerPublications(true); }}
+                  commentaireRestaure={commentaireRestaure?.publicationId === publication.id ? commentaireRestaure : null}
                 />
               ))
             )}

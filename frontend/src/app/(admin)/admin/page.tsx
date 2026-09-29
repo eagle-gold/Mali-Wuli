@@ -103,7 +103,7 @@ export default function AdminPage() {
         aPermission(compte, "CATALOGUE_GERER") ? api.get<{ notifications: NotificationCatalogue[] }>("/admin/notifications") : Promise.resolve({ data: { notifications: [] } }),
         aPermission(compte, "INSCRIPTIONS_GERER") ? api.get<{ inscriptions: Inscription[] }>("/admin/inscriptions?statut=EN_ATTENTE") : Promise.resolve({ data: { inscriptions: [] } }),
         aPermission(compte, "STATS_CONSULTER") ? api.get<StatsAdmin>("/admin/stats") : Promise.resolve(null),
-        aPermission(compte, "SIGNALEMENTS_CONSULTER") ? api.get<{ signalements: Signalement[] }>("/admin/signalements") : Promise.resolve({ data: { signalements: [] } }),
+        aPermission(compte, "SIGNALEMENTS_CONSULTER") ? api.get<{ signalements: Signalement[] }>("/admin/signalements", { params: { statut: "EN_ATTENTE" } }) : Promise.resolve({ data: { signalements: [] } }),
       ]);
       setNotifications(notificationsResponse.data.notifications);
       setInscriptions(inscriptionsResponse.data.inscriptions);
@@ -390,16 +390,9 @@ export default function AdminPage() {
             </div>
           )}
         </section>}
-        {aPermission(compte, "SIGNALEMENTS_CONSULTER") && <section className="min-w-0 rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-5 shadow-sm sm:p-8" aria-labelledby="signalements-titre">
-          <h2 id="signalements-titre" className="titre-section">Signalements</h2>
-          <p className="mt-2 text-sm text-[#56493e]">Les 200 signalements les plus récents, pour consultation par l’équipe de modération.</p>
-          {chargement ? <p role="status" className="py-6 text-[#735133]">Chargement des signalements…</p> : !signalements.length ? <p className="mt-5 text-sm text-[#56493e]">Aucun signalement à afficher.</p> : <ul className="mt-5 space-y-3">{signalements.map((signalement) => <li key={signalement.id} className="min-w-0 rounded-xl border border-[#e4d2b3] bg-white p-4">
-            <p className="font-semibold text-[#2e261f]">{signalement.cibleType === "PUBLICATION" ? "Publication" : signalement.cibleType === "COMMENTAIRE" ? "Commentaire" : signalement.cibleType === "MEMBRE" ? "Membre" : signalement.cibleType}</p>
-            <p className="mt-2 whitespace-pre-wrap break-words text-sm text-[#56493e]">{signalement.motif}</p>
-            <p className="mt-3 text-xs text-[#735133]">Signalé par {[signalement.signaleur.user.prenom, signalement.signaleur.user.nom].filter(Boolean).join(" ") || "Un membre"} · {new Date(signalement.createdAt).toLocaleDateString("fr-FR")}</p>
-            <p className="mt-1 break-all text-xs text-[#735133]">Référence : {signalement.cibleId}</p>
-          </li>)}</ul>}
-        </section>}
+        {aPermission(compte, "SIGNALEMENTS_CONSULTER") && <Link href="/admin/signalements" className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#e4d2b3] bg-[#fffbf5] p-5 text-[#2e261f] transition hover:border-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738]">
+          <span><strong className="titre-element block">Signalements</strong><span className="mt-1 block text-sm text-[#695c4b]">{chargement ? "Chargement…" : `${signalements.length} signalement${signalements.length > 1 ? "s" : ""} en attente d’examen.`} Prendre en charge, traiter ou rejeter les contenus signalés.</span></span><span className="font-semibold text-[#0d6738]">Examiner les signalements →</span>
+        </Link>}
       </div>
     </main>
   );

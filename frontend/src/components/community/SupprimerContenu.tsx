@@ -6,7 +6,8 @@ import api from "@/lib/api";
 import { messageErreur } from "@/lib/community";
 import styles from "./SupprimerContenu.module.css";
 
-export type ResultatSuppression = { nbCommentaires?: number };
+/** `corbeille: true` : l’élément est restaurable 30 jours depuis /corbeille (publications et commentaires). */
+export type ResultatSuppression = { nbCommentaires?: number; corbeille?: boolean; message?: string };
 
 type Props = {
   autorise: boolean;

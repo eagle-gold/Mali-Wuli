@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import SupprimerContenu from "@/components/community/SupprimerContenu";
+import { BoutonSignaler } from "@/components/community/SignalerContenu";
 import { Pencil } from "lucide-react";
 import { urlMediaBackend } from "@/lib/media";
 import { libelleModeTravail, libelleTypeOffre } from "@/lib/offres";
@@ -19,6 +20,6 @@ export default function DetailOffre({ offre, actualiser, onSupprime }: { offre: 
     {offre.peutSupprimer && <SupprimerContenu autorise={offre.peutSupprimer === true} endpoint={urlOffre(offre.id)} libelle="Supprimer l’offre" titre={`Supprimer « ${offre.titre} » ?`} consequences="L’offre et ses enregistrements seront retirés. Les candidatures déjà transmises à un recruteur ne peuvent pas être annulées par cette action." onSupprime={() => onSupprime(offre.id)} />}
     {offre.recommandationPossible && offre.publieur && <div className={styles.recommendation}><Link href={`/membres/${encodeURIComponent(offre.publieur.id)}`} className={styles.author}><span className={styles.avatar}>{photo ? <img src={photo} alt="" /> : `${offre.publieur.prenom[0] || ""}${offre.publieur.nom[0] || ""}`}</span><span><strong>{offre.publieur.nomComplet}</strong> peut vous recommander.</span></Link></div>}
     <h3 className={styles.sectionTitle}>Le poste</h3><p className={styles.description}>{offre.description}</p>{offre.profilRecherche && <><h3 className={styles.sectionTitle}>Profil recherché</h3><p className={styles.description}>{offre.profilRecherche}</p></>}
-    <footer className={styles.detailFooter}>Publiée {offre.publieur ? <>par <Link href={`/membres/${encodeURIComponent(offre.publieur.id)}`} className={styles.link}>{offre.publieur.nomComplet}</Link> · </> : ""}{datePublication(offre.createdAt)}{offre.dateExpiration && ` · candidatures jusqu’au ${dateOffre(offre.dateExpiration)}`}</footer>
+    <footer className={styles.detailFooter}>Publiée {offre.publieur ? <>par <Link href={`/membres/${encodeURIComponent(offre.publieur.id)}`} className={styles.link}>{offre.publieur.nomComplet}</Link> · </> : ""}{datePublication(offre.createdAt)}{offre.dateExpiration && ` · candidatures jusqu’au ${dateOffre(offre.dateExpiration)}`}{!offre.peutModifier && <div style={{ marginTop: 8 }}><BoutonSignaler cibleType="OFFRE" cibleId={offre.id} libelleCible={`l’offre « ${offre.titre} »`} /></div>}</footer>
   </div></article>;
 }
