@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-09-29 00:40 UTC (plan-cycles prêt, NON appliqué).
+LIBRE — dernière session : Claude, 2026-09-29 (fusion des cycles + correction des accents appliquées).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,16 @@ LIBRE — dernière session : Claude, 2026-09-29 00:40 UTC (plan-cycles prêt, N
 ```
 
 ## Entrées
+
+### 2026-09-29 — Claude — Fusion des cycles (Mali) et correction des « ? »
+- Statut : TERMINÉ
+- Accord explicite du propriétaire pour les deux écritures.
+- Sauvegarde préalable : `~/private-backups/20260929-cycles/before.sql.gz` (31 534 968 o, SHA256 530ec58c…, « Dump completed »).
+- Outil : backend `9bc579c` compilé à part dans `~/private-backups/20260929-cycles/outil` (non activé, site inchangé) ; `plan-cycles.json` (525 groupes CYCLES_SURE).
+- Simulation 525/525 sans erreur, puis `--apply` : 525 groupes appliqués, 544 fiches désactivées, 525 canoniques valides, 211 renommées (ancien nom en alias), codes MEN conservés comme sources. Mali : 20 264 → 19 720 fiches actives ; catalogue : 141 935 → 141 391. Journaux : `simulation.json`, `application.json`, `application.log` dans le même dossier.
+- Accents : 47 noms (CA 41, FR 6) + 1 ville corrigés à la main (mapping `accents.json`, journal `accents-application.json`), `nomNormalise` recalculé avec `normaliserEducation` (ex. « cole sainte agathe » → « ecole sainte agathe »). Reste : `ca-statcan-9f32006c71fc1aa727e5` « ?table » (Franklin, QC), nom réel inconnu.
+- Reste à vérifier : 799 groupes CYCLES_A_VERIFIER (dont 346 « nom = localité »), casse imparfaite de certains noms renommés (ex. « Avenir Je »).
+- En attente : tâche Cron anti-veille (échec d'enregistrement dans hPanel, incident Hostinger) ; dépôt eagle-gold à passer en privé.
 
 ### 2026-09-29 00:40 UTC — Claude — Plan de fusion des cycles (1er/2nd cycle/CDPE) au Mali
 - Statut : TERMINÉ (plan seulement)
