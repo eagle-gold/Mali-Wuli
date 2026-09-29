@@ -1,0 +1,48 @@
+{
+ "fiches": 19720,
+ "villesDistinctesAvant": 5593,
+ "villeNormaliseeDistinctesAvant": 5227,
+ "villeNormaliseeDistinctesApres": 147,
+ "villeNormaliseeDistinctesApresChefsLieux": 10,
+ "villeNormaliseeDistinctesApresHorsChefsLieux(BASSE)": 137,
+ "villeNormaliseeDistinctesSiToutApplique": 10,
+ "confiance": {
+  "HAUTE": 18456,
+  "MOYENNE": 1071,
+  "BASSE": 193
+ },
+ "appliquees": 19527,
+ "nonAppliquees": 193,
+ "villeChange": 16576,
+ "villeInchangeeMaisDetailsEcrits": 2951,
+ "localite": 7655,
+ "avecCommune": 19485,
+ "repartitionApres": {
+  "Sikasso": 4236,
+  "Ségou": 3168,
+  "Koulikoro": 2905,
+  "Mopti": 2712,
+  "Bamako": 2086,
+  "Kayes": 1904,
+  "Tombouctou": 1145,
+  "Gao": 863,
+  "Ménaka": 373,
+  "Kidal": 135
+ },
+ "fichesDansCerclesEponymesNouvellesRegions2023": {
+  "Bandiagara (région OCHA Mopti)": 519,
+  "Bougouni (région OCHA Sikasso)": 662,
+  "Dioila (région OCHA Koulikoro)": 489,
+  "Douentza (région OCHA Mopti)": 256,
+  "Kita (région OCHA Kayes)": 500,
+  "Koutiala (région OCHA Sikasso)": 832,
+  "Nara (région OCHA Koulikoro)": 343,
+  "Nioro (région OCHA Kayes)": 139,
+  "San (région OCHA Ségou)": 306
+ },
+ "basseAvecRegionUnique": 136,
+ "villeNormaliseeDistinctesSiBasseRegionUniqueAppliquee": 30,
+ "fichesTaoudenit": 0,
+ "fichesAvecFormationQuiChangent": 0,
+ "libellesApres": 147
+}

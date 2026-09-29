@@ -19,9 +19,11 @@ import {
   normaliserRegionOvertureMali,
   normaliserTexteOverture,
   signatureBrancheOverture,
+  localisationOvertureMali,
   trouverCorrespondanceOverture,
   villeCanoniqueOvertureMali,
 } from "../education/mali-overture-education";
+import type { LocalisationMali, ReferenceVoisinMali } from "../education/localisation-mali";
 
 const prisma = new PrismaClient();
 const CODE_SOURCE = "overture-places-mali";
@@ -40,6 +42,9 @@ type CandidatIndexe = CandidatOverture & {
 };
 
 type IndexEtablissements = {
+  /** Fiches déjà localisées (commune + coordonnées), pour le kNN des lieux Overture. */
+  voisins: ReferenceVoisinMali[];
+  localisationConnue: Set<string>;
   candidats: Map<string, CandidatIndexe>;
   parNomExact: Map<string, Set<string>>;
   parNomRapproche: Map<string, Set<string>>;
@@ -64,6 +69,8 @@ type PlanEtablissement = {
   enrichirLatitude: boolean;
   enrichirLongitude: boolean;
   enrichirStatut: boolean;
+  /** Détail administratif à écrire (null : déjà connu en base). */
+  localisation: LocalisationMali | null;
 };
 
 type Statistiques = {
@@ -212,6 +219,8 @@ async function chargerIndex(): Promise<IndexEtablissements> {
     },
   });
   const index: IndexEtablissements = {
+    voisins: [],
+    localisationConnue: new Set(),
     candidats: new Map(),
     parNomExact: new Map(),
     parNomRapproche: new Map(),
@@ -223,6 +232,17 @@ async function chargerIndex(): Promise<IndexEtablissements> {
     const localisationsNormalisees = new Set<string>();
     ajouterLocalisation(localisationsNormalisees, etablissement.ville);
     ajouterLocalisation(localisationsNormalisees, etablissement.villeNormalisee);
+    // Avec ville = chef-lieu de région, la commune et la localité précisent le lieu.
+    ajouterLocalisation(localisationsNormalisees, etablissement.commune);
+    ajouterLocalisation(localisationsNormalisees, etablissement.localite);
+    if (etablissement.communeCode || etablissement.commune || etablissement.region) index.localisationConnue.add(etablissement.id);
+    if (etablissement.communeCode && etablissement.latitude !== null && etablissement.longitude !== null) {
+      index.voisins.push({
+        latitude: Number(etablissement.latitude),
+        longitude: Number(etablissement.longitude),
+        communeCode: etablissement.communeCode,
+      });
+    }
     const regionsNormalisees = new Set<string>();
     for (const source of etablissement.sources) {
       const contexte = extraireContexteSource(source.donneesBrutes);
@@ -298,6 +318,7 @@ function planifierImport(
     else if (resultat.raison === "nom-exact") statistiques.rattachesNomExact += 1;
     else if (resultat.raison === "nom-relache") statistiques.rattachesNomRelache += 1;
 
+    const localisation = localisationOvertureMali(ecole, index.voisins);
     let planifie = plan.get(id);
     if (!planifie) {
       planifie = {
@@ -307,8 +328,9 @@ function planifierImport(
         nomNormalise: candidat?.nomNormalise || ecole.nomNormalise,
         type: candidat?.type || ecole.type,
         statut: candidat?.statut || ecole.statut,
-        ville: candidat?.ville || ecole.ville,
-        villeNormalisee: candidat?.villeNormalisee || ecole.villeNormalisee,
+        ville: candidat?.ville || localisation.ville || ecole.ville,
+        villeNormalisee: candidat?.villeNormalisee || (localisation.ville ? localisation.villeNormalisee : ecole.villeNormalisee),
+        localisation: index.localisationConnue.has(id) ? null : localisation,
         latitude: candidat?.latitude ?? ecole.latitude,
         longitude: candidat?.longitude ?? ecole.longitude,
         niveaux: new Set(),
@@ -390,6 +412,11 @@ async function appliquerPlan(plan: PlanEtablissement[], sourceId: string, releas
         systemeEducatifCode: "ML",
         ville: item.ville,
         villeNormalisee: item.villeNormalisee,
+        localite: item.localisation?.localite ?? null,
+        commune: item.localisation?.commune ?? null,
+        communeCode: item.localisation?.communeCode ?? null,
+        cercle: item.localisation?.cercle ?? null,
+        region: item.localisation?.region ?? null,
         statut: item.statut,
         latitude: item.latitude,
         longitude: item.longitude,
@@ -424,6 +451,18 @@ async function appliquerPlan(plan: PlanEtablissement[], sourceId: string, releas
         operations.push(prisma.etablissement.updateMany({
           where: { id: item.id, longitude: null },
           data: { longitude: item.longitude },
+        }));
+      }
+      if (item.localisation && item.localisation.resolution !== "aucune") {
+        operations.push(prisma.etablissement.updateMany({
+          where: { id: item.id, commune: null, communeCode: null, region: null },
+          data: {
+            localite: item.localisation.localite,
+            commune: item.localisation.commune,
+            communeCode: item.localisation.communeCode,
+            cercle: item.localisation.cercle,
+            region: item.localisation.region,
+          },
         }));
       }
       if (item.enrichirStatut && item.statut !== StatutEtablissement.INCONNU) {

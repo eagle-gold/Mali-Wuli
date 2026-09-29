@@ -7,6 +7,7 @@ import api from "@/lib/api";
 import { urlMediaBackend } from "@/lib/media";
 import { BoutonSignaler } from "@/components/community/SignalerContenu";
 import NoteEtoiles from "./NoteEtoiles";
+import { detailLieu } from "@/lib/education/localisation-etablissement";
 import type { EtablissementDetail, ReponseEtablissementDetail, TonEtablissement } from "./types-etablissements";
 
 const TONS: Record<TonEtablissement, string> = {
@@ -51,6 +52,7 @@ export default function FicheEtablissement({ etablissementId }: { etablissementI
   const estScolaire = etablissement.type === "FONDAMENTALE" || etablissement.type === "LYCEE";
   const estSuperieur = etablissement.type === "UNIVERSITE" || etablissement.type === "ECOLE_SUPERIEURE";
   const avisAffiches = afficherTous ? etablissement.avisApercu : etablissement.avisApercu.slice(0, 2);
+  const lieu = detailLieu(etablissement);
 
   return <section className="min-h-[calc(100dvh-112px)] min-w-0 [overflow-wrap:anywhere] bg-[var(--color-page)] px-4 py-6 text-[#2d241d] sm:px-6 sm:py-8 lg:px-10">
     <div className="mx-auto w-full max-w-[1510px]">
@@ -62,6 +64,7 @@ export default function FicheEtablissement({ etablissementId }: { etablissementI
             <div className="px-6 pb-7 pt-16 sm:px-8 sm:pb-8 sm:pt-[68px]">
               <h1 className="font-display text-3xl font-bold leading-tight text-[#292119] sm:text-4xl">{etablissement.nom}</h1>
               <p className="mt-1 text-sm text-[#887764] sm:text-base">{[etablissement.niveau, [etablissement.ville, etablissement.pays].filter(Boolean).join(", "), etablissement.statut].filter(Boolean).join(" · ")}</p>
+              {lieu && <p className="mt-1 text-sm text-[#55483b]"><span className="sr-only">Localisation : </span>{lieu}</p>}
               <div className="mt-3 flex flex-wrap items-center gap-3">{etablissement.note === null ? <span className="text-sm text-[#887764]">Aucun avis publié</span> : <><NoteEtoiles note={etablissement.note} /><strong>{nombreFrancais(etablissement.note)}</strong><span className="text-sm text-[#887764]">sur 5 · {etablissement.nombreAvis} avis d’anciens</span></>}</div>
               {etablissement.description && <p className="mt-6 text-base leading-relaxed text-[#40372f] sm:text-lg">{etablissement.description}</p>}
               {!!etablissement.parcours.length && <div className="mt-5 flex flex-wrap gap-2">{etablissement.parcours.map((parcours) => <span key={parcours} className="rounded-full bg-[#f0e5d0] px-4 py-2 text-sm font-semibold text-[#55483b]">{parcours}</span>)}</div>}

@@ -10,7 +10,7 @@ import {
   TypeSuggestionCatalogue,
 } from "@prisma/client";
 import { demanderDecisionOpenRouter, type CandidatDeduplication } from "./openrouter-deduplication";
-import { normaliserEducation, prismaEducation } from "./catalog-service";
+import { filtreVilleEtablissements, normaliserEducation, prismaEducation } from "./catalog-service";
 import { villeNormaliseePourPays } from "./normalisation-localisations";
 
 export type SuggestionCatalogueInput = {
@@ -46,14 +46,16 @@ const contexteJson = (contexte: Record<string, unknown>): Prisma.InputJsonValue 
 
 async function correspondanceCanonique(input: SuggestionCatalogueInput) {
   const nomNormalise = normaliserEducation(input.libelle);
-  const villeNormalisee = normaliserEducation(input.ville || "");
   if (input.type === TypeSuggestionCatalogue.ETABLISSEMENT) {
+    const filtreVille = filtreVilleEtablissements(input.paysCode, input.ville);
     const exact = await prismaEducation.etablissement.findFirst({
       where: {
         valide: true,
         paysCode: input.paysCode,
-        ...(villeNormalisee ? { villeNormalisee } : {}),
-        OR: [{ nomNormalise }, { alias: { some: { nomNormalise } } }],
+        AND: [
+          ...(filtreVille ? [filtreVille] : []),
+          { OR: [{ nomNormalise }, { alias: { some: { nomNormalise } } }] },
+        ],
       },
       select: { id: true, nom: true },
     });
@@ -89,10 +91,10 @@ async function correspondanceCanonique(input: SuggestionCatalogueInput) {
 }
 
 async function candidatsCanoniques(input: SuggestionCatalogueInput): Promise<CandidatDeduplication[]> {
-  const villeNormalisee = normaliserEducation(input.ville || "");
   if (input.type === TypeSuggestionCatalogue.ETABLISSEMENT) {
+    const filtreVille = filtreVilleEtablissements(input.paysCode, input.ville);
     const lignes = await prismaEducation.etablissement.findMany({
-      where: { valide: true, paysCode: input.paysCode, ...(villeNormalisee ? { villeNormalisee } : {}) },
+      where: { valide: true, paysCode: input.paysCode, ...(filtreVille || {}) },
       select: {
         id: true,
         nom: true,

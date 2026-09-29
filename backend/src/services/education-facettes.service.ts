@@ -1,7 +1,8 @@
 import { Prisma, type PrismaClient, TypeEtablissement } from "@prisma/client";
+import { estChefLieuMali, normaliserLocalisation } from "../education/localisation-mali";
 
 type NiveauEtablissement = TypeEtablissement | "INSTITUT" | "GRANDE_ECOLE";
-type OptionsFacettes = { niveau?: NiveauEtablissement; pays?: string };
+type OptionsFacettes = { niveau?: NiveauEtablissement; pays?: string; ville?: string };
 type BaseFacettes = Pick<PrismaClient, "paysEducation" | "$queryRaw">;
 
 export function filtreNiveauEtablissements(niveau?: NiveauEtablissement): Prisma.EtablissementWhereInput {
@@ -19,8 +20,9 @@ function conditionNiveau(niveau?: NiveauEtablissement) {
 }
 
 /** Agrégation en base ; Prisma distinct chargeait tous les établissements en mémoire. */
-export async function lireFacettesEtablissements(db: BaseFacettes, { niveau, pays }: OptionsFacettes = {}) {
-  const [paysDisponibles, villesDisponibles] = await Promise.all([
+export async function lireFacettesEtablissements(db: BaseFacettes, { niveau, pays, ville }: OptionsFacettes = {}) {
+  const villeNormalisee = normaliserLocalisation(ville || "");
+  const [paysDisponibles, villesDisponibles, communesDisponibles] = await Promise.all([
     db.paysEducation.findMany({
       where: { etablissements: { some: { valide: true, ...filtreNiveauEtablissements(niveau) } } },
       select: { code: true, nom: true },
@@ -48,9 +50,25 @@ export async function lireFacettesEtablissements(db: BaseFacettes, { niveau, pay
           ORDER BY ville ASC
         `)
       : Promise.resolve([]),
+    // Filtre secondaire « commune », seulement quand une ville est choisie.
+    pays && villeNormalisee
+      ? db.$queryRaw<{ commune: string }[]>(Prisma.sql`
+          SELECT DISTINCT commune
+          FROM Etablissement
+          WHERE valide = true AND commune IS NOT NULL
+            ${conditionNiveau(niveau)}
+            AND paysCode = ${pays}
+            AND villeNormalisee = ${villeNormalisee}
+          ORDER BY commune ASC
+        `)
+      : Promise.resolve([]),
   ]);
+  const villes = villesDisponibles.map(({ ville: libelle }) => libelle).filter(Boolean);
   return {
     pays: paysDisponibles.sort((a, b) => a.nom.localeCompare(b.nom, "fr", { sensitivity: "base" })),
-    villes: villesDisponibles.map(({ ville }) => ville).filter(Boolean),
+    // Mali : seules les villes chefs-lieux de région sont proposées (règle du
+    // 2026-09-29) ; communes et localités restent trouvables par la recherche.
+    villes: pays === "ML" ? villes.filter(estChefLieuMali) : villes,
+    communes: communesDisponibles.map(({ commune }) => commune).filter(Boolean),
   };
 }

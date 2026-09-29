@@ -10,6 +10,7 @@ import {
   TypeEtablissement,
 } from "@prisma/client";
 import { SOURCES_EDUCATIVES } from "../education/catalog-data";
+import type { LocalisationMali } from "../education/localisation-mali";
 import {
   type AdministrationEcoleMali,
   type CampusRegistreEcoleMali,
@@ -71,6 +72,8 @@ export type CandidatIndex = AdministrationEcoleMali & CoordonneesEcoleMali & {
   type: TypeEtablissement;
   statut: StatutEtablissement;
   villeNormalisee: string;
+  /** Colonnes commune/cercle/région déjà renseignées en base : jamais écrasées. */
+  localisationConnue?: boolean;
   signaturesAdministration: Set<string>;
   signaturesHierarchie: Set<string>;
   signaturesBranche: Set<string>;
@@ -101,6 +104,8 @@ type CampusPlanifie = {
   niveaux: Set<NiveauEducation>;
   aliases: Map<string, string>;
   campus: CampusRegistreEcoleMali[];
+  /** Localisation détaillée à écrire (null : déjà connue en base). */
+  localisation: LocalisationMali | null;
 };
 
 export type ResultatCorrespondance = {
@@ -376,6 +381,7 @@ async function chargerIndexExistants() {
       type: etablissement.type,
       statut: etablissement.statut,
       villeNormalisee: etablissement.villeNormalisee,
+      localisationConnue: Boolean(etablissement.communeCode || etablissement.commune || etablissement.region),
       latitude: etablissement.latitude ? Number(etablissement.latitude) : null,
       longitude: etablissement.longitude ? Number(etablissement.longitude) : null,
       region: null,
@@ -540,6 +546,11 @@ const fusionnerCampusPlanifie = (planifie: CampusPlanifie, campus: CampusRegistr
     planifie.ville = campus.ville;
     planifie.villeNormalisee = campus.villeNormalisee;
   }
+  // Première localisation résolue au niveau de la commune (2023 passe avant 2013).
+  if (planifie.localisation && planifie.localisation.resolution !== "commune"
+    && campus.localisation.resolution === "commune") {
+    planifie.localisation = campus.localisation;
+  }
   if (planifie.latitude === null && campus.latitude !== null) planifie.latitude = campus.latitude;
   if (planifie.longitude === null && campus.longitude !== null) planifie.longitude = campus.longitude;
   if (planifie.statut === StatutEtablissement.INCONNU && campus.statut !== StatutEtablissement.INCONNU) {
@@ -613,6 +624,7 @@ function planifier(
           niveaux: new Set(),
           aliases: new Map(),
           campus: [],
+          localisation: candidatExistant?.localisationConnue ? null : campus.localisation,
         };
         plan.set(id, planifie);
       }
@@ -656,6 +668,14 @@ async function garantirSources(codes: SourceRegistreMali[]) {
   return new Map((await prisma.sourceEducative.findMany({ where: { code: { in: codes } } })).map((source) => [source.code as SourceRegistreMali, source]));
 }
 
+const colonnesLocalisation = (localisation: LocalisationMali | null) => ({
+  localite: localisation?.localite ?? null,
+  commune: localisation?.commune ?? null,
+  communeCode: localisation?.communeCode ?? null,
+  cercle: localisation?.cercle ?? null,
+  region: localisation?.region ?? null,
+});
+
 async function appliquerPlan(
   plan: CampusPlanifie[],
   sources: Awaited<ReturnType<typeof garantirSources>>,
@@ -672,6 +692,7 @@ async function appliquerPlan(
         systemeEducatifCode: "ML",
         ville: item.ville,
         villeNormalisee: item.villeNormalisee,
+        ...colonnesLocalisation(item.localisation),
         statut: item.statut,
         latitude: item.latitude,
         longitude: item.longitude,
@@ -696,6 +717,14 @@ async function appliquerPlan(
         statut: item.statut,
       },
     })));
+    // Détail administratif seulement s'il manque encore (jamais d'écrasement).
+    const aLocaliser = lot.filter((item) => item.localisation?.communeCode || item.localisation?.region);
+    if (aLocaliser.length) {
+      await prisma.$transaction(aLocaliser.map((item) => prisma.etablissement.updateMany({
+        where: { id: item.id, commune: null, communeCode: null, region: null },
+        data: colonnesLocalisation(item.localisation),
+      })));
+    }
   }
 
   const niveaux = plan.flatMap((item) => [...item.niveaux].map((niveau) => ({ etablissementId: item.id, niveau })));

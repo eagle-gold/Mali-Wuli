@@ -21,6 +21,7 @@ import {
   resoudreCandidats,
 } from "../education/import-mali-osm-utils";
 import { villeCanoniqueMali } from "../education/normalisation-localisations";
+import { cleLocaliteRapprochementMali, localisationMali } from "../education/localisation-mali";
 
 const prisma = new PrismaClient();
 const ARCHIVE = "https://production-raw-data-api.s3.amazonaws.com/ISO3/MLI/education_facilities/hotosm_mli_education_facilities_osm_geojson.zip";
@@ -67,6 +68,11 @@ type LigneImportee = {
   niveaux: NiveauEducation[];
   ville: string | null;
   villeNormalisee: string;
+  localite: string | null;
+  commune: string | null;
+  communeCode: string | null;
+  cercle: string | null;
+  region: string | null;
   admin3Pcode: string;
   admin3NomNormalise: string;
   localiteNormalisee: string;
@@ -113,19 +119,23 @@ async function enregistrerLot(lot: LigneImportee[], sourceId: string) {
   if (nouvelles.length) {
     const valeurs = Prisma.join(nouvelles.map((item) => Prisma.sql`(
       ${item.id}, ${item.nom}, ${item.nomNormalise}, ${item.type}, ${"ML"}, ${"ML"},
-      ${item.ville}, ${item.villeNormalisee}, ${item.statut},
+      ${item.ville}, ${item.villeNormalisee}, ${item.localite}, ${item.commune}, ${item.communeCode},
+      ${item.cercle}, ${item.region}, ${item.statut},
       ${item.latitude}, ${item.longitude}, true, CURRENT_TIMESTAMP(3), CURRENT_TIMESTAMP(3)
     )`));
     await prisma.$executeRaw(Prisma.sql`
       INSERT INTO Etablissement
         (id, nom, nomNormalise, type, paysCode, systemeEducatifCode,
-         ville, villeNormalisee, statut, latitude, longitude,
+         ville, villeNormalisee, localite, commune, communeCode, cercle, region,
+         statut, latitude, longitude,
          valide, createdAt, updatedAt)
       VALUES ${valeurs}
       ON DUPLICATE KEY UPDATE
         nom=VALUES(nom), nomNormalise=VALUES(nomNormalise), type=VALUES(type),
         systemeEducatifCode=VALUES(systemeEducatifCode),
-        ville=VALUES(ville), villeNormalisee=VALUES(villeNormalisee), statut=VALUES(statut),
+        ville=VALUES(ville), villeNormalisee=VALUES(villeNormalisee),
+        localite=VALUES(localite), commune=VALUES(commune), communeCode=VALUES(communeCode),
+        cercle=VALUES(cercle), region=VALUES(region), statut=VALUES(statut),
         latitude=COALESCE(VALUES(latitude), latitude),
         longitude=COALESCE(VALUES(longitude), longitude), valide=true,
         updatedAt=CURRENT_TIMESTAMP(3)
@@ -162,6 +172,21 @@ async function enregistrerLot(lot: LigneImportee[], sourceId: string) {
       data: { ville: "Bamako", villeNormalisee: "bamako" },
     });
   }
+  // Fiches déjà connues : le détail administratif n'est ajouté que s'il manque
+  // (la ville n'est pas réécrite ici ; voir appliquer-plan-villes.ts).
+  const existantsALocaliser = etablissements.filter((item) => item.existant && (item.communeCode || item.region));
+  if (existantsALocaliser.length) {
+    await prisma.$transaction(existantsALocaliser.map((item) => prisma.etablissement.updateMany({
+      where: { id: item.id, paysCode: "ML", commune: null, communeCode: null, region: null },
+      data: {
+        localite: item.localite,
+        commune: item.commune,
+        communeCode: item.communeCode,
+        cercle: item.cercle,
+        region: item.region,
+      },
+    })));
+  }
   const uniquesParOsm = new Map<string, LigneImportee>();
   for (const item of [...lot].sort((a, b) => a.osmId.localeCompare(b.osmId, "fr"))) {
     if (!uniquesParOsm.has(item.osmId)) uniquesParOsm.set(item.osmId, item);
@@ -189,6 +214,20 @@ async function enregistrerLot(lot: LigneImportee[], sourceId: string) {
     `);
   }
 }
+
+/**
+ * Avec ville = chef-lieu de région (une dizaine de valeurs), la ville seule ne
+ * suffit plus à séparer deux homonymes : la commune entre dans la clé. Une
+ * fiche existante sans commune (pas encore passée par le plan des villes)
+ * garde l'ancienne clé « ville historique », comparée à la commune OSM.
+ */
+const localiteRapprochementExistant = (item: {
+  villeNormalisee: string;
+  commune: string | null;
+  communeCode: string | null;
+}) => (item.communeCode || item.commune
+  ? cleLocaliteRapprochementMali(item)
+  : `ancienne|${villeRapprochementMali(item.villeNormalisee)}`);
 
 const cleCanoniqueExacte = (type: TypeEtablissement, ville: string, nom: string) => (
   `${groupeTypeRapprochement(type)}|${ville}|${nom}`
@@ -232,7 +271,7 @@ async function importer() {
   for (const item of existantsMali) {
     for (const nom of [item.nomNormalise, ...item.alias.map(({ nomNormalise }) => nomNormalise)]) {
       if (!nom) continue;
-      const villeRapprochee = villeRapprochementMali(item.villeNormalisee);
+      const villeRapprochee = localiteRapprochementExistant(item);
       ajouterCandidat(canoniqueExact, cleCanoniqueExacte(item.type, villeRapprochee, nom), item.id);
       const nomRapproche = nomRapprochementEtablissement(nom);
       if (nomRapproche.length >= 4) {
@@ -280,21 +319,43 @@ async function importer() {
         || feature.properties.adm2_name
         || feature.properties.adm1_name
         || null;
-      const { ville, villeNormalisee } = villeCanoniqueMali(villeSource, {
+      // Ancienne règle (commune/localité comme ville) : sert seulement à
+      // retrouver les fiches existantes pas encore localisées.
+      const ancienneVille = villeCanoniqueMali(villeSource, {
         region: feature.properties.adm1_name,
         cercle: feature.properties.adm2_name,
         commune: feature.properties.adm3_name,
       });
+      // Règle du 2026-09-29 : ville = chef-lieu de région, commune par P-code adm3 (COD-AB).
+      const localisation = localisationMali({
+        region: feature.properties.adm1_name || (feature.properties.adm1_pcode ? String(feature.properties.adm1_pcode) : null),
+        cercle: feature.properties.adm2_name,
+        commune: feature.properties.adm3_name,
+        code: pcode(feature.properties.adm3_pcode) || null,
+        codeFiable: true,
+        localite: feature.properties.addr_city || feature.properties.adm4_name || null,
+      });
+      const ville = localisation.ville || ancienneVille.ville;
+      const villeNormalisee = localisation.ville ? localisation.villeNormalisee : ancienneVille.villeNormalisee;
       const referenceId = idParOsm.get(osmId);
-      const villeRapprochee = villeRapprochementMali(villeNormalisee);
-      const cleExacte = cleCanoniqueExacte(classification.type, villeRapprochee, nomNormalise);
+      const villeRapprochee = localisation.ville ? cleLocaliteRapprochementMali(localisation) : "";
+      const villeRapprocheeAncienne = ancienneVille.villeNormalisee
+        ? `ancienne|${villeRapprochementMali(ancienneVille.villeNormalisee)}`
+        : "";
       const nomRapproche = nomRapprochementEtablissement(nom);
-      const cleRapprochee = cleCanoniqueRapprochee(classification.type, villeRapprochee, nom);
-      const resolution = referenceId || !villeRapprochee
+      const cles = [villeRapprochee, villeRapprocheeAncienne].filter(Boolean);
+      const unionCandidats = (index: Map<string, Set<string>>, cleDe: (localite: string) => string) => {
+        const ids = new Set<string>();
+        for (const localite of cles) for (const id of index.get(cleDe(localite)) || []) ids.add(id);
+        return ids.size ? ids : undefined;
+      };
+      const resolution = referenceId || !cles.length
         ? { id: null, candidats: [], ambigu: false }
         : resoudreCandidats(
-          canoniqueExact.get(cleExacte),
-          nomRapproche.length >= 4 ? canoniqueRapproche.get(cleRapprochee) : undefined,
+          unionCandidats(canoniqueExact, (localite) => cleCanoniqueExacte(classification.type, localite, nomNormalise)),
+          nomRapproche.length >= 4
+            ? unionCandidats(canoniqueRapproche, (localite) => cleCanoniqueRapprochee(classification.type, localite, nom))
+            : undefined,
         );
       if (resolution.ambigu) {
         ambiguitesCanoniques += 1;
@@ -302,7 +363,7 @@ async function importer() {
           exemplesAmbiguitesCanoniques.push({
             osmId,
             nom,
-            ville: villeRapprochee,
+            ville: villeRapprochee || villeRapprocheeAncienne,
             candidats: resolution.candidats,
           });
         }
@@ -332,6 +393,11 @@ async function importer() {
         niveaux: classification.niveaux,
         ville,
         villeNormalisee,
+        localite: localisation.localite,
+        commune: localisation.commune,
+        communeCode: localisation.communeCode,
+        cercle: localisation.cercle,
+        region: localisation.region,
         admin3Pcode: pcode(feature.properties.adm3_pcode),
         admin3NomNormalise,
         localiteNormalisee,

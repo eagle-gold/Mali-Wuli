@@ -130,6 +130,9 @@ type InstitutionOption = {
   nom: string;
   paysCode: string;
   ville?: string;
+  // Mali : ville = chef-lieu de région ; la localité et la commune situent l’école.
+  localite?: string;
+  commune?: string;
   type: FormationType;
   statut?: "Public" | "Privé";
   systemeEducatifCode?: string;
@@ -881,7 +884,11 @@ function FormationForm({
   const institutionOptions = useMemo<SearchOption[]>(() => institutions.map((institution) => ({
     id: institution.id,
     label: institution.nom,
-    secondary: [institution.ville, institution.statut].filter(Boolean).join(" · "),
+    secondary: [
+      [institution.localite, institution.commune].filter((valeur, index, liste) => valeur && liste.indexOf(valeur) === index).join(", "),
+      institution.ville,
+      institution.statut,
+    ].filter(Boolean).join(" · "),
   })), [institutions]);
 
   const programmeOptions = useMemo<SearchOption[]>(() => programmes.map((programme) => ({
@@ -1176,7 +1183,9 @@ function FormationForm({
           loading={rechercheVille}
           minChars={2}
           required
-          helperText="Tapez au moins 2 lettres, puis sélectionnez la ville."
+          helperText={form.paysCode === "ML"
+            ? "Tapez au moins 2 lettres : chef-lieu de région, commune ou village."
+            : "Tapez au moins 2 lettres, puis sélectionnez la ville."}
           onChange={(value) => {
             setForm((precedent) => ({
               ...precedent,

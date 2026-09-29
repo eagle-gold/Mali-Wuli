@@ -93,6 +93,43 @@ const variantesVille = (paysCode: string, ville: string) => {
   return [ville];
 };
 
+/**
+ * Filtre « ville » d'une recherche d'établissements. Au Mali, `ville` est le
+ * chef-lieu de région (règle du 2026-09-29) : une ville choisie dans une liste
+ * (onboarding : 47 villes @countrystatecity, dont des communes comme Kati ou
+ * Koutiala) doit aussi trouver les fiches dont c'est la COMMUNE ou la LOCALITÉ.
+ * La collation utf8mb4_unicode_ci rend ces égalités insensibles à la casse et
+ * aux accents.
+ */
+export const filtreVilleEtablissements = (paysCode: string, ville?: string | null): Prisma.EtablissementWhereInput | null => {
+  const brute = (ville || "").trim();
+  const villeNormalisee = normaliserEducation(brute);
+  if (!villeNormalisee) return null;
+  const villes = variantesVille(paysCode, villeNormalisee);
+  if (paysCode !== "ML") return { villeNormalisee: { in: villes } };
+  // « Cercle de San », « Koutiala Cercle » (liste @countrystatecity) : le nom du cercle.
+  const cercle = brute.replace(/^cercle\s+d(?:e\s+|[’']\s*)/i, "").replace(/\s+cercle$/i, "").trim();
+  if (cercle !== brute) {
+    return { OR: [{ villeNormalisee: { in: villes } }, { cercle }, { commune: cercle }] };
+  }
+  return {
+    OR: [
+      { villeNormalisee: { in: villes } },
+      { commune: brute },
+      { localite: brute },
+    ],
+  };
+};
+
+/** Un terme de recherche porte sur le nom, les alias et, au Mali, la commune ou la localité. */
+export const filtreTermeEtablissement = (terme: string, paysCode?: string | null): Prisma.EtablissementWhereInput => ({
+  OR: [
+    { nomNormalise: { contains: terme } },
+    { alias: { some: { nomNormalise: { contains: terme } } } },
+    ...(paysCode === "ML" ? [{ commune: { contains: terme } }, { localite: { contains: terme } }] : []),
+  ],
+});
+
 export async function chercherEtablissements(params: {
   paysCode: string;
   type: TypeRechercheEtablissement;
@@ -102,21 +139,15 @@ export async function chercherEtablissements(params: {
 }) {
   const recherche = normaliserEducation(params.recherche || "");
   const termesRecherche = recherche.split(" ").filter(Boolean);
-  const ville = normaliserEducation(params.ville || "");
-  const villes = variantesVille(params.paysCode, ville);
+  const filtreVille = filtreVilleEtablissements(params.paysCode, params.ville);
   const etablissements = await prismaEducation.etablissement.findMany({
     where: {
       paysCode: params.paysCode,
       valide: true,
       AND: [
         filtreType(params.type),
-        ...(ville ? [{ villeNormalisee: { in: villes } }] : []),
-        ...termesRecherche.map((terme) => ({
-          OR: [
-            { nomNormalise: { contains: terme } },
-            { alias: { some: { nomNormalise: { contains: terme } } } },
-          ],
-        })),
+        ...(filtreVille ? [filtreVille] : []),
+        ...termesRecherche.map((terme) => filtreTermeEtablissement(terme, params.paysCode)),
       ],
     },
     include: {
@@ -132,6 +163,10 @@ export async function chercherEtablissements(params: {
     nom: etablissement.nom,
     paysCode: etablissement.paysCode,
     ville: etablissement.ville || undefined,
+    localite: etablissement.localite || undefined,
+    commune: etablissement.commune || undefined,
+    cercle: etablissement.cercle || undefined,
+    region: etablissement.region || undefined,
     type: params.type,
     statut: statutPublic(etablissement.statut),
     source: etablissement.sources[0]?.source.code || "mali-wuli",

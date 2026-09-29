@@ -5,6 +5,8 @@ export type TonEtablissement = "vert" | "orange" | "sable" | "olive";
 export type EtablissementListe = {
   id: string; sigle: string | null; nom: string; niveau: NiveauEtablissement; type: TypeEtablissementApi;
   paysCode: string; pays: string; ville: string | null; statut: "public" | "privé" | null;
+  // Mali : ville = chef-lieu de région ; détail administratif ci-dessous.
+  localite?: string | null; commune?: string | null; cercle?: string | null; region?: string | null;
   ton: TonEtablissement; resume: string | null; note: number | null; nombreAvis: number;
   membres: number; promotions: number; insertion: number | null; repondantsInsertion: number;
 };
@@ -12,7 +14,7 @@ export type EtablissementListe = {
 export type ReponseListeEtablissements = {
   etablissements: EtablissementListe[];
   pagination: { page: number; limite: number; total: number; totalPages: number };
-  filtres: { pays: Array<{ code: string; nom: string }>; villes: string[] };
+  filtres: { pays: Array<{ code: string; nom: string }>; villes: string[]; communes?: string[] };
 };
 
 export type EtablissementDetail = EtablissementListe & {

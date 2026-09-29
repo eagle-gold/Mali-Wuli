@@ -4,6 +4,7 @@ import {
   TypeEtablissement,
 } from "@prisma/client";
 import { villeCanoniqueMali } from "./normalisation-localisations";
+import { localisationMali, type LocalisationMali } from "./localisation-mali";
 
 export type SourceRegistreMali = "ocha-men-mali-schools-2023" | "unicef-men-mali-schools-2013";
 
@@ -38,8 +39,11 @@ export type CampusRegistreEcoleMali = AdministrationEcoleMali & CoordonneesEcole
   nomCampusNormalise: string;
   nomRapprochement: string;
   aliases: string[];
+  /** Chef-lieu de la région (règle du 2026-09-29). */
   ville: string | null;
   villeNormalisee: string;
+  /** Commune officielle, P-code, cercle, région, localité (colonnes Etablissement). */
+  localisation: LocalisationMali;
   type: TypeEtablissement;
   statut: StatutEtablissement;
   niveaux: NiveauEducation[];
@@ -181,7 +185,24 @@ export const statutDepuisRegistreMali = (statuts: Array<string | null>) => {
   return StatutEtablissement.INCONNU;
 };
 
-const villeDepuisAdministration = (administration: AdministrationEcoleMali) => {
+const codeCommuneBrut = (ligne: LigneRegistreEcoleMali) => {
+  const code = ligne.donneesBrutes?.codeCommune;
+  return typeof code === "string" ? code : null;
+};
+
+/**
+ * Règle du 2026-09-29 : ville = chef-lieu de la région OCHA de la commune
+ * (référentiel COD-AB), la commune, le cercle, la région et la localité sont
+ * conservés à part. Le P-code communal du registre 2023 est souvent décalé :
+ * il ne sert que d'indice après le nom dans le cercle. Sans région reconnue,
+ * l'ancienne règle (localité, Bamako canonique) reste le dernier recours.
+ */
+export const localisationDepuisAdministration = (
+  administration: AdministrationEcoleMali,
+  codeCommune?: string | null,
+): LocalisationMali => {
+  const localisation = localisationMali({ ...administration, code: codeCommune, codeFiable: false });
+  if (localisation.ville) return localisation;
   const bamako = [administration.region, administration.cercle, administration.commune]
     .some((item) => /(?:^|\s)bamako(?:\s|$)/.test(normaliserTexteEcoleMali(item || "")))
     || /^commune\s+(?:[1-6]|i{1,3}|iv|v|vi)$/.test(normaliserTexteEcoleMali(administration.commune || ""));
@@ -191,7 +212,8 @@ const villeDepuisAdministration = (administration: AdministrationEcoleMali) => {
       || administration.commune?.replace(COMMUNE_PREFIXE, "").trim()
       || administration.cercle
       || administration.region;
-  return villeCanoniqueMali(valeur || null, administration);
+  const ancienne = villeCanoniqueMali(valeur || null, administration);
+  return { ...localisation, ville: ancienne.ville, villeNormalisee: ancienne.villeNormalisee };
 };
 
 const intersectionNonVide = (a: string[], b: string[]) => {
@@ -286,7 +308,10 @@ const construireCampus = (lignes: LigneRegistreEcoleMali[], index: number): Camp
     commune: premiere.commune,
     localite: premiere.localite,
   };
-  const ville = villeDepuisAdministration(administration);
+  const localisation = localisationDepuisAdministration(
+    administration,
+    lignes.map(codeCommuneBrut).find(Boolean) || null,
+  );
   const nomCampusNormalise = normaliserNomCampusMali(nom);
   return {
     cle: [
@@ -303,8 +328,9 @@ const construireCampus = (lignes: LigneRegistreEcoleMali[], index: number): Camp
     aliases: [...new Map(lignes.map((ligne) => [normaliserTexteEcoleMali(ligne.nom), ligne.nom.trim()])).values()]
       .filter((alias) => normaliserTexteEcoleMali(alias) !== normaliserTexteEcoleMali(nom)),
     ...administration,
-    ville: ville.ville,
-    villeNormalisee: ville.villeNormalisee,
+    ville: localisation.ville,
+    villeNormalisee: localisation.villeNormalisee,
+    localisation,
     latitude: coordonnees.latitude,
     longitude: coordonnees.longitude,
     // Dans ces deux registres maliens, F1/F2 sont les deux cycles de

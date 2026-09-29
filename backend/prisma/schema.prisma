@@ -271,6 +271,14 @@ model Etablissement {
   systemeEducatifCode String                   @db.VarChar(16)
   ville               String?
   villeNormalisee     String                   @default("")
+  // Détail administratif (Mali : `ville` = chef-lieu de région, le reste ici).
+  // `localite` = village ou quartier (ancienne valeur de `ville`).
+  localite            String?
+  commune             String?
+  // P-code COD-AB OCHA (ex. ML090105) ou code provisoire « ML23:… ».
+  communeCode         String?                  @db.VarChar(24)
+  cercle              String?
+  region              String?
   statut              StatutEtablissement      @default(INCONNU)
   habilite            Boolean?
   description         String?
@@ -292,6 +300,7 @@ model Etablissement {
   // ROR, URN…), pas sur un libellé humain.
   @@index([paysCode, nomNormalise, villeNormalisee])
   @@index([paysCode, type, villeNormalisee])
+  @@index([paysCode, communeCode])
   @@index([systemeEducatifCode])
   @@index([nomNormalise])
 }

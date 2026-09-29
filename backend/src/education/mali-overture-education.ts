@@ -4,6 +4,12 @@ import {
   TypeEtablissement,
 } from "@prisma/client";
 import { villeCanoniqueMali } from "./normalisation-localisations";
+import {
+  communeParVoisinsMali,
+  localisationMali,
+  type LocalisationMali,
+  type ReferenceVoisinMali,
+} from "./localisation-mali";
 
 export type AdresseOverture = {
   freeform?: string | null;
@@ -474,4 +480,38 @@ export const lireFeaturesOverture = (contenu: string): FeatureOverture[] => {
       throw new Error(`NDJSON Overture invalide à la ligne ${index + 1}: ${error instanceof Error ? error.message : "JSON invalide"}`);
     }
   });
+};
+
+/**
+ * Règle du 2026-09-29 (ville = chef-lieu de région) pour un lieu Overture, qui
+ * n'a ni commune ni cercle : la localité est rapprochée d'un nom de commune
+ * unique au Mali, sinon des fiches voisines déjà localisées (k=5, 3 km,
+ * unanimité), sinon de la région Overture ; un quartier de Bamako reste Bamako.
+ * Sans rien de tout cela, l'ancienne ville (localité) est conservée.
+ */
+export const localisationOvertureMali = (
+  ecole: Pick<EcoleOverture, "ville" | "villeNormalisee" | "region" | "latitude" | "longitude" | "donneesBrutes">,
+  voisins: readonly ReferenceVoisinMali[] = [],
+): LocalisationMali => {
+  const adresse = (ecole.donneesBrutes?.adresse || {}) as AdresseOverture;
+  const localite = adresse.locality?.trim() || ecole.ville;
+  const region = ecole.villeNormalisee === "bamako" ? "Bamako" : ecole.region;
+  const parNom = localisationMali({ commune: localite, region, localite });
+  if (parNom.resolution === "commune") return parNom;
+  const voisine = communeParVoisinsMali(ecole, voisins);
+  if (voisine && (!parNom.region || parNom.region === voisine.region)) {
+    return localisationMali({ code: voisine.code, codeFiable: true, localite });
+  }
+  // Région seule : la localité n'est pas une commune reconnue.
+  if (parNom.ville) return localisationMali({ region, localite });
+  return {
+    ville: ecole.ville,
+    villeNormalisee: ecole.villeNormalisee,
+    localite: null,
+    commune: null,
+    communeCode: null,
+    cercle: null,
+    region: null,
+    resolution: "aucune",
+  };
 };

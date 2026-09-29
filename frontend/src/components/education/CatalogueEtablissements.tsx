@@ -5,6 +5,7 @@ import Link from "next/link";
 import { FormEvent, useEffect, useState } from "react";
 import api from "@/lib/api";
 import NoteEtoiles from "./NoteEtoiles";
+import { nomAvecLocalite } from "@/lib/education/localisation-etablissement";
 import type { EtablissementListe, ReponseListeEtablissements, TonEtablissement } from "./types-etablissements";
 
 const TONS: Record<TonEtablissement, string> = {
@@ -29,6 +30,7 @@ export default function CatalogueEtablissements() {
   const [niveau, setNiveau] = useState("");
   const [pays, setPays] = useState("");
   const [ville, setVille] = useState("");
+  const [commune, setCommune] = useState("");
   const [recherche, setRecherche] = useState("");
   const [requete, setRequete] = useState("");
   const [page, setPage] = useState(1);
@@ -41,20 +43,20 @@ export default function CatalogueEtablissements() {
     const controleur = new AbortController();
     setChargement(true); setErreur("");
     api.get<ReponseListeEtablissements>("/education/etablissements", {
-      params: { ...(niveau && { niveau }), ...(pays && { pays }), ...(ville && { ville }), ...(requete && { q: requete }), page, limite: 12 },
+      params: { ...(niveau && { niveau }), ...(pays && { pays }), ...(ville && { ville }), ...(ville && commune && { commune }), ...(requete && { q: requete }), page, limite: 12 },
       signal: controleur.signal,
     }).then(({ data }) => setReponse(data)).catch((cause) => {
       if (!controleur.signal.aborted) setErreur(messageErreur(cause));
     }).finally(() => { if (!controleur.signal.aborted) setChargement(false); });
     return () => controleur.abort();
-  }, [niveau, page, pays, requete, revision, ville]);
+  }, [commune, niveau, page, pays, requete, revision, ville]);
 
   const rechercher = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setRequete(recherche.trim());
     setPage(1);
   };
-  const reinitialiser = () => { setNiveau(""); setPays(""); setVille(""); setRecherche(""); setRequete(""); setPage(1); };
+  const reinitialiser = () => { setNiveau(""); setPays(""); setVille(""); setCommune(""); setRecherche(""); setRequete(""); setPage(1); };
   const etablissements = reponse?.etablissements || [];
   const pagination = reponse?.pagination;
 
@@ -69,7 +71,7 @@ export default function CatalogueEtablissements() {
         <form onSubmit={rechercher} role="search" className="mt-6 flex min-w-0 flex-col gap-3 sm:flex-row">
           <label className="min-w-0 flex-1">
             <span className="sr-only">Rechercher un établissement</span>
-            <input value={recherche} onChange={(event) => setRecherche(event.target.value)} maxLength={120} placeholder="Nom, sigle ou mot-clé…" className="h-14 w-full rounded-xl border border-[#eadfce] bg-[#fffdf9] px-4 text-base outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20" />
+            <input value={recherche} onChange={(event) => setRecherche(event.target.value)} maxLength={120} placeholder="Nom, sigle, commune ou localité…" className="h-14 w-full rounded-xl border border-[#eadfce] bg-[#fffdf9] px-4 text-base outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20" />
           </label>
           <button type="submit" className="min-h-14 rounded-xl bg-[#0d6738] px-6 py-3 font-bold text-white transition hover:bg-[#095a30] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2">Rechercher</button>
         </form>
@@ -77,14 +79,17 @@ export default function CatalogueEtablissements() {
         <div className="mt-4 flex flex-col gap-4 min-[900px]:flex-row min-[900px]:items-end">
           <div className="grid min-w-0 flex-1 gap-4 sm:grid-cols-2 min-[900px]:max-w-[930px] min-[900px]:grid-cols-3">
             <label className="block min-w-0"><span className="mb-2 block text-xs font-bold uppercase tracking-[.09em] text-[#766957]">Niveau</span>
-              <select value={niveau} onChange={(event) => { setNiveau(event.target.value); setVille(""); setPage(1); }} className="h-14 w-full rounded-xl border border-[#eadfce] bg-[#fffdf9] px-4 font-semibold outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"><option value="">Tous les niveaux</option>{NIVEAUX.map(([valeur, libelle]) => <option key={valeur} value={valeur}>{libelle}</option>)}</select>
+              <select value={niveau} onChange={(event) => { setNiveau(event.target.value); setVille(""); setCommune(""); setPage(1); }} className="h-14 w-full rounded-xl border border-[#eadfce] bg-[#fffdf9] px-4 font-semibold outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"><option value="">Tous les niveaux</option>{NIVEAUX.map(([valeur, libelle]) => <option key={valeur} value={valeur}>{libelle}</option>)}</select>
             </label>
             <label className="block min-w-0"><span className="mb-2 block text-xs font-bold uppercase tracking-[.09em] text-[#766957]">Pays</span>
-              <select value={pays} onChange={(event) => { setPays(event.target.value); setVille(""); setPage(1); }} className="h-14 w-full rounded-xl border border-[#eadfce] bg-[#fffdf9] px-4 font-semibold outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"><option value="">Tous les pays</option>{(reponse?.filtres.pays || []).map((option) => <option key={option.code} value={option.code}>{option.nom}</option>)}</select>
+              <select value={pays} onChange={(event) => { setPays(event.target.value); setVille(""); setCommune(""); setPage(1); }} className="h-14 w-full rounded-xl border border-[#eadfce] bg-[#fffdf9] px-4 font-semibold outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"><option value="">Tous les pays</option>{(reponse?.filtres.pays || []).map((option) => <option key={option.code} value={option.code}>{option.nom}</option>)}</select>
             </label>
             <label className="block min-w-0 sm:col-span-2 min-[900px]:col-span-1"><span className="mb-2 block text-xs font-bold uppercase tracking-[.09em] text-[#766957]">Ville</span>
-              <select value={ville} disabled={!pays} onChange={(event) => { setVille(event.target.value); setPage(1); }} className="h-14 w-full rounded-xl border border-[#eadfce] bg-[#fffdf9] px-4 font-semibold outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 disabled:cursor-not-allowed disabled:opacity-60"><option value="">{pays ? "Toutes les villes" : "Choisissez d’abord un pays"}</option>{(reponse?.filtres.villes || []).map((option) => <option key={option}>{option}</option>)}</select>
+              <select value={ville} disabled={!pays} onChange={(event) => { setVille(event.target.value); setCommune(""); setPage(1); }} className="h-14 w-full rounded-xl border border-[#eadfce] bg-[#fffdf9] px-4 font-semibold outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 disabled:cursor-not-allowed disabled:opacity-60"><option value="">{pays ? "Toutes les villes" : "Choisissez d’abord un pays"}</option>{(reponse?.filtres.villes || []).map((option) => <option key={option}>{option}</option>)}</select>
             </label>
+            {ville && (commune || !!reponse?.filtres.communes?.length) && <label className="block min-w-0"><span className="mb-2 block text-xs font-bold uppercase tracking-[.09em] text-[#766957]">Commune</span>
+              <select value={commune} onChange={(event) => { setCommune(event.target.value); setPage(1); }} className="h-14 w-full rounded-xl border border-[#eadfce] bg-[#fffdf9] px-4 font-semibold outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"><option value="">Toutes les communes</option>{(reponse?.filtres.communes || []).map((option) => <option key={option}>{option}</option>)}</select>
+            </label>}
           </div>
           <p className="pb-4 text-sm text-[#887764] min-[900px]:ml-auto" aria-live="polite">{chargement && !reponse ? "Chargement…" : `${pagination?.total || 0} établissement${(pagination?.total || 0) > 1 ? "s" : ""}`}</p>
         </div>
@@ -113,7 +118,7 @@ function EtatMessage({ titre, texte, children }: { titre: string; texte: string;
 function CarteEtablissement({ etablissement }: { etablissement: EtablissementListe }) {
   const estSuperieur = etablissement.type === "UNIVERSITE" || etablissement.type === "ECOLE_SUPERIEURE";
   return <Link href={`/education/etablissements/${encodeURIComponent(etablissement.id)}`} className="group flex min-h-[272px] flex-col rounded-[18px] border border-[#eadfce] bg-[#fffdf9] p-5 transition hover:-translate-y-0.5 hover:border-[#d5bd98] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#0d6738] sm:p-7">
-    <div className="flex min-w-0 items-start gap-4"><span className={`flex h-14 min-w-14 shrink-0 items-center justify-center rounded-xl px-2 text-center text-sm font-bold sm:h-16 sm:min-w-16 ${TONS[etablissement.ton]}`}>{sigle(etablissement)}</span><span className="min-w-0 flex-1"><strong className="titre-element block group-hover:text-[#0d6738]">{etablissement.nom}</strong><span className="mt-1 block text-sm text-[#887764]">{[etablissement.niveau, [etablissement.ville, etablissement.pays].filter(Boolean).join(", "), etablissement.statut].filter(Boolean).join(" · ")}</span><span className="mt-2 flex flex-wrap items-center gap-2">{etablissement.note === null ? <span className="text-sm text-[#887764]">Pas encore d’avis</span> : <><NoteEtoiles note={etablissement.note} compacte /><b className="text-sm">{etablissement.note.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b><span className="text-sm text-[#887764]">({etablissement.nombreAvis} avis)</span></>}</span></span></div>
+    <div className="flex min-w-0 items-start gap-4"><span className={`flex h-14 min-w-14 shrink-0 items-center justify-center rounded-xl px-2 text-center text-sm font-bold sm:h-16 sm:min-w-16 ${TONS[etablissement.ton]}`}>{sigle(etablissement)}</span><span className="min-w-0 flex-1"><strong className="titre-element block group-hover:text-[#0d6738]">{nomAvecLocalite(etablissement.nom, etablissement)}</strong><span className="mt-1 block text-sm text-[#887764]">{[etablissement.niveau, [etablissement.ville, etablissement.pays].filter(Boolean).join(", "), etablissement.statut].filter(Boolean).join(" · ")}</span><span className="mt-2 flex flex-wrap items-center gap-2">{etablissement.note === null ? <span className="text-sm text-[#887764]">Pas encore d’avis</span> : <><NoteEtoiles note={etablissement.note} compacte /><b className="text-sm">{etablissement.note.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</b><span className="text-sm text-[#887764]">({etablissement.nombreAvis} avis)</span></>}</span></span></div>
     <p className="my-5 flex-1 text-sm leading-relaxed text-[#40372f] sm:text-base">{etablissement.resume || "Aucune description n’a encore été renseignée pour cet établissement."}</p>
     <dl className={`grid grid-cols-2 gap-4 border-t border-[#eee3d2] pt-4 ${estSuperieur ? "sm:grid-cols-3" : ""}`}><Stat valeur={etablissement.membres} libelle="membres affiliés" couleur="text-[#0d6738]" /><Stat valeur={etablissement.promotions} libelle="promotions représentées" couleur="text-[#765131]" />{estSuperieur && <Stat valeur={etablissement.insertion === null ? "—" : `${etablissement.insertion} %`} libelle={etablissement.insertion === null ? "pas encore de suivi exploitable" : `insertion à 12 mois · ${etablissement.repondantsInsertion} répondant${etablissement.repondantsInsertion > 1 ? "s" : ""}`} couleur={etablissement.insertion === null ? "text-[#a39583]" : "text-[#0d6738]"} />}</dl>
   </Link>;

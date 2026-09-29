@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { readdir, readFile } from "node:fs/promises";
 import path from "node:path";
 import type { ICity, IState } from "@countrystatecity/countries";
+import { CHEFS_LIEUX_MALI } from "@/lib/education/localisation-etablissement";
 
 export const runtime = "nodejs";
 
@@ -72,9 +73,16 @@ const chargerVilles = (codePays: string) => {
       }
     }
 
-    return [...villesUniques.values()].sort((a, b) =>
+    const villes = [...villesUniques.values()].sort((a, b) =>
       a.nom.localeCompare(b.nom, "fr", { sensitivity: "base" }),
     );
+    if (codePays !== "ML") return villes;
+    // Au Mali, la ville d'un établissement est le chef-lieu de sa région : les
+    // chefs-lieux sont toujours proposés (Ménaka, Taoudéni, Tombouctou manquent
+    // à la liste @countrystatecity) et passent en tête de la liste complète.
+    const chefsLieux: Ville[] = CHEFS_LIEUX_MALI.map((nom, index) => ({ id: -(index + 1), nom, region: "Chef-lieu de région" }));
+    const cles = new Set(chefsLieux.map(({ nom }) => normaliser(nom)));
+    return [...chefsLieux, ...villes.filter(({ nom }) => !cles.has(normaliser(nom)) && normaliser(nom) !== "timbuktu")];
   })();
 
   cacheVilles.set(codePays, chargement);

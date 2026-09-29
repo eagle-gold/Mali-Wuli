@@ -37,6 +37,7 @@ export async function paginerParMembresEligibles<T extends { id: string }>(
 
 const ETABLISSEMENT_LISTE = {
   id: true, nom: true, sigle: true, type: true, ville: true, statut: true,
+  localite: true, commune: true, cercle: true, region: true,
   description: true, paysCode: true, pays: { select: { nom: true } },
   niveaux: { select: { niveau: true } },
 } as const;

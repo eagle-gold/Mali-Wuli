@@ -19,6 +19,7 @@ import {
   chercherEtablissements,
   chercherProgrammes,
   chercherReferences,
+  filtreVilleEtablissements,
   normaliserEducation,
   prismaEducation,
   type TypeRechercheEtablissement,
@@ -48,6 +49,8 @@ const listeEtablissementsSchema = z.object({
   ]).optional(),
   pays: z.string().trim().regex(/^[A-Za-z]{2}$/).transform((code) => code.toUpperCase()).optional(),
   ville: z.string().trim().max(120).optional(),
+  // Filtre secondaire, proposé quand une ville (chef-lieu au Mali) est choisie.
+  commune: z.string().trim().max(120).optional(),
   q: z.string().trim().max(120).default(""),
   page: z.coerce.number().int().min(1).default(1),
   limite: z.coerce.number().int().min(1).max(50).default(12),
@@ -304,30 +307,36 @@ router.get("/etablissements", authenticate, async (req, res) => {
   }
 
   try {
-    const { niveau, pays, ville, q, page, limite } = validation.data;
+    const { niveau, pays, ville, commune, q, page, limite } = validation.data;
     const termes = normaliserEducation(q).split(" ").filter(Boolean);
     const villeNormalisee = normaliserEducation(ville || "");
+    // Mali : ville = chef-lieu de région ; une commune ou une localité saisie
+    // comme « ville » reste trouvée (filtreVilleEtablissements).
+    const filtreVille = pays === "ML"
+      ? filtreVilleEtablissements("ML", ville)
+      : villeNormalisee ? { villeNormalisee: { contains: villeNormalisee } } : null;
     const baseWhere: Prisma.EtablissementWhereInput = {
       valide: true,
       ...filtreNiveau(niveau),
       ...(pays ? { paysCode: pays } : {}),
-      ...(villeNormalisee ? { villeNormalisee: { contains: villeNormalisee } } : {}),
-      ...(termes.length
-        ? {
-            AND: termes.map((terme) => ({
-              OR: [
-                { nomNormalise: { contains: terme } },
-                { sigle: { contains: terme } },
-                { alias: { some: { nomNormalise: { contains: terme } } } },
-              ],
-            })),
-          }
-        : {}),
+      AND: [
+        ...(filtreVille ? [filtreVille] : []),
+        ...(commune ? [{ commune }] : []),
+        ...termes.map((terme) => ({
+          OR: [
+            { nomNormalise: { contains: terme } },
+            { sigle: { contains: terme } },
+            { alias: { some: { nomNormalise: { contains: terme } } } },
+            { commune: { contains: terme } },
+            { localite: { contains: terme } },
+          ],
+        })),
+      ],
     };
     const [etablissements, total, filtres] = await Promise.all([
       listerPageEtablissementsParMembres(prisma, baseWhere, { page, limite }),
       prisma.etablissement.count({ where: baseWhere }),
-      lireFacettesEtablissements(prisma, { niveau, pays }),
+      lireFacettesEtablissements(prisma, { niveau, pays, ville }),
     ]);
 
     const ids = etablissements.map(({ id }) => id);
@@ -382,6 +391,10 @@ router.get("/etablissements", authenticate, async (req, res) => {
         paysCode: etablissement.paysCode,
         pays: etablissement.pays.nom,
         ville: etablissement.ville,
+        localite: etablissement.localite,
+        commune: etablissement.commune,
+        cercle: etablissement.cercle,
+        region: etablissement.region,
         statut: libelleStatut(etablissement.statut),
         ton: tonaliteDepuisId(etablissement.id),
         resume: etablissement.description,
@@ -418,6 +431,10 @@ router.get("/etablissements/:id", authenticate, async (req: AuthRequest, res) =>
         sigle: true,
         type: true,
         ville: true,
+        localite: true,
+        commune: true,
+        cercle: true,
+        region: true,
         statut: true,
         description: true,
         siteWeb: true,
@@ -602,6 +619,10 @@ router.get("/etablissements/:id", authenticate, async (req: AuthRequest, res) =>
         paysCode: etablissement.paysCode,
         pays: etablissement.pays.nom,
         ville: etablissement.ville,
+        localite: etablissement.localite,
+        commune: etablissement.commune,
+        cercle: etablissement.cercle,
+        region: etablissement.region,
         statut: libelleStatut(etablissement.statut),
         description: etablissement.description,
         siteWeb: etablissement.siteWeb,

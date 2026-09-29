@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-09-29 (plan des villes du Mali, rien d'appliqué).
+LIBRE — dernière session : Claude, 2026-09-29 (ville = chef-lieu de région au Mali : plan, migration écrite, script, imports, API, interface ; rien d'appliqué ni commité).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,17 @@ LIBRE — dernière session : Claude, 2026-09-29 (plan des villes du Mali, rien 
 ```
 
 ## Entrées
+
+### 2026-09-29 09:30 CEST — Claude — Ville = chef-lieu de région (Mali) : plan, migration, script, imports, API, interface
+- Statut : TERMINÉ
+- Demande de l'utilisateur : nouvelle règle du propriétaire (remplace « ville = commune ») : `ville` = chef-lieu de la région OCHA de la commune ; détails dans `localite`/`commune`/`communeCode`/`cercle`/`region`. Plan régénéré, migration additive écrite (non appliquée), script `appliquer-plan-villes.ts`, imports, API, interface, tests. Ni commit, ni push, ni déploiement, ni migration, ni --apply.
+- État Git au début : `~/dev/mali-wuli`, branche main, HEAD ca1963b ; seul `PASSATION_IA/output/2026-09-29-villes-mali/extract-villes.json` non suivi ; aucune modification partielle d'un agent précédent (git diff vide).
+- Statut final : TERMINÉ (code écrit et testé, rien d'appliqué).
+- Fichiers touchés : backend `prisma/schema.prisma`, `prisma/migrations/20260929120000_etablissement_localisation/migration.sql`, `src/education/{localisation-mali.ts,localisation-mali.test.ts,data/communes-mali.json,catalog-service.ts,catalog-suggestion-service.ts,mali-school-registries.ts,mali-overture-education.ts}`, `src/scripts/{appliquer-plan-villes.ts,import-mali-school-registries.ts,import-mali-osm-education.ts,import-mali-overture-education.ts}`, `src/services/{education-facettes.service.ts,education-facettes.test.ts,priorite-membres.service.ts}`, `src/routes/education.routes.ts` ; frontend `src/lib/education/localisation-etablissement(.test).ts`, `src/components/education/{FicheEtablissement,CatalogueEtablissements,types-etablissements}.tsx/ts`, `src/components/onboarding/StepFormations.tsx`, `src/app/api/locations/cities/route.ts` ; sorties `PASSATION_IA/output/2026-09-29-villes-mali/{plan-villes-region.json,resume-region.md,stats-region.json,outils/*region*.py,outils/exporter-referentiel-backend.py}`.
+- Fait et vérifié : plan 19 720 fiches (HAUTE 18 456 + MOYENNE 1 071 appliquées, BASSE 193 inchangées) ; villeNormalisee distinctes 5 227 → 147 (10 chefs-lieux + 137 valeurs BASSE ; 30 si les 136 BASSE à région unique étaient appliquées) ; SQL identique à `prisma migrate diff` ; `prisma generate`, `tsc --noEmit` OK ; tests backend 207/207 ; frontend type-check OK, tests 12/12 ; localisationMali recoupe le plan sur 99 % des lignes sources.
+- Actions à effet externe : SELECT de collation seulement (utf8mb4_unicode_ci). Aucune migration, aucun --apply, aucun commit.
+- Prochaine action : accord du propriétaire → sauvegarde → migration → simulation `appliquer-plan-villes.ts` (plan valable jusqu'au 2026-09-30T12:44Z, sinon réextraire) → --apply → déploiement backend + frontend.
+- Preuves : `PASSATION_IA/output/2026-09-29-villes-mali/resume-region.md`
 
 ### 2026-09-29 — Claude — Plan de normalisation des villes (Mali)
 - Statut : TERMINÉ (plan seulement)
