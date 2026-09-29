@@ -84,7 +84,7 @@ export function donneesLigne(ligne: LignePlanVille) {
     villeNormalisee,
     localite: texte(ligne.localite),
     commune: texte(ligne.commune),
-    communeCode: texte(ligne.communeCode, 24),
+    communeCode: texte(ligne.communeCode, 64),
     cercle: texte(ligne.cercle),
     region: texte(ligne.region),
   };

@@ -4,7 +4,7 @@
 -- AlterTable
 ALTER TABLE `Etablissement` ADD COLUMN `localite` VARCHAR(191) NULL,
     ADD COLUMN `commune` VARCHAR(191) NULL,
-    ADD COLUMN `communeCode` VARCHAR(24) NULL,
+    ADD COLUMN `communeCode` VARCHAR(64) NULL,
     ADD COLUMN `cercle` VARCHAR(191) NULL,
     ADD COLUMN `region` VARCHAR(191) NULL;
 
