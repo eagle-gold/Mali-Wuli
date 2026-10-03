@@ -104,7 +104,7 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
           Bienvenue sur Mali Wuli !
         </h1>
         <p className="mx-auto mt-4 max-w-[730px] text-center text-base font-semibold leading-relaxed text-[#17120f] sm:text-lg">
-          Votre profil est en cours de validation par l’équipe. Vous recevrez un e-mail dès que vous pourrez accéder à la communauté.
+          Votre profil est enregistré. Vous avez dès maintenant accès à toute la communauté.
         </p>
 
         <div className="mt-8 rounded-[16px] bg-[#f6efe3] px-4 py-6 sm:px-7">
@@ -154,7 +154,7 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
           }}
           className="mt-7 w-full rounded-[11px] bg-[#0d6738] px-6 py-4 text-base font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 sm:text-lg"
         >
-          Découvrir votre profil en attendant
+          Découvrir votre profil
         </button>
         <button
           type="button"

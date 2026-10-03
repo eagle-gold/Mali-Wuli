@@ -6,19 +6,11 @@ import { prismaEducation } from "../education/catalog-service";
 import { prisma } from "../lib/prisma";
 import { authenticate, requireRole, requirePermission, type AuthRequest } from "../middlewares/auth.middleware";
 import { revoquerSocketsUtilisateur } from "../realtime/socket";
-import { envoyerEmail } from "../services/email.service";
-import { EMAIL_ADMIN_PRINCIPAL, roleEffectif, droitsUtilisateur } from "../lib/roles";
 import { COMMENTAIRE_ACTIF, PUBLICATION_ACTIVE } from "../services/corbeille.service";
 import { creerServiceSignalements, ErreurSignalement, filtresSignalementsSchema, traitementSignalementSchema, type ServiceSignalements } from "../services/signalement.service";
 import { creerServiceGestionMembres, ErreurGestionMembres, filtresMembres, changementRolesSchema, changementStatutSchema, type ServiceGestionMembres } from "../services/admin-membres.service";
 
-const gestionProduction = creerServiceGestionMembres(prisma, {
-  revoquerSockets: revoquerSocketsUtilisateur,
-  notifierInscription: async (user, valide, raison) => {
-    const texte = valide ? "Votre profil Mali Wuli est validé. Vous pouvez maintenant accéder à toute la communauté." : raison || "Votre profil ne peut pas encore être validé. Contactez l’équipe si vous souhaitez plus d’informations.";
-    return envoyerEmail({ destinataire: user.email, sujet: valide ? "Votre profil Mali Wuli est validé" : "Mise à jour de votre inscription Mali Wuli", texte, html: `<h1>Mali Wuli</h1><p>${texte.replace(/[<>&]/g, "")}</p>` });
-  },
-});
+const gestionProduction = creerServiceGestionMembres(prisma, { revoquerSockets: revoquerSocketsUtilisateur });
 export function creerRouteurAdmin(gestion: ServiceGestionMembres = gestionProduction, options: { signalements?: ServiceSignalements } = {}) {
 const router = Router();
 const signalements = options.signalements || creerServiceSignalements(prisma);
@@ -40,57 +32,8 @@ const membresManagers = [authenticate, (req: AuthRequest, res: import("express")
   if (!req.permissions?.some(permission => permission === "MEMBRES_GERER" || permission === "ROLES_GERER")) return res.status(403).json({ message: "La gestion des membres ne fait pas partie de vos autorisations." });
   next();
 }];
-const inscriptionsModerators = [authenticate, requirePermission("INSCRIPTIONS_GERER")];
 const catalogueModerators = [authenticate, requirePermission("CATALOGUE_GERER")];
 const signalementsModerators = [authenticate, requirePermission("SIGNALEMENTS_CONSULTER")];
-
-router.get("/inscriptions", ...inscriptionsModerators, async (req: AuthRequest, res) => {
-  const query = z.object({
-    statut: z.enum(["EN_ATTENTE", "VALIDE", "REFUSE", "SUSPENDU"]).default("EN_ATTENTE"),
-    page: z.coerce.number().int().min(1).default(1),
-    limite: z.coerce.number().int().min(1).max(100).default(30),
-  }).safeParse(req.query);
-  if (!query.success) return res.status(400).json({ message: "Filtres invalides." });
-  const { statut, page, limite } = query.data;
-  if (req.userRole !== "ADMIN" && statut !== "EN_ATTENTE") return res.status(403).json({ message: "Un modérateur consulte uniquement les inscriptions en attente." });
-  try {
-    const where = { statut, ...(req.userRole !== "ADMIN" ? { id: { not: req.userId }, email: { not: EMAIL_ADMIN_PRINCIPAL }, role: { notIn: ["ADMIN" as const, "MODERATEUR" as const] }, rolesDelegues: { none: {} } } : {}) };
-    const [inscriptions, total] = await Promise.all([
-      prisma.user.findMany({
-        where,
-        orderBy: { createdAt: "asc" },
-        skip: (page - 1) * limite,
-        take: limite,
-        select: {
-          id: true,
-          prenom: true,
-          nom: true,
-          email: true,
-          emailVerifie: true,
-          role: true,
-          statut: true,
-          createdAt: true,
-          profil: {
-            select: {
-              id: true,
-              pays: true,
-              ville: true,
-              titre: true,
-              onboardingFini: true,
-              estVolontaire: true,
-              _count: { select: { formations: true, experiences: true } },
-            },
-          },
-        },
-      }),
-      prisma.user.count({ where }),
-    ]);
-    return res.json({ inscriptions: inscriptions.map(u => ({ ...u, role: roleEffectif(u) })), total, page, limite, totalPages: Math.ceil(total / limite) });
-  } catch (error) {
-    console.error("[GET /admin/inscriptions]", error);
-    return res.status(500).json({ message: "Impossible de charger les inscriptions." });
-  }
-});
 
 router.get("/roles", ...membresManagers, traiter(async (req, res) => res.json(await gestion.roles(req.userId!))));
 router.get("/membres", ...membresManagers, traiter(async (req, res) => res.json(await gestion.liste(req.userId!, filtresMembres.parse(req.query)))));
@@ -103,16 +46,6 @@ router.patch("/membres/:id/statut", ...membresManagers, traiter(async (req, res)
   const id = z.string().trim().min(1).max(191).parse(req.params.id);
   return res.json(await gestion.modifierStatut(req.userId!, id, changementStatutSchema.parse(req.body)));
 }));
-router.put("/inscriptions/:id/valider", ...inscriptionsModerators, traiter(async (req, res) => {
-  const id = z.string().trim().min(1).max(191).parse(req.params.id);
-  return res.json(await gestion.deciderInscription(req.userId!, id, true));
-}));
-router.put("/inscriptions/:id/refuser", ...inscriptionsModerators, traiter(async (req, res) => {
-  const id = z.string().trim().min(1).max(191).parse(req.params.id);
-  const { raison } = z.object({ raison: z.string().trim().max(500).optional() }).strict().parse(req.body);
-  return res.json(await gestion.deciderInscription(req.userId!, id, false, raison));
-}));
-
 // Le modérateur global traite le contenu et le catalogue. Les rôles et statistiques restent réservés au propriétaire.
 router.get("/signalements", ...signalementsModerators, async (req, res) => {
   const filtres = filtresSignalementsSchema.safeParse(req.query);
@@ -141,16 +74,15 @@ router.put("/signalements/:id", ...signalementsModerators, async (req: AuthReque
 
 router.get("/stats", ...adminOnly, async (_req, res) => {
   try {
-    const [membres, enAttente, publications, commentaires, messages, synergies, rendezVous] = await Promise.all([
+    const [membres, publications, commentaires, messages, synergies, rendezVous] = await Promise.all([
       prisma.user.count({ where: { statut: "VALIDE" } }),
-      prisma.user.count({ where: { statut: "EN_ATTENTE" } }),
       prisma.publication.count({ where: { visible: true, ...PUBLICATION_ACTIVE } }),
       prisma.commentairePublication.count({ where: { ...COMMENTAIRE_ACTIF, publication: PUBLICATION_ACTIVE } }),
       prisma.message.count(),
       prisma.synergie.count({ where: { statut: "ACCEPTE" } }),
       prisma.rendezVous.count(),
     ]);
-    return res.json({ membres, enAttente, publications, commentaires, messages, synergies, rendezVous });
+    return res.json({ membres, publications, commentaires, messages, synergies, rendezVous });
   } catch (error) {
     console.error("[GET /admin/stats]", error);
     return res.status(500).json({ message: "Impossible de charger les statistiques." });

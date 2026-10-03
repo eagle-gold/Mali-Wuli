@@ -3,6 +3,7 @@ import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import { champsLiensSociaux, liensSociauxProfil, modificationsLiensSociaux, selectionLiensSociaux } from "../lib/liens-sociaux";
+import { LONGUEUR_MAX_TITRE, titreAEnregistrer, titreAutomatiqueDepuisBase } from "../lib/titre-profil";
 import { authenticate, AuthRequest } from "../middlewares/auth.middleware";
 import {
   ErreurCatalogueOnboarding,
@@ -158,6 +159,7 @@ const schemaOnboarding = z.object({
     ...champsLiensSociaux,
     prenom: z.string().trim().min(1).max(100),
     nom: z.string().trim().min(1).max(100),
+    titre: z.string().trim().max(LONGUEUR_MAX_TITRE).optional(),
     telephone: z.string().trim().max(40),
     indicatif: z.string().trim().max(10),
     pays: z.string().trim().min(1).max(100),
@@ -218,6 +220,7 @@ router.get("/", authenticate, async (req: AuthRequest, res) => {
           select: {
             id: true,
             telephone: true,
+            titre: true,
             ...selectionLiensSociaux,
             pays: true,
             ville: true,
@@ -309,7 +312,7 @@ router.get("/", authenticate, async (req: AuthRequest, res) => {
     const snapshot = schemaOnboarding.safeParse(compte.profil.onboardingDonnees);
     if (snapshot.success) return res.json(donneesCompletes({
       ...snapshot.data,
-      informations: { ...snapshot.data.informations, ...liensSociauxProfil(compte.profil) },
+      informations: { ...snapshot.data.informations, ...liensSociauxProfil(compte.profil), titre: compte.profil.titre ?? "" },
     }, compte.profil.id));
 
     // Compatibilité avec les profils enregistrés avant l'ajout du snapshot :
@@ -423,6 +426,7 @@ router.get("/", authenticate, async (req: AuthRequest, res) => {
     const donnees: DonneesOnboarding = {
       informations: {
         ...liensSociauxProfil(compte.profil),
+        titre: compte.profil.titre ?? "",
         prenom: compte.prenom || "",
         nom: compte.nom || "",
         telephone,
@@ -501,6 +505,7 @@ router.post("/", authenticate, async (req: AuthRequest, res) => {
       where: { id: req.userId },
       select: { id: true, emailVerifie: true, profil: { select: {
         id: true,
+        titre: true,
         ...selectionLiensSociaux,
         onboardingDonnees: true,
         formations: { select: {
@@ -545,8 +550,26 @@ router.post("/", authenticate, async (req: AuthRequest, res) => {
       });
     }
 
+    // Titre affiché sous le nom : saisi par le membre, sinon conservé, sinon déduit du parcours.
+    // Parcours enregistré jusqu'ici : permet de savoir si le titre actuel est resté
+    // celui que le parcours produisait (il suit alors le nouveau parcours).
+    const parcoursActuel = await prisma.profil.findUnique({
+      where: { id: compte.profil.id },
+      select: {
+        experiences: { select: { poste: true, entreprise: true, estActuel: true, dateDebut: true } },
+        formations: { select: { type: true, statutDiplome: true, autreEtablissement: true, etablissement: { select: { nom: true } } } },
+      },
+    });
+    const titreProfil = titreAEnregistrer({
+      saisi: informations.titre,
+      existant: compte.profil.titre,
+      experiences,
+      formations,
+      ancienAutomatique: parcoursActuel ? titreAutomatiqueDepuisBase(parcoursActuel.experiences, parcoursActuel.formations) : null,
+    });
+
     const donneesASauvegarder = donneesCompletes(
-      { informations: { ...informations, ...liensSociauxProfil({ ...compte.profil, ...modificationsLiensSociaux(informations) }) }, formations, experiences, mentorat },
+      { informations: { ...informations, titre: titreProfil ?? "", ...liensSociauxProfil({ ...compte.profil, ...modificationsLiensSociaux(informations) }) }, formations, experiences, mentorat },
       compte.profil.id,
     );
 
@@ -563,6 +586,7 @@ router.post("/", authenticate, async (req: AuthRequest, res) => {
         where: { id: compte.profil!.id },
         data: {
           telephone,
+          titre: titreProfil,
           // Une omission (ancien client) ne doit jamais effacer un lien récent.
           ...modificationsLiensSociaux(informations),
           pays: informations.pays,
@@ -697,7 +721,7 @@ router.post("/", authenticate, async (req: AuthRequest, res) => {
     return res.status(201).json({
       message: "Votre profil a bien été enregistré.",
       onboardingFini: true,
-      statut: "EN_ATTENTE",
+      statut: req.authenticatedUser?.statut ?? "VALIDE",
     });
   } catch (erreur) {
     if (erreur instanceof ErreurCatalogueOnboarding) {

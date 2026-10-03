@@ -17,7 +17,7 @@ const userFindAvant = prisma.user.findUnique;
 const comptes = new Map(["member", "other", "owner", "admin", "moderator", "pending", "pendingadmin", "offres-specialiste", "autre-specialiste"].map(id => [`user-${id}`, {
  id: `user-${id}`, email: id === "admin" ? "ik736764@gmail.com" : `user-${id}@example.invalid`, role: id.includes("admin") ? "ADMIN" : id === "moderator" ? "MODERATEUR" : "MEMBRE",
  rolesDelegues: id === "offres-specialiste" ? [{code:"OFFRES"}] : id === "autre-specialiste" ? [{code:"EVENEMENTS"}] : [],
- statut: id.startsWith("pending") ? "EN_ATTENTE" : "VALIDE", emailVerifie: true, tokenVersion: 0,
+ statut: id.startsWith("pending") ? "SUSPENDU" : "VALIDE", emailVerifie: true, tokenVersion: 0,
 }]));
 prisma.user.findUnique = (async ({ where }: Row) => comptes.get(where.id) || null) as unknown as typeof prisma.user.findUnique;
 after(() => { prisma.user.findUnique = userFindAvant; if(secretAvant === undefined) delete process.env.JWT_SECRET; else process.env.JWT_SECRET = secretAvant; });

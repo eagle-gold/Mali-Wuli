@@ -1,5 +1,11 @@
 # État livré, sujets ouverts et preuves
 
+## 3 octobre 2026 — validation des inscriptions supprimée (local, non publié)
+
+**Décision utilisateur :** un compte créé accède immédiatement au réseau. Aucune validation par l'équipe. Cette décision remplace le principe « profil vérifié et validé avant l'accès » de la spécification (§3.4, §4.1) et l'écran d'attente de l'onboarding.
+
+**Conséquences dans le code :** le statut `EN_ATTENTE` disparaît de l'énumération `StatutInscription` (défaut `VALIDE`) ; la garde `PROFIL_EN_ATTENTE` du middleware, les routes `/api/admin/inscriptions*`, le rôle délégué « Validation des inscriptions » et la section « Profils à valider » de l'administration sont retirés. Désactiver puis rétablir un compte redonne l'accès immédiatement. `REFUSE` et `SUSPENDU` restent bloquants. Migration `20261003120000_inscription_sans_validation` écrite, non appliquée. Voir l'entrée du journal du 3 octobre 2026.
+
 ## 28 septembre 2026 — liens sociaux publiés
 
 **Décision utilisateur :** ajouter LinkedIn, Facebook, Instagram et TikTok à l’inscription et au profil, visibles et cliquables. Les quatre champs sont facultatifs dans Informations ; « Modifier mes infos » ouvre ce même formulaire. Il faut terminer le parcours pour enregistrer sur le serveur. Icônes et noms affichés dans les profils personnel et annuaire, ouverture dans un nouvel onglet. Les accès membres existants sont conservés.

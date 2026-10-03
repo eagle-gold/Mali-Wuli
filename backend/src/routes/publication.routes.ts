@@ -2,7 +2,7 @@ import { Prisma, type PrismaClient } from "@prisma/client";
 import { Router, Response } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
-import { urlHttpSchema } from "../lib/validation";
+import { texteMultiligneSchema, urlHttpSchema } from "../lib/validation";
 import { authenticate, AuthRequest } from "../middlewares/auth.middleware";
 import {
   supprimerUpload,
@@ -103,7 +103,7 @@ const listeSchema = z.object({
 const creerSchema = z.object({
   intention: z.enum(["OFFRE", "DEMANDE"]),
   thematique: z.string().trim().min(2).max(80),
-  contenu: z.string().trim().max(1200).default(""),
+  contenu: texteMultiligneSchema(1200).default(""),
   lienUrl: z.union([urlHttpSchema(), z.literal("")]).optional(),
   lienTitre: z.string().trim().max(191).optional(),
 });

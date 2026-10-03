@@ -4,14 +4,15 @@ import Link from "next/link";
 import {
   ArrowRight,
   Check,
+  ChevronDown,
   Flag,
+  Globe2,
   LoaderCircle,
   MessageCircle,
   MoreHorizontal,
   Pencil,
   Plus,
   RotateCcw,
-  Search,
   Send,
   ThumbsUp,
   Trash2,
@@ -28,6 +29,7 @@ import {
   type RefObject,
 } from "react";
 
+import ComposerPublication from "@/components/feed/ComposerPublication";
 import { useSocket } from "@/hooks/useSocket";
 import api from "@/lib/api";
 import type { ResultatSuppression } from "@/components/community/SupprimerContenu";
@@ -68,6 +70,8 @@ type Publication = {
   reponses: number;
   maReaction: ReactionPublication | null;
   photo?: string | null;
+  /** Image jointe à la publication (distincte de la photo de l’auteur). */
+  image?: string | null;
   commentaires?: CommentairePublicationApi[];
   couleurAvatar?: "vert" | "orange" | "sable";
 };
@@ -210,7 +214,7 @@ function adapterPublication(publication: PublicationApi): Publication {
     aMedia: Boolean(publication.photoUrl || (publication as PublicationAvecDroits).lienUrl),
     auteur,
     initiales,
-    fonction: publication.auteur?.titre?.trim() || "Membre du réseau",
+    fonction: publication.auteur?.titre?.trim() || "",
     lieu:
       publication.auteur?.ville?.trim() ||
       publication.auteur?.pays?.trim() ||
@@ -224,6 +228,7 @@ function adapterPublication(publication: PublicationApi): Publication {
     reponses: publication.nbCommentaires ?? 0,
     maReaction: publication.maReaction ?? null,
     photo: urlMediaBackend(publication.auteur?.photo),
+    image: urlMediaBackend(publication.photoUrl),
     commentaires: publication.commentaires,
     couleurAvatar: couleurDepuisInitiales(initiales),
   };
@@ -314,18 +319,6 @@ const FILTRES: Array<{ id: FiltreFil; label: string }> = [
   { id: "pays", label: "Mon pays" },
   { id: "ville", label: "Ma ville" },
 ];
-
-const THEMATIQUES = [
-  "Santé & Télémédecine",
-  "Éducation & Orientation",
-  "Emploi & Carrière",
-  "Bourses & Études",
-  "Numérique & IA",
-  "Énergie & Solaire",
-  "Entrepreneuriat",
-  "Agriculture & Agro",
-  "Diaspora & Retour",
-] as const;
 
 const COULEURS_AVATAR = {
   vert: "bg-[#e3f0e9] text-[#0d6738]",
@@ -515,11 +508,11 @@ function ModaleSoutiens({
                         <p className="truncate font-bold text-[#2f261e]">
                           {nom}
                         </p>
-                        <p className="truncate text-sm text-[#786958]">
-                          {[supporter.titre, lieu]
-                            .filter(Boolean)
-                            .join(" · ") || "Membre du réseau"}
-                        </p>
+                        {[supporter.titre, lieu].filter(Boolean).length > 0 && (
+                          <p className="truncate text-sm text-[#786958]">
+                            {[supporter.titre, lieu].filter(Boolean).join(" · ")}
+                          </p>
+                        )}
                       </div>
                       <ThumbsUp
                         aria-label="Soutient cette publication"
@@ -1011,6 +1004,9 @@ function CommentaireFil({
               retourFocus={declencheurMenu}
             />
           </div>
+          {commentaire.auteur?.titre?.trim() && (
+            <p className="-mt-0.5 truncate text-xs text-[#6e5b49]">{commentaire.auteur.titre.trim()}</p>
+          )}
           {mode === "edition" ? (
             <EditionInline
               compact
@@ -1453,19 +1449,14 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
           <h2 className="truncate titre-element">
             {publication.auteur}
           </h2>
-          <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-2 text-sm text-[#806f5e] sm:text-base">
-            <span>{publication.fonction}</span>
+          {publication.fonction && <p className="mt-0.5 truncate text-sm text-[#6e5b49]">{publication.fonction}</p>}
+          <p className="mt-0.5 flex items-center gap-1.5 text-xs text-[#806f5e]">
+            <span className="truncate">{publication.lieu}</span>
             <span aria-hidden="true">·</span>
-            <span>{publication.lieu}</span>
+            <span className="shrink-0">{publication.date}</span>
             <span aria-hidden="true">·</span>
-            <span>{publication.date}</span>
-            <BadgeType type={publication.type} />
-            {publication.thematique && (
-              <span className="inline-flex rounded-full bg-[#efe4d2] px-3 py-1 text-xs font-bold text-[#664e39] sm:text-sm">
-                {publication.thematique}
-              </span>
-            )}
-          </div>
+            <Globe2 aria-label="Visible par tous les membres" role="img" size={13} className="shrink-0" />
+          </p>
         </div>
         {modeCarte === "lecture" && (
           <MenuActions
@@ -1515,6 +1506,15 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
         </div>
       )}
 
+      <div className="mt-3 flex flex-wrap items-center gap-2">
+        <BadgeType type={publication.type} />
+        {publication.thematique && (
+          <span className="inline-flex rounded-full bg-[#efe4d2] px-3 py-1 text-xs font-bold text-[#664e39] sm:text-sm">
+            {publication.thematique}
+          </span>
+        )}
+      </div>
+
       {modeCarte === "edition" ? (
         <EditionInline
           valeurInitiale={texte}
@@ -1524,49 +1524,73 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
           onEnregistrer={enregistrerPublication}
           onAnnuler={revenirALaLecturePublication}
         />
-      ) : (
-        <p className="mt-4 whitespace-pre-wrap text-[15px] leading-7 text-[#342a22] sm:text-[17px] sm:leading-8">
+      ) : texte.trim() ? (
+        <p className="mt-3 whitespace-pre-wrap text-[15px] leading-6 text-[#342a22] sm:text-base sm:leading-7">
           {texte}
         </p>
+      ) : null}
+      {publication.image && (
+        <div className="-mx-4 mt-3 bg-[#f0e7da] sm:-mx-5">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={publication.image}
+            alt={`Image publiée par ${publication.auteur}`}
+            loading="lazy"
+            className="max-h-[560px] w-full object-contain"
+          />
+        </div>
       )}
 
-      <div className="mt-4 flex flex-wrap items-center gap-1 border-t border-[#eee1cf] pt-3">
-        <div className="inline-flex min-h-11 items-center rounded-lg transition hover:bg-[#f5ecdf]">
-          <button
-            type="button"
-            aria-pressed={soutenu}
-            disabled={reactionEnCours}
-            onClick={() => void basculerSoutien()}
-            className={`inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#0d6738] sm:text-base ${
-              soutenu ? "bg-[#e2efe7] text-[#0d6738]" : "text-[#6e5b49]"
-            } disabled:cursor-wait disabled:opacity-60`}
-          >
-            <ThumbsUp
-              aria-hidden="true"
-              size={17}
-              fill={soutenu ? "currentColor" : "none"}
-            />
-            {soutenu ? "Soutenu" : "Soutenir"}
-          </button>
-          <button
-            type="button"
-            onClick={ouvrirSoutiens}
-            aria-haspopup="dialog"
-            aria-label={`Voir ${soutiens === 1 ? "la personne" : `les ${soutiens} personnes`} qui soutiennent cette publication`}
-            className="mr-1 min-h-9 rounded-md px-2 text-sm font-bold text-[#0d6738] underline decoration-[#0d6738]/35 underline-offset-4 focus:outline-none focus:ring-2 focus:ring-[#0d6738] sm:text-base"
-          >
-            {soutiens} {soutiens === 1 ? "soutien" : "soutiens"}
-          </button>
+      {(soutiens > 0 || nombreReponses > 0) && (
+        <div className="mt-3 flex items-center justify-between gap-3 text-sm text-[#806f5e]">
+          {soutiens > 0 ? (
+            <button
+              type="button"
+              onClick={ouvrirSoutiens}
+              aria-haspopup="dialog"
+              aria-label={`Voir ${soutiens === 1 ? "la personne" : `les ${soutiens} personnes`} qui soutiennent cette publication`}
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-md px-1 hover:text-[#0d6738] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738]"
+            >
+              <span aria-hidden="true" className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0d6738] text-white">
+                <ThumbsUp size={11} fill="currentColor" />
+              </span>
+              {soutiens}
+            </button>
+          ) : <span />}
+          {nombreReponses > 0 && (
+            <button
+              type="button"
+              onClick={basculerReponses}
+              aria-expanded={reponseOuverte}
+              className="min-h-9 rounded-md px-1 hover:text-[#0d6738] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738]"
+            >
+              {nombreReponses} {nombreReponses === 1 ? "commentaire" : "commentaires"}
+            </button>
+          )}
         </div>
+      )}
+
+      <div className="mt-2 grid grid-cols-2 gap-1 border-t border-[#eee1cf] pt-1">
+        <button
+          type="button"
+          aria-pressed={soutenu}
+          disabled={reactionEnCours}
+          onClick={() => void basculerSoutien()}
+          className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-semibold transition hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738] sm:text-[15px] ${
+            soutenu ? "text-[#0d6738]" : "text-[#6e5b49]"
+          } disabled:cursor-wait disabled:opacity-60`}
+        >
+          <ThumbsUp aria-hidden="true" size={19} fill={soutenu ? "currentColor" : "none"} />
+          {soutenu ? "Soutenu" : "Soutenir"}
+        </button>
         <button
           type="button"
           aria-expanded={reponseOuverte}
           onClick={basculerReponses}
-          className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-[#6e5b49] transition hover:bg-[#f5ecdf] focus:outline-none focus:ring-2 focus:ring-[#0d6738] sm:text-base"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-semibold text-[#6e5b49] transition hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738] sm:text-[15px]"
         >
-          <MessageCircle aria-hidden="true" size={18} />
-          {reponseOuverte ? "Masquer" : "Voir"} les commentaires ·{" "}
-          {nombreReponses}
+          <MessageCircle aria-hidden="true" size={19} />
+          Commenter
         </button>
       </div>
 
@@ -1759,10 +1783,14 @@ function ColonneProfil({
           <h2 className="mt-3 titre-element">
             {nom}
           </h2>
-          <p className="mt-1 text-[#4f4339]">
-            {[profil.titre, lieu].filter(Boolean).join(" · ") ||
-              "Profil Mali Wuli"}
-          </p>
+          {profil.titre?.trim() ? (
+            <p className="mt-1 text-[#4f4339]">{profil.titre.trim()}</p>
+          ) : (
+            <Link href="/profil" className="mt-1 inline-block text-sm font-semibold text-[#0d6738] hover:underline">
+              Ajouter un titre à votre profil
+            </Link>
+          )}
+          {lieu && <p className="mt-0.5 text-sm text-[#806f5e]">{lieu}</p>}
           <dl className="mt-5 space-y-3 border-t border-[#eee1cf] pt-4 text-sm">
             <div className="flex items-center justify-between gap-4">
               <dt className="text-[#615247]">Synergies actives</dt>
@@ -1847,7 +1875,7 @@ function ColonneSuggestions({
     return (
       <aside
         aria-label="Chargement des suggestions"
-        className="hidden space-y-5 min-[1750px]:block"
+        className="hidden space-y-5 xl:block"
       >
         {[1, 2].map((item) => (
           <div
@@ -1862,7 +1890,7 @@ function ColonneSuggestions({
   return (
     <aside
       aria-label="Suggestions et événements"
-      className="hidden space-y-5 min-[1750px]:block"
+      className="hidden space-y-5 xl:block"
     >
       <section className="rounded-2xl border border-[#eadcc7] bg-[#fffaf4] p-5">
         <h2 className="titre-section">
@@ -1897,11 +1925,11 @@ function ColonneSuggestions({
                     />
                     <div className="min-w-0">
                       <p className="truncate font-bold text-[#2f261e]">{nom}</p>
-                      <p className="truncate text-sm text-[#5f5145]">
-                        {[suggestion.titre, suggestion.ville || suggestion.pays]
-                          .filter(Boolean)
-                          .join(" · ") || "Membre du réseau"}
-                      </p>
+                      {[suggestion.titre, suggestion.ville || suggestion.pays].filter(Boolean).length > 0 && (
+                        <p className="truncate text-sm text-[#5f5145]">
+                          {[suggestion.titre, suggestion.ville || suggestion.pays].filter(Boolean).join(" · ")}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <button
@@ -2027,12 +2055,6 @@ export default function ActualiteFeed() {
   const [chargementPanneaux, setChargementPanneaux] = useState(true);
   const [erreurPanneaux, setErreurPanneaux] = useState("");
   const [filtre, setFiltre] = useState<FiltreFil>("tout");
-  const [modePublication, setModePublication] =
-    useState<TypePublication | null>(null);
-  const [etapePublication, setEtapePublication] = useState<1 | 2>(1);
-  const [thematiqueSelectionnee, setThematiqueSelectionnee] = useState("");
-  const [thematiqueLibre, setThematiqueLibre] = useState("");
-  const [textePublication, setTextePublication] = useState("");
   const [publications, setPublications] = useState<Publication[]>([]);
   const publicationsSupprimees = useRef(new Set<string>());
   const [annonceSuppression, setAnnonceSuppression] = useState("");
@@ -2041,10 +2063,6 @@ export default function ActualiteFeed() {
   const [commentaireRestaure, setCommentaireRestaure] = useState<RestaurationRecue | null>(null);
   const [chargementFil, setChargementFil] = useState(true);
   const [erreurFil, setErreurFil] = useState("");
-  const [envoiPublication, setEnvoiPublication] = useState(false);
-  const [erreurPublication, setErreurPublication] = useState("");
-
-  const thematique = thematiqueSelectionnee || thematiqueLibre.trim();
 
   const chargerPanneaux = useCallback(
     async (silencieux = false, signal?: AbortSignal) => {
@@ -2247,70 +2265,17 @@ export default function ActualiteFeed() {
     }
   };
 
-  const publier = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const texte = textePublication.trim();
-    if (!texte || !modePublication || !thematique || envoiPublication) return;
-
-    setEnvoiPublication(true);
-    setErreurPublication("");
-    try {
-      const { data } = await api.post<ReponsePublicationApi>("/publications", {
-        contenu: texte,
-        intention: modePublication === "Offre" ? "OFFRE" : "DEMANDE",
-        thematique,
-      });
-      const publicationCreee = adapterPublication(extrairePublication(data));
-      setPublications((actuelles) => [
-        publicationCreee,
-        ...actuelles.filter(
-          (publication) => publication.id !== publicationCreee.id,
-        ),
-      ]);
-      annulerPublication();
-      setFiltre("tout");
-    } catch (erreur) {
-      setErreurPublication(
-        lireMessageErreur(erreur, "La publication n’a pas pu être envoyée."),
-      );
-    } finally {
-      setEnvoiPublication(false);
-    }
-  };
-
-  const ouvrirPublication = (mode: TypePublication) => {
-    setModePublication(mode);
-    setEtapePublication(1);
-    setThematiqueSelectionnee("");
-    setThematiqueLibre("");
-    setTextePublication("");
-    setErreurPublication("");
-  };
-
-  const annulerPublication = () => {
-    setModePublication(null);
-    setEtapePublication(1);
-    setThematiqueSelectionnee("");
-    setThematiqueLibre("");
-    setTextePublication("");
-    setErreurPublication("");
-  };
-
-  const validerThematique = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (!thematique) return;
-    setEtapePublication(2);
-  };
-
-  const choisirThematique = (valeur: string) => {
-    setThematiqueSelectionnee(valeur);
-    setThematiqueLibre("");
+  const publicationRecue = (brute: PublicationApi) => {
+    const creee = adapterPublication(brute);
+    publicationsSupprimees.current.delete(creee.id);
+    setPublications((actuelles) => [creee, ...actuelles.filter((publication) => publication.id !== creee.id)]);
+    setFiltre("tout");
   };
 
   return (
     <div className="min-h-full min-w-0 bg-[var(--color-page)] [overflow-wrap:anywhere] font-sans text-[#2f261e]">
-      <div className="mx-auto grid w-full max-w-[2040px] grid-cols-1 items-start gap-5 p-4 sm:p-6 xl:grid-cols-[300px_minmax(0,1fr)] min-[1750px]:grid-cols-[380px_minmax(0,1fr)_440px] min-[1750px]:gap-7">
-        <div className="xl:sticky xl:top-6">
+      <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-start gap-5 p-4 sm:p-6 xl:grid-cols-[250px_minmax(0,1fr)_320px]">
+        <div className="xl:sticky xl:top-[136px]">
           <ColonneProfil
             utilisateur={panneaux.utilisateur}
             chargement={chargementPanneaux}
@@ -2320,206 +2285,32 @@ export default function ActualiteFeed() {
         </div>
 
         <main aria-label="Fil d’actualité" className="min-w-0 space-y-4">
-          <section className="rounded-2xl border border-[#eadcc7] bg-[#fffaf4] p-3 sm:p-4">
-            {!modePublication ? (
-              <div className="flex items-center gap-3">
-                <div className="hidden sm:block">
-                  <Avatar
-                    initiales={initialesDe(
-                      panneaux.utilisateur?.prenom,
-                      panneaux.utilisateur?.nom,
-                    )}
-                    couleur="sable"
-                    photo={urlMediaBackend(panneaux.utilisateur?.profil.photo)}
-                  />
-                </div>
-                <div className="grid min-w-0 flex-1 grid-cols-1 gap-3 sm:grid-cols-2">
-                  <button
-                    type="button"
-                    onClick={() => ouvrirPublication("Demande")}
-                    className="flex min-h-14 items-center justify-center gap-3 rounded-xl bg-[#f0b90a] px-4 text-base font-bold text-[#2d251e] transition hover:bg-[#dda900] focus:outline-none focus:ring-2 focus:ring-[#7a5833] focus:ring-offset-2 sm:text-lg"
-                  >
-                    <Search aria-hidden="true" size={20} />
-                    Je cherche
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => ouvrirPublication("Offre")}
-                    className="flex min-h-14 items-center justify-center gap-3 rounded-xl bg-[#0d6738] px-4 text-base font-bold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 sm:text-lg"
-                  >
-                    <Plus aria-hidden="true" size={21} />
-                    Je propose
-                  </button>
-                </div>
-              </div>
-            ) : etapePublication === 1 ? (
-              <form
-                onSubmit={validerThematique}
-                aria-label="Choisir la thématique de la publication"
-              >
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <span
-                    className={`inline-flex rounded-lg px-3 py-2 text-sm font-extrabold uppercase tracking-wide sm:text-base ${
-                      modePublication === "Demande"
-                        ? "bg-[#f8ece3] text-[#98451f]"
-                        : "bg-[#e2f0e9] text-[#0d6738]"
-                    }`}
-                  >
-                    {modePublication === "Demande"
-                      ? "Je cherche"
-                      : "Je propose"}
-                  </span>
-                  <p className="min-w-0 basis-full sm:basis-auto flex-1 text-base text-[#776654] sm:text-lg">
-                    Étape 1 / 2 · choisissez la thématique
-                  </p>
-                  <button
-                    type="button"
-                    onClick={annulerPublication}
-                    className="min-h-11 rounded-lg px-2 font-semibold text-[#9a8874] transition hover:bg-[#f5ecdf] hover:text-[#3b3027] focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
-                  >
-                    Annuler
-                  </button>
-                </div>
+          <ComposerPublication
+            prenom={panneaux.utilisateur?.prenom}
+            nom={panneaux.utilisateur?.nom}
+            initiales={initialesDe(panneaux.utilisateur?.prenom, panneaux.utilisateur?.nom)}
+            photo={urlMediaBackend(panneaux.utilisateur?.profil.photo)}
+            onPublie={publicationRecue}
+          />
 
-                <fieldset className="mt-3">
-                  <legend className="sr-only">Thématiques proposées</legend>
-                  <div className="flex flex-wrap gap-2">
-                    {THEMATIQUES.map((option) => {
-                      const selectionnee = thematiqueSelectionnee === option;
-                      return (
-                        <button
-                          key={option}
-                          type="button"
-                          aria-pressed={selectionnee}
-                          onClick={() => choisirThematique(option)}
-                          className={`min-h-11 rounded-full border px-4 py-2 text-left text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-1 sm:text-base ${
-                            selectionnee
-                              ? "border-[#0d6738] bg-[#0d6738] text-white"
-                              : "border-[#e5d4bc] bg-[#fffdf9] text-[#342b23] hover:border-[#b99a77] hover:bg-[#f8f1e6]"
-                          }`}
-                        >
-                          {option}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </fieldset>
-
-                <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:items-center">
-                  <label htmlFor="thematique-libre" className="sr-only">
-                    Autre thématique
-                  </label>
-                  <input
-                    id="thematique-libre"
-                    value={thematiqueLibre}
-                    onChange={(event) => {
-                      setThematiqueLibre(event.target.value);
-                      setThematiqueSelectionnee("");
-                    }}
-                    maxLength={80}
-                    placeholder="Votre thématique"
-                    className="min-h-11 min-w-0 flex-1 rounded-full border border-[#cdb99f] bg-white px-5 text-[#2f261e] outline-none placeholder:text-[#9a8a79] focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 sm:max-w-xs"
-                  />
-                  <button
-                    type="submit"
-                    disabled={!thematique}
-                    className="min-h-11 rounded-full bg-[#2f261e] px-6 font-bold text-white transition hover:bg-[#493a2e] focus:outline-none focus:ring-2 focus:ring-[#2f261e] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40"
-                  >
-                    Valider
-                  </button>
-                </div>
-              </form>
-            ) : (
-              <form onSubmit={publier} aria-label="Rédiger la publication">
-                <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-                  <span
-                    className={`inline-flex rounded-lg px-3 py-2 text-sm font-extrabold uppercase tracking-wide sm:text-base ${
-                      modePublication === "Demande"
-                        ? "bg-[#f8ece3] text-[#98451f]"
-                        : "bg-[#e2f0e9] text-[#0d6738]"
-                    }`}
-                  >
-                    {modePublication === "Demande"
-                      ? "Je cherche"
-                      : "Je propose"}
-                  </span>
-                  <strong className="text-base text-[#332920] sm:text-lg">
-                    {thematique}
-                  </strong>
-                  <button
-                    type="button"
-                    onClick={() => setEtapePublication(1)}
-                    className="min-h-11 rounded-lg px-1 text-sm font-semibold text-[#968571] underline underline-offset-2 transition hover:text-[#3b3027] focus:outline-none focus:ring-2 focus:ring-[#0d6738] sm:text-base"
-                  >
-                    changer
-                  </button>
-                  <span className="ml-auto text-sm text-[#776654] sm:text-base">
-                    Étape 2 / 2
-                  </span>
-                </div>
-                <label htmlFor="nouvelle-publication" className="sr-only">
-                  {modePublication === "Demande"
-                    ? "Décrivez précisément ce que vous cherchez"
-                    : "Décrivez précisément ce que vous proposez"}
-                </label>
-                <textarea
-                  id="nouvelle-publication"
-                  value={textePublication}
-                  onChange={(event) => setTextePublication(event.target.value)}
-                  rows={4}
-                  maxLength={1200}
-                  autoFocus
-                  placeholder={
-                    modePublication === "Demande"
-                      ? "Décrivez précisément ce que vous cherchez : le besoin, pour qui, et d’ici quand."
-                      : "Décrivez précisément ce que vous proposez : pour qui, sous quelle forme, et vos disponibilités."
-                  }
-                  className="mt-2 min-h-36 w-full resize-y rounded-xl border border-[#dfcdb4] bg-white px-4 py-3 text-base leading-7 text-[#2f261e] outline-none placeholder:text-[#8f8a84] focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"
-                />
-                <div className="mt-3 flex justify-end">
-                  <button
-                    type="submit"
-                    disabled={!textePublication.trim() || envoiPublication}
-                    className="min-h-12 rounded-xl bg-[#0d6738] px-6 font-bold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-[#ded2bc] disabled:text-[#a59784]"
-                  >
-                    {envoiPublication ? "Publication…" : "Publier"}
-                  </button>
-                </div>
-                {erreurPublication && (
-                  <p
-                    role="alert"
-                    className="mt-2 text-right text-sm font-medium text-[#9b3e24]"
-                  >
-                    {erreurPublication}
-                  </p>
-                )}
-              </form>
-            )}
-          </section>
-
-          <nav
-            aria-label="Filtres du fil"
-            className="grid grid-cols-3 gap-2 sm:gap-3"
-          >
-            {FILTRES.map((option) => {
-              const actif = filtre === option.id;
-              return (
-                <button
-                  key={option.id}
-                  type="button"
-                  aria-pressed={actif}
-                  onClick={() => setFiltre(option.id)}
-                  className={`min-h-12 rounded-full border px-3 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-[#765238] sm:text-base ${
-                    actif
-                      ? "border-[#765238] bg-[#765238] text-white shadow-sm"
-                      : "border-[#e5d4bc] bg-[#f8f1e6] text-[#342b23] hover:border-[#b99a77] hover:bg-[#fffaf4]"
-                  }`}
+          <div className="flex items-center gap-3 text-sm text-[#806f5e]">
+            <div aria-hidden="true" className="h-px flex-1 bg-[#e3d6c0]" />
+            <label className="inline-flex items-center gap-1.5">
+              <span>Afficher :</span>
+              <span className="relative inline-flex items-center">
+                <select
+                  value={filtre}
+                  onChange={(event) => setFiltre(event.target.value as FiltreFil)}
+                  className="min-h-9 cursor-pointer appearance-none rounded bg-transparent py-1 pl-1 pr-6 font-bold text-[#56493e] outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738]"
                 >
-                  {option.label}
-                </button>
-              );
-            })}
-          </nav>
+                  {FILTRES.map((option) => (
+                    <option key={option.id} value={option.id}>{option.label}</option>
+                  ))}
+                </select>
+                <ChevronDown aria-hidden="true" size={16} className="pointer-events-none absolute right-0" />
+              </span>
+            </label>
+          </div>
 
           <p className="sr-only" aria-live="polite">
             {chargementFil
@@ -2605,7 +2396,7 @@ export default function ActualiteFeed() {
           </section>
         </main>
 
-        <div className="min-[1750px]:sticky min-[1750px]:top-6">
+        <div className="xl:sticky xl:top-[136px] xl:max-h-[calc(100dvh-160px)] xl:overflow-y-auto">
           <ColonneSuggestions
             suggestions={panneaux.suggestions}
             evenements={panneaux.evenements}

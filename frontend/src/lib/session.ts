@@ -53,16 +53,14 @@ type IdentiteSession = {
   rolesDelegues?: string[];
   revisionDroits?: string;
   statut?: string;
-  profil?: { id?: string; photo?: string | null; onboardingFini?: boolean } | null;
+  profil?: { id?: string; photo?: string | null; titre?: string | null; onboardingFini?: boolean } | null;
 };
 
 export type CompteSession = IdentiteSession & { user?: IdentiteSession | null };
 
-/** Les étapes de création/validation restent prioritaires sur la destination demandée. */
+/** Le questionnaire d’accueil reste prioritaire sur la destination demandée. */
 export function destinationSession(compte: CompteSession, destination = "/dashboard") {
   const profil = compte.profil || compte.user?.profil;
   if (profil?.onboardingFini !== true) return "/onboarding";
-  const statut = compte.statut ?? compte.user?.statut;
-  if (statut && statut !== "VALIDE") return "/profil";
   return destination;
 }

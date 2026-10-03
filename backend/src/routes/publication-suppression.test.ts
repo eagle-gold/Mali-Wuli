@@ -12,7 +12,7 @@ const findAvant = prisma.user.findUnique;
 const comptes = new Map(["owner", "commentateur", "other", "admin", "publications", "offres", "pending", "suspended"].map((id) => [`user-${id}`, compteMemoire(id, {
   email: id === "admin" ? "ik736764@gmail.com" : `${id}@example.invalid`,
   role: id === "admin" ? "ADMIN" : "MEMBRE",
-  statut: id === "pending" ? "EN_ATTENTE" : id === "suspended" ? "SUSPENDU" : "VALIDE",
+  statut: id === "pending" ? "SUSPENDU" : id === "suspended" ? "SUSPENDU" : "VALIDE",
   rolesDelegues: id === "publications" ? [{ code: "PUBLICATIONS" }] : id === "offres" ? [{ code: "OFFRES" }] : [],
 })]));
 prisma.user.findUnique = (async ({ where }: any) => comptes.get(where.id) || null) as typeof prisma.user.findUnique;

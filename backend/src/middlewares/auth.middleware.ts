@@ -21,14 +21,6 @@ export interface AuthRequest extends Request {
   authenticatedUser?: AuthenticatedUser;
 }
 
-function routeAutoriseePendantValidation(req: AuthRequest) {
-  const chemin = req.originalUrl.split("?")[0];
-  return chemin === "/api/users/me"
-    || chemin.startsWith("/api/users/me/")
-    || chemin === "/api/onboarding"
-    || chemin.startsWith("/api/onboarding/");
-}
-
 export const authenticate = async (req: AuthRequest, res: Response, next: NextFunction) => {
   const authorization = req.headers.authorization;
   const token = authorization?.startsWith("Bearer ") ? authorization.slice(7).trim() : "";
@@ -61,12 +53,6 @@ export const authenticate = async (req: AuthRequest, res: Response, next: NextFu
       });
     }
     const role = roleEffectif(user);
-    if (user.statut !== "VALIDE" && role !== "ADMIN" && !routeAutoriseePendantValidation(req)) {
-      return res.status(403).json({
-        code: "PROFIL_EN_ATTENTE",
-        message: "Votre profil est encore en cours de validation. Vous pouvez consulter et modifier votre profil en attendant.",
-      });
-    }
 
     req.userId = user.id;
     // Ce rôle vient volontairement de la base, jamais du JWT.

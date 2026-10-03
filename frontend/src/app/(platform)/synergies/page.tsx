@@ -68,9 +68,11 @@ function CarteProfil({
           <h2 className="truncate titre-element">
             {nomComplet(profil.user.prenom, profil.user.nom)}
           </h2>
-          <p className="text-sm text-terre-300">
-            {profil.titre || experience?.poste || "Membre du réseau"}
-          </p>
+          {(profil.titre || experience?.poste) && (
+            <p className="text-sm text-terre-300">
+              {profil.titre || experience?.poste}
+            </p>
+          )}
           <p className="text-xs text-terre-300">
             {[profil.ville, profil.pays].filter(Boolean).join(" · ") ||
               "Localisation non renseignée"}

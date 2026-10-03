@@ -12,6 +12,8 @@ interface StepInformationsProps {
 export interface InfoData extends ReseauxSociaux {
   prenom: string;
   nom: string;
+  /** Courte description affichée sous le nom (160 caractères maximum). */
+  titre?: string;
   telephone: string;
   indicatif: string;
   pays: string;
@@ -50,6 +52,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
   const [form, setForm] = useState<InfoData>(() => ({
     prenom: initialData?.prenom || "",
     nom: initialData?.nom || "",
+    titre: initialData?.titre || "",
     telephone: initialData?.telephone || "",
     indicatif: initialData?.indicatif || "+223",
     pays: initialData?.pays || "Mali",
@@ -211,7 +214,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
     setErreursLiens(erreurs);
     const premiereErreur = RESEAUX_SOCIAUX.find(({ cle }) => erreurs[cle]);
     if (premiereErreur) { document.getElementById(`reseau-${premiereErreur.cle}`)?.focus(); return; }
-    if (canContinue) onNext({ ...form, ville: form.ville.trim(), ...normaliserReseauxSociaux(form) });
+    if (canContinue) onNext({ ...form, titre: (form.titre || "").trim(), ville: form.ville.trim(), ...normaliserReseauxSociaux(form) });
   };
 
   return (
@@ -258,6 +261,27 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
             className={CHAMP_CLASS}
           />
         </div>
+      </div>
+
+      <div className="mb-6">
+        <label htmlFor="titre" className="mb-2 block text-base font-semibold text-[#2e261f]">
+          Titre ou description <span className="font-normal">· optionnel</span>
+        </label>
+        <input
+          id="titre"
+          type="text"
+          maxLength={160}
+          autoComplete="organization-title"
+          value={form.titre || ""}
+          onChange={(event) => handleChange("titre", event.target.value)}
+          placeholder="Ex. Ingénieur logiciel | Passionné par l’innovation"
+          aria-describedby="titre-aide"
+          className={CHAMP_CLASS}
+        />
+        <p id="titre-aide" className="mt-2 text-sm text-[#2e261f] sm:text-base">
+          Affiché sous votre nom dans tout le réseau : fil, commentaires, annuaire et messages.
+          Laissé vide, il sera déduit de votre poste actuel ou de vos études.
+        </p>
       </div>
 
       <div className="mb-6">
@@ -399,7 +423,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
 
       <div className="mb-9 rounded-[14px] bg-[#f6efe3] px-5 py-4 text-base text-[#2e261f] sm:text-lg">
         Vous apparaîtrez comme{" "}
-        <strong>{nomAnnuaire} · {villeAnnuaire}, {form.pays}</strong>{" "}
+        <strong>{nomAnnuaire}{form.titre?.trim() ? ` · ${form.titre.trim()}` : ""} · {villeAnnuaire}, {form.pays}</strong>{" "}
         dans l&apos;annuaire.
       </div>
 

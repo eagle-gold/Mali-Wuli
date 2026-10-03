@@ -547,7 +547,7 @@ router.get("/etablissements/:id", authenticate, async (req: AuthRequest, res) =>
       id: profilId,
       initiales: initiales(formation.profil.user.prenom, formation.profil.user.nom),
       nom: nomComplet(formation.profil.user.prenom, formation.profil.user.nom),
-      fonction: formation.profil.experiences[0]?.poste || formation.profil.titre,
+      fonction: formation.profil.titre?.trim() || formation.profil.experiences[0]?.poste || null,
       ville: formation.profil.ville,
       photo: formation.profil.photo,
       promotion: formation.anneeFin,

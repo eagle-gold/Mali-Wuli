@@ -83,7 +83,7 @@ function membreVersInterlocuteur(membre: MembreResumeApi): Interlocuteur {
     id: membre.id,
     nom: nomComplet || "Membre Mali Wuli",
     initiales: initialesDe(membre.prenom, membre.nom, membre.initiales),
-    fonction: membre.titre?.trim() || "Membre du réseau",
+    fonction: membre.titre?.trim() || "",
     ville: membre.ville?.trim() || "Ville non renseignée",
     ton: tonDepuisId(membre.id),
   };
@@ -582,7 +582,7 @@ export default function Messagerie() {
                       <Avatar personne={contact} />
                       <span className="min-w-0">
                         <strong className="block truncate text-base text-[#2d241d] sm:text-lg">{contact.nom}</strong>
-                        <span className="block truncate text-sm text-[#887764] sm:text-base">{contact.fonction} · {contact.ville}</span>
+                        <span className="block truncate text-sm text-[#887764] sm:text-base">{[contact.fonction, contact.ville].filter(Boolean).join(" · ")}</span>
                       </span>
                     </button>
                     ))}
@@ -670,7 +670,7 @@ export default function Messagerie() {
             <Avatar personne={conversationActive.interlocuteur} grand />
             <div className="min-w-0">
               <h2 className="truncate titre-element">{conversationActive.interlocuteur.nom}</h2>
-              <p className="truncate text-sm text-[#887764] sm:text-lg">{conversationActive.interlocuteur.fonction} · {conversationActive.interlocuteur.ville}</p>
+              <p className="truncate text-sm text-[#887764] sm:text-lg">{[conversationActive.interlocuteur.fonction, conversationActive.interlocuteur.ville].filter(Boolean).join(" · ")}</p>
             </div>
           </header>
 

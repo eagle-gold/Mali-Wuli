@@ -261,11 +261,11 @@ export default function AgendaPage() {
                           <h2 className="titre-element">
                             {nom}
                           </h2>
-                          <p className="text-sm text-terre-300">
-                            {item.role === "MENTOR"
-                              ? personne.titre || "Membre du réseau"
-                              : item.volontaire.specialite}
-                          </p>
+                          {(item.role === "MENTOR" ? personne.titre : item.volontaire.specialite) && (
+                            <p className="text-sm text-terre-300">
+                              {item.role === "MENTOR" ? personne.titre : item.volontaire.specialite}
+                            </p>
+                          )}
                         </div>
                       </div>
                       <span className={classeStatut(item.statut)}>

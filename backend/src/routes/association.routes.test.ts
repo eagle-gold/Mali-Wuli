@@ -17,7 +17,8 @@ const comptes = new Map([
   ["user-admin", { id: "user-admin", email: "ik736764@gmail.com", role: "ADMIN", statut: "VALIDE", emailVerifie: true, tokenVersion: 0 }],
   ["user-associations-specialiste", {id:"user-associations-specialiste",role:"MEMBRE",statut:"VALIDE",emailVerifie:true,tokenVersion:0,rolesDelegues:[{code:"ASSOCIATIONS"}]}],
   ["user-autre-specialiste", {id:"user-autre-specialiste",role:"MEMBRE",statut:"VALIDE",emailVerifie:true,tokenVersion:0,rolesDelegues:[{code:"OFFRES"}]}],
-  ["user-pending", { id: "user-pending", role: "MEMBRE", statut: "EN_ATTENTE", emailVerifie: true, tokenVersion: 0 }],
+  ["user-pending", { id: "user-pending", role: "MEMBRE", statut: "VALIDE", emailVerifie: true, tokenVersion: 0 }],
+  ["user-suspended", { id: "user-suspended", role: "MEMBRE", statut: "SUSPENDU", emailVerifie: true, tokenVersion: 0 }],
 ]);
 // Seul le lookup d'identité utilisé par authenticate est remplacé ; aucune requête réelle possible.
 prisma.user.findUnique = (async ({ where }: { where: { id: string } }) => comptes.get(where.id) || null) as unknown as typeof prisma.user.findUnique;
@@ -36,7 +37,7 @@ function fixture() {
   ]);
   const profils = ["member", "manager", "admin", "pending", "other-manager", "associations-specialiste", "autre-specialiste"].map((id) => ({
     id, userId: `user-${id}`, photo: null, titre: "Membre", ville: "Bamako", pays: "Mali",
-    onboardingFini: id !== "pending", user: { prenom: "Prénom", nom: id, statut: id === "pending" ? "EN_ATTENTE" : "VALIDE" },
+    onboardingFini: id !== "pending", user: { prenom: "Prénom", nom: id, statut: "VALIDE" },
   }));
   const affiliations = new Map<string, Affiliation>();
   const propositions: Array<Record<string, unknown>> = [];
@@ -155,10 +156,13 @@ function requete(router: Router, method: string, path: string, utilisateur = "me
   });
 }
 
-test("auth réelle : anonyme refusé, compte en attente limité au routeur onboarding", async () => {
+test("auth réelle : anonyme et compte suspendu refusés ; le routeur onboarding reste allégé", async () => {
   const f = fixture();
   assert.equal((await requete(f.router, "GET", "/", "member", {}, { sansToken: true })).status, 401);
-  assert.equal((await requete(f.router, "GET", "/", "pending")).status, 403);
+  assert.equal((await requete(f.router, "GET", "/", "suspended")).status, 403);
+  assert.equal((await requete(f.onboarding, "GET", "/", "suspended", {}, { onboarding: true })).status, 403);
+  // Un compte créé accède immédiatement : le membre encore en questionnaire voit les deux routeurs.
+  assert.equal((await requete(f.router, "GET", "/", "pending")).status, 200);
   assert.equal((await requete(f.router, "PATCH", "/asso-a/affiliations/member", "pending", { decision: "VERIFIE" })).status, 403);
   assert.equal((await requete(f.onboarding, "GET", "/", "pending", {}, { onboarding: true })).status, 200);
   assert.equal((await requete(f.onboarding, "GET", "/asso-a/membres", "pending", {}, { onboarding: true })).status, 404);

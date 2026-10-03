@@ -22,7 +22,7 @@ function projeter(row: any, select?: Row): any {
 }
 function fixture(t: TestContext) {
   const identite: Row = { id: "session-user", prenom: "Awa", nom: "Test", email: "qa@example.invalid", role: "MEMBRE", rolesDelegues: [], statut: "VALIDE", emailVerifie: true, createdAt: new Date("2025-01-01") };
-  const profil: Row = { id: "session-profile", userId: identite.id, pays: "Mali", ville: "Bamako", telephone: null, estVolontaire: false, onboardingFini: true, onboardingEtape: 4,
+  const profil: Row = { id: "session-profile", userId: identite.id, pays: "Mali", ville: "Bamako", telephone: null, titre: null, estVolontaire: false, onboardingFini: true, onboardingEtape: 4,
     linkedin: "https://www.linkedin.com/in/ancien", facebook: "https://www.facebook.com/ancien", instagram: null, tiktok: null,
     onboardingDonnees: ancienQuestionnaire(), formations: [], experiences: [], volontaire: null, cerclesMembres: [], associations: [], emailVisible: false, telephoneVisible: false, _count: { publications: 0, commentairesPub: 0 } };
   const ecritures: Row[] = [];
@@ -38,7 +38,7 @@ function fixture(t: TestContext) {
     if (data.profil) Object.assign(profil, data.profil.upsert.update);
     return { ...identite, profil };
   });
-  mock(t, prisma.profil, "findUnique", async () => ({ id: profil.id }));
+  mock(t, prisma.profil, "findUnique", async () => ({ id: profil.id, experiences: profil.experiences, formations: profil.formations }));
   mock(t, prisma.profil, "findFirst", async ({ where, select }) => {
     assert.equal(where.onboardingFini, true); assert.deepEqual(where.user, { statut: "VALIDE" });
     for (const champ of CHAMPS_LIENS_SOCIAUX) assert.equal(select[champ], true);
@@ -52,7 +52,7 @@ function fixture(t: TestContext) {
     user: { update: async ({ where, data }: Row) => { assert.equal(where.id, identite.id); Object.assign(identite, data); return identite; } },
     profil: { update: async ({ where, data }: Row) => { assert.equal(where.id, profil.id); ecritures.push(data); Object.assign(profil, data); return profil; } },
     formation: { deleteMany: async () => ({ count: 0 }) },
-    experience: { deleteMany: async () => ({ count: 0 }) },
+    experience: { deleteMany: async () => ({ count: 0 }), create: async () => ({}) },
     volontaire: { deleteMany: async () => ({ count: 0 }) },
   }));
   return { profil, identite, ecritures };
@@ -191,4 +191,65 @@ test("nouvelle route PATCH conserve le refus des appels sans session", async () 
   let status = 0, next = false;
   await middleware({ headers: {} }, { status(n: number) { status = n; return this; }, json() { return this; } }, () => { next = true; });
   assert.equal(status, 401); assert.equal(next, false);
+});
+
+const experienceActuelle = (poste: string, structure: string) => ({
+  poste, structure, typeContrat: "CDI", pays: "Mali", paysCode: "ML", ville: "Bamako",
+  moisDebut: "03", anneeDebut: "2023", moisFin: "", anneeFin: "", posteActuel: true, description: "",
+});
+
+test("titre : saisi au questionnaire, persisté (profil + snapshot) et relu avant l'ancien snapshot", async (t) => {
+  const f = fixture(t), body: Row = ancienQuestionnaire();
+  body.informations.titre = "  Data Scientist chez Natixis CIB | Étudiante à Paris Dauphine-PSL  ";
+  assert.equal((await appeler(onboardingRouter, "post", "/", body)).status, 201);
+  const attendu = "Data Scientist chez Natixis CIB | Étudiante à Paris Dauphine-PSL";
+  assert.equal(f.profil.titre, attendu);
+  assert.equal(f.profil.onboardingDonnees.informations.titre, attendu);
+  f.profil.titre = "Titre modifié depuis le profil";
+  assert.equal((await appeler(onboardingRouter, "get", "/")).body.informations.titre, "Titre modifié depuis le profil");
+});
+
+test("titre : champ vide et poste actuel → titre déduit ; trop long refusé avant toute écriture", async (t) => {
+  const f = fixture(t), body: Row = ancienQuestionnaire();
+  Object.assign(body, { experiences: [experienceActuelle("Ingénieur logiciel", "Orange Mali")] });
+  body.informations.titre = "";
+  assert.equal((await appeler(onboardingRouter, "post", "/", body)).status, 201);
+  assert.equal(f.profil.titre, "Ingénieur logiciel chez Orange Mali");
+  const trop: Row = ancienQuestionnaire(); trop.informations.titre = "x".repeat(161);
+  const avant = f.ecritures.length;
+  assert.equal((await appeler(onboardingRouter, "post", "/", trop)).status, 400);
+  assert.equal(f.ecritures.length, avant);
+});
+
+test("titre : un ancien client qui n'envoie pas le champ ne perd jamais un titre existant", async (t) => {
+  const f = fixture(t);
+  f.profil.titre = "Mon titre à moi";
+  assert.equal((await appeler(onboardingRouter, "post", "/", ancienQuestionnaire())).status, 201);
+  assert.equal(f.profil.titre, "Mon titre à moi");
+});
+
+test("titre : un titre resté automatique suit le nouveau poste, un titre personnalisé jamais", async (t) => {
+  const f = fixture(t);
+  f.profil.experiences = [{ poste: "Dev", entreprise: "A", estActuel: true, dateDebut: new Date("2022-01-01T00:00:00Z") }];
+  f.profil.titre = "Dev chez A";
+  const suit: Row = ancienQuestionnaire();
+  Object.assign(suit, { experiences: [experienceActuelle("Lead Dev", "B")] });
+  suit.informations.titre = "Dev chez A";
+  assert.equal((await appeler(onboardingRouter, "post", "/", suit)).status, 201);
+  assert.equal(f.profil.titre, "Lead Dev chez B");
+  f.profil.titre = "Ma phrase perso";
+  const perso: Row = ancienQuestionnaire();
+  Object.assign(perso, { experiences: [experienceActuelle("CTO", "C")] });
+  perso.informations.titre = "Ma phrase perso";
+  assert.equal((await appeler(onboardingRouter, "post", "/", perso)).status, 201);
+  assert.equal(f.profil.titre, "Ma phrase perso");
+});
+
+test("titre : PATCH /users/me modifie ou efface le titre (null)", async (t) => {
+  const f = fixture(t);
+  assert.equal((await appeler(userRouter, "patch", "/me", { titre: "  Ingénieure data  " })).status, 200);
+  assert.equal(f.profil.titre, "Ingénieure data");
+  assert.equal((await appeler(userRouter, "patch", "/me", { titre: null })).status, 200);
+  assert.equal(f.profil.titre, null);
+  assert.equal((await appeler(userRouter, "patch", "/me", { titre: "x".repeat(161) })).status, 400);
 });

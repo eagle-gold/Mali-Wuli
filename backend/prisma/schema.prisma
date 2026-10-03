@@ -21,7 +21,6 @@ enum Role {
 }
 
 enum StatutInscription {
-  EN_ATTENTE
   VALIDE
   REFUSE
   SUSPENDU
@@ -43,7 +42,7 @@ model User {
   dateNaissance DateTime?
   role          Role              @default(MEMBRE)
   rolesDelegues UserRoleGrant[]
-  statut        StatutInscription @default(EN_ATTENTE)
+  statut        StatutInscription @default(VALIDE)
   emailVerifie  Boolean           @default(false)
   tokenVersion  Int               @default(0)
   codeVerif     String?

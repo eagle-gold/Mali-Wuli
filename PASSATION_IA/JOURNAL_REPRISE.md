@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-09-29 (villes Mali = chef-lieu de région, publié).
+LIBRE — dernière session : Claude, 2026-10-03 (suppression de la validation des inscriptions, non commité, migration non appliquée).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,44 @@ LIBRE — dernière session : Claude, 2026-09-29 (villes Mali = chef-lieu de ré
 ```
 
 ## Entrées
+
+### 2026-10-03 — Claude — Titre de profil (courte description sous le nom, façon LinkedIn)
+- Statut : TERMINÉ (code local ; ni commit, ni push, ni déploiement ; script de remplissage écrit mais NON lancé)
+- Demande de l'utilisateur : le profil doit avoir une description (headline) ; dans les publications et partout, afficher cette description à la place de « Membre du réseau ».
+- Constat : `Profil.titre` existait mais l'onboarding ne l'écrivait jamais et aucun écran ne le modifiait ; il était donc vide pour tout le monde, d'où le libellé générique.
+- Fichiers touchés : backend `lib/titre-profil.ts` (+ test) [titreAutomatique, titreAEnregistrer, titreAutomatiqueDepuisBase, coupure sans casser les emojis], `routes/onboarding.routes.ts` (champ `informations.titre`, calcul à l'enregistrement, relecture GET prioritaire sur le snapshot), `routes/education.routes.ts` (fiche établissement : titre avant poste), `scripts/remplir-titres-profils.ts` (nouveau), `routes/profile-social-links.test.ts` (5 tests de route sur le titre) ; frontend `components/profile/ProfilMembre.tsx` (TitreProfilEditable, en-tête propriétaire/visiteur, lieu sur sa ligne), `components/onboarding/StepInformations.tsx` (champ « Titre ou description »), `components/feed/ActualiteFeed.tsx` (publications, commentaires, soutiens, suggestions, colonne profil), `components/messages/Messagerie.tsx`, `components/directory/CartesAnnuaire.tsx`, `app/(platform)/synergies` et `agenda`, `components/MenuCompte.tsx`.
+- Règles : titre saisi (160 caractères max) prioritaire ; champ absent = titre conservé ; champ vide ou jamais saisi = titre déduit du poste actuel (« Poste chez Structure ») ou des études supérieures en cours (« Étudiant(e) à … ») ; un titre resté identique au titre déduit de l'ancien parcours suit le nouveau parcours, un titre modifié par le membre n'est jamais remplacé. Sans titre, la ligne est omise partout (plus de « Membre du réseau »). Modification directe sur le profil via PATCH /users/me ; effacer = aucun titre (pas de recalcul).
+- Fait et vérifié : backend tsc OK, 226/226 tests ; frontend type-check OK, 19/19. Parcours réel dans Chrome (comptes QA temporaires sur la base locale, supprimés ensuite) : titre déduit à l'enregistrement du questionnaire, titre conservé si champ absent, modification et effacement sur le profil, affichage dans le fil, les commentaires, la colonne gauche, le menu du compte et le profil vu par un autre membre, échec réseau, focus, annonce, menu sur /onboarding. Relecture indépendante (3 angles, 16 agents, constats contestés) : 9 défauts confirmés corrigés (pagination du script, coupure d'emoji, formations canoniques, titre déduit qui ne se mettait plus à jour, focus et boutons invisibles, annonce, menu sur le questionnaire).
+- Fait mais non vérifié : Safari/Firefox ; lecteur d'écran réel ; script de remplissage en --apply (simulation seule exécutée sur la base locale : 0 profil concerné).
+- Actions à effet externe : base locale uniquement (comptes QA créés puis supprimés). Aucune migration (aucune colonne ajoutée). Production non touchée.
+- Prochaine action : revue par l'utilisateur puis commit. En production, après déploiement et accord : `npx tsx src/scripts/remplir-titres-profils.ts` (simulation) puis `--apply` après sauvegarde, pour donner un titre déduit aux membres existants qui n'en ont pas.
+- Preuves : captures et scripts temporaires dans /tmp/qa-feed (non conservés dans le dépôt).
+
+### 2026-10-03 — Claude — Menu du compte et accueil façon LinkedIn
+- Statut : TERMINÉ (code local ; ni commit, ni push, ni déploiement)
+- Demande de l'utilisateur : (1) déconnexion et corbeille dans un menu à flèche à côté de l'avatar, comme LinkedIn ; (2) accueil connecté façon LinkedIn : carte « Commencer un post », sélecteur d'affichage, cartes de publication avec image.
+- État Git au début : main, HEAD 46f8c0e, modifications de l'entrée précédente non commitées.
+- Fichiers touchés : frontend `components/MenuCompte.tsx` (nouveau), `components/MaliWuliHeader.tsx`, `components/profile/ProfilMembre.tsx` (lien Corbeille retiré), `lib/session.ts` (type titre), `components/feed/ComposerPublication.tsx` (nouveau : carte + fenêtre de rédaction, photo, portail), `components/feed/ActualiteFeed.tsx` (grille 3 colonnes max 1280 px, sélecteur « Afficher : », carte de publication : en-tête, puces, image, compteurs, barre Soutenir/Commenter ; ancien composer en 2 étapes retiré), `lib/publication-image.ts` + test ; backend `lib/validation.ts` (`texteMultiligneSchema`) + test, `routes/publication.routes.ts` (contenu normalisé CRLF→LF).
+- Décisions de conception : « Vidéo » et « Rédiger un article » n'existent pas côté serveur ; remplacés par « Je cherche » / « Je propose » (les deux intentions du produit) autour de « Photo ». Le serveur acceptait déjà une photo sur les publications mais le fil ne l'affichait ni ne la proposait : c'est maintenant le cas. « + Suivre » non repris (pas de concept d'abonnement) ; synergies inchangées.
+- Fait et vérifié : type-check frontend 0 erreur, tests frontend 19/19, backend tsc OK et 209/209. Parcours réel dans Chrome (compte QA temporaire sur la base locale, supprimé ensuite avec ses publications et fichiers) : ouverture/fermeture, Échap, focus rendu, brouillon conservé, format refusé, publication avec photo (201), image dans le fil, texte 1190 caractères avec retours à la ligne + photo, verrouillage pendant l'envoi, mobile 390 px sans débordement, aucune erreur console. Relecture indépendante (3 angles, 19 agents, constats contestés) : défauts confirmés corrigés (clavier avec focus sur body, focus après retrait de photo, consigne si « Publier » grisé, délai d'envoi 45 s, nom accessible, contrastes, aria-expanded du compteur, CRLF multipart).
+- Fait mais non vérifié : Safari/Firefox ; lecteur d'écran réel.
+- Actions à effet externe : base locale uniquement (compte QA créé puis supprimé, deux fois). Aucune migration supplémentaire, aucun déploiement.
+- Arrêté à : terminé.
+- Prochaine action : revue par l'utilisateur puis commit ; texte alternatif des images (non stocké côté serveur) reste une amélioration possible.
+- Preuves : captures et scripts temporaires dans /tmp/qa-feed (non conservés dans le dépôt).
+
+### 2026-10-03 — Claude — Suppression de la validation des inscriptions (accès immédiat)
+- Statut : TERMINÉ (code local ; ni commit, ni push, ni migration appliquée, ni déploiement)
+- Demande de l'utilisateur : un compte créé accède directement au réseau ; retirer la mise « en attente de validation » côté backend et frontend.
+- État Git au début : `~/Downloads/formation-langchain/mali-wuli`, branche main, HEAD 46f8c0e, 1 modifié (`backend/src/routes/auth.routes.ts` : statut VALIDE à l'inscription, déjà présent) / 1 non suivi (`docker-compose.yml`, MySQL local 3307).
+- Fichiers touchés : backend `prisma/schema.prisma` (enum StatutInscription sans EN_ATTENTE, défaut VALIDE), `prisma/migrations/20261003120000_inscription_sans_validation/migration.sql` (UPDATE EN_ATTENTE→VALIDE puis MODIFY enum), `src/middlewares/auth.middleware.ts` (garde PROFIL_EN_ATTENTE retirée), `src/routes/auth.routes.ts` (commentaire), `src/routes/onboarding.routes.ts` (réponse = statut réel), `src/lib/roles.ts` (rôle délégué INSCRIPTIONS et permission INSCRIPTIONS_GERER retirés), `src/routes/admin.routes.ts` (GET/PUT /admin/inscriptions supprimés, stats sans `enAttente`), `src/services/admin-membres.service.ts` (deciderInscription supprimé, RETABLIR → VALIDE direct) ; tests `admin-roles`, `association`, `evenement`, `offre`, `publication-suppression`, `signalement`, `priorite-membres` (comptes « pending » → suspendus). Frontend `lib/session.ts` (plus de redirection /profil selon statut), `lib/autorisations.ts`, `types/index.ts`, `types/profile.ts`, `app/(auth)/onboarding/page.tsx` (écran final : accès immédiat), `components/profile/ProfilMembre.tsx` (badge EN_ATTENTE retiré), `components/admin/GestionMembres.tsx` (libellés), `app/(admin)/admin/page.tsx` (section « Profils à valider » et tuile « En attente » retirées). `README.md` (table des rôles).
+- Fait et vérifié : `prisma validate` OK ; `prisma migrate diff --from-empty` produit la même définition d'enum que la migration ; backend `tsc --noEmit` 0 erreur, tests 206/206 ; frontend `type-check` 0 erreur, tests 16/16.
+- Fait mais non vérifié : parcours navigateur réel (inscription → onboarding → dashboard) ; base locale Docker (3307) arrêtée, migration non appliquée.
+- Actions à effet externe : aucune.
+- Décisions de l'utilisateur prises pendant la session : suppression de la validation des inscriptions par l'équipe (remplace le principe « profil vérifié avant accès » de la spécification §3.4/§4.1). Les grants `INSCRIPTIONS` existants en base deviennent des codes inconnus, ignorés par `rolesDeleguesUtilisateur`.
+- Arrêté à : travail terminé, aucun fichier à moitié fait.
+- Prochaine action : revue par l'utilisateur, puis commit ; en production : sauvegarde, `prisma migrate deploy` (18 migrations), déploiement backend puis frontend.
+- Preuves : aucune (vérifications listées ci-dessus, relançables).
 
 ### 2026-09-29 — Claude — Publication « ville = chef-lieu de région » (Mali)
 - Statut : TERMINÉ (accord explicite du propriétaire : « go », règle chef-lieu de région choisie).

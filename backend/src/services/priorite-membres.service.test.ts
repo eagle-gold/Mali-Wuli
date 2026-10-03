@@ -65,12 +65,12 @@ test("établissements : priorité globale avant pagination et profils distincts 
   assert.deepEqual((await f.liste(4, 1)).map((e) => e.id), []);
 });
 
-test("établissements : comptes en attente/refusés, parcours incomplets et établissements invalides exclus", async () => {
+test("établissements : comptes suspendus/refusés, parcours incomplets et établissements invalides exclus", async () => {
   const f = fixture([ecole("a", "Alpha"), ecole("z", "Zulu"), ecole("cachee", "École cachée", { valide: false })], [
     { etablissementId: "a", profilId: "attente" }, { etablissementId: "a", profilId: "refuse" },
     { etablissementId: "a", profilId: "incomplet" }, { etablissementId: "z", profilId: "un" },
     { etablissementId: "cachee", profilId: "un" }, { etablissementId: null, profilId: "un" },
-  ], [actif("un"), { ...actif("attente"), user: { statut: "EN_ATTENTE" } },
+  ], [actif("un"), { ...actif("attente"), user: { statut: "SUSPENDU" } },
     { ...actif("refuse"), user: { statut: "REFUSE" } }, { ...actif("incomplet"), onboardingFini: false }]);
   assert.deepEqual((await f.liste()).map((e) => e.id), ["z", "a"]);
   assert.deepEqual(f.appels[0].args.where.profil, { onboardingFini: true, user: { statut: "VALIDE" } });

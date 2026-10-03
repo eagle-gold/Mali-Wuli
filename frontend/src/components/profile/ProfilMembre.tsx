@@ -19,7 +19,6 @@ import {
   Pencil,
   Phone,
   RefreshCw,
-  Trash2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -341,7 +340,7 @@ function adapterSuggestion(suggestion: SuggestionSynergieApi, index: number): Su
     id: suggestion.id,
     nom: `${prenom} ${nom}`.trim(),
     initiales: initialesDe(prenom, nom),
-    fonction: suggestion.titre?.trim() || experience?.poste?.trim() || "Membre du réseau",
+    fonction: suggestion.titre?.trim() || experience?.poste?.trim() || "",
     ville: suggestion.ville?.trim() || suggestion.pays?.trim() || "Localisation non renseignée",
     ton: tons[index % tons.length] || "vert",
     photo: urlMediaBackend(suggestion.photo),
@@ -359,19 +358,14 @@ const STATUT_PROFIL: Record<
   StatutInscriptionProfilApi,
   { libelle: string; detail: string; classe: string }
 > = {
-  EN_ATTENTE: {
-    libelle: "En attente de validation",
-    detail: "Votre profil est relu par l’équipe, réponse sous 48 h.",
-    classe: "bg-[#f3e4d8] text-[#ac6139]",
-  },
   VALIDE: {
     libelle: "Profil validé",
     detail: "Votre profil est visible par les membres du réseau.",
     classe: "bg-[#e5efe8] text-[#2a5b37]",
   },
   REFUSE: {
-    libelle: "Profil à compléter",
-    detail: "Certaines informations doivent être corrigées avant la validation.",
+    libelle: "Profil refusé",
+    detail: "Ce compte n’a plus accès au réseau. Contactez l’équipe Mali Wuli.",
     classe: "bg-[#f3e4d8] text-[#ac6139]",
   },
   SUSPENDU: {
@@ -682,7 +676,7 @@ function EnTeteProfil({
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0">
             <h1 className="break-words font-display text-2xl font-semibold leading-tight sm:text-3xl">{nomComplet}</h1>
-            <p className="mt-1 text-base text-[#695c4b] sm:text-lg">{sousTitre}</p>
+            <div className="mt-1 text-base text-[#2e261f] sm:text-lg">{sousTitre}</div>
             {meta}
           </div>
           {actions}
@@ -690,6 +684,123 @@ function EnTeteProfil({
         {apres}
       </div>
     </section>
+  );
+}
+
+const LONGUEUR_MAX_TITRE = 160;
+
+/** Courte description sous le nom, modifiable sur place par le propriétaire du profil. */
+function TitreProfilEditable({ titre, repli, onEnregistre }: {
+  titre: string;
+  /** Texte déduit du parcours, affiché tant qu'aucun titre n'est saisi. */
+  repli: string;
+  onEnregistre: (titre: string | null) => void;
+}) {
+  const [edition, setEdition] = useState(false);
+  const [valeur, setValeur] = useState(titre);
+  const [envoi, setEnvoi] = useState(false);
+  const [erreur, setErreur] = useState("");
+  const champ = useRef<HTMLInputElement>(null);
+  const declencheur = useRef<HTMLButtonElement>(null);
+
+  const [rendreLeFocus, setRendreLeFocus] = useState(false);
+
+  useEffect(() => { if (!edition) setValeur(titre); }, [titre, edition]);
+  useEffect(() => { if (edition) champ.current?.focus(); }, [edition]);
+  // Le bouton à refocaliser (crayon ou « Ajouter ») n'existe qu'après le rendu qui suit la fermeture.
+  useEffect(() => {
+    if (rendreLeFocus && !edition) {
+      declencheur.current?.focus();
+      setRendreLeFocus(false);
+    }
+  }, [rendreLeFocus, edition, titre]);
+
+  const fermer = () => {
+    setEdition(false);
+    setErreur("");
+    setRendreLeFocus(true);
+  };
+
+  const enregistrer = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    if (envoi) return;
+    const propre = valeur.trim();
+    if (propre === titre.trim()) { fermer(); return; }
+    setEnvoi(true);
+    setErreur("");
+    try {
+      await api.patch("/users/me", { titre: propre || null });
+      onEnregistre(propre || null);
+      setEdition(false);
+      setRendreLeFocus(true);
+    } catch (e) {
+      setErreur(messageErreurApi(e, "Le titre n’a pas pu être enregistré. Réessayez."));
+      window.setTimeout(() => champ.current?.focus(), 0);
+    } finally {
+      setEnvoi(false);
+    }
+  };
+
+  if (edition) {
+    return (
+      <form onSubmit={enregistrer} className="max-w-[720px]">
+        <label htmlFor="titre-profil" className="sr-only">Titre ou description de votre profil</label>
+        <input
+          ref={champ}
+          id="titre-profil"
+          value={valeur}
+          maxLength={LONGUEUR_MAX_TITRE}
+          readOnly={envoi}
+          onChange={(event) => setValeur(event.target.value)}
+          onKeyDown={(event) => { if (event.key === "Escape" && !envoi) { event.preventDefault(); fermer(); } }}
+          aria-describedby="titre-profil-aide"
+          placeholder="Ex. Ingénieur logiciel | Passionné par l’innovation"
+          className="min-h-11 w-full rounded-xl border border-[#d9c7aa] bg-white px-4 text-base text-[#2e261f] outline-none placeholder:text-[#75695d] focus:border-[#2a5b37] focus:ring-2 focus:ring-[#2a5b37]/20"
+        />
+        <p id="titre-profil-aide" className="mt-1 text-xs text-[#6e5b49]">
+          Visible sous votre nom dans tout le réseau · {valeur.length}/{LONGUEUR_MAX_TITRE} caractères
+        </p>
+        {erreur && <p role="alert" className="mt-1 text-sm font-medium text-[#9b3e24]">{erreur}</p>}
+        <div className="mt-2 flex gap-2">
+          <button type="submit" disabled={envoi} className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[#2a5b37] px-5 text-sm font-bold text-white hover:bg-[#214a2c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37] focus-visible:ring-offset-2 disabled:opacity-60">
+            {envoi && <LoaderCircle aria-hidden="true" size={15} className="animate-spin" />}
+            {envoi ? "Enregistrement…" : "Enregistrer"}
+          </button>
+          <button type="button" onClick={fermer} disabled={envoi} className="min-h-10 rounded-full px-4 text-sm font-semibold text-[#56493e] hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37] disabled:opacity-60">
+            Annuler
+          </button>
+        </div>
+      </form>
+    );
+  }
+
+  const affiche = titre.trim() || repli;
+  return (
+    <div className="flex items-start gap-1">
+      {affiche ? (
+        <>
+          <p className="min-w-0">{affiche}</p>
+          <button
+            ref={declencheur}
+            type="button"
+            onClick={() => setEdition(true)}
+            aria-label="Modifier mon titre"
+            className="-mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[#695c4b] hover:bg-[#f5ecdf] hover:text-[#2a5b37] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37]"
+          >
+            <Pencil aria-hidden="true" size={16} />
+          </button>
+        </>
+      ) : (
+        <button
+          ref={declencheur}
+          type="button"
+          onClick={() => setEdition(true)}
+          className="text-left font-semibold text-[#2a5b37] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37]"
+        >
+          Ajouter un titre ou une description
+        </button>
+      )}
+    </div>
   );
 }
 
@@ -784,7 +895,7 @@ function ProfilProprietaire() {
   const photo = urlMediaBackend(utilisateur?.profil.photo);
   const photoCouverture = urlMediaBackend(utilisateur?.profil.photoCouverture);
   const stats = utilisateur?.profil.stats || {};
-  const statut = STATUT_PROFIL[utilisateur?.statut || "EN_ATTENTE"];
+  const statut = STATUT_PROFIL[utilisateur?.statut || "VALIDE"];
   const avisCalcules = useMemo(
     () =>
       formations.filter((formation) => {
@@ -805,6 +916,13 @@ function ProfilProprietaire() {
     [formations],
   );
   const avisPublies = stats.nbAvis ?? avisCalcules;
+
+  const enregistrerTitre = (titre: string | null) => {
+    setUtilisateur((precedent) => precedent ? { ...precedent, profil: { ...precedent.profil, titre } } : precedent);
+    // L'en-tête et le menu du compte lisent le titre dans la session partagée.
+    sessionMembre?.actualiser();
+    setAnnonce(titre ? "Votre titre a bien été enregistré." : "Votre titre a été supprimé.");
+  };
 
   const choisirPhoto = async (event: ChangeEvent<HTMLInputElement>) => {
     const fichier = event.target.files?.[0];
@@ -938,13 +1056,6 @@ function ProfilProprietaire() {
             <ArrowLeft aria-hidden="true" size={18} />
             Retour à l’accueil
           </Link>
-          <Link
-            href="/corbeille"
-            className="inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2 text-xs font-semibold text-[#806f5e] transition hover:bg-[#f5ecdf] hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] sm:text-sm"
-          >
-            <Trash2 aria-hidden="true" size={15} />
-            Corbeille
-          </Link>
         </div>
 
         <EnTeteProfil
@@ -953,10 +1064,12 @@ function ProfilProprietaire() {
           photo={photo}
           photoCouverture={photoCouverture}
           sousTitre={<>
-            {utilisateur.profil.titre || experienceActuelle?.poste || "Membre du réseau"}
-            {experienceActuelle?.structure ? " · " + experienceActuelle.structure : ""}
-            {" · "}
-            {localisationProfil}
+            <TitreProfilEditable
+              titre={utilisateur.profil.titre?.trim() || ""}
+              repli={[experienceActuelle?.poste, experienceActuelle?.structure].filter(Boolean).join(" · ")}
+              onEnregistre={enregistrerTitre}
+            />
+            {localisationProfil && <p className="mt-1 text-sm text-[#806f5e] sm:text-base">{localisationProfil}</p>}
           </>}
           controleCouverture={<>
             <button
@@ -1134,7 +1247,7 @@ function ProfilProprietaire() {
                     )}
                     <div className="min-w-0">
                       <h3 className="truncate text-base font-bold sm:text-lg">{membre.nom}</h3>
-                      <p className="truncate text-sm text-[#7b654e] sm:text-base">{membre.fonction} · {membre.ville}</p>
+                      <p className="truncate text-sm text-[#7b654e] sm:text-base">{[membre.fonction, membre.ville].filter(Boolean).join(" · ")}</p>
                     </div>
                   </div>
                   <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_auto]">
@@ -1250,7 +1363,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
         setErreur({
           introuvable,
           texte: introuvable
-            ? "Ce profil n’existe pas ou n’est pas encore validé par l’équipe Mali Wuli."
+            ? "Ce profil n’existe pas ou n’est plus disponible."
             : messageErreurApi(e, "Impossible de charger ce profil pour le moment."),
         });
       })
@@ -1355,9 +1468,9 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
   const stats = membre.stats || {};
   const membreDepuis = dateMembreDepuis(membre.membreDepuis);
   const fonction = membre.titre?.trim()
-    || experienceActuelle?.poste
-    || (membre.situation ? SITUATIONS[membre.situation] : "")
-    || "Membre du réseau";
+    || [experienceActuelle?.poste, experienceActuelle?.structure].filter(Boolean).join(" · ")
+    || (membre.situation ? SITUATIONS[membre.situation] : "");
+  const lieuVisiteur = lieuDe(informations.ville || experienceActuelle?.ville, informations.pays || experienceActuelle?.pays);
   const associations = membre.associations || [];
 
   // Demande reçue de ce membre : on renvoie vers /synergies pour répondre.
@@ -1406,10 +1519,8 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
           photo={urlMediaBackend(membre.photo)}
           photoCouverture={urlMediaBackend(membre.photoCouverture)}
           sousTitre={<>
-            {fonction}
-            {experienceActuelle?.structure ? " · " + experienceActuelle.structure : ""}
-            {" · "}
-            {lieuDe(informations.ville || experienceActuelle?.ville, informations.pays || experienceActuelle?.pays)}
+            {fonction && <p>{fonction}</p>}
+            {lieuVisiteur && <p className="mt-1 text-sm text-[#806f5e] sm:text-base">{lieuVisiteur}</p>}
           </>}
           meta={
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm sm:text-base">

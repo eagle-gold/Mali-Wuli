@@ -1,5 +1,4 @@
 export type StatutInscriptionProfilApi =
-  | "EN_ATTENTE"
   | "VALIDE"
   | "REFUSE"
   | "SUSPENDU";

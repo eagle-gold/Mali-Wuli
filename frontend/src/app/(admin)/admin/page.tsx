@@ -37,26 +37,8 @@ type NotificationCatalogue = {
   };
 };
 
-type Inscription = {
-  id: string;
-  prenom: string | null;
-  nom: string | null;
-  email: string;
-  emailVerifie: boolean;
-  createdAt: string;
-  profil: {
-    pays: string | null;
-    ville: string | null;
-    titre: string | null;
-    onboardingFini: boolean;
-    estVolontaire: boolean;
-    _count: { formations: number; experiences: number };
-  } | null;
-};
-
 type StatsAdmin = {
   membres: number;
-  enAttente: number;
   publications: number;
   commentaires: number;
   messages: number;
@@ -77,11 +59,9 @@ export default function AdminPage() {
   const [erreurAcces, setErreurAcces] = useState("");
   const [signalements, setSignalements] = useState<Signalement[]>([]);
   const [notifications, setNotifications] = useState<NotificationCatalogue[]>([]);
-  const [inscriptions, setInscriptions] = useState<Inscription[]>([]);
   const [stats, setStats] = useState<StatsAdmin | null>(null);
   const [chargement, setChargement] = useState(true);
   const [actionId, setActionId] = useState<string | null>(null);
-  const [actionInscriptionId, setActionInscriptionId] = useState<string | null>(null);
   const [erreur, setErreur] = useState("");
 
   const verifierAcces = useCallback(async () => {
@@ -99,44 +79,22 @@ export default function AdminPage() {
     if (!aAccesAdministration(compte)) return;
     setChargement(true); setErreur("");
     try {
-      const [notificationsResponse, inscriptionsResponse, statsResponse, signalementsResponse] = await Promise.all([
+      const [notificationsResponse, statsResponse, signalementsResponse] = await Promise.all([
         aPermission(compte, "CATALOGUE_GERER") ? api.get<{ notifications: NotificationCatalogue[] }>("/admin/notifications") : Promise.resolve({ data: { notifications: [] } }),
-        aPermission(compte, "INSCRIPTIONS_GERER") ? api.get<{ inscriptions: Inscription[] }>("/admin/inscriptions?statut=EN_ATTENTE") : Promise.resolve({ data: { inscriptions: [] } }),
         aPermission(compte, "STATS_CONSULTER") ? api.get<StatsAdmin>("/admin/stats") : Promise.resolve(null),
         aPermission(compte, "SIGNALEMENTS_CONSULTER") ? api.get<{ signalements: Signalement[] }>("/admin/signalements", { params: { statut: "EN_ATTENTE" } }) : Promise.resolve({ data: { signalements: [] } }),
       ]);
       setNotifications(notificationsResponse.data.notifications);
-      setInscriptions(inscriptionsResponse.data.inscriptions);
       setStats(statsResponse?.data || null);
       setSignalements(signalementsResponse.data.signalements);
     } catch (error: unknown) {
       const message = (error as { response?: { data?: { message?: string } } })
         .response?.data?.message;
-      setErreur(message || "Impossible de charger les validations en attente.");
+      setErreur(message || "Impossible de charger les données d’administration.");
     } finally {
       setChargement(false);
     }
   }, [compte]);
-
-  const traiterInscription = async (inscription: Inscription, decision: "valider" | "refuser") => {
-    setActionInscriptionId(inscription.id);
-    setErreur("");
-    try {
-      await api.put(`/admin/inscriptions/${inscription.id}/${decision}`, {});
-      setInscriptions((actuelles) => actuelles.filter(({ id }) => id !== inscription.id));
-      setStats((actuelles) => actuelles && ({
-        ...actuelles,
-        enAttente: Math.max(0, actuelles.enAttente - 1),
-        membres: decision === "valider" ? actuelles.membres + 1 : actuelles.membres,
-      }));
-    } catch (error: unknown) {
-      const message = (error as { response?: { data?: { message?: string } } })
-        .response?.data?.message;
-      setErreur(message || "Cette inscription n’a pas pu être traitée.");
-    } finally {
-      setActionInscriptionId(null);
-    }
-  };
 
   useEffect(() => {
     void charger();
@@ -198,10 +156,9 @@ export default function AdminPage() {
         </Link>}
 
         {aPermission(compte, "STATS_CONSULTER") && stats && (
-          <section aria-label="Statistiques du réseau" className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
+          <section aria-label="Statistiques du réseau" className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
             {[
               ["Membres", stats.membres],
-              ["En attente", stats.enAttente],
               ["Publications", stats.publications],
               ["Commentaires", stats.commentaires],
               ["Messages", stats.messages],
@@ -217,58 +174,6 @@ export default function AdminPage() {
         )}
 
         {erreur && <div className="rounded-xl bg-[#fde8e7] px-4 py-3 text-sm text-[#a22922]"><p role="alert">{erreur}</p><button type="button" onClick={() => void charger()} disabled={chargement} className="mt-2 rounded-lg border border-current px-3 py-2 font-semibold">Réessayer</button></div>}
-
-        {aPermission(compte, "INSCRIPTIONS_GERER") && <section className="rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-5 shadow-sm sm:p-8">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-            <div>
-              <h2 className="titre-section">Profils à valider</h2>
-              <p className="mt-2 text-sm text-[#56493e] sm:text-base">
-                Vérifiez que le profil est complet avant de lui ouvrir l’accès à l’annuaire.
-              </p>
-            </div>
-            <span className="rounded-full bg-[#f8e4d7] px-4 py-2 text-sm font-bold text-[#9a441f]">
-              {inscriptions.length} en attente
-            </span>
-          </div>
-
-          {chargement ? (
-            <p className="py-6 text-center text-[#735133]">Chargement des profils…</p>
-          ) : inscriptions.length === 0 ? (
-            <div className="rounded-[16px] border border-dashed border-[#d7b98d] px-5 py-8 text-center text-[#56493e]">
-              Aucun profil ne demande de validation.
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {inscriptions.map((inscription) => {
-                const enCours = actionInscriptionId === inscription.id;
-                const nom = [inscription.prenom, inscription.nom].filter(Boolean).join(" ") || inscription.email;
-                return (
-                  <article key={inscription.id} className="flex flex-col gap-4 rounded-2xl border border-[#e4d2b3] bg-white p-5 lg:flex-row lg:items-center">
-                    <div className="min-w-0 flex-1">
-                      <h3 className="titre-element">{nom}</h3>
-                      <p className="mt-1 break-all text-sm text-[#735133]">{inscription.email}</p>
-                      <p className="mt-2 text-sm text-[#56493e]">
-                        {[inscription.profil?.titre, inscription.profil?.ville, inscription.profil?.pays].filter(Boolean).join(" · ") || "Informations professionnelles à compléter"}
-                      </p>
-                      <p className="mt-2 text-xs font-semibold text-[#0d6738]">
-                        {inscription.profil?._count.formations || 0} formation(s) · {inscription.profil?._count.experiences || 0} expérience(s)
-                        {inscription.profil?.estVolontaire ? " · mentor volontaire" : ""}
-                      </p>
-                    </div>
-                    <div className="flex flex-wrap gap-2 lg:shrink-0">
-                      <button type="button" disabled={enCours || !inscription.emailVerifie || !inscription.profil?.onboardingFini} onClick={() => void traiterInscription(inscription, "valider")} className="rounded-xl bg-[#0d6738] px-5 py-3 text-sm font-bold text-white hover:bg-[#09572f] disabled:cursor-not-allowed disabled:opacity-50">
-                        Valider
-                      </button>
-                      <button type="button" disabled={enCours} onClick={() => void traiterInscription(inscription, "refuser")} className="rounded-xl border border-[#dfc9a8] px-5 py-3 text-sm font-bold text-[#735133] hover:bg-[#f6efe3] disabled:opacity-50">
-                        Refuser
-                      </button>
-                    </div>
-                  </article>
-                );
-              })}
-            </div>
-          )}
-        </section>}
 
         {aPermission(compte, "CATALOGUE_GERER") && <section className="rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-5 shadow-sm sm:p-8">
           <div className="mb-6 flex flex-wrap items-end justify-between gap-3">

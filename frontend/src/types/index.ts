@@ -11,7 +11,7 @@ export type Role =
   | "MODERATEUR"
   | "ADMIN";
 
-export type StatutInscription = "EN_ATTENTE" | "VALIDE" | "REFUSE" | "SUSPENDU";
+export type StatutInscription = "VALIDE" | "REFUSE" | "SUSPENDU";
 
 export type SituationActuelle =
   | "ETUDIANT"

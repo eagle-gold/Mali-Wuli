@@ -3,7 +3,7 @@ import { z } from "zod";
 import { CATALOGUE_ROLES, EMAIL_ADMIN_PRINCIPAL, ROLES_DELEGUES, emailAdminPrincipal, estAdminPrincipal, roleEffectif, droitsUtilisateur, permissionsUtilisateur, revisionDroits } from "../lib/roles";
 
 export class ErreurGestionMembres extends Error { constructor(public statut: number, message: string) { super(message); } }
-export const filtresMembres = z.object({ q: z.string().trim().max(100).optional(), role: z.nativeEnum(Role).optional(), roleDelegue: z.enum(ROLES_DELEGUES).optional(), statut: z.enum(["EN_ATTENTE", "VALIDE", "REFUSE", "SUSPENDU"]).optional(), page: z.coerce.number().int().min(1).max(10000).default(1), limite: z.coerce.number().int().min(1).max(100).default(30) });
+export const filtresMembres = z.object({ q: z.string().trim().max(100).optional(), role: z.nativeEnum(Role).optional(), roleDelegue: z.enum(ROLES_DELEGUES).optional(), statut: z.enum(["VALIDE", "REFUSE", "SUSPENDU"]).optional(), page: z.coerce.number().int().min(1).max(10000).default(1), limite: z.coerce.number().int().min(1).max(100).default(30) });
 export const changementRolesSchema = z.object({ rolesDelegues: z.array(z.enum(ROLES_DELEGUES)).max(ROLES_DELEGUES.length).refine(v => new Set(v).size === v.length, "Un rôle ne peut apparaître qu’une fois."), expectedRevision: z.string().regex(/^[a-f0-9]{64}$/) }).strict();
 export const changementStatutSchema = z.object({ action: z.enum(["DESACTIVER", "RETABLIR"]), expectedRevision: z.string().regex(/^[a-f0-9]{64}$/) }).strict();
 const selectionMembre = { id: true, prenom: true, nom: true, email: true, role: true, rolesDelegues: { select: { code: true } }, statut: true, emailVerifie: true, tokenVersion: true, createdAt: true, updatedAt: true, profil: { select: { id: true, onboardingFini: true } } } as const;
@@ -11,11 +11,11 @@ type Membre = Prisma.UserGetPayload<{ select: typeof selectionMembre }>;
 const selectionActeur = { id: true, role: true, rolesDelegues: { select: { code: true } }, email: true, statut: true, emailVerifie: true } as const;
 type Acteur = Prisma.UserGetPayload<{ select: typeof selectionActeur }>;
 type DB = PrismaClient | Prisma.TransactionClient;
-export type EffetsGestionMembres = { revoquerSockets: (id: string) => void; notifierInscription: (user: { email: string }, valide: boolean, raison?: string) => Promise<unknown> };
+export type EffetsGestionMembres = { revoquerSockets: (id: string) => void };
 function raisonProtection(u: Membre, acteurId: string) {
   if (u.id === acteurId) return "Vous ne pouvez pas modifier votre propre rôle.";
   if (emailAdminPrincipal(u.email) || u.role === "ADMIN") return "Le compte administrateur est protégé.";
-  if (u.statut !== "VALIDE" || !u.emailVerifie) return "Validez le compte et son adresse e-mail avant d’attribuer un rôle.";
+  if (u.statut !== "VALIDE" || !u.emailVerifie) return "Le compte doit être actif et son adresse e-mail confirmée avant d’attribuer un rôle.";
   return null;
 }
 function raisonProtectionCompte(u: Membre, responsable: Acteur) {
@@ -32,11 +32,11 @@ function formater(u: Membre, responsable: Acteur) {
     peutDesactiver: !protectionCompte && u.statut !== "SUSPENDU", peutRetablir: !protectionCompte && u.statut === "SUSPENDU", raisonProtectionCompte: protectionCompte };
 }
 export function creerServiceGestionMembres(db: PrismaClient, effets: EffetsGestionMembres) {
-  async function acteur(userId: string, base: DB = db, perimetre: "roles" | "membres" | "inscriptions" = "roles") {
+  async function acteur(userId: string, base: DB = db, perimetre: "roles" | "membres" = "roles") {
     const user = await base.user.findUnique({ where: { id: userId }, select: selectionActeur });
     if (!user || !user.emailVerifie || user.statut !== "VALIDE") throw new ErreurGestionMembres(403, "Compte validé requis.");
     const permissions = permissionsUtilisateur(user);
-    const autorise = perimetre === "roles" ? estAdminPrincipal(user) : perimetre === "inscriptions" ? permissions.includes("INSCRIPTIONS_GERER") : permissions.includes("MEMBRES_GERER") || permissions.includes("ROLES_GERER");
+    const autorise = perimetre === "roles" ? estAdminPrincipal(user) : permissions.includes("MEMBRES_GERER") || permissions.includes("ROLES_GERER");
     if (!autorise) throw new ErreurGestionMembres(403, "Accès réservé à l’administration autorisée.");
     return user;
   }
@@ -82,32 +82,15 @@ export function creerServiceGestionMembres(db: PrismaClient, effets: EffetsGesti
       if (revisionDroits(cible) !== d.expectedRevision) throw new ErreurGestionMembres(409, "Le compte ou ses droits ont changé. Actualisez la liste.");
       if (d.action === "DESACTIVER" && cible.statut === "SUSPENDU") return { membre: cible, responsable, modifie: false };
       if (d.action === "RETABLIR" && cible.statut !== "SUSPENDU") throw new ErreurGestionMembres(409, "Seul un compte désactivé peut être rétabli. Actualisez la liste.");
-      const statut = d.action === "DESACTIVER" ? "SUSPENDU" as const : "EN_ATTENTE" as const;
+      const statut = d.action === "DESACTIVER" ? "SUSPENDU" as const : "VALIDE" as const;
       const miseAJour = await tx.user.updateMany({ where: { id: cible.id, role: cible.role, statut: cible.statut, emailVerifie: cible.emailVerifie, tokenVersion: cible.tokenVersion }, data: { statut, tokenVersion: { increment: 1 } } });
       if (miseAJour.count !== 1) throw new ErreurGestionMembres(409, "Le compte a changé. Actualisez la liste.");
       await tx.loginOtpCode.deleteMany({ where: { email: cible.email } });
       return { membre: await tx.user.findUniqueOrThrow({ where: { id: cible.id }, select: selectionMembre }), responsable, modifie: true };
     }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });
     if (result.modifie) effets.revoquerSockets(cibleId);
-    return { membre: formater(result.membre, result.responsable), message: !result.modifie ? "Ce compte est déjà désactivé." : d.action === "DESACTIVER" ? "Compte désactivé. Ses données sont conservées et ses sessions déconnectées." : "Compte rétabli en attente de validation. Une nouvelle validation est nécessaire pour accéder au réseau." };
+    return { membre: formater(result.membre, result.responsable), message: !result.modifie ? "Ce compte est déjà désactivé." : d.action === "DESACTIVER" ? "Compte désactivé. Ses données sont conservées et ses sessions déconnectées." : "Compte rétabli. Cette personne peut de nouveau se connecter et accéder au réseau." };
   }
-  async function deciderInscription(userId: string, cibleId: string, valide: boolean, raison?: string) {
-    const cible = await db.$transaction(async tx => {
-      const responsable = await acteur(userId, tx, "inscriptions");
-      const user = await tx.user.findUnique({ where: { id: cibleId }, select: { ...selectionMembre, motDePasse: true } });
-      if (!user) throw new ErreurGestionMembres(404, "Inscription introuvable.");
-      if (user.id === userId || emailAdminPrincipal(user.email) || user.role === "ADMIN") throw new ErreurGestionMembres(403, "Ce compte est protégé.");
-      if (user.statut === "SUSPENDU") throw new ErreurGestionMembres(409, "Rétablissez d’abord ce compte depuis la gestion des membres avant de traiter son inscription.");
-      if (!estAdminPrincipal(responsable) && (user.role === "MODERATEUR" || user.rolesDelegues.length > 0 || user.statut !== "EN_ATTENTE")) throw new ErreurGestionMembres(403, "Un modérateur traite uniquement les inscriptions en attente des membres.");
-      if (valide && (!user.emailVerifie || !user.motDePasse)) throw new ErreurGestionMembres(409, "Le membre doit d’abord confirmer son e-mail et terminer son compte.");
-      await tx.user.update({ where: { id: user.id }, data: { statut: valide ? "VALIDE" : "REFUSE", tokenVersion: { increment: 1 } } });
-      await tx.loginOtpCode.deleteMany({ where: { email: user.email } });
-      return user;
-    }, { isolationLevel: Prisma.TransactionIsolationLevel.Serializable });
-    effets.revoquerSockets(cible.id);
-    void effets.notifierInscription(cible, valide, raison).catch(() => console.error("[inscriptions] Notification non transmise."));
-    return { message: valide ? "Inscription validée." : "Inscription refusée.", statut: valide ? "VALIDE" : "REFUSE" };
-  }
-  return { roles, liste, modifierRoles, modifierStatut, deciderInscription };
+  return { roles, liste, modifierRoles, modifierStatut };
 }
 export type ServiceGestionMembres = ReturnType<typeof creerServiceGestionMembres>;

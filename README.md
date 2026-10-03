@@ -83,7 +83,7 @@ npm run dev
 | Rôle                  | Description                                      |
 |-----------------------|--------------------------------------------------|
 | Visiteur              | Accès à la vitrine publique uniquement           |
-| Membre                | Accès complet après validation                   |
+| Membre                | Accès complet dès la création du compte          |
 | Volontaire            | Propose des créneaux de mentorat                 |
 | Président de cercle   | Anime un cercle thématique                       |
 | Responsable asso.     | Valide les affiliations à son association        |

@@ -405,10 +405,10 @@ router.post("/register", async (req: Request, res: Response) => {
       cguAccepteLe: existant?.cguAccepteLe ?? new Date(),
       parrainId,
       role: roleAttribue,
-      // L'adresse administrateur est une liste blanche opérateur. Une fois
-      // son e-mail vérifié, ce compte doit pouvoir traiter les validations
-      // initiales même sur une base de production encore vide.
-      statut: roleAttribue === Role.ADMIN ? "VALIDE" as const : (existant?.statut ?? "EN_ATTENTE" as const),
+      // Aucune validation par l'équipe : un compte créé accède immédiatement
+      // au réseau. Un compte existant conserve son statut (ex. suspendu) ;
+      // l'administrateur principal reste toujours actif.
+      statut: roleAttribue === Role.ADMIN ? "VALIDE" as const : (existant?.statut ?? "VALIDE" as const),
     };
     const user = await prisma.$transaction(async (transaction) => {
       const compte = existant

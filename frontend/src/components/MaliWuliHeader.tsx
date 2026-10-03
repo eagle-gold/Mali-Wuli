@@ -20,6 +20,7 @@ import {
   X,
 } from "lucide-react";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import MenuCompte from "@/components/MenuCompte";
 import NotificationsPopover from "@/components/notifications/NotificationsPopover";
 import { useSessionMembre } from "@/components/auth/SessionMembreContext";
 import api from "@/lib/api";
@@ -181,6 +182,7 @@ function profilAffiche(data: CompteSession) {
     nom: [prenom, nom].filter(Boolean).join(" ") || "Mon profil",
     initiales: `${prenom.charAt(0)}${nom.charAt(0)}`.toLocaleUpperCase("fr"),
     photo: urlMediaBackend(profil?.photo),
+    titre: profil?.titre?.trim() || null,
   };
 }
 
@@ -199,6 +201,7 @@ export function MemberHeader() {
   const [initialesProfil, setInitialesProfil] = useState(profilInitial?.initiales ?? "");
   const [autorisations, setAutorisations] = useState<AutorisationsUtilisateur | null>(profilInitial?.utilisateur ?? null);
   const [photoProfil, setPhotoProfil] = useState<string | null>(profilInitial?.photo ?? null);
+  const [titreProfil, setTitreProfil] = useState<string | null>(profilInitial?.titre ?? null);
   const messagesConnus = useRef(new Set<string>());
 
   const appliquerProfil = useCallback((data: CompteSession) => {
@@ -207,6 +210,7 @@ export function MemberHeader() {
       setNomProfil(affiche.nom);
       setInitialesProfil(affiche.initiales);
       setPhotoProfil(affiche.photo);
+      setTitreProfil(affiche.titre);
   }, []);
 
   useEffect(() => {
@@ -355,32 +359,15 @@ export function MemberHeader() {
             <PastilleCompteur valeur={messagesNonLus} variante="orange" />
           </Link>
           <NotificationsPopover onOpen={() => setMenuOuvert(false)} />
-          <Link
-            href="/profil"
-            aria-label={`Ouvrir le profil de ${nomProfil}`}
-            aria-current={estActif("/profil") ? "page" : undefined}
-            className={`hidden h-12 w-12 items-center justify-center overflow-hidden rounded-full border-2 bg-[#f4eee1] font-bold text-[#0d6738] transition hover:border-[#f4b400] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:flex ${estActif("/profil") ? "border-[#f4b400] ring-2 ring-[#f4b400]/30" : "border-white/25"}`}
-          >
-            {photoProfil ? (
-              <Image
-                src={photoProfil}
-                alt=""
-                width={48}
-                height={48}
-                unoptimized
-                className="h-full w-full object-cover"
-              />
-            ) : initialesProfil}
-          </Link>
-          <button
-            type="button"
-            onClick={deconnecter}
-            title="Se déconnecter"
-            aria-label="Se déconnecter"
-            className="hidden h-11 w-11 items-center justify-center rounded-full text-[#e5ddcf] transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:flex"
-          >
-            <LogOut aria-hidden="true" size={22} />
-          </button>
+          <MenuCompte
+            nom={nomProfil}
+            titre={titreProfil}
+            initiales={initialesProfil}
+            photo={photoProfil}
+            administration={aAccesAdministration(autorisations)}
+            onOuverture={() => setMenuOuvert(false)}
+            onDeconnexion={deconnecter}
+          />
           <button
             type="button"
             aria-label={menuOuvert ? "Fermer le menu" : "Ouvrir le menu"}
