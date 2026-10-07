@@ -1,5 +1,6 @@
 "use client";
 
+import { titreMembre } from "@/lib/titre-membre";
 import { CalendarClock, Check, ExternalLink, UserRound, X } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
@@ -261,11 +262,9 @@ export default function AgendaPage() {
                           <h2 className="titre-element">
                             {nom}
                           </h2>
-                          {(item.role === "MENTOR" ? personne.titre : item.volontaire.specialite) && (
-                            <p className="text-sm text-terre-300">
-                              {item.role === "MENTOR" ? personne.titre : item.volontaire.specialite}
-                            </p>
-                          )}
+                          <p className="text-sm text-terre-300">
+                            {item.role === "MENTOR" ? titreMembre(personne.titre) : item.volontaire.specialite}
+                          </p>
                         </div>
                       </div>
                       <span className={classeStatut(item.statut)}>

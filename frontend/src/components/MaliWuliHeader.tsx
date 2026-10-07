@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import MenuCompte from "@/components/MenuCompte";
+import { titreMembre } from "@/lib/titre-membre";
 import NotificationsPopover from "@/components/notifications/NotificationsPopover";
 import { useSessionMembre } from "@/components/auth/SessionMembreContext";
 import api from "@/lib/api";
@@ -182,7 +183,7 @@ function profilAffiche(data: CompteSession) {
     nom: [prenom, nom].filter(Boolean).join(" ") || "Mon profil",
     initiales: `${prenom.charAt(0)}${nom.charAt(0)}`.toLocaleUpperCase("fr"),
     photo: urlMediaBackend(profil?.photo),
-    titre: profil?.titre?.trim() || null,
+    titre: titreMembre(profil?.titre),
   };
 }
 

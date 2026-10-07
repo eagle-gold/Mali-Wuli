@@ -1,3 +1,4 @@
+import { titreSignificatif } from "../lib/titre-profil";
 import { randomUUID } from "node:crypto";
 import { Prisma, type PrismaClient } from "@prisma/client";
 import type { NouvelleNotification } from "./notification.service";
@@ -19,7 +20,7 @@ export function contenuCandidature(o: { titre: string; entreprise: string }, p: 
   const nom = resumeProfilOffre(p).nomComplet;
   return [
     `Candidature à « ${ponctuel(o.titre,150)} » — ${ponctuel(o.entreprise,150)}`,
-    `${ponctuel(nom,190)}${p.titre ? ` · ${ponctuel(p.titre,190)}` : ""}`,
+    `${ponctuel(nom,190)}${titreSignificatif(p.titre) ? ` · ${ponctuel(titreSignificatif(p.titre)!,190)}` : ""}`,
     [p.ville, p.pays].filter(Boolean).join(", ").slice(0, 200),
     p.bio ? ponctuel(p.bio, 500) : "", message ? `Message du candidat :\n${ponctuel(message,2000)}` : "",
     `Consulter mon profil : ${profilURL(p.id)}`,

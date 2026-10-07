@@ -4,6 +4,7 @@ import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import { COMMENTAIRE_ACTIF, PUBLICATION_ACTIVE } from "../services/corbeille.service";
 import { roleEffectif, droitsUtilisateur, revisionDroits } from "../lib/roles";
+import { resoudreTitre, selectionParcoursTitre, TITRE_PAR_DEFAUT, titreParDefautDepuisBase } from "../lib/titre-profil";
 import { champsLiensSociaux, liensSociauxProfil, modificationsLiensSociaux, selectionLiensSociaux } from "../lib/liens-sociaux";
 import { authenticate, AuthRequest } from "../middlewares/auth.middleware";
 import {
@@ -153,6 +154,7 @@ async function lireProfilComplet(userId: string) {
           ville: true,
           situation: true,
           titre: true,
+          titrePersonnalise: true,
           bio: true,
           photo: true,
           photoCouverture: true,
@@ -285,6 +287,21 @@ async function mettreAJourProfil(req: AuthRequest, res: Response) {
   const { prenom, nom, ...profil } = donnees.data;
   try {
     if (!req.userId) return res.status(401).json({ message: "Session invalide." });
+    // Titre : texte du membre (personnalisé) ou, s'il est vide, retour au titre par défaut
+    // qui suit son parcours. Le titre n'est touché que s'il figure dans la requête.
+    let titreDonnees: { titre: string; titrePersonnalise: boolean } | undefined;
+    if (profil.titre !== undefined) {
+      const existant = await prisma.profil.findUnique({
+        where: { userId: req.userId },
+        select: { titre: true, titrePersonnalise: true, ...selectionParcoursTitre },
+      });
+      const resolu = resoudreTitre({
+        saisi: profil.titre,
+        actuel: { titre: existant?.titre ?? null, personnalise: existant?.titrePersonnalise ?? false },
+        defaut: existant ? titreParDefautDepuisBase(existant.experiences, existant.formations) : TITRE_PAR_DEFAUT,
+      });
+      titreDonnees = { titre: resolu.titre, titrePersonnalise: resolu.personnalise };
+    }
     await prisma.user.update({
       where: { id: req.userId },
       data: {
@@ -296,7 +313,7 @@ async function mettreAJourProfil(req: AuthRequest, res: Response) {
               telephone: valeurNullable(profil.telephone),
               pays: valeurNullable(profil.pays),
               ville: valeurNullable(profil.ville),
-              titre: valeurNullable(profil.titre),
+              ...titreDonnees,
               bio: valeurNullable(profil.bio),
               ...modificationsLiensSociaux(profil),
               situation: profil.situation,
@@ -307,7 +324,7 @@ async function mettreAJourProfil(req: AuthRequest, res: Response) {
               ...(profil.telephone !== undefined ? { telephone: valeurNullable(profil.telephone) } : {}),
               ...(profil.pays !== undefined ? { pays: valeurNullable(profil.pays) } : {}),
               ...(profil.ville !== undefined ? { ville: valeurNullable(profil.ville) } : {}),
-              ...(profil.titre !== undefined ? { titre: valeurNullable(profil.titre) } : {}),
+              ...titreDonnees,
               ...(profil.bio !== undefined ? { bio: valeurNullable(profil.bio) } : {}),
               ...modificationsLiensSociaux(profil),
               ...(profil.situation !== undefined ? { situation: profil.situation } : {}),

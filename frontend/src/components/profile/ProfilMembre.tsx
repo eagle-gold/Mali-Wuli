@@ -28,6 +28,7 @@ import { formaterMoisAnnee, trierParDateDebut } from "@/lib/periode";
 import { libelleProgramme, libelleSystemeEducatif } from "@/lib/education/reference";
 import { avisEtablissementScolaireEstDisponible } from "@/lib/education/suivi";
 import { urlMediaBackend } from "@/lib/media";
+import { TITRE_PAR_DEFAUT, titreMembre } from "@/lib/titre-membre";
 import type {
   CreationSynergieResponseApi,
   DiplomeScolaireProfilApi,
@@ -340,7 +341,7 @@ function adapterSuggestion(suggestion: SuggestionSynergieApi, index: number): Su
     id: suggestion.id,
     nom: `${prenom} ${nom}`.trim(),
     initiales: initialesDe(prenom, nom),
-    fonction: suggestion.titre?.trim() || experience?.poste?.trim() || "",
+    fonction: suggestion.titre?.trim() || experience?.poste?.trim() || TITRE_PAR_DEFAUT,
     ville: suggestion.ville?.trim() || suggestion.pays?.trim() || "Localisation non renseignée",
     ton: tons[index % tons.length] || "vert",
     photo: urlMediaBackend(suggestion.photo),
@@ -689,25 +690,29 @@ function EnTeteProfil({
 
 const LONGUEUR_MAX_TITRE = 160;
 
-/** Courte description sous le nom, modifiable sur place par le propriétaire du profil. */
-function TitreProfilEditable({ titre, repli, onEnregistre }: {
+type TitreEnregistre = { titre: string | null; personnalise: boolean };
+
+/**
+ * Courte description sous le nom. Par défaut elle suit le parcours
+ * (« Poste - Entreprise », « Étudiant(e) - Université ») ; le membre peut y mettre
+ * ce qu'il veut et revenir au titre par défaut à tout moment.
+ */
+function TitreProfilEditable({ titre, personnalise, onEnregistre }: {
   titre: string;
-  /** Texte déduit du parcours, affiché tant qu'aucun titre n'est saisi. */
-  repli: string;
-  onEnregistre: (titre: string | null) => void;
+  personnalise: boolean;
+  onEnregistre: (resultat: TitreEnregistre, message: string) => void;
 }) {
   const [edition, setEdition] = useState(false);
   const [valeur, setValeur] = useState(titre);
   const [envoi, setEnvoi] = useState(false);
   const [erreur, setErreur] = useState("");
+  const [rendreLeFocus, setRendreLeFocus] = useState(false);
   const champ = useRef<HTMLInputElement>(null);
   const declencheur = useRef<HTMLButtonElement>(null);
 
-  const [rendreLeFocus, setRendreLeFocus] = useState(false);
-
   useEffect(() => { if (!edition) setValeur(titre); }, [titre, edition]);
-  useEffect(() => { if (edition) champ.current?.focus(); }, [edition]);
-  // Le bouton à refocaliser (crayon ou « Ajouter ») n'existe qu'après le rendu qui suit la fermeture.
+  useEffect(() => { if (edition) { champ.current?.focus(); champ.current?.select(); } }, [edition]);
+  // Le bouton à refocaliser n'existe qu'après le rendu qui suit la fermeture.
   useEffect(() => {
     if (rendreLeFocus && !edition) {
       declencheur.current?.focus();
@@ -721,16 +726,13 @@ function TitreProfilEditable({ titre, repli, onEnregistre }: {
     setRendreLeFocus(true);
   };
 
-  const enregistrer = async (event: { preventDefault: () => void }) => {
-    event.preventDefault();
+  const envoyer = async (corps: string | null, message: string) => {
     if (envoi) return;
-    const propre = valeur.trim();
-    if (propre === titre.trim()) { fermer(); return; }
     setEnvoi(true);
     setErreur("");
     try {
-      await api.patch("/users/me", { titre: propre || null });
-      onEnregistre(propre || null);
+      const { data } = await api.patch<{ user?: { profil?: { titre?: string | null; titrePersonnalise?: boolean } } }>("/users/me", { titre: corps });
+      onEnregistre({ titre: data.user?.profil?.titre ?? null, personnalise: data.user?.profil?.titrePersonnalise === true }, message);
       setEdition(false);
       setRendreLeFocus(true);
     } catch (e) {
@@ -739,6 +741,14 @@ function TitreProfilEditable({ titre, repli, onEnregistre }: {
     } finally {
       setEnvoi(false);
     }
+  };
+
+  const enregistrer = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    const propre = valeur.trim();
+    if (propre === titre.trim()) { fermer(); return; }
+    // Un champ vidé revient au titre par défaut.
+    void envoyer(propre || null, propre ? "Votre titre a bien été enregistré." : "Le titre par défaut a été rétabli.");
   };
 
   if (edition) {
@@ -758,10 +768,13 @@ function TitreProfilEditable({ titre, repli, onEnregistre }: {
           className="min-h-11 w-full rounded-xl border border-[#d9c7aa] bg-white px-4 text-base text-[#2e261f] outline-none placeholder:text-[#75695d] focus:border-[#2a5b37] focus:ring-2 focus:ring-[#2a5b37]/20"
         />
         <p id="titre-profil-aide" className="mt-1 text-xs text-[#6e5b49]">
-          Visible sous votre nom dans tout le réseau · {valeur.length}/{LONGUEUR_MAX_TITRE} caractères
+          {personnalise
+            ? "Titre personnalisé : il ne change plus tout seul."
+            : "Titre par défaut : « Poste - Entreprise » selon votre poste actuel, ou « Étudiant(e) - Université » si vous étudiez. Modifiez-le pour le personnaliser."}
+          {" · "}{valeur.length}/{LONGUEUR_MAX_TITRE} caractères
         </p>
         {erreur && <p role="alert" className="mt-1 text-sm font-medium text-[#9b3e24]">{erreur}</p>}
-        <div className="mt-2 flex gap-2">
+        <div className="mt-2 flex flex-wrap items-center gap-2">
           <button type="submit" disabled={envoi} className="inline-flex min-h-10 items-center gap-2 rounded-full bg-[#2a5b37] px-5 text-sm font-bold text-white hover:bg-[#214a2c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37] focus-visible:ring-offset-2 disabled:opacity-60">
             {envoi && <LoaderCircle aria-hidden="true" size={15} className="animate-spin" />}
             {envoi ? "Enregistrement…" : "Enregistrer"}
@@ -769,37 +782,33 @@ function TitreProfilEditable({ titre, repli, onEnregistre }: {
           <button type="button" onClick={fermer} disabled={envoi} className="min-h-10 rounded-full px-4 text-sm font-semibold text-[#56493e] hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37] disabled:opacity-60">
             Annuler
           </button>
+          {personnalise && (
+            <button
+              type="button"
+              disabled={envoi}
+              onClick={() => void envoyer(null, "Le titre par défaut a été rétabli.")}
+              className="ml-auto min-h-10 rounded-full border border-[#d9c7aa] px-4 text-sm font-semibold text-[#2a5b37] hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37] disabled:opacity-60"
+            >
+              Rétablir le titre par défaut
+            </button>
+          )}
         </div>
       </form>
     );
   }
 
-  const affiche = titre.trim() || repli;
   return (
     <div className="flex items-start gap-1">
-      {affiche ? (
-        <>
-          <p className="min-w-0">{affiche}</p>
-          <button
-            ref={declencheur}
-            type="button"
-            onClick={() => setEdition(true)}
-            aria-label="Modifier mon titre"
-            className="-mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[#695c4b] hover:bg-[#f5ecdf] hover:text-[#2a5b37] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37]"
-          >
-            <Pencil aria-hidden="true" size={16} />
-          </button>
-        </>
-      ) : (
-        <button
-          ref={declencheur}
-          type="button"
-          onClick={() => setEdition(true)}
-          className="text-left font-semibold text-[#2a5b37] underline-offset-2 hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37]"
-        >
-          Ajouter un titre ou une description
-        </button>
-      )}
+      <p className="min-w-0">{titre}</p>
+      <button
+        ref={declencheur}
+        type="button"
+        onClick={() => setEdition(true)}
+        aria-label="Modifier mon titre"
+        className="-mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[#695c4b] hover:bg-[#f5ecdf] hover:text-[#2a5b37] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37]"
+      >
+        <Pencil aria-hidden="true" size={16} />
+      </button>
     </div>
   );
 }
@@ -917,11 +926,11 @@ function ProfilProprietaire() {
   );
   const avisPublies = stats.nbAvis ?? avisCalcules;
 
-  const enregistrerTitre = (titre: string | null) => {
-    setUtilisateur((precedent) => precedent ? { ...precedent, profil: { ...precedent.profil, titre } } : precedent);
+  const enregistrerTitre = (resultat: TitreEnregistre, message: string) => {
+    setUtilisateur((precedent) => precedent ? { ...precedent, profil: { ...precedent.profil, titre: resultat.titre, titrePersonnalise: resultat.personnalise } } : precedent);
     // L'en-tête et le menu du compte lisent le titre dans la session partagée.
     sessionMembre?.actualiser();
-    setAnnonce(titre ? "Votre titre a bien été enregistré." : "Votre titre a été supprimé.");
+    setAnnonce(message);
   };
 
   const choisirPhoto = async (event: ChangeEvent<HTMLInputElement>) => {
@@ -1065,8 +1074,8 @@ function ProfilProprietaire() {
           photoCouverture={photoCouverture}
           sousTitre={<>
             <TitreProfilEditable
-              titre={utilisateur.profil.titre?.trim() || ""}
-              repli={[experienceActuelle?.poste, experienceActuelle?.structure].filter(Boolean).join(" · ")}
+              titre={titreMembre(utilisateur.profil.titre || [experienceActuelle?.poste, experienceActuelle?.structure].filter(Boolean).join(" - "))}
+              personnalise={utilisateur.profil.titrePersonnalise === true}
               onEnregistre={enregistrerTitre}
             />
             {localisationProfil && <p className="mt-1 text-sm text-[#806f5e] sm:text-base">{localisationProfil}</p>}
@@ -1468,8 +1477,9 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
   const stats = membre.stats || {};
   const membreDepuis = dateMembreDepuis(membre.membreDepuis);
   const fonction = membre.titre?.trim()
-    || [experienceActuelle?.poste, experienceActuelle?.structure].filter(Boolean).join(" · ")
-    || (membre.situation ? SITUATIONS[membre.situation] : "");
+    || [experienceActuelle?.poste, experienceActuelle?.structure].filter(Boolean).join(" - ")
+    || (membre.situation ? SITUATIONS[membre.situation] : "")
+    || TITRE_PAR_DEFAUT;
   const lieuVisiteur = lieuDe(informations.ville || experienceActuelle?.ville, informations.pays || experienceActuelle?.pays);
   const associations = membre.associations || [];
 
@@ -1519,7 +1529,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
           photo={urlMediaBackend(membre.photo)}
           photoCouverture={urlMediaBackend(membre.photoCouverture)}
           sousTitre={<>
-            {fonction && <p>{fonction}</p>}
+            <p>{fonction}</p>
             {lieuVisiteur && <p className="mt-1 text-sm text-[#806f5e] sm:text-base">{lieuVisiteur}</p>}
           </>}
           meta={

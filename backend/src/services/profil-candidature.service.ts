@@ -1,3 +1,4 @@
+import { titreSignificatif } from "../lib/titre-profil";
 import PDFDocument from "pdfkit";
 import path from "node:path";
 import { prisma } from "../lib/prisma";
@@ -55,7 +56,7 @@ export function creerProfilCandidaturePdf(profil:ProfilCandidature):Promise<Buff
    doc.font('Bold').fontSize(10).fillColor(vert).text('MALI WULI   /   PROFIL PROFESSIONNEL');doc.moveDown(0.8);
    doc.font('Bold').fontSize(25).fillColor(noir).text(nom,{width:largeur});doc.moveDown(0.2);
    const recent=[...profil.experiences].sort((a,b)=>b.dateDebut.getTime()-a.dateDebut.getTime());
-   paragraph(texte(profil.titre)||recent.find(e=>e.estActuel)?.poste||recent[0]?.poste||'',12,brun);
+   paragraph(texte(titreSignificatif(profil.titre))||recent.find(e=>e.estActuel)?.poste||recent[0]?.poste||'',12,brun);
    paragraph(joindre(profil.ville,profil.pays));
    paragraph(joindre(profil.user.email,profil.telephoneVisible?profil.telephone:null),10,gris);
    const linkedin=urlSure(profil.linkedin);if(linkedin)paragraph(linkedin,9,vert);

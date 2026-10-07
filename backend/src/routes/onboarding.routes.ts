@@ -3,7 +3,7 @@ import { Router } from "express";
 import { z } from "zod";
 import { prisma } from "../lib/prisma";
 import { champsLiensSociaux, liensSociauxProfil, modificationsLiensSociaux, selectionLiensSociaux } from "../lib/liens-sociaux";
-import { LONGUEUR_MAX_TITRE, titreAEnregistrer, titreAutomatiqueDepuisBase } from "../lib/titre-profil";
+import { LONGUEUR_MAX_TITRE, resoudreTitre, titreParDefaut } from "../lib/titre-profil";
 import { authenticate, AuthRequest } from "../middlewares/auth.middleware";
 import {
   ErreurCatalogueOnboarding,
@@ -173,6 +173,10 @@ const schemaOnboarding = z.object({
 
 type DonneesOnboarding = z.infer<typeof schemaOnboarding>;
 
+/** Le champ du questionnaire ne contient que le titre écrit par le membre : vide = titre dynamique. */
+const titrePourFormulaire = (profil: { titre: string | null; titrePersonnalise: boolean }) =>
+  profil.titrePersonnalise ? profil.titre ?? "" : "";
+
 const deuxChiffres = (valeur: number) => String(valeur).padStart(2, "0");
 const anneeDate = (date: Date) => String(date.getUTCFullYear());
 const moisDate = (date: Date) => deuxChiffres(date.getUTCMonth() + 1);
@@ -221,6 +225,7 @@ router.get("/", authenticate, async (req: AuthRequest, res) => {
             id: true,
             telephone: true,
             titre: true,
+            titrePersonnalise: true,
             ...selectionLiensSociaux,
             pays: true,
             ville: true,
@@ -312,7 +317,7 @@ router.get("/", authenticate, async (req: AuthRequest, res) => {
     const snapshot = schemaOnboarding.safeParse(compte.profil.onboardingDonnees);
     if (snapshot.success) return res.json(donneesCompletes({
       ...snapshot.data,
-      informations: { ...snapshot.data.informations, ...liensSociauxProfil(compte.profil), titre: compte.profil.titre ?? "" },
+      informations: { ...snapshot.data.informations, ...liensSociauxProfil(compte.profil), titre: titrePourFormulaire(compte.profil) },
     }, compte.profil.id));
 
     // Compatibilité avec les profils enregistrés avant l'ajout du snapshot :
@@ -426,7 +431,7 @@ router.get("/", authenticate, async (req: AuthRequest, res) => {
     const donnees: DonneesOnboarding = {
       informations: {
         ...liensSociauxProfil(compte.profil),
-        titre: compte.profil.titre ?? "",
+        titre: titrePourFormulaire(compte.profil),
         prenom: compte.prenom || "",
         nom: compte.nom || "",
         telephone,
@@ -506,6 +511,7 @@ router.post("/", authenticate, async (req: AuthRequest, res) => {
       select: { id: true, emailVerifie: true, profil: { select: {
         id: true,
         titre: true,
+        titrePersonnalise: true,
         ...selectionLiensSociaux,
         onboardingDonnees: true,
         formations: { select: {
@@ -550,26 +556,16 @@ router.post("/", authenticate, async (req: AuthRequest, res) => {
       });
     }
 
-    // Titre affiché sous le nom : saisi par le membre, sinon conservé, sinon déduit du parcours.
-    // Parcours enregistré jusqu'ici : permet de savoir si le titre actuel est resté
-    // celui que le parcours produisait (il suit alors le nouveau parcours).
-    const parcoursActuel = await prisma.profil.findUnique({
-      where: { id: compte.profil.id },
-      select: {
-        experiences: { select: { poste: true, entreprise: true, estActuel: true, dateDebut: true } },
-        formations: { select: { type: true, statutDiplome: true, autreEtablissement: true, etablissement: { select: { nom: true } } } },
-      },
-    });
-    const titreProfil = titreAEnregistrer({
+    // Titre affiché sous le nom : celui que le membre a écrit, sinon le titre par défaut
+    // qui suit son parcours (« Poste - Entreprise », « Étudiant(e) - Université »).
+    const titreResolu = resoudreTitre({
       saisi: informations.titre,
-      existant: compte.profil.titre,
-      experiences,
-      formations,
-      ancienAutomatique: parcoursActuel ? titreAutomatiqueDepuisBase(parcoursActuel.experiences, parcoursActuel.formations) : null,
+      actuel: { titre: compte.profil.titre, personnalise: compte.profil.titrePersonnalise },
+      defaut: titreParDefaut(experiences, formations),
     });
 
     const donneesASauvegarder = donneesCompletes(
-      { informations: { ...informations, titre: titreProfil ?? "", ...liensSociauxProfil({ ...compte.profil, ...modificationsLiensSociaux(informations) }) }, formations, experiences, mentorat },
+      { informations: { ...informations, titre: titreResolu.personnalise ? titreResolu.titre : "", ...liensSociauxProfil({ ...compte.profil, ...modificationsLiensSociaux(informations) }) }, formations, experiences, mentorat },
       compte.profil.id,
     );
 
@@ -586,7 +582,8 @@ router.post("/", authenticate, async (req: AuthRequest, res) => {
         where: { id: compte.profil!.id },
         data: {
           telephone,
-          titre: titreProfil,
+          titre: titreResolu.titre,
+          titrePersonnalise: titreResolu.personnalise,
           // Une omission (ancien client) ne doit jamais effacer un lien récent.
           ...modificationsLiensSociaux(informations),
           pays: informations.pays,

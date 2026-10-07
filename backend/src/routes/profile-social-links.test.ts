@@ -22,7 +22,7 @@ function projeter(row: any, select?: Row): any {
 }
 function fixture(t: TestContext) {
   const identite: Row = { id: "session-user", prenom: "Awa", nom: "Test", email: "qa@example.invalid", role: "MEMBRE", rolesDelegues: [], statut: "VALIDE", emailVerifie: true, createdAt: new Date("2025-01-01") };
-  const profil: Row = { id: "session-profile", userId: identite.id, pays: "Mali", ville: "Bamako", telephone: null, titre: null, estVolontaire: false, onboardingFini: true, onboardingEtape: 4,
+  const profil: Row = { id: "session-profile", userId: identite.id, pays: "Mali", ville: "Bamako", telephone: null, titre: null, titrePersonnalise: false, estVolontaire: false, onboardingFini: true, onboardingEtape: 4,
     linkedin: "https://www.linkedin.com/in/ancien", facebook: "https://www.facebook.com/ancien", instagram: null, tiktok: null,
     onboardingDonnees: ancienQuestionnaire(), formations: [], experiences: [], volontaire: null, cerclesMembres: [], associations: [], emailVisible: false, telephoneVisible: false, _count: { publications: 0, commentairesPub: 0 } };
   const ecritures: Row[] = [];
@@ -198,58 +198,63 @@ const experienceActuelle = (poste: string, structure: string) => ({
   moisDebut: "03", anneeDebut: "2023", moisFin: "", anneeFin: "", posteActuel: true, description: "",
 });
 
-test("titre : saisi au questionnaire, persisté (profil + snapshot) et relu avant l'ancien snapshot", async (t) => {
+test("titre : écrit par le membre au questionnaire → personnalisé, persisté (profil + snapshot) et relu", async (t) => {
   const f = fixture(t), body: Row = ancienQuestionnaire();
-  body.informations.titre = "  Data Scientist chez Natixis CIB | Étudiante à Paris Dauphine-PSL  ";
+  body.informations.titre = "  Mentor bénévole | Passionné d'innovation  ";
   assert.equal((await appeler(onboardingRouter, "post", "/", body)).status, 201);
-  const attendu = "Data Scientist chez Natixis CIB | Étudiante à Paris Dauphine-PSL";
-  assert.equal(f.profil.titre, attendu);
+  const attendu = "Mentor bénévole | Passionné d'innovation";
+  assert.equal(f.profil.titre, attendu); assert.equal(f.profil.titrePersonnalise, true);
   assert.equal(f.profil.onboardingDonnees.informations.titre, attendu);
-  f.profil.titre = "Titre modifié depuis le profil";
-  assert.equal((await appeler(onboardingRouter, "get", "/")).body.informations.titre, "Titre modifié depuis le profil");
+  assert.equal((await appeler(onboardingRouter, "get", "/")).body.informations.titre, attendu);
 });
 
-test("titre : champ vide et poste actuel → titre déduit ; trop long refusé avant toute écriture", async (t) => {
+test("titre : champ vide → titre par défaut dynamique « Poste - Entreprise », le champ du questionnaire reste vide", async (t) => {
   const f = fixture(t), body: Row = ancienQuestionnaire();
   Object.assign(body, { experiences: [experienceActuelle("Ingénieur logiciel", "Orange Mali")] });
   body.informations.titre = "";
   assert.equal((await appeler(onboardingRouter, "post", "/", body)).status, 201);
-  assert.equal(f.profil.titre, "Ingénieur logiciel chez Orange Mali");
+  assert.equal(f.profil.titre, "Ingénieur logiciel - Orange Mali"); assert.equal(f.profil.titrePersonnalise, false);
+  assert.equal(f.profil.onboardingDonnees.informations.titre, "");
+  assert.equal((await appeler(onboardingRouter, "get", "/")).body.informations.titre, "");
+});
+
+test("titre : sans poste actuel ni études en cours → « Membre du réseau » ; trop long refusé avant toute écriture", async (t) => {
+  const f = fixture(t);
+  assert.equal((await appeler(onboardingRouter, "post", "/", ancienQuestionnaire())).status, 201);
+  assert.equal(f.profil.titre, "Membre du réseau"); assert.equal(f.profil.titrePersonnalise, false);
   const trop: Row = ancienQuestionnaire(); trop.informations.titre = "x".repeat(161);
   const avant = f.ecritures.length;
   assert.equal((await appeler(onboardingRouter, "post", "/", trop)).status, 400);
   assert.equal(f.ecritures.length, avant);
 });
 
-test("titre : un ancien client qui n'envoie pas le champ ne perd jamais un titre existant", async (t) => {
+test("titre dynamique : suit le nouveau poste à chaque enregistrement ; un titre personnalisé n'est jamais remplacé", async (t) => {
   const f = fixture(t);
-  f.profil.titre = "Mon titre à moi";
-  assert.equal((await appeler(onboardingRouter, "post", "/", ancienQuestionnaire())).status, 201);
-  assert.equal(f.profil.titre, "Mon titre à moi");
-});
-
-test("titre : un titre resté automatique suit le nouveau poste, un titre personnalisé jamais", async (t) => {
-  const f = fixture(t);
-  f.profil.experiences = [{ poste: "Dev", entreprise: "A", estActuel: true, dateDebut: new Date("2022-01-01T00:00:00Z") }];
-  f.profil.titre = "Dev chez A";
+  f.profil.titre = "Dev - A";
   const suit: Row = ancienQuestionnaire();
   Object.assign(suit, { experiences: [experienceActuelle("Lead Dev", "B")] });
-  suit.informations.titre = "Dev chez A";
   assert.equal((await appeler(onboardingRouter, "post", "/", suit)).status, 201);
-  assert.equal(f.profil.titre, "Lead Dev chez B");
-  f.profil.titre = "Ma phrase perso";
+  assert.equal(f.profil.titre, "Lead Dev - B"); assert.equal(f.profil.titrePersonnalise, false);
+  Object.assign(f.profil, { titre: "Ma phrase perso", titrePersonnalise: true });
   const perso: Row = ancienQuestionnaire();
   Object.assign(perso, { experiences: [experienceActuelle("CTO", "C")] });
-  perso.informations.titre = "Ma phrase perso";
   assert.equal((await appeler(onboardingRouter, "post", "/", perso)).status, 201);
-  assert.equal(f.profil.titre, "Ma phrase perso");
+  assert.equal(f.profil.titre, "Ma phrase perso"); assert.equal(f.profil.titrePersonnalise, true);
+  assert.equal((await appeler(onboardingRouter, "get", "/")).body.informations.titre, "Ma phrase perso");
 });
 
-test("titre : PATCH /users/me modifie ou efface le titre (null)", async (t) => {
+test("titre : PATCH /users/me personnalise, rétablit le défaut avec null, ou retombe sur le défaut si le texte lui est identique", async (t) => {
   const f = fixture(t);
+  f.profil.experiences = [{ poste: "Analyste", entreprise: "Banque X", estActuel: true, dateDebut: new Date("2024-05-10T00:00:00Z") }];
   assert.equal((await appeler(userRouter, "patch", "/me", { titre: "  Ingénieure data  " })).status, 200);
-  assert.equal(f.profil.titre, "Ingénieure data");
+  assert.equal(f.profil.titre, "Ingénieure data"); assert.equal(f.profil.titrePersonnalise, true);
   assert.equal((await appeler(userRouter, "patch", "/me", { titre: null })).status, 200);
-  assert.equal(f.profil.titre, null);
+  assert.equal(f.profil.titre, "Analyste - Banque X"); assert.equal(f.profil.titrePersonnalise, false);
+  assert.equal((await appeler(userRouter, "patch", "/me", { titre: "Autre" })).status, 200);
+  assert.equal((await appeler(userRouter, "patch", "/me", { titre: "Analyste - Banque X" })).status, 200);
+  assert.equal(f.profil.titrePersonnalise, false);
   assert.equal((await appeler(userRouter, "patch", "/me", { titre: "x".repeat(161) })).status, 400);
+  const sansTitre = f.profil.titre;
+  assert.equal((await appeler(userRouter, "patch", "/me", { bio: "Une bio" })).status, 200);
+  assert.equal(f.profil.titre, sansTitre);
 });

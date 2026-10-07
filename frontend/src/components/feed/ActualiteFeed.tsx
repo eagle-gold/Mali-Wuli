@@ -30,6 +30,7 @@ import {
 } from "react";
 
 import ComposerPublication from "@/components/feed/ComposerPublication";
+import { titreMembre } from "@/lib/titre-membre";
 import { useSocket } from "@/hooks/useSocket";
 import api from "@/lib/api";
 import type { ResultatSuppression } from "@/components/community/SupprimerContenu";
@@ -214,7 +215,7 @@ function adapterPublication(publication: PublicationApi): Publication {
     aMedia: Boolean(publication.photoUrl || (publication as PublicationAvecDroits).lienUrl),
     auteur,
     initiales,
-    fonction: publication.auteur?.titre?.trim() || "",
+    fonction: titreMembre(publication.auteur?.titre),
     lieu:
       publication.auteur?.ville?.trim() ||
       publication.auteur?.pays?.trim() ||
@@ -508,11 +509,9 @@ function ModaleSoutiens({
                         <p className="truncate font-bold text-[#2f261e]">
                           {nom}
                         </p>
-                        {[supporter.titre, lieu].filter(Boolean).length > 0 && (
-                          <p className="truncate text-sm text-[#786958]">
-                            {[supporter.titre, lieu].filter(Boolean).join(" · ")}
-                          </p>
-                        )}
+                        <p className="truncate text-sm text-[#786958]">
+                          {[titreMembre(supporter.titre), lieu].filter(Boolean).join(" · ")}
+                        </p>
                       </div>
                       <ThumbsUp
                         aria-label="Soutient cette publication"
@@ -1004,9 +1003,7 @@ function CommentaireFil({
               retourFocus={declencheurMenu}
             />
           </div>
-          {commentaire.auteur?.titre?.trim() && (
-            <p className="-mt-0.5 truncate text-xs text-[#6e5b49]">{commentaire.auteur.titre.trim()}</p>
-          )}
+          <p className="-mt-0.5 truncate text-xs text-[#6e5b49]">{titreMembre(commentaire.auteur?.titre)}</p>
           {mode === "edition" ? (
             <EditionInline
               compact
@@ -1449,7 +1446,7 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
           <h2 className="truncate titre-element">
             {publication.auteur}
           </h2>
-          {publication.fonction && <p className="mt-0.5 truncate text-sm text-[#6e5b49]">{publication.fonction}</p>}
+          <p className="mt-0.5 truncate text-sm text-[#6e5b49]">{publication.fonction}</p>
           <p className="mt-0.5 flex items-center gap-1.5 text-xs text-[#806f5e]">
             <span className="truncate">{publication.lieu}</span>
             <span aria-hidden="true">·</span>
@@ -1783,13 +1780,7 @@ function ColonneProfil({
           <h2 className="mt-3 titre-element">
             {nom}
           </h2>
-          {profil.titre?.trim() ? (
-            <p className="mt-1 text-[#4f4339]">{profil.titre.trim()}</p>
-          ) : (
-            <Link href="/profil" className="mt-1 inline-block text-sm font-semibold text-[#0d6738] hover:underline">
-              Ajouter un titre à votre profil
-            </Link>
-          )}
+          <p className="mt-1 text-[#4f4339]">{titreMembre(profil.titre)}</p>
           {lieu && <p className="mt-0.5 text-sm text-[#806f5e]">{lieu}</p>}
           <dl className="mt-5 space-y-3 border-t border-[#eee1cf] pt-4 text-sm">
             <div className="flex items-center justify-between gap-4">
@@ -1925,11 +1916,9 @@ function ColonneSuggestions({
                     />
                     <div className="min-w-0">
                       <p className="truncate font-bold text-[#2f261e]">{nom}</p>
-                      {[suggestion.titre, suggestion.ville || suggestion.pays].filter(Boolean).length > 0 && (
-                        <p className="truncate text-sm text-[#5f5145]">
-                          {[suggestion.titre, suggestion.ville || suggestion.pays].filter(Boolean).join(" · ")}
-                        </p>
-                      )}
+                      <p className="truncate text-sm text-[#5f5145]">
+                        {[titreMembre(suggestion.titre), suggestion.ville || suggestion.pays].filter(Boolean).join(" · ")}
+                      </p>
                     </div>
                   </div>
                   <button

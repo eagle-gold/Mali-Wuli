@@ -1,5 +1,6 @@
 "use client";
 
+import { titreMembre } from "@/lib/titre-membre";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
@@ -83,7 +84,7 @@ function membreVersInterlocuteur(membre: MembreResumeApi): Interlocuteur {
     id: membre.id,
     nom: nomComplet || "Membre Mali Wuli",
     initiales: initialesDe(membre.prenom, membre.nom, membre.initiales),
-    fonction: membre.titre?.trim() || "",
+    fonction: titreMembre(membre.titre),
     ville: membre.ville?.trim() || "Ville non renseignée",
     ton: tonDepuisId(membre.id),
   };

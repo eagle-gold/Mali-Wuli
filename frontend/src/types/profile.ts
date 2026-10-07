@@ -119,6 +119,8 @@ export type ProfilConnecteApi = {
   ville?: string | null;
   situation?: string | null;
   titre?: string | null;
+  /** Vrai si le membre a écrit son titre ; faux : il suit son parcours (« Poste - Entreprise »). */
+  titrePersonnalise?: boolean;
   bio?: string | null;
   photo?: string | null;
   photoCouverture?: string | null;

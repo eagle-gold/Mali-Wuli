@@ -1,77 +1,93 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { LONGUEUR_MAX_TITRE, titreAEnregistrer, titreAutomatique, titreAutomatiqueDepuisBase, type ExperienceTitre } from "./titre-profil";
+import {
+  LONGUEUR_MAX_TITRE,
+  TITRE_PAR_DEFAUT,
+  resoudreTitre,
+  titreSignificatif,
+  titreAutomatique,
+  titreParDefaut,
+  titreParDefautDepuisBase,
+  type ExperienceTitre,
+} from "./titre-profil";
 
 const exp = (poste: string, structure: string, posteActuel: boolean, anneeDebut: number, moisDebut = 1): ExperienceTitre =>
   ({ poste, structure, posteActuel, anneeDebut, moisDebut });
+const univ = (etablissement: string, statutDiplome = "EN_COURS", type = "universite") => ({ type, etablissement, statutDiplome });
 
-test("titre automatique : poste actuel le plus récent, « Poste chez Structure »", () => {
-  const titre = titreAutomatique([exp("Stagiaire", "Banque A", false, 2022), exp("Data Scientist", "Natixis CIB", true, 2024), exp("Analyste", "Cabinet B", true, 2023)], []);
-  assert.equal(titre, "Data Scientist chez Natixis CIB");
+test("titre par défaut : poste actuel le plus récent, « Poste - Entreprise »", () => {
+  const titre = titreParDefaut([exp("Stagiaire", "Banque A", false, 2022), exp("Data Scientist", "Natixis CIB", true, 2024), exp("Analyste", "Cabinet B", true, 2023)], []);
+  assert.equal(titre, "Data Scientist - Natixis CIB");
 });
 
-test("titre automatique : poste sans structure, espaces normalisés", () => {
-  assert.equal(titreAutomatique([exp("  Ingénieure   data ", "  ", true, 2024)], []), "Ingénieure data");
+test("titre par défaut : le poste actuel l'emporte sur des études en cours", () => {
+  assert.equal(titreParDefaut([exp("Développeuse", "Orange Mali", true, 2024)], [univ("Université de Bamako")]), "Développeuse - Orange Mali");
 });
 
-test("titre automatique : sans poste actuel, étudiant(e) si études supérieures en cours", () => {
-  const formations = [
-    { type: "lycee", etablissement: "Lycée X", statutDiplome: "EN_COURS" },
-    { type: "universite", etablissement: "Université Paris Dauphine-PSL", statutDiplome: "EN_COURS" },
-  ];
-  assert.equal(titreAutomatique([exp("Ancien poste", "Ex", false, 2020)], formations), "Étudiant(e) à Université Paris Dauphine-PSL");
+test("titre par défaut : poste sans entreprise, espaces normalisés", () => {
+  assert.equal(titreParDefaut([exp("  Ingénieure   data ", "  ", true, 2024)], []), "Ingénieure data");
 });
 
-test("titre automatique : rien à déduire → null (lycée en cours, diplôme obtenu, aucune donnée)", () => {
+test("titre par défaut : sans poste actuel, « Étudiant(e) - Université » si études supérieures en cours", () => {
+  const formations = [univ("Lycée X", "EN_COURS", "lycee"), univ("Université Paris Dauphine-PSL")];
+  assert.equal(titreParDefaut([exp("Ancien poste", "Ex", false, 2020)], formations), "Étudiant(e) - Université Paris Dauphine-PSL");
+  assert.equal(titreParDefaut([], [univ("")]), "Étudiant(e)");
+});
+
+test("titre par défaut : sinon « Membre du réseau » (rien, lycée en cours, diplôme obtenu)", () => {
+  assert.equal(TITRE_PAR_DEFAUT, "Membre du réseau");
+  assert.equal(titreParDefaut([], []), "Membre du réseau");
+  assert.equal(titreParDefaut([], [univ("Lycée X", "EN_COURS", "lycee")]), "Membre du réseau");
+  assert.equal(titreParDefaut([], [univ("Univ", "OBTENU")]), "Membre du réseau");
   assert.equal(titreAutomatique([], []), null);
-  assert.equal(titreAutomatique([], [{ type: "lycee", etablissement: "Lycée X", statutDiplome: "EN_COURS" }]), null);
-  assert.equal(titreAutomatique([], [{ type: "universite", etablissement: "Univ", statutDiplome: "OBTENU" }]), null);
 });
 
-test("titre automatique : tronqué à la longueur maximale avec ellipse", () => {
-  const titre = titreAutomatique([exp("P".repeat(100), "S".repeat(100), true, 2024)], []);
-  assert.equal(titre?.length, LONGUEUR_MAX_TITRE);
-  assert.ok(titre?.endsWith("…"));
+test("titre par défaut : tronqué à la longueur maximale, sans casser un emoji", () => {
+  const long = titreParDefaut([exp("P".repeat(100), "S".repeat(100), true, 2024)], []);
+  assert.equal(long.length, LONGUEUR_MAX_TITRE);
+  assert.ok(long.endsWith("…"));
+  const emoji = titreParDefaut([exp("A".repeat(150), "🚀".repeat(6), true, 2024)], []);
+  assert.ok(emoji.length <= LONGUEUR_MAX_TITRE);
+  assert.equal(/[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/.test(emoji), false, "surrogate orphelin");
 });
 
-test("titre à enregistrer : le titre saisi l'emporte, même s'il existe un titre ou un parcours", () => {
-  const experiences = [exp("Data Scientist", "Natixis", true, 2024)];
-  assert.equal(titreAEnregistrer({ saisi: "  Data Scientist | Étudiant  ", existant: "Ancien", experiences, formations: [] }), "Data Scientist | Étudiant");
+const dynamique = { titre: "Dev - A", personnalise: false };
+
+test("résolution : texte du membre → titre personnalisé", () => {
+  assert.deepEqual(resoudreTitre({ saisi: "  Papa, mentor et passionné  ", actuel: dynamique, defaut: "Dev - A" }), { titre: "Papa, mentor et passionné", personnalise: true });
 });
 
-test("titre à enregistrer : champ absent → le titre existant est conservé, jamais écrasé", () => {
-  const experiences = [exp("Data Scientist", "Natixis", true, 2024)];
-  assert.equal(titreAEnregistrer({ saisi: undefined, existant: "Mon titre perso", experiences, formations: [] }), "Mon titre perso");
+test("résolution : vide, null ou identique au titre par défaut → retour au titre dynamique", () => {
+  const perso = { titre: "Mon titre", personnalise: true };
+  assert.deepEqual(resoudreTitre({ saisi: "", actuel: perso, defaut: "Lead - B" }), { titre: "Lead - B", personnalise: false });
+  assert.deepEqual(resoudreTitre({ saisi: null, actuel: perso, defaut: "Lead - B" }), { titre: "Lead - B", personnalise: false });
+  assert.deepEqual(resoudreTitre({ saisi: "   ", actuel: perso, defaut: "Lead - B" }), { titre: "Lead - B", personnalise: false });
+  assert.deepEqual(resoudreTitre({ saisi: "Lead - B", actuel: perso, defaut: "Lead - B" }), { titre: "Lead - B", personnalise: false });
 });
 
-test("titre à enregistrer : champ vide ou aucun titre existant → titre déduit, sinon null", () => {
-  const experiences = [exp("Data Scientist", "Natixis", true, 2024)];
-  assert.equal(titreAEnregistrer({ saisi: "", existant: "Ancien", experiences, formations: [] }), "Data Scientist chez Natixis");
-  assert.equal(titreAEnregistrer({ saisi: undefined, existant: null, experiences, formations: [] }), "Data Scientist chez Natixis");
-  assert.equal(titreAEnregistrer({ saisi: "", existant: null, experiences: [], formations: [] }), null);
+test("résolution : champ absent → un titre personnalisé est conservé, un titre dynamique suit le parcours", () => {
+  assert.deepEqual(resoudreTitre({ saisi: undefined, actuel: { titre: "Mon titre", personnalise: true }, defaut: "Lead - B" }), { titre: "Mon titre", personnalise: true });
+  assert.deepEqual(resoudreTitre({ saisi: undefined, actuel: dynamique, defaut: "Lead - B" }), { titre: "Lead - B", personnalise: false });
+  assert.deepEqual(resoudreTitre({ saisi: undefined, actuel: { titre: null, personnalise: false }, defaut: "Membre du réseau" }), { titre: "Membre du réseau", personnalise: false });
 });
 
-test("titre automatique : une coupure ne laisse jamais la moitié d'un emoji", () => {
-  const titre = titreAutomatique([exp("A".repeat(150), "🚀".repeat(6), true, 2024)], []) ?? "";
-  assert.ok(titre.length <= LONGUEUR_MAX_TITRE);
-  assert.ok(titre.endsWith("…"));
-  assert.equal(/[\ud800-\udbff](?![\udc00-\udfff])|(?<![\ud800-\udbff])[\udc00-\udfff]/.test(titre), false, "surrogate orphelin");
+test("résolution : un titre personnalisé trop long est tronqué proprement", () => {
+  const resolu = resoudreTitre({ saisi: "x".repeat(500), actuel: dynamique, defaut: "Dev - A" });
+  assert.equal(resolu.titre.length, LONGUEUR_MAX_TITRE);
+  assert.equal(resolu.personnalise, true);
 });
 
-test("titre à enregistrer : un titre resté automatique suit le nouveau parcours", () => {
-  const ancien = "Dev chez A";
-  const experiences = [exp("Lead Dev", "B", true, 2025)];
-  assert.equal(titreAEnregistrer({ saisi: ancien, existant: ancien, ancienAutomatique: ancien, experiences, formations: [] }), "Lead Dev chez B");
+test("titre depuis la base : même règle (poste actuel, nom canonique de l'établissement)", () => {
+  assert.equal(titreParDefautDepuisBase([{ poste: "Analyste", entreprise: "Banque X", estActuel: true, dateDebut: new Date("2024-05-10T00:00:00Z") }], []), "Analyste - Banque X");
+  assert.equal(titreParDefautDepuisBase([], [{ type: "universite", statutDiplome: "EN_COURS", autreEtablissement: "Saisie libre", etablissement: { nom: "Université canonique" } }]), "Étudiant(e) - Université canonique");
+  assert.equal(titreParDefautDepuisBase([], [{ type: "universite", statutDiplome: "EN_COURS", autreEtablissement: "Saisie libre", etablissement: null }]), "Étudiant(e) - Saisie libre");
+  assert.equal(titreParDefautDepuisBase([], []), "Membre du réseau");
 });
 
-test("titre à enregistrer : un titre modifié par le membre n'est jamais remplacé par le parcours", () => {
-  const experiences = [exp("Lead Dev", "B", true, 2025)];
-  assert.equal(titreAEnregistrer({ saisi: "Ma phrase perso", existant: "Ma phrase perso", ancienAutomatique: "Dev chez A", experiences, formations: [] }), "Ma phrase perso");
-  assert.equal(titreAEnregistrer({ saisi: "Dev chez A", existant: "Dev chez A", ancienAutomatique: null, experiences, formations: [] }), "Dev chez A");
-});
-
-test("titre depuis la base : même règle que le questionnaire (poste actuel, nom canonique de l'établissement)", () => {
-  assert.equal(titreAutomatiqueDepuisBase([{ poste: "Analyste", entreprise: "Banque X", estActuel: true, dateDebut: new Date("2024-05-10T00:00:00Z") }], []), "Analyste chez Banque X");
-  assert.equal(titreAutomatiqueDepuisBase([], [{ type: "universite", statutDiplome: "EN_COURS", autreEtablissement: "Saisie libre", etablissement: { nom: "Université canonique" } }]), "Étudiant(e) à Université canonique");
-  assert.equal(titreAutomatiqueDepuisBase([], [{ type: "universite", statutDiplome: "EN_COURS", autreEtablissement: "Saisie libre", etablissement: null }]), "Étudiant(e) à Saisie libre");
+test("titre dans un document pro : le libellé générique est écarté, un vrai titre est conservé", () => {
+  assert.equal(titreSignificatif("Membre du réseau"), null);
+  assert.equal(titreSignificatif("  Membre du réseau "), null);
+  assert.equal(titreSignificatif(null), null);
+  assert.equal(titreSignificatif(""), null);
+  assert.equal(titreSignificatif(" Développeuse - Orange Mali "), "Développeuse - Orange Mali");
 });

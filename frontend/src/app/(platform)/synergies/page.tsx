@@ -1,5 +1,6 @@
 "use client";
 
+import { TITRE_PAR_DEFAUT } from "@/lib/titre-membre";
 import { Check, Clock3, UserPlus, UsersRound, X } from "lucide-react";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import {
@@ -68,11 +69,9 @@ function CarteProfil({
           <h2 className="truncate titre-element">
             {nomComplet(profil.user.prenom, profil.user.nom)}
           </h2>
-          {(profil.titre || experience?.poste) && (
-            <p className="text-sm text-terre-300">
-              {profil.titre || experience?.poste}
-            </p>
-          )}
+          <p className="text-sm text-terre-300">
+            {profil.titre?.trim() || experience?.poste || TITRE_PAR_DEFAUT}
+          </p>
           <p className="text-xs text-terre-300">
             {[profil.ville, profil.pays].filter(Boolean).join(" · ") ||
               "Localisation non renseignée"}

@@ -103,6 +103,10 @@ model Profil {
   ville               String?
   situation           SituationActuelle?
   titre               String?
+  // `titre` est le titre affiché sous le nom. Tant que `titrePersonnalise` est faux, il est
+  // recalculé à partir du parcours (« Poste - Entreprise », « Étudiant(e) - Université »,
+  // « Membre du réseau »). Vrai : le membre l'a écrit lui-même et on n'y touche plus.
+  titrePersonnalise   Boolean                  @default(false)
   bio                 String?                  @db.Text
   photo               String?                  @db.Text
   photoCouverture     String?                  @db.Text

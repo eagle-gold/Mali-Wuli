@@ -12,7 +12,7 @@ interface StepInformationsProps {
 export interface InfoData extends ReseauxSociaux {
   prenom: string;
   nom: string;
-  /** Courte description affichée sous le nom (160 caractères maximum). */
+  /** Titre écrit par le membre (160 caractères maximum) ; vide = titre par défaut qui suit son parcours. */
   titre?: string;
   telephone: string;
   indicatif: string;
@@ -265,7 +265,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
 
       <div className="mb-6">
         <label htmlFor="titre" className="mb-2 block text-base font-semibold text-[#2e261f]">
-          Titre ou description <span className="font-normal">· optionnel</span>
+          Titre personnalisé <span className="font-normal">· optionnel</span>
         </label>
         <input
           id="titre"
@@ -279,8 +279,8 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
           className={CHAMP_CLASS}
         />
         <p id="titre-aide" className="mt-2 text-sm text-[#2e261f] sm:text-base">
-          Affiché sous votre nom dans tout le réseau : fil, commentaires, annuaire et messages.
-          Laissé vide, il sera déduit de votre poste actuel ou de vos études.
+          Affiché sous votre nom dans tout le réseau. Laissez ce champ vide : il suit automatiquement votre parcours,
+          « Poste - Entreprise » ou « Étudiant(e) - Université » si vous étudiez, sinon « Membre du réseau ».
         </p>
       </div>
 
