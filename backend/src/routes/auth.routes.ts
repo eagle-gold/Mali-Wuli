@@ -10,7 +10,9 @@ import {
 } from "../lib/auth-token";
 import { prisma } from "../lib/prisma";
 import { roleEffectif, rolePourInscription, droitsUtilisateur } from "../lib/roles";
-import { revoquerSocketsUtilisateur } from "../realtime/socket";
+import { revoquerSocketsSession, revoquerSocketsUtilisateur } from "../realtime/socket";
+import { authenticate, type AuthRequest } from "../middlewares/auth.middleware";
+import { revoquerSession } from "../lib/revocation-session";
 import {
   codeCorrespond,
   genererCodeVerification,
@@ -832,6 +834,34 @@ router.post("/reset-password", limiteConnexion, async (req: Request, res: Respon
     }
     console.error(err);
     return res.status(500).json({ message: "Impossible de modifier le mot de passe." });
+  }
+});
+
+// ─── POST /api/auth/logout ──────────────────────────────────────────────────
+// Révoque uniquement la session courante : les autres appareils restent connectés.
+router.post("/logout", authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    if (req.session && req.userId) {
+      await revoquerSession(req.session.jti, req.userId, req.session.expireLe);
+      revoquerSocketsSession(req.session.jti);
+    }
+    return res.status(204).end();
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Déconnexion impossible pour le moment." });
+  }
+});
+
+// ─── POST /api/auth/logout-all ──────────────────────────────────────────────
+// Déconnecte tous les appareils, y compris la session courante.
+router.post("/logout-all", authenticate, async (req: AuthRequest, res: Response) => {
+  try {
+    await prisma.user.update({ where: { id: req.userId }, data: { tokenVersion: { increment: 1 } } });
+    revoquerSocketsUtilisateur(req.userId!);
+    return res.status(204).end();
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Déconnexion impossible pour le moment." });
   }
 });
 

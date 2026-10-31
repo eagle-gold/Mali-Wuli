@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-10-31 (refonte lot 3, non commité).
+LIBRE — dernière session : Claude, 2026-10-31 (lot 4 déconnexion et suppression de compte, non commité ; migration appliquée en LOCAL seulement).
 
 ## Modèle d'entrée
 
@@ -30,8 +30,18 @@ LIBRE — dernière session : Claude, 2026-10-31 (refonte lot 3, non commité).
 
 ## Entrées
 
-### 2026-10-31 — Claude — Refonte lot 3 : connexion, mot de passe oublié, étapes de l'onboarding
+### 2026-10-31 — Claude — Lot 4 : déconnexion côté serveur et suppression de compte
 - Statut : TERMINÉ (code local, non commité ; ni push ni déploiement)
+- Demande de l'utilisateur : déconnexion réelle côté serveur ; suppression de compte selon la recommandation ; commit du lot 3 (fait : d5e79a5).
+- Décisions de l'utilisateur : suppression immédiate et définitive avec confirmation par l'e-mail, données et contenus effacés (voir 05_ETAT_ET_REPRISE.md).
+- Fichiers touchés : backend `prisma/schema.prisma` (JetonRevoque, relation User.jetonsRevoques) + migration `20261031130000_jetons_revoques`, `lib/auth-token.ts` (jwtid), `lib/revocation-session.ts`, `middlewares/auth.middleware.ts`, `realtime/socket.ts`, `routes/auth.routes.ts` (logout, logout-all), `routes/user.routes.ts` (DELETE /me), `services/suppression-compte.service.ts` (+ test) ; frontend `lib/deconnexion.ts`, `app/(platform)/parametres/page.tsx`, `app/compte-supprime/page.tsx`, `MaliWuliHeader.tsx`, `MenuCompte.tsx`, `onboarding/EnTeteOnboarding.tsx`.
+- Fait et vérifié : back tsc OK, 230/230 ; front type-check OK, 40/40. API locale : révocation par appareil, puis de tous les appareils, suppression refusée sans la bonne confirmation, puis complète (contrôle en base). Chrome 1440/390 : page Paramètres, tout déconnecter, fenêtre de suppression (Échap, bouton bloqué), redirection vers /compte-supprime.
+- Fait mais non vérifié : protection de l'administrateur principal en conditions réelles ; suppression d'un compte avec offres, candidatures et associations réelles.
+- Actions à effet externe : base LOCALE — `prisma migrate deploy` (20261031130000) ; comptes QA qa-suppr-a et qa-suppr-b créés puis supprimés (A par la fonction elle-même).
+- Prochaine action : revue utilisateur et commit ; en production : sauvegarde, puis migrations 20261031120000 et 20261031130000 avant le backend.
+
+### 2026-10-31 — Claude — Refonte lot 3 : connexion, mot de passe oublié, étapes de l'onboarding
+- Statut : TERMINÉ (commité en local ; ni push ni déploiement)
 - Demande de l'utilisateur : « go » sur la suite proposée (connexion et mot de passe dans le style de l'inscription, intérieur des étapes de l'onboarding, puis lot sécurité).
 - État Git au début : refonte/lot-1-design-system, HEAD e37f348.
 - Fichiers touchés : frontend `app/(auth)/login`, `forgot-password`, `reset-password` (réécrits sur CoqueAuth), `components/ui/classes.ts` (CLASSE_CHAMP, CLASSE_LIBELLE), `components/auth/Champs.tsx`, `components/onboarding/Step*.tsx`, `SearchCombobox.tsx`, `StarRating.tsx`, `MaliWuliHeader.tsx` (plus d'en-tête marron sur les pages d'authentification) ; docs `progress.md`, `roadmap.md`.

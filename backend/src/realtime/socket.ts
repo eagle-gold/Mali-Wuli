@@ -47,13 +47,15 @@ export function initialiserSocket(httpServer: HttpServer, origins: string[]) {
           emailVerifie: true,
           tokenVersion: true,
           profil: { select: { id: true } },
+          jetonsRevoques: decoded.jti ? { where: { jti: decoded.jti }, select: { jti: true }, take: 1 } : false,
         },
       });
       if (
         !user?.profil ||
         !user.emailVerifie ||
         user.statut !== "VALIDE" ||
-        user.tokenVersion !== decoded.tokenVersion
+        user.tokenVersion !== decoded.tokenVersion ||
+        Boolean(user.jetonsRevoques?.length)
       ) {
         return next(new Error("Session révoquée ou compte indisponible"));
       }
@@ -63,6 +65,7 @@ export function initialiserSocket(httpServer: HttpServer, origins: string[]) {
         profilId: user.profil.id,
         prenom: user.prenom?.trim() || "Un membre",
       } satisfies SocketIdentity;
+      if (decoded.jti) void socket.join(`session:${decoded.jti}`);
       return next();
     } catch {
       return next(new Error("Token invalide ou expiré"));
@@ -119,4 +122,9 @@ export function emettreConversation(conversationId: string, evenement: string, d
 /** Coupe immédiatement les connexions temps réel associées aux sessions révoquées. */
 export function revoquerSocketsUtilisateur(userId: string) {
   socketServer?.in(`user:${userId}`).disconnectSockets(true);
+}
+
+/** Coupe le temps réel d'une seule session (déconnexion d'un appareil). */
+export function revoquerSocketsSession(jti: string) {
+  socketServer?.in(`session:${jti}`).disconnectSockets(true);
 }

@@ -1,5 +1,11 @@
 # État livré, sujets ouverts et preuves
 
+## 31 octobre 2026 — suppression de compte et déconnexion serveur (local, non publié)
+
+**Décision utilisateur (suppression de compte) :** le membre confirme en saisissant l'e-mail de son compte ; la suppression est immédiate et définitive (pas de délai de grâce). Le compte et toutes ses données personnelles sont effacés, ainsi que ses contenus : publications, commentaires, réactions, offres, événements organisés, photos, conversations privées (dans un groupe, seuls ses messages sont retirés). Les fichiers envoyés sont effacés du disque. Le compte de l'administrateur principal ne peut pas être supprimé. Code : `backend/src/services/suppression-compte.service.ts`, page `/parametres`.
+
+**Déconnexion :** chaque session a un identifiant (`jti`). « Se déconnecter » révoque seulement l'appareil courant ; « Se déconnecter de tous les appareils » (page Paramètres) révoque toutes les sessions. Les jetons émis avant le déploiement restent valides jusqu'à leur expiration (7 jours au plus).
+
 ## 31 octobre 2026 — refonte lot 1 : design system et nouvel accueil (local, non publié)
 
 **Mission :** `docs/mission-refonte.md`. Suivi : `docs/roadmap.md`, `docs/progress.md`, `docs/audit.md`, `docs/design-system.md`, `docs/security-privacy.md`.

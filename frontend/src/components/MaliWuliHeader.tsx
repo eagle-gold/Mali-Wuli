@@ -13,6 +13,7 @@ import {
   Menu,
   MessageCircle,
   Search,
+  Settings,
   ShieldCheck,
   Trash2,
   UserRound,
@@ -31,6 +32,7 @@ import { aAccesAdministration, type AutorisationsUtilisateur } from "@/lib/autor
 import { urlMediaBackend } from "@/lib/media";
 import { fermerSocket, useSocket } from "@/hooks/useSocket";
 import { definirMessagesNonLus, libellePastille } from "@/lib/compteur-messages";
+import { deconnecterSession } from "@/lib/deconnexion";
 import { rubriqueActive } from "@/lib/navigation";
 import { classesBouton } from "@/components/ui/classes";
 import type {
@@ -310,10 +312,8 @@ export function MemberHeader() {
     ? [...LIENS_MEMBRE, { label: "Administration", href: "/admin", Icone: ShieldCheck }]
     : LIENS_MEMBRE;
   const estActif = (href: string) => rubriqueActive(pathname, href);
-  const deconnecter = () => {
-    fermerSocket();
-    terminerSession();
-    localStorage.removeItem("mali_wuli_registration_token");
+  const deconnecter = async () => {
+    await deconnecterSession();
     router.replace("/login");
   };
 
@@ -422,7 +422,16 @@ export function MemberHeader() {
             <Trash2 aria-hidden="true" size={20} className="shrink-0" />
             Corbeille
           </Link>
-          <button type="button" onClick={deconnecter} className="flex items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-semibold text-[#f4eee1] hover:bg-white/5">
+          <Link
+            href="/parametres"
+            onClick={() => setMenuOuvert(false)}
+            aria-current={estActif("/parametres") ? "page" : undefined}
+            className={`flex min-w-0 items-center gap-2 rounded-xl px-2 py-3 text-sm font-semibold ${estActif("/parametres") ? "bg-white/10 text-gold" : "text-[#f4eee1] hover:bg-white/5"}`}
+          >
+            <Settings aria-hidden="true" size={20} className="shrink-0" />
+            Paramètres
+          </Link>
+          <button type="button" onClick={() => void deconnecter()} className="flex items-center gap-3 rounded-xl px-4 py-3 text-left text-sm font-semibold text-[#f4eee1] hover:bg-white/5">
             <LogOut aria-hidden="true" size={20} />
             Se déconnecter
           </button>

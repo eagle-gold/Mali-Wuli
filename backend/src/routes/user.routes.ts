@@ -7,6 +7,8 @@ import { roleEffectif, droitsUtilisateur, revisionDroits } from "../lib/roles";
 import { resoudreTitre, selectionParcoursTitre, TITRE_PAR_DEFAUT, titreParDefautDepuisBase } from "../lib/titre-profil";
 import { champsLiensSociaux, liensSociauxProfil, modificationsLiensSociaux, selectionLiensSociaux } from "../lib/liens-sociaux";
 import { authenticate, AuthRequest } from "../middlewares/auth.middleware";
+import { confirmationValide, supprimerCompte, SuppressionCompteImpossible } from "../services/suppression-compte.service";
+import { revoquerSocketsUtilisateur } from "../realtime/socket";
 import {
   supprimerUpload,
   uploadAvatar,
@@ -588,6 +590,24 @@ router.get("/:id", authenticate, async (req: AuthRequest, res: Response) => {
   } catch (error) {
     console.error("[GET /users/:id]", error);
     return res.status(500).json({ message: "Erreur serveur." });
+  }
+});
+
+// ─── DELETE /api/users/me ────────────────────────────────────────────────────
+// Suppression définitive du compte : le membre confirme en saisissant son e-mail.
+router.delete("/me", authenticate, async (req: AuthRequest, res: Response) => {
+  const email = req.authenticatedUser?.email || "";
+  if (!confirmationValide(req.body?.confirmation, email)) {
+    return res.status(400).json({ message: "Saisissez l’adresse e-mail de votre compte pour confirmer la suppression.", code: "CONFIRMATION_INVALIDE" });
+  }
+  try {
+    await supprimerCompte(req.userId!);
+    revoquerSocketsUtilisateur(req.userId!);
+    return res.status(204).end();
+  } catch (err) {
+    if (err instanceof SuppressionCompteImpossible) return res.status(403).json({ message: err.message });
+    console.error(err);
+    return res.status(500).json({ message: "La suppression n’a pas pu aboutir. Aucune donnée n’a été supprimée ; réessayez plus tard." });
   }
 });
 

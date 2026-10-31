@@ -42,6 +42,7 @@ model User {
   dateNaissance DateTime?
   role          Role              @default(MEMBRE)
   rolesDelegues UserRoleGrant[]
+  jetonsRevoques JetonRevoque[]
   statut        StatutInscription @default(VALIDE)
   emailVerifie  Boolean           @default(false)
   tokenVersion  Int               @default(0)
@@ -1246,4 +1247,17 @@ model UserRoleGrant {
 
   @@id([userId, code])
   @@index([code])
+}
+
+/// Sessions révoquées avant leur expiration (déconnexion d'un appareil).
+/// Une ligne par jeton (jti) ; inutile après `expireLe`, purgée régulièrement.
+model JetonRevoque {
+  jti       String   @id @db.VarChar(64)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expireLe  DateTime
+  createdAt DateTime @default(now())
+
+  @@index([expireLe])
+  @@index([userId])
 }

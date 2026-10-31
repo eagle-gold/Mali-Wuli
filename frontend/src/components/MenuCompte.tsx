@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, LogOut, Pencil, ShieldCheck, Trash2, type LucideIcon } from "lucide-react";
+import { ChevronDown, LogOut, Pencil, ShieldCheck, Trash2, type LucideIcon, Settings } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
 
 type Props = {
@@ -127,6 +127,7 @@ export default function MenuCompte({ nom, titre, initiales, photo, administratio
             <p className="px-3 pb-1 text-xs font-bold uppercase tracking-[0.06em] text-[#9a8a76]">Compte</p>
             {!surQuestionnaire && <Entree href="/onboarding?etape=informations" Icone={Pencil} libelle="Modifier mes infos" onClick={fermer} />}
             <Entree href="/corbeille" Icone={Trash2} libelle="Corbeille" onClick={fermer} />
+            <Entree href="/parametres" Icone={Settings} libelle="Paramètres et confidentialité" onClick={fermer} />
           </div>
 
           {administration && (

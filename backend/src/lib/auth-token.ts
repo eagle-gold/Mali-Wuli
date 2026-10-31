@@ -1,3 +1,4 @@
+import { randomUUID } from "crypto";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 type AccessTokenPayload = JwtPayload & {
@@ -26,7 +27,8 @@ export function signerTokenAcces(user: { id: string; tokenVersion: number }) {
       tokenVersion: user.tokenVersion,
     },
     secretJwt(),
-    { expiresIn: "7d" },
+    // Identifiant unique de la session : permet de révoquer un seul appareil.
+    { expiresIn: "7d", jwtid: randomUUID() },
   );
 }
 

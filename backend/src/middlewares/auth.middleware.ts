@@ -19,6 +19,8 @@ export interface AuthRequest extends Request {
   permissions?: Permission[];
   contributorKey?: string;
   authenticatedUser?: AuthenticatedUser;
+  /** Session courante (absente pour les jetons émis avant l'identifiant de session). */
+  session?: { jti: string; expireLe: Date };
 }
 
 export const authenticate = async (req: AuthRequest, res: Response, next: NextFunction) => {
@@ -38,10 +40,13 @@ export const authenticate = async (req: AuthRequest, res: Response, next: NextFu
         statut: true,
         emailVerifie: true,
         tokenVersion: true,
+        // Révocation de cette session précise, lue dans la même requête.
+        jetonsRevoques: decoded.jti ? { where: { jti: decoded.jti }, select: { jti: true }, take: 1 } : false,
       },
     });
+    const revoque = Boolean(user?.jetonsRevoques?.length);
 
-    if (!user || user.tokenVersion !== decoded.tokenVersion) {
+    if (!user || revoque || user.tokenVersion !== decoded.tokenVersion) {
       return res.status(401).json({ message: "Session révoquée ou invalide." });
     }
     if (!user.emailVerifie) {
@@ -58,7 +63,9 @@ export const authenticate = async (req: AuthRequest, res: Response, next: NextFu
     // Ce rôle vient volontairement de la base, jamais du JWT.
     req.userRole = role;
     req.permissions = permissionsUtilisateur(user);
-    req.authenticatedUser = { ...user, role };
+    const { jetonsRevoques: _revocation, ...utilisateur } = user;
+    req.authenticatedUser = { ...utilisateur, role };
+    if (decoded.jti && decoded.exp) req.session = { jti: decoded.jti, expireLe: new Date(decoded.exp * 1000) };
     req.contributorKey = createHash("sha256").update(`user:${user.id}`).digest("hex");
     next();
   } catch {
