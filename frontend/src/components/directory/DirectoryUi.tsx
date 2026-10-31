@@ -8,11 +8,12 @@ import api from "@/lib/api";
 import { messageErreur } from "@/lib/community";
 import { urlMediaBackend } from "@/lib/media";
 import styles from "./Directory.module.css";
+import ImageAvecRepli from "@/components/ui/ImageAvecRepli";
 
 export function AvatarAnnuaire({ nom, photo, grand = false, carre = false }: { nom: string; photo?: string | null; grand?: boolean; carre?: boolean }) {
   const url = urlMediaBackend(photo);
   const lettres = nom.trim().split(/\s+/).filter(Boolean).slice(0, 2).map((partie) => partie[0]).join("").toUpperCase();
-  return <span className={`${styles.avatar} ${grand ? styles.avatarLarge : ""}`} style={carre ? { borderRadius: 18 } : undefined}>{url ? <img src={url} alt="" /> : lettres || "MW"}</span>;
+  return <span className={`${styles.avatar} ${grand ? styles.avatarLarge : ""}`} style={carre ? { borderRadius: 18 } : undefined}><ImageAvecRepli src={url} repli={lettres || "MW"} /></span>;
 }
 
 export function PaginationAnnuaire({ page, totalPages, changer, libelle = "Pagination de l’annuaire", chargement = false }: { page: number; totalPages: number; changer: (page: number) => void; libelle?: string; chargement?: boolean }) {

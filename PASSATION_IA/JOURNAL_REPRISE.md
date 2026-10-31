@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-10-31 (lot 4 déconnexion et suppression de compte, non commité ; migration appliquée en LOCAL seulement).
+LIBRE — dernière session : Claude, 2026-10-31 (correctif avatars, non commité).
 
 ## Modèle d'entrée
 
@@ -30,8 +30,16 @@ LIBRE — dernière session : Claude, 2026-10-31 (lot 4 déconnexion et suppress
 
 ## Entrées
 
+### 2026-10-31 — Claude — Correctif : avatars de repli
+- Statut : TERMINÉ (code local, non commité)
+- Demande de l'utilisateur : commit du lot 4 (fait : e360611) et correction de l'image cassée quand une photo de profil manque.
+- Fichiers touchés : frontend `components/ui/ImageAvecRepli.tsx` (+ test), `feed/ActualiteFeed.tsx`, `feed/ComposerPublication.tsx`, `MenuCompte.tsx`, `profile/ProfilMembre.tsx`, `directory/DirectoryUi.tsx`, `evenements/EvenementUi.tsx`, `offres/DetailOffre.tsx`, `education/FicheEtablissement.tsx`, `app/(platform)/synergies`, `volontaires`.
+- Fait et vérifié : type-check OK, 42/42 ; Chrome : 0 image cassée sur 4 pages avec des photos introuvables.
+- Actions à effet externe : base LOCALE — comptes QA qa-avatar-a et qa-avatar-b créés puis supprimés.
+- Prochaine action : commit, puis export des données personnelles et CSP.
+
 ### 2026-10-31 — Claude — Lot 4 : déconnexion côté serveur et suppression de compte
-- Statut : TERMINÉ (code local, non commité ; ni push ni déploiement)
+- Statut : TERMINÉ (commit local e360611 ; ni push ni déploiement)
 - Demande de l'utilisateur : déconnexion réelle côté serveur ; suppression de compte selon la recommandation ; commit du lot 3 (fait : d5e79a5).
 - Décisions de l'utilisateur : suppression immédiate et définitive avec confirmation par l'e-mail, données et contenus effacés (voir 05_ETAT_ET_REPRISE.md).
 - Fichiers touchés : backend `prisma/schema.prisma` (JetonRevoque, relation User.jetonsRevoques) + migration `20261031130000_jetons_revoques`, `lib/auth-token.ts` (jwtid), `lib/revocation-session.ts`, `middlewares/auth.middleware.ts`, `realtime/socket.ts`, `routes/auth.routes.ts` (logout, logout-all), `routes/user.routes.ts` (DELETE /me), `services/suppression-compte.service.ts` (+ test) ; frontend `lib/deconnexion.ts`, `app/(platform)/parametres/page.tsx`, `app/compte-supprime/page.tsx`, `MaliWuliHeader.tsx`, `MenuCompte.tsx`, `onboarding/EnTeteOnboarding.tsx`.

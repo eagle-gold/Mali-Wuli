@@ -18,6 +18,7 @@ import {
   nomComplet,
 } from "@/lib/community";
 import { urlMediaBackend } from "@/lib/media";
+import ImageAvecRepli from "@/components/ui/ImageAvecRepli";
 
 type ProfilPublic = {
   id: string;
@@ -59,11 +60,7 @@ function CarteProfil({
     <article className="card flex h-full flex-col gap-3">
       <div className="flex items-start gap-3">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-vert-50 font-bold text-vert">
-          {photo ? (
-            <img src={photo} alt="" className="h-full w-full object-cover" />
-          ) : (
-            initiales(profil.user.prenom, profil.user.nom)
-          )}
+          <ImageAvecRepli src={photo} className="h-full w-full object-cover" repli={initiales(profil.user.prenom, profil.user.nom)} />
         </div>
         <div className="min-w-0">
           <h2 className="truncate titre-element">

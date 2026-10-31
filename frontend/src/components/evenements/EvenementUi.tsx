@@ -9,6 +9,7 @@ import { urlMediaBackend } from "@/lib/media";
 import { formaterDateEvenement } from "@/lib/evenements";
 import type { Evenement, FormatEvenement, ProfilEvenement } from "@/types/evenements";
 import styles from "./Events.module.css";
+import ImageAvecRepli from "@/components/ui/ImageAvecRepli";
 
 export const FORMATS: Record<FormatEvenement, string> = { PRESENTIEL: "Présentiel", EN_LIGNE: "En ligne", HYBRIDE: "Hybride" };
 export function urlFicheEvenement(id: string) { return `/evenements/${encodeURIComponent(id)}`; }
@@ -26,7 +27,7 @@ export function StatutEvenement({ evenement }: { evenement: Evenement }) {
 }
 export function AvatarParticipant({ profil }: { profil: ProfilEvenement }) {
   const url = urlMediaBackend(profil.photo);
-  return <span className={styles.avatar}>{url ? <img src={url} alt="" /> : initiales(profil.prenom, profil.nom)}</span>;
+  return <span className={styles.avatar}><ImageAvecRepli src={url} repli={initiales(profil.prenom, profil.nom)} /></span>;
 }
 export function PaginationEvenements({ page, totalPages, changer, chargement = false, libelle = "Pagination des événements" }: { page: number; totalPages: number; changer: (page: number) => void; chargement?: boolean; libelle?: string }) {
   if (totalPages <= 1) return null;

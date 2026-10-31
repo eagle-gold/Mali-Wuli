@@ -40,6 +40,7 @@ import type {
   SuggestionsSynergieResponseApi,
   UtilisateurProfilApi,
 } from "@/types/profile";
+import ImageAvecRepli from "@/components/ui/ImageAvecRepli";
 
 type InformationsProfil = ReseauxSociaux & {
   prenom?: string;
@@ -661,15 +662,12 @@ function EnTeteProfil({
       <div className="relative px-5 pb-7 pt-16 sm:px-8 sm:pb-8 sm:pt-5 sm:pl-[190px]">
         <div className="absolute -top-14 left-5 sm:-top-14 sm:left-10">
           <div className="relative rounded-full border-4 border-[#fdfaf4] bg-brand-50 shadow-sm">
-            {photo ? (
-              <img
-                src={photo}
-                alt={"Photo de " + nomComplet}
-                className="h-24 w-24 rounded-full object-cover sm:h-32 sm:w-32"
-              />
-            ) : (
-              <AvatarInitiales initiales={initiales} ton="vert" grand />
-            )}
+            <ImageAvecRepli
+              src={photo}
+              alt={"Photo de " + nomComplet}
+              className="h-24 w-24 rounded-full object-cover sm:h-32 sm:w-32"
+              repli={<AvatarInitiales initiales={initiales} ton="vert" grand />}
+            />
             {controlePhoto}
           </div>
         </div>
@@ -1249,11 +1247,7 @@ function ProfilProprietaire() {
               return (
                 <article key={membre.id} className="min-w-0 rounded-2xl border border-[#eae3d4] bg-[#fffefb] p-5">
                   <div className="flex items-center gap-3">
-                    {membre.photo ? (
-                      <img src={membre.photo} alt="" className="h-12 w-12 shrink-0 rounded-full object-cover sm:h-14 sm:w-14" />
-                    ) : (
-                      <AvatarInitiales initiales={membre.initiales} ton={membre.ton} />
-                    )}
+                    <ImageAvecRepli src={membre.photo} className="h-12 w-12 shrink-0 rounded-full object-cover sm:h-14 sm:w-14" repli={<AvatarInitiales initiales={membre.initiales} ton={membre.ton} />} />
                     <div className="min-w-0">
                       <h3 className="truncate text-base font-bold sm:text-lg">{membre.nom}</h3>
                       <p className="truncate text-sm text-[#7b654e] sm:text-base">{[membre.fonction, membre.ville].filter(Boolean).join(" · ")}</p>

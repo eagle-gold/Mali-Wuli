@@ -19,6 +19,7 @@ import {
   type PaginationApi,
 } from "@/lib/community";
 import { urlMediaBackend } from "@/lib/media";
+import ImageAvecRepli from "@/components/ui/ImageAvecRepli";
 
 type ProfilVolontaire = {
   id: string;
@@ -275,15 +276,7 @@ export default function VolontairesPage() {
                 <article key={item.id} className="card flex min-h-64 flex-col">
                   <div className="flex items-start gap-3">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-vert-50 font-bold text-vert">
-                      {photo ? (
-                        <img
-                          src={photo}
-                          alt=""
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        initiales(item.profil.prenom, item.profil.nom)
-                      )}
+                      <ImageAvecRepli src={photo} className="h-full w-full object-cover" repli={initiales(item.profil.prenom, item.profil.nom)} />
                     </div>
                     <div>
                       <h2 className="titre-element">

@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronDown, LogOut, Pencil, ShieldCheck, Trash2, type LucideIcon, Settings } from "lucide-react";
 import { useEffect, useId, useRef, useState } from "react";
+import ImageAvecRepli from "@/components/ui/ImageAvecRepli";
 
 type Props = {
   nom: string;
@@ -22,9 +22,7 @@ function Avatar({ photo, initiales, taille }: { photo: string | null; initiales:
       style={{ width: taille, height: taille }}
       className="flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#f4eee1] font-bold text-brand"
     >
-      {photo ? (
-        <Image src={photo} alt="" width={taille} height={taille} unoptimized className="h-full w-full object-cover" />
-      ) : initiales}
+      <ImageAvecRepli src={photo} width={taille} height={taille} className="h-full w-full object-cover" repli={initiales} />
     </span>
   );
 }

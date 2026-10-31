@@ -15,6 +15,7 @@ import {
 import api from "@/lib/api";
 import { erreurImagePublication } from "@/lib/publication-image";
 import type { PublicationApi, PublicationIntention } from "@/types/api";
+import ImageAvecRepli from "@/components/ui/ImageAvecRepli";
 
 export const THEMATIQUES = [
   "Santé & Télémédecine",
@@ -61,10 +62,7 @@ function PastilleAvatar({ initiales, photo, taille }: { initiales: string; photo
       style={{ width: taille, height: taille }}
       className="flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#efe3d0] font-bold text-[#6f5237]"
     >
-      {photo ? (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={photo} alt="" className="h-full w-full object-cover" />
-      ) : initiales}
+      <ImageAvecRepli src={photo} className="h-full w-full object-cover" repli={initiales} />
     </span>
   );
 }

@@ -49,6 +49,7 @@ import type {
   SupporterPublicationApi,
   SupportersPublicationResponseApi,
 } from "@/types/api";
+import ImageAvecRepli from "@/components/ui/ImageAvecRepli";
 
 type FiltreFil = PublicationScope;
 type TypePublication = "Offre" | "Demande";
@@ -351,13 +352,8 @@ function Avatar({
       aria-hidden="true"
       className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full font-bold ${COULEURS_AVATAR[couleur]} ${taille}`}
     >
-      {photo ? (
-        // Les photos de profil proviennent de l'API Mali Wuli, parfois via une URL relative.
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={photo} alt="" className="h-full w-full object-cover" />
-      ) : (
-        initiales
-      )}
+      {/* Les photos de profil proviennent de l'API Mali Wuli, parfois via une URL relative. */}
+      <ImageAvecRepli src={photo} className="h-full w-full object-cover" repli={initiales} />
     </span>
   );
 }
