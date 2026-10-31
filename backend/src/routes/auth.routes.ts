@@ -12,6 +12,14 @@ import { prisma } from "../lib/prisma";
 import { roleEffectif, rolePourInscription, droitsUtilisateur } from "../lib/roles";
 import { revoquerSocketsUtilisateur } from "../realtime/socket";
 import {
+  codeCorrespond,
+  genererCodeVerification,
+  hacherCodeVerification,
+  messageCodeIncorrect,
+  TENTATIVES_CODE_MAX,
+  VALIDITE_CODE_MS,
+} from "../lib/code-inscription";
+import {
   envoyerCodeConnexion,
   envoyerCodeReinitialisation,
   envoyerCodeVerification,
@@ -142,8 +150,6 @@ const limiteVerificationOtpParEmail = rateLimit({
 
 router.use(limiteAuthentification);
 
-// Génère un code à 6 chiffres
-const genererCode = () => Math.floor(100000 + Math.random() * 900000).toString();
 
 const normaliserEmail = (email: unknown) =>
   typeof email === "string" ? email.trim().toLowerCase() : "";
@@ -210,12 +216,13 @@ router.post("/request-email-code", limiteEnvoiCode, async (req: Request, res: Re
       return res.status(409).json({ message: "Un compte existe déjà avec cet e-mail." });
     }
 
-    const code = genererCode();
-    const codeExpire = new Date(Date.now() + 15 * 60 * 1000);
+    const code = genererCodeVerification();
+    const empreinte = await hacherCodeVerification(code);
+    const codeExpire = new Date(Date.now() + VALIDITE_CODE_MS);
     const verification = await prisma.emailVerification.upsert({
       where: { email },
-      create: { email, code, codeExpire },
-      update: { code, codeExpire, verifieLe: null },
+      create: { email, code: empreinte, codeExpire },
+      update: { code: empreinte, codeExpire, verifieLe: null, tentatives: 0 },
     });
 
     await envoyerCodeVerification(email, code);
@@ -248,11 +255,27 @@ router.post("/verify-registration-email", async (req: Request, res: Response) =>
     if (!verification || verification.email !== email) {
       return res.status(404).json({ message: "Demande de vérification introuvable." });
     }
-    if (verification.code !== code && !estCodeDeTest(code)) {
-      return res.status(400).json({ message: "Code incorrect." });
-    }
-    if (verification.codeExpire < new Date() && !estCodeDeTest(code)) {
-      return res.status(400).json({ message: "Code expiré. Demandez-en un nouveau." });
+    if (!estCodeDeTest(code)) {
+      if (verification.codeExpire < new Date()) {
+        return res.status(400).json({ message: "Code expiré. Demandez-en un nouveau.", code: "CODE_EXPIRE" });
+      }
+      // Réservation atomique d'un essai : des requêtes parallèles ne peuvent
+      // pas dépasser la limite.
+      const essai = await prisma.emailVerification.updateMany({
+        where: { id: verification.id, tentatives: { lt: TENTATIVES_CODE_MAX } },
+        data: { tentatives: { increment: 1 } },
+      });
+      if (essai.count === 0) {
+        return res.status(429).json({ message: "Trop de tentatives pour ce code. Demandez-en un nouveau.", code: "TROP_DE_TENTATIVES", tentativesRestantes: 0 });
+      }
+      if (!(await codeCorrespond(code, verification.code))) {
+        const consommees = verification.tentatives + 1;
+        return res.status(400).json({
+          message: messageCodeIncorrect(consommees),
+          code: consommees >= TENTATIVES_CODE_MAX ? "TROP_DE_TENTATIVES" : "CODE_INCORRECT",
+          tentativesRestantes: Math.max(0, TENTATIVES_CODE_MAX - consommees),
+        });
+      }
     }
 
     await prisma.emailVerification.update({
@@ -290,13 +313,14 @@ router.post("/resend-registration-code", limiteEnvoiCode, async (req: Request, r
       return res.status(404).json({ message: "Demande de vérification introuvable." });
     }
 
-    const code = genererCode();
+    const code = genererCodeVerification();
     await prisma.emailVerification.update({
       where: { id: verification.id },
       data: {
-        code,
-        codeExpire: new Date(Date.now() + 15 * 60 * 1000),
+        code: await hacherCodeVerification(code),
+        codeExpire: new Date(Date.now() + VALIDITE_CODE_MS),
         verifieLe: null,
+        tentatives: 0,
       },
     });
 
@@ -444,44 +468,6 @@ router.post("/register", async (req: Request, res: Response) => {
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Erreur serveur. Réessayez." });
-  }
-});
-
-// ─── POST /api/auth/verify-email ─────────────────────────────────────────────
-router.post("/verify-email", async (req: Request, res: Response) => {
-  const { userId, code } = req.body;
-
-  if (!userId || !code) {
-    return res.status(400).json({ message: "Données manquantes." });
-  }
-
-  try {
-    const user = await prisma.user.findUnique({ where: { id: userId } });
-
-    if (!user) return res.status(404).json({ message: "Utilisateur introuvable." });
-    if (user.emailVerifie) return res.status(400).json({ message: "Email déjà vérifié." });
-    if (user.codeVerif !== code && !estCodeDeTest(code)) return res.status(400).json({ message: "Code incorrect." });
-    if ((!user.codeExpire || user.codeExpire < new Date()) && !estCodeDeTest(code)) {
-      return res.status(400).json({ message: "Code expiré. Demandez-en un nouveau." });
-    }
-
-    // Marquer l'email comme vérifié
-    await prisma.user.update({
-      where: { id: userId },
-      data: { emailVerifie: true, codeVerif: null, codeExpire: null },
-    });
-
-    // Créer le profil vide
-    await prisma.profil.upsert({
-      where: { userId },
-      create: { userId },
-      update: {},
-    });
-
-    return res.json({ message: "Email vérifié avec succès." });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Erreur serveur." });
   }
 });
 
@@ -846,37 +832,6 @@ router.post("/reset-password", limiteConnexion, async (req: Request, res: Respon
     }
     console.error(err);
     return res.status(500).json({ message: "Impossible de modifier le mot de passe." });
-  }
-});
-
-// ─── POST /api/auth/resend-code ──────────────────────────────────────────────
-router.post("/resend-code", limiteEnvoiCode, async (req: Request, res: Response) => {
-  const { userId } = req.body;
-
-  if (!userId) return res.status(400).json({ message: "userId manquant." });
-
-  try {
-    const user = await prisma.user.findUnique({ where: { id: userId } });
-    if (!user) return res.status(404).json({ message: "Utilisateur introuvable." });
-    if (user.emailVerifie) return res.status(400).json({ message: "Email déjà vérifié." });
-
-    const code = genererCode();
-    const expiration = new Date(Date.now() + 15 * 60 * 1000);
-
-    await prisma.user.update({
-      where: { id: userId },
-      data: { codeVerif: code, codeExpire: expiration },
-    });
-
-    await envoyerCodeVerification(user.email, code);
-
-    return res.json({
-      message: "Nouveau code envoyé.",
-      codeDevOnly: process.env.NODE_ENV === "development" ? code : undefined,
-    });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Erreur serveur." });
   }
 });
 

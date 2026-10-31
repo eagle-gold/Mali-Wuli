@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { ArrowRight, BriefcaseBusiness, Check, Copy, GraduationCap, Landmark, Sprout, UserRound } from "lucide-react";
+import { classesBouton } from "@/components/ui/classes";
 import StepIndicator from "@/components/onboarding/StepIndicator";
 import StepAssociations from "@/components/onboarding/StepAssociations";
 import StepInformations, { type InfoData } from "@/components/onboarding/StepInformations";
@@ -20,6 +22,14 @@ const STEPS = [
   { number: 4, label: "Mentorat" },
   { number: 5, label: "Associations" },
 ];
+
+const ETAPES_BIENVENUE = [
+  { titre: "Vos informations", description: "Votre nom, votre ville et, si vous le souhaitez, vos réseaux.", Icone: UserRound, facultatif: false },
+  { titre: "Vos formations", description: "École, lycée, université, et votre avis pour guider les plus jeunes.", Icone: GraduationCap, facultatif: false },
+  { titre: "Vos expériences", description: "Postes et missions : ce sur quoi les membres peuvent vous solliciter.", Icone: BriefcaseBusiness, facultatif: false },
+  { titre: "Le mentorat", description: "Ouvrez quelques créneaux si vous le souhaitez. Vous restez libre.", Icone: Sprout, facultatif: false },
+  { titre: "Vos associations", description: "Rattachez votre profil aux associations dont vous êtes membre.", Icone: Landmark, facultatif: true },
+] as const;
 
 type OnboardingData = {
   informations?: InfoData;
@@ -90,78 +100,75 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
   const residence = data.informations?.ville?.trim()
     || data.informations?.pays?.trim()
     || "Non renseignée";
+  const prenom = data.informations?.prenom?.trim();
 
   return (
-    <main className="min-h-screen bg-[var(--color-page)] px-4 py-6 sm:px-6 sm:py-10">
-      <section className="mx-auto w-full max-w-[984px] rounded-[20px] border border-line bg-surface px-5 py-8 shadow-sm sm:px-10 sm:py-10">
-        <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#e3f0e9] text-brand sm:h-[68px] sm:w-[68px]">
-          <svg aria-hidden="true" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="m5 12.5 4 4L19 6.5" />
-          </svg>
+    <main className="px-4 pb-16 pt-8 sm:px-6 sm:pt-14">
+      <section aria-labelledby="titre-fin" className="mx-auto w-full max-w-[640px] animate-apparition text-center">
+        <div className="relative mx-auto flex h-20 w-20 items-center justify-center">
+          <span aria-hidden="true" className="absolute inset-0 rounded-full bg-brand/15 motion-safe:animate-ping [animation-iteration-count:2]" />
+          <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-brand text-white shadow-raised">
+            <Check size={38} strokeWidth={2.8} aria-hidden="true" />
+          </span>
         </div>
-
-        <h1 className="text-center font-display text-4xl font-bold leading-tight text-ink sm:text-5xl">
-          Bienvenue sur Mali Wuli !
+        <h1 id="titre-fin" className="mt-7 font-display text-4xl font-bold leading-tight tracking-tight text-ink sm:text-5xl">
+          {prenom ? `Votre profil est prêt, ${prenom} !` : "Votre profil est prêt !"}
         </h1>
-        <p className="mx-auto mt-4 max-w-[730px] text-center text-base font-semibold leading-relaxed text-[#17120f] sm:text-lg">
-          Votre profil est enregistré. Vous avez dès maintenant accès à toute la communauté.
+        <p className="mx-auto mt-4 max-w-md text-lg leading-relaxed text-ink-muted">
+          Vous avez dès maintenant accès à toute la communauté Mali Wuli.
         </p>
 
-        <div className="mt-8 rounded-[16px] bg-surface-sunken px-4 py-6 sm:px-7">
-          <h2 className="titre-section text-center">Invitez vos proches</h2>
-          <p className="mt-1 text-center text-base text-[#a44d28] sm:text-lg">
-            Partagez votre lien d’invitation et agrandissez la communauté !
-          </p>
-          <div className="mt-4 flex flex-col gap-3 sm:flex-row">
+        <dl className="mt-10 grid grid-cols-2 gap-3 text-left sm:grid-cols-4">
+          {[
+            { valeur: String(data.formations?.length || 0), libelle: "Formations", detail: formationsNotees ? `${formationsNotees} notée${formationsNotees > 1 ? "s" : ""}` : undefined },
+            { valeur: String(data.experiences?.length || 0), libelle: "Expériences" },
+            { valeur: residence, libelle: "Résidence" },
+            { valeur: data.mentorat?.estVolontaire ? "Oui" : "Non", libelle: "Mentor" },
+          ].map((item) => (
+            <div key={item.libelle} className="min-w-0 rounded-2xl border border-line-soft bg-surface px-4 py-4 shadow-card">
+              <dt className="text-xs font-semibold uppercase tracking-[0.1em] text-ink-muted">{item.libelle}</dt>
+              <dd className="mt-1.5 truncate text-2xl font-bold tabular-nums tracking-tight text-ink" title={item.valeur}>{item.valeur}</dd>
+              {item.detail && <dd className="text-xs text-ink-muted">{item.detail}</dd>}
+            </div>
+          ))}
+        </dl>
+
+        <div className="mt-8 rounded-2xl border border-line-soft bg-surface p-5 text-left shadow-card sm:p-6">
+          <h2 className="font-display text-xl font-bold text-ink">Invitez vos proches</h2>
+          <p className="mt-1 text-[15px] text-ink-muted">Chaque nouveau membre fait grandir l’arbre. Partagez votre lien d’invitation.</p>
+          <div className="mt-4 flex flex-col gap-2.5 sm:flex-row">
             <input
               aria-label="Lien d’invitation"
               readOnly
               value={lienInvitation}
               placeholder="Préparation de votre lien…"
-              className="min-w-0 flex-1 rounded-[11px] border border-line-strong bg-surface px-4 py-3 text-sm text-ink outline-none sm:text-base"
+              onFocus={(event) => event.target.select()}
+              className="h-12 min-w-0 flex-1 rounded-xl border border-line-strong bg-surface-sunken px-4 text-sm text-ink-soft outline-none focus:border-brand focus:ring-4 focus:ring-brand/15"
             />
-            <button
-              type="button"
-              onClick={copierLien}
-              disabled={!lienInvitation}
-              className="rounded-[11px] bg-brand px-6 py-3 font-semibold text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-wait disabled:opacity-60"
-            >
-              {lienCopie ? "Copié !" : "Copier"}
+            <button type="button" onClick={copierLien} disabled={!lienInvitation} className={classesBouton({ variante: lienCopie ? "secondaire" : "primaire", className: "h-12" })}>
+              {lienCopie ? <><Check size={16} aria-hidden="true" />Copié</> : <><Copy size={16} aria-hidden="true" />Copier le lien</>}
             </button>
           </div>
           <p aria-live="polite" className="sr-only">{lienCopie ? "Lien d’invitation copié." : ""}</p>
         </div>
 
-        <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            { valeur: String(formationsNotees), libelle: "formation(s) notée(s)", couleur: "text-brand" },
-            { valeur: String(data.experiences?.length || 0), libelle: "expérience(s)", couleur: "text-brand" },
-            { valeur: residence, libelle: "résidence", couleur: "text-[#17120f]" },
-            { valeur: data.mentorat?.estVolontaire ? "Oui" : "Non", libelle: "mentorat", couleur: "text-brand" },
-          ].map((item) => (
-            <article key={item.libelle} className="min-w-0 rounded-[15px] border border-line-soft bg-surface px-5 py-5">
-              <p className={`break-words text-2xl font-bold ${item.couleur}`}>{item.valeur}</p>
-              <p className="mt-1 text-base leading-snug text-ink">{item.libelle}</p>
-            </article>
-          ))}
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+          <button
+            type="button"
+            onClick={() => {
+              sauvegarderProfilLocal(data);
+              router.replace("/profil");
+            }}
+            className={classesBouton({ taille: "lg", className: "group" })}
+          >
+            Découvrir mon profil<ArrowRight size={18} aria-hidden="true" className="transition group-hover:translate-x-0.5" />
+          </button>
+          <button type="button" onClick={() => router.replace("/dashboard")} className={classesBouton({ variante: "secondaire", taille: "lg" })}>
+            Aller au fil d’actualité
+          </button>
         </div>
-
-        <button
-          type="button"
-          onClick={() => {
-            sauvegarderProfilLocal(data);
-            router.replace("/profil");
-          }}
-          className="mt-7 w-full rounded-[11px] bg-brand px-6 py-4 text-base font-semibold text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:text-lg"
-        >
-          Découvrir votre profil
-        </button>
-        <button
-          type="button"
-          onClick={onBack}
-          className="mx-auto mt-4 block px-4 py-1 text-base font-semibold text-ink hover:text-brand"
-        >
-          ‹ Revenir aux associations
+        <button type="button" onClick={onBack} className="mt-6 rounded text-sm font-semibold text-ink-muted underline-offset-4 hover:text-ink hover:underline focus-anneau">
+          Revenir aux associations
         </button>
       </section>
     </main>
@@ -263,70 +270,55 @@ export default function OnboardingPage() {
 
   if (chargementInitial) {
     return (
-      <main className="flex min-h-screen items-center justify-center bg-[var(--color-page)] px-4">
-        <div role="status" aria-live="polite" className="rounded-[18px] border border-line bg-surface px-7 py-5 text-center font-semibold text-ink shadow-sm">
+      <main className="flex min-h-[60vh] items-center justify-center px-4">
+        <p role="status" aria-live="polite" className="flex items-center gap-3 text-sm font-medium text-ink-muted">
+          <span aria-hidden="true" className="h-5 w-5 animate-spin rounded-full border-2 border-line border-t-brand" />
           Chargement de votre profil…
-        </div>
+        </p>
       </main>
     );
   }
 
   // Écran de bienvenue
   if (step === 0) {
+    const prenom = data.informations?.prenom?.trim();
     return (
-      <main className="min-h-screen bg-[var(--color-page)] px-4 py-8 sm:px-6 sm:py-10">
-        <div className="mx-auto w-full max-w-[1040px] space-y-6">
+      <main className="px-4 pb-16 pt-8 sm:px-6 sm:pt-14">
+        <section aria-labelledby="titre-bienvenue" className="mx-auto w-full max-w-[640px] animate-apparition">
+          <p className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-raised px-3 py-1 text-xs font-semibold text-ink-soft shadow-card">
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand" />
+            Environ 5 minutes
+          </p>
+          <h1 id="titre-bienvenue" className="mt-5 font-display text-4xl font-bold leading-[1.1] tracking-tight text-ink sm:text-5xl">
+            {prenom ? <>Bienvenue, {prenom}.<br /></> : <>Bienvenue.<br /></>}
+            <span className="text-brand">Construisons votre profil.</span>
+          </h1>
+          <p className="mt-5 text-lg leading-relaxed text-ink-muted">
+            Un profil complet permet aux membres de vous trouver, de savoir comment vous aider et comment vous pouvez les aider.
+          </p>
 
-          {/* Header terre */}
-          <section className="rounded-[22px] bg-[#735133] px-6 py-8 text-surface sm:px-10 sm:py-10 lg:px-12 lg:py-11">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-surface sm:text-base">
-              Bienvenue sur Mali Wuli
-            </p>
-            <h1 className="mb-5 max-w-[850px] font-display text-3xl font-bold leading-[1.2] sm:text-4xl lg:text-[40px]">
-              Un seul réseau pour les talents du Mali, ici et ailleurs.
-            </h1>
-            <p className="max-w-[900px] text-base leading-[1.7] text-surface sm:text-[17px] lg:text-lg">
-              Mali Wuli relie ceux qui cherchent et ceux qui proposent : mentorat, orientation,
-              chantiers concrets et emplois.
-            </p>
-          </section>
+          <ol className="mt-9 divide-y divide-line-soft overflow-hidden rounded-2xl border border-line-soft bg-surface shadow-card">
+            {ETAPES_BIENVENUE.map(({ titre, description, Icone, facultatif }, index) => (
+              <li key={titre} className="flex items-start gap-4 px-5 py-4 sm:px-6">
+                <span aria-hidden="true" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand">
+                  <Icone size={20} />
+                </span>
+                <div className="min-w-0 pt-0.5">
+                  <h2 className="flex flex-wrap items-center gap-2 text-base font-semibold text-ink">
+                    <span><span className="sr-only">Étape {index + 1} : </span>{titre}</span>
+                    {facultatif && <span className="rounded-full bg-surface-sunken px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-ink-muted">Facultatif</span>}
+                  </h2>
+                  <p className="mt-0.5 text-sm leading-relaxed text-ink-muted">{description}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
 
-          {/* Étapes */}
-          <section className="rounded-[22px] border border-line bg-surface p-5 shadow-sm sm:p-8 lg:p-9">
-            <div className="mb-6 flex flex-wrap items-center gap-3">
-              <span className="rounded-[9px] border border-[#edc9b7] bg-[#f8e4d7] px-3 py-2 text-sm font-bold uppercase tracking-[0.04em] text-ink sm:text-base">
-                Environ 5 minutes
-              </span>
-              <span className="text-sm text-ink sm:text-base">
-                Quatre étapes courtes et vos associations, si vous le souhaitez.
-              </span>
-            </div>
-
-            <div className="mb-7 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-5">
-              {[
-                { num: "ÉTAPE 1", titre: "Vos informations", desc: "Nom, prénom et lieu de résidence : de quoi vous identifier dans l'annuaire." },
-                { num: "ÉTAPE 2", titre: "Vos formations", desc: "École, lycée, université, et votre avis noté sur chacune pour guider les plus jeunes." },
-                { num: "ÉTAPE 3", titre: "Vos expériences", desc: "Postes et missions : ce qui permet aux autres de savoir quoi vous demander." },
-                { num: "ÉTAPE 4", titre: "Le mentorat", desc: "Voulez-vous ouvrir des créneaux ? Vous choisissez lesquels, et vous restez libre." },
-                { num: "ÉTAPE 5 · FACULTATIVE", titre: "Vos associations", desc: "Retrouvez vos associations et demandez la validation de votre affiliation." },
-              ].map((s) => (
-                <article key={s.num} className="min-h-[200px] rounded-[18px] border border-line-soft bg-surface p-5 lg:min-h-[210px]">
-                  <p className="mb-2 text-sm font-bold text-clay sm:text-base">{s.num}</p>
-                  <h2 className="mb-2 titre-element">{s.titre}</h2>
-                  <p className="text-[15px] leading-[1.55] text-ink lg:text-base">{s.desc}</p>
-                </article>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setStep(1)}
-              className="w-full rounded-full bg-brand px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:text-lg"
-            >
-              Commencer le questionnaire
-            </button>
-          </section>
-        </div>
+          <button type="button" onClick={() => setStep(1)} className={classesBouton({ taille: "lg", pleineLargeur: true, className: "group mt-8" })}>
+            Commencer<ArrowRight size={18} aria-hidden="true" className="transition group-hover:translate-x-0.5" />
+          </button>
+          <p className="mt-4 text-center text-sm text-ink-muted">Vous pourrez tout modifier plus tard depuis votre profil.</p>
+        </section>
       </main>
     );
   }
@@ -337,22 +329,20 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--color-page)]">
-      <div className="border-b border-line-soft bg-surface px-4 py-5 sm:px-6">
-        <div className="mx-auto w-full max-w-[1320px]">
-          <StepIndicator currentStep={step} steps={STEPS} />
-        </div>
+    <div className="pb-16">
+      <div className="mx-auto w-full max-w-[920px] px-4 pt-6 sm:px-6 sm:pt-10">
+        <StepIndicator currentStep={step} steps={STEPS} />
       </div>
 
-      <main className="mx-auto w-full min-w-0 max-w-[1320px] px-4 py-8 sm:px-6 sm:py-12">
+      <main className="mx-auto w-full min-w-0 max-w-[920px] px-4 pt-6 sm:px-6 sm:pt-8">
 
         {(enregistrementEnCours || erreurEnregistrement) && (
           <div
             role={erreurEnregistrement ? "alert" : "status"}
-            className={`mb-5 rounded-[14px] border px-5 py-4 text-base font-semibold ${
+            className={`mb-5 rounded-xl border px-4 py-3 text-sm font-medium ${
               erreurEnregistrement
-                ? "border-[#d89474] bg-[#fff1e9] text-[#8f3518]"
-                : "border-[#bad7c6] bg-[#e7f3ec] text-brand"
+                ? "border-danger/25 bg-danger/[0.06] text-danger"
+                : "border-brand/25 bg-brand-50 text-brand-800"
             }`}
           >
             {erreurEnregistrement || "Enregistrement sécurisé de votre profil…"}

@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-10-31 (refonte lot 1, branche refonte/lot-1-design-system, non commité).
+LIBRE — dernière session : Claude, 2026-10-31 (refonte lot 2 inscription/onboarding, non commité ; migration appliquée en LOCAL seulement).
 
 ## Modèle d'entrée
 
@@ -30,8 +30,18 @@ LIBRE — dernière session : Claude, 2026-10-31 (refonte lot 1, branche refonte
 
 ## Entrées
 
+### 2026-10-31 — Claude — Refonte lot 2 : inscription et création de profil
+- Statut : TERMINÉ (code local, non commité ; ni push ni déploiement)
+- Demande de l'utilisateur : inscription et création de profil « niveau Google / LinkedIn, ultra clean ».
+- État Git au début : refonte/lot-1-design-system, HEAD c7a5bd0 (lot 1 commité en local à la demande de l'utilisateur).
+- Fichiers touchés : backend `prisma/schema.prisma` (EmailVerification.tentatives) + migration `20261031120000_tentatives_code_inscription`, `lib/code-inscription.ts` (+ test), `routes/auth.routes.ts` (code haché, 5 essais atomiques, routes /verify-email et /resend-code supprimées) ; frontend `components/auth/CoqueAuth.tsx`, `Champs.tsx`, `SaisieCode.tsx`, `lib/mot-de-passe.ts`, `lib/saisie-code.ts` (+ tests), pages `register`, `verify-email`, `register/details`, `onboarding` ; `components/onboarding/StepIndicator.tsx`, `EnTeteOnboarding.tsx` ; boutons « Passer » de StepFormations/StepExperiences ; `MaliWuliHeader.tsx` (AuthFlowHeader).
+- Fait et vérifié : front type-check OK, 40/40 ; back tsc OK, 229/229. API locale : décompte des essais, blocage 429, bon code refusé une fois bloqué puis accepté après renvoi, routes héritées en 404. Chrome 1440/390 : parcours complet inscription puis onboarding jusqu'à l'écran final, sans erreur JS ni débordement.
+- Fait mais non vérifié : remplissage automatique du code sur un vrai téléphone ; vrai e-mail ; lecteur d'écran.
+- Actions à effet externe : base LOCALE — `prisma migrate deploy` (20261031120000) ; comptes QA qa-inscription-d/m et qa-otp @example.invalid créés puis supprimés. API et Next relancés localement (deux serveurs Next concurrents arrêtés).
+- Prochaine action : revue utilisateur puis commit ; en production, sauvegarde puis `prisma migrate deploy` avant le backend.
+
 ### 2026-10-31 — Claude — Refonte lot 1 : diagnostic, design system, navigation, accueil
-- Statut : TERMINÉ (code local ; ni commit, ni push, ni déploiement)
+- Statut : TERMINÉ (commit local c7a5bd0, ni push ni déploiement)
 - Demande de l'utilisateur : lancer la transformation (docs/mission-refonte.md) : diagnostic priorisé, feuille de route, puis premier lot UX/UI (design system, navigation, accueil).
 - État Git au début : develop, HEAD dc8ee24 ; 2 suppressions non commitées (Specification_Fonctionnelle_Mali_Wuli.md, docs/Mali_Wuli_Passation_Ibrahima_2026-08-20.docx) et non suivis (.Rhistory, .claude/, CLAUDE.md, docs/mission-refonte.md), conservés tels quels. Nouvelle branche refonte/lot-1-design-system.
 - Fichiers touchés : frontend `app/globals.css` (tokens --mw-*), `tailwind.config.ts`, `components/ui/*` (nouveau), `MaliWuliHeader.tsx`, `BarreNavigationMobile.tsx`, `LogoMaliWuliImage.tsx`, `lib/compteur-messages.ts`, `lib/navigation.ts`, `lib/design/tokens.test.ts`, `components/landing/*` (LandingArbre réécrit, ArbreDiaspora nouveau, LandingTree.tsx et LandingArbre.module.css supprimés, landing-data réécrit sans contenu fictif), `app/not-found.tsx`, `app/error.tsx`, `app/(platform)/loading.tsx` ; remplacement mécanique de couleurs par les tokens dans 38 fichiers (1 335 occurrences) ; docs `audit.md`, `roadmap.md`, `design-system.md`, `security-privacy.md`, `progress.md`.

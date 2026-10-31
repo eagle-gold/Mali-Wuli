@@ -2077,7 +2077,7 @@ export default function StepFormations({ onNext, onBack, initialData }: StepForm
             <button
               type="button"
               onClick={() => onNext(trierParDateDebut(formations).map(nettoyerAvisNonEligible))}
-              className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${formations.length ? "bg-brand hover:bg-brand-700" : "bg-[#aa997f] hover:bg-[#96866e]"}`}
+              className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${formations.length ? "bg-brand hover:bg-brand-700" : "border border-line-strong bg-surface-raised !text-ink hover:border-brand hover:!text-brand"}`}
             >
               {formations.length ? "Continuer vers les expériences" : "Passer cette étape"}
             </button>

@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import MenuCompte from "@/components/MenuCompte";
+import EnTeteOnboarding from "@/components/onboarding/EnTeteOnboarding";
 import { titreMembre } from "@/lib/titre-membre";
 import NotificationsPopover from "@/components/notifications/NotificationsPopover";
 import { useSessionMembre } from "@/components/auth/SessionMembreContext";
@@ -431,7 +432,11 @@ export function MemberHeader() {
   );
 }
 
+/** Écrans qui portent leur propre barre minimale (CoqueAuth). */
+const PAGES_COQUE_AUTH = new Set(["/register", "/register/details", "/verify-email"]);
+
 export function AuthFlowHeader() {
   const pathname = usePathname();
-  return pathname === "/onboarding" ? <MemberHeader /> : <PublicHeader />;
+  if (PAGES_COQUE_AUTH.has(pathname)) return null;
+  return pathname === "/onboarding" ? <EnTeteOnboarding /> : <PublicHeader />;
 }

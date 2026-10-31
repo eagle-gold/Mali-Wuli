@@ -1,209 +1,144 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import { MailCheck } from "lucide-react";
+import CoqueAuth from "@/components/auth/CoqueAuth";
+import { Alerte } from "@/components/auth/Champs";
+import SaisieCode from "@/components/auth/SaisieCode";
+import { classesBouton } from "@/components/ui/classes";
 import api from "@/lib/api";
+import { codeComplet, formaterDecompte, LONGUEUR_CODE } from "@/lib/saisie-code";
 import { terminerSession } from "@/lib/session";
 
-const CODE_LENGTH = 6;
+const DELAI_RENVOI_S = 30;
+const casesVides = () => Array<string>(LONGUEUR_CODE).fill("");
+
+function secondesAvantRenvoi() {
+  const envoyeLe = Number(localStorage.getItem("mali_wuli_code_envoye_le")) || 0;
+  return Math.max(0, DELAI_RENVOI_S - (Date.now() - envoyeLe) / 1000);
+}
 
 export default function VerifyEmailPage() {
   const router = useRouter();
-  const [code, setCode] = useState(Array(CODE_LENGTH).fill(""));
-  const [loading, setLoading] = useState(false);
-  const [erreur, setErreur] = useState("");
-  const [renvoiOk, setRenvoiOk] = useState(false);
   const [email, setEmail] = useState("");
-  const inputs = useRef<(HTMLInputElement | null)[]>([]);
-
-  const codeComplet = code.every(Boolean);
-  const codeSaisi = code.join("");
+  const [cases, setCases] = useState(casesVides);
+  const [verification, setVerification] = useState(false);
+  const [erreur, setErreur] = useState("");
+  const [bloque, setBloque] = useState(false);
+  const [info, setInfo] = useState("");
+  const [attente, setAttente] = useState(0);
+  const [renvoi, setRenvoi] = useState(false);
 
   useEffect(() => {
-    const emailEnAttente = localStorage.getItem("mali_wuli_pending_email") || "";
-    const verificationId = localStorage.getItem("mali_wuli_pending_verificationId");
-    if (!emailEnAttente || !verificationId) {
+    const adresse = localStorage.getItem("mali_wuli_pending_email") || "";
+    if (!adresse || !localStorage.getItem("mali_wuli_pending_verificationId")) {
       router.replace("/register");
       return;
     }
-    setEmail(emailEnAttente);
+    setEmail(adresse);
+    setAttente(secondesAvantRenvoi());
   }, [router]);
 
-  const appliquerCode = (valeur: string) => {
-    const chiffres = valeur.replace(/\D/g, "").slice(0, CODE_LENGTH);
-    setCode(Array.from({ length: CODE_LENGTH }, (_, index) => chiffres[index] || ""));
+  const enAttente = attente > 0;
+  useEffect(() => {
+    if (!enAttente) return;
+    const minuteur = window.setInterval(() => setAttente(secondesAvantRenvoi()), 1000);
+    return () => window.clearInterval(minuteur);
+  }, [enAttente]);
+
+  const verifier = useCallback(async (code: string) => {
+    if (verification) return;
+    setVerification(true);
     setErreur("");
-  };
-
-  const handleChange = (index: number, value: string) => {
-    if (!/^\d?$/.test(value)) return;
-
-    const nouveauCode = [...code];
-    nouveauCode[index] = value;
-    setCode(nouveauCode);
-    setErreur("");
-
-    if (value && index < CODE_LENGTH - 1) {
-      inputs.current[index + 1]?.focus();
-    }
-  };
-
-  const handleKeyDown = (index: number, event: React.KeyboardEvent) => {
-    if (event.key === "Backspace" && !code[index] && index > 0) {
-      inputs.current[index - 1]?.focus();
-    }
-  };
-
-  const handlePaste = (event: React.ClipboardEvent) => {
-    event.preventDefault();
-    appliquerCode(event.clipboardData.getData("text"));
-    inputs.current[CODE_LENGTH - 1]?.focus();
-  };
-
-  const handleVerify = async () => {
-    if (!codeComplet) {
-      setErreur("Entrez les 6 chiffres du code.");
-      return;
-    }
-
-    setLoading(true);
-    setErreur("");
-
+    setInfo("");
     try {
-      const verificationId = localStorage.getItem("mali_wuli_pending_verificationId");
-      const res = await api.post("/auth/verify-registration-email", {
-        verificationId,
+      const { data } = await api.post<{ registrationToken: string }>("/auth/verify-registration-email", {
+        verificationId: localStorage.getItem("mali_wuli_pending_verificationId"),
         email,
-        code: codeSaisi,
+        code,
       });
       terminerSession();
-      localStorage.setItem("mali_wuli_registration_token", res.data.registrationToken);
+      localStorage.setItem("mali_wuli_registration_token", data.registrationToken);
       localStorage.removeItem("mali_wuli_pending_verificationId");
+      localStorage.removeItem("mali_wuli_code_envoye_le");
       router.push("/register/details");
-    } catch (err: unknown) {
-      const error = err as { response?: { data?: { message?: string } } };
-      setErreur(error.response?.data?.message || "Code incorrect ou expiré.");
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      const reponse = axios.isAxiosError<{ message?: string; code?: string }>(err) ? err.response : undefined;
+      const tropDeTentatives = reponse?.data?.code === "TROP_DE_TENTATIVES";
+      setBloque(tropDeTentatives || reponse?.data?.code === "CODE_EXPIRE");
+      setErreur(reponse?.data?.message || (reponse ? "Code incorrect ou expiré." : "Connexion impossible. Vérifiez votre réseau puis réessayez."));
+      setCases(casesVides());
+      setVerification(false);
     }
-  };
+  }, [email, router, verification]);
 
-  const handleNext = () => {
-    if (!codeComplet) {
-      setErreur(
-        "Pour continuer, consultez votre boîte e-mail, saisissez ici le code à 6 chiffres reçu, puis cliquez sur « Confirmer ».",
-      );
-      return;
-    }
-
-    void handleVerify();
-  };
-
-  const handleResend = async () => {
+  const renvoyer = async () => {
+    if (attente > 0 || renvoi) return;
+    setRenvoi(true);
     setErreur("");
-    setRenvoiOk(false);
-
     try {
-      const verificationId = localStorage.getItem("mali_wuli_pending_verificationId");
-      await api.post("/auth/resend-registration-code", { verificationId });
-      appliquerCode("");
-      setRenvoiOk(true);
-      setTimeout(() => setRenvoiOk(false), 5000);
-    } catch {
-      setErreur("Impossible de renvoyer le code.");
+      await api.post("/auth/resend-registration-code", { verificationId: localStorage.getItem("mali_wuli_pending_verificationId") });
+      localStorage.setItem("mali_wuli_code_envoye_le", String(Date.now()));
+      setAttente(DELAI_RENVOI_S);
+      setCases(casesVides());
+      setBloque(false);
+      setInfo(`Un nouveau code a été envoyé à ${email}.`);
+    } catch (err) {
+      const message = axios.isAxiosError<{ message?: string }>(err) ? err.response?.data?.message : undefined;
+      setErreur(message || "Impossible de renvoyer le code. Réessayez dans un instant.");
+    } finally {
+      setRenvoi(false);
     }
   };
 
-  const handleBack = () => {
-    localStorage.removeItem("mali_wuli_pending_email");
+  const modifierAdresse = () => {
     localStorage.removeItem("mali_wuli_pending_verificationId");
     localStorage.removeItem("mali_wuli_registration_token");
+    localStorage.removeItem("mali_wuli_code_envoye_le");
     router.push("/register");
   };
 
   return (
-    <main className="min-h-screen bg-[var(--color-page)] flex items-center justify-center px-4 py-10">
-      <section className="bg-surface rounded-2xl shadow-sm border border-line w-full min-w-0 max-w-md p-5 text-center sm:p-8">
-        <nav className="flex items-center justify-between mb-7" aria-label="Navigation de l'inscription">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="text-sm font-semibold text-ink hover:text-brand hover:underline"
-          >
-            Retour
-          </button>
-          <button
-            type="button"
-            onClick={handleNext}
-            className="text-sm font-semibold text-brand hover:underline"
-          >
-            Suivant
-          </button>
-        </nav>
-
-        <h1 className="font-display text-3xl font-bold text-ink mb-3">
-          Confirmez votre e-mail
-        </h1>
-        <p className="break-words text-sm text-ink mb-8">
-          Code à 6 chiffres envoyé à {" "}
-          <strong>{email || "votre adresse e-mail"}</strong>
-        </p>
-
-        <div
-          className="mx-auto mb-6 grid w-full max-w-[328px] grid-cols-6 gap-1.5 sm:gap-2"
-          onPaste={handlePaste}
-          aria-label="Code de confirmation"
-        >
-          {code.map((digit, index) => (
-            <input
-              key={index}
-              ref={(element) => {
-                inputs.current[index] = element;
-              }}
-              type="text"
-              inputMode="numeric"
-              autoComplete={index === 0 ? "one-time-code" : "off"}
-              maxLength={1}
-              value={digit}
-              aria-label={`Chiffre ${index + 1}`}
-              onChange={(event) => handleChange(index, event.target.value)}
-              onKeyDown={(event) => handleKeyDown(index, event)}
-              className={`h-12 w-full min-w-0 sm:h-14 rounded-xl border text-center text-xl font-bold text-ink outline-none transition-colors focus:ring-2 focus:ring-brand ${
-                digit
-                  ? "border-brand bg-[#eaf1e9]"
-                  : "border-line-strong bg-surface"
-              }`}
-            />
-          ))}
-        </div>
-
-        {erreur && <p role="alert" className="text-sm text-red-600 mt-4">{erreur}</p>}
-        {renvoiOk && <p className="text-sm text-brand mt-4">Code renvoyé !</p>}
-
-        <button
-          type="button"
-          onClick={handleVerify}
-          disabled={!codeComplet || loading}
-          className={`w-full py-4 rounded-xl font-semibold text-sm mt-6 transition-colors ${
-            codeComplet && !loading
-              ? "bg-brand text-white hover:bg-brand-700"
-              : "bg-[#eee2d0] text-[#ad9d89] cursor-not-allowed"
-          }`}
-        >
-          {loading ? "Vérification..." : "Confirmer"}
+    <CoqueAuth
+      titre="Vérifiez votre e-mail"
+      sousTitre={<>
+        Saisissez le code à 6 chiffres envoyé à&nbsp;:
+        <span className="mt-3 flex items-center justify-between gap-3 rounded-xl bg-surface-sunken px-3.5 py-2.5">
+          <strong className="min-w-0 truncate font-semibold text-ink">{email || "votre adresse"}</strong>
+          <button type="button" onClick={modifierAdresse} className="shrink-0 rounded text-sm font-semibold text-brand underline-offset-4 hover:underline focus-anneau">Modifier</button>
+        </span>
+      </>}
+      etape={{ courante: 2, total: 3, libelle: "Vérification" }}
+      lienHaut={{ texte: "Déjà membre ?", libelle: "Se connecter", href: "/login" }}
+      pied={<span className="inline-flex items-center gap-1.5"><MailCheck size={15} aria-hidden="true" />Rien reçu ? Pensez à regarder dans les courriers indésirables.</span>}
+    >
+      {info && !erreur && <Alerte ton="succes">{info}</Alerte>}
+      {erreur && <Alerte>{erreur}</Alerte>}
+      <form onSubmit={(event) => { event.preventDefault(); if (codeComplet(cases)) void verifier(cases.join("")); }} className="space-y-6">
+        <SaisieCode
+          cases={cases}
+          onChange={(suivant) => { setCases(suivant); if (erreur && !bloque) setErreur(""); }}
+          onComplet={(code) => { if (!bloque) void verifier(code); }}
+          invalide={Boolean(erreur) && !bloque}
+          desactive={verification || bloque}
+        />
+        <button type="submit" disabled={!codeComplet(cases) || verification || bloque} aria-busy={verification} className={classesBouton({ taille: "lg", pleineLargeur: true })}>
+          {verification ? <><span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />Vérification…</> : "Vérifier"}
         </button>
-
-        <p className="mt-5 text-sm text-ink">
-          Pas reçu ? {" "}
-          <button
-            type="button"
-            onClick={handleResend}
-            className="font-semibold text-brand hover:underline"
-          >
-            Renvoyer le code
-          </button>
-        </p>
-      </section>
-    </main>
+      </form>
+      <div className="mt-6 text-center text-sm text-ink-muted">
+        {attente > 0 ? (
+          <p aria-live="polite">Vous pourrez demander un nouveau code dans <span className="font-semibold tabular-nums text-ink">{formaterDecompte(attente)}</span></p>
+        ) : (
+          <p>Vous n’avez pas reçu le code ?{" "}
+            <button type="button" onClick={renvoyer} disabled={renvoi} className="rounded font-semibold text-brand underline-offset-4 hover:underline focus-anneau disabled:opacity-60">
+              {renvoi ? "Envoi…" : "Renvoyer un code"}
+            </button>
+          </p>
+        )}
+      </div>
+    </CoqueAuth>
   );
 }

@@ -364,7 +364,7 @@ function ExperienceForm({
             if (!canSave) return;
             onSave({ ...form, lieu: `${form.ville}, ${form.pays}`, id: initialData?.id || crypto.randomUUID() });
           }}
-          className={`flex-1 rounded-[14px] px-7 py-4 text-base font-semibold text-white transition-colors ${canSave ? "bg-brand hover:bg-brand-700" : "cursor-not-allowed bg-[#aa997f]"}`}
+          className={`flex-1 rounded-[14px] px-7 py-4 text-base font-semibold text-white transition-colors ${canSave ? "bg-brand hover:bg-brand-700" : "cursor-not-allowed bg-brand/40"}`}
         >
           {initialData ? "Enregistrer les modifications" : "Enregistrer cette expérience"}
         </button>
@@ -437,7 +437,7 @@ export default function StepExperiences({ onNext, onBack, initialData }: StepExp
         <button
           type="button"
           onClick={() => onNext(trierParDateDebut(experiences))}
-          className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${experiences.length ? "bg-brand hover:bg-brand-700" : "bg-[#aa997f] hover:bg-[#96866e]"}`}
+          className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${experiences.length ? "bg-brand hover:bg-brand-700" : "border border-line-strong bg-surface-raised !text-ink hover:border-brand hover:!text-brand"}`}
         >
           {experiences.length ? "Continuer vers le mentorat" : "Passer cette étape"}
         </button>

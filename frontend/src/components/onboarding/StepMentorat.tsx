@@ -356,7 +356,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
     <div className="space-y-6">
       <section className="rounded-[22px] bg-[#735133] px-6 py-8 text-surface sm:px-10 sm:py-10">
         <h1 className="mb-4 max-w-[900px] font-display text-3xl font-bold leading-tight sm:text-4xl">
-          Souhaitez-vous être volontaire pour le mentorat ?
+          Souhaitez-vous être volontaire pour le mentorat&nbsp;?
         </h1>
         <p className="max-w-[930px] text-base leading-[1.7] sm:text-lg">
           Un lycéen de Sikasso qui hésite entre deux concours, une sage-femme de Kayes qui cherche une formation,

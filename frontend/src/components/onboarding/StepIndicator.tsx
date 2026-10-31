@@ -1,5 +1,7 @@
 "use client";
 
+import { Check } from "lucide-react";
+
 interface Step {
   number: number;
   label: string;
@@ -10,69 +12,42 @@ interface StepIndicatorProps {
   steps: Step[];
 }
 
+/** Progression du questionnaire : barre segmentée, libellés dès la tablette. */
 export default function StepIndicator({ currentStep, steps }: StepIndicatorProps) {
+  const courante = steps.find((step) => step.number === currentStep);
+  const pourcentage = Math.round(((currentStep - 1) / steps.length) * 100);
   return (
     <nav aria-label="Progression du questionnaire">
-      <ol className="grid gap-2 sm:gap-4" style={{ gridTemplateColumns: `repeat(${steps.length}, minmax(0, 1fr))` }}>
+      <div className="flex items-baseline justify-between gap-3 sm:hidden">
+        <p className="text-sm font-semibold text-ink">{courante?.label}</p>
+        <p className="text-xs font-semibold text-ink-muted">Étape {currentStep} sur {steps.length}</p>
+      </div>
+      <ol className="mt-3 flex gap-1.5 sm:mt-0 sm:gap-3">
         {steps.map((step) => {
-          const isCompleted = currentStep > step.number;
-          const isCurrent = currentStep === step.number;
-          const isActive = isCompleted || isCurrent;
-
+          const termine = currentStep > step.number;
+          const actuel = currentStep === step.number;
           return (
-            <li
-              key={step.number}
-              aria-current={isCurrent ? "step" : undefined}
-              className="min-w-0"
-            >
-              <div
-                className={`mb-3 h-1 w-full rounded-full transition-colors ${
-                  isActive ? "bg-brand" : "bg-[#e3d8c4]"
-                }`}
-              />
-
-              <div className="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:gap-3">
+            <li key={step.number} aria-current={actuel ? "step" : undefined} className="min-w-0 flex-1">
+              <span className={`block h-1 rounded-full transition-colors duration-500 ${termine || actuel ? "bg-brand" : "bg-line-soft"}`} aria-hidden="true" />
+              <span className="mt-2.5 hidden items-center gap-2 sm:flex">
                 <span
-                  className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors sm:h-8 sm:w-8 sm:text-sm ${
-                    isCurrent
-                      ? "bg-ink text-white"
-                      : isCompleted
-                        ? "bg-brand text-white"
-                        : "bg-[#e3d8c4] text-[#ad9d89]"
+                  aria-hidden="true"
+                  className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors ${
+                    termine ? "bg-brand text-white" : actuel ? "bg-ink text-white" : "border border-line-strong text-ink-muted"
                   }`}
                 >
-                  {isCompleted ? (
-                    <svg
-                      aria-hidden="true"
-                      className="h-4 w-4"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      strokeWidth={3}
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  ) : (
-                    step.number
-                  )}
+                  {termine ? <Check size={13} strokeWidth={3} /> : step.number}
                 </span>
-
-                <span
-                  className={`block min-w-0 break-words text-[10px] font-semibold leading-tight transition-colors sm:text-sm lg:text-base ${
-                    isCurrent
-                      ? "text-ink"
-                      : isCompleted
-                        ? "text-brand"
-                        : "text-[#ad9d89]"
-                  }`}
-                >
-                  {step.label}
-                </span>
-              </div>
+                <span className={`truncate text-sm font-semibold ${actuel ? "text-ink" : termine ? "text-brand" : "text-ink-muted"}`}>{step.label}</span>
+              </span>
+              <span className="sr-only">
+                {step.label}{termine ? " : terminé" : actuel ? " : étape en cours" : " : à venir"}
+              </span>
             </li>
           );
         })}
       </ol>
+      <p className="sr-only" aria-live="polite">Étape {currentStep} sur {steps.length}, {courante?.label}. {pourcentage} % du questionnaire terminé.</p>
     </nav>
   );
 }

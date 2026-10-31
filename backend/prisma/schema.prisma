@@ -59,8 +59,11 @@ model User {
 model EmailVerification {
   id         String    @id @default(cuid())
   email      String    @unique
+  /// Empreinte bcrypt du code (jamais le code en clair).
   code       String
   codeExpire DateTime
+  /// Essais de saisie consommés pour le code courant (5 au maximum).
+  tentatives Int       @default(0)
   verifieLe  DateTime?
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
