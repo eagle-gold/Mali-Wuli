@@ -11,7 +11,7 @@ export default function StarRating({ label, description, value, onChange }: Star
   return (
     <div className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <p className="text-base font-semibold text-ink">{label}</p>
+        <p className="text-sm font-semibold text-ink">{label}</p>
         {description && <p className="text-sm text-ink-soft">{description}</p>}
       </div>
       <div className="flex items-center gap-1.5">

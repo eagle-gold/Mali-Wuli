@@ -3,11 +3,9 @@
 import { forwardRef, useId, useState, type InputHTMLAttributes, type ReactNode } from "react";
 import { AlertCircle, Check, Eye, EyeOff } from "lucide-react";
 import { criteresMotDePasse, robustesseMotDePasse } from "@/lib/mot-de-passe";
+import { CLASSE_CHAMP, CLASSE_CHAMP_INVALIDE } from "@/components/ui/classes";
 
-export const classesChamp = (invalide: boolean) =>
-  `block h-12 w-full rounded-xl border bg-surface px-4 text-base text-ink shadow-[inset_0_1px_2px_rgb(var(--mw-ink)/0.04)] outline-none transition placeholder:text-ink-muted/70 focus:ring-4 disabled:cursor-not-allowed disabled:opacity-60 ${
-    invalide ? "border-danger focus:border-danger focus:ring-danger/15" : "border-line-strong hover:border-ink-muted/50 focus:border-brand focus:ring-brand/15"
-  }`;
+export const classesChamp = (invalide: boolean) => `${invalide ? CLASSE_CHAMP_INVALIDE : CLASSE_CHAMP} h-12`;
 
 /** Message d'erreur lié au champ par aria-describedby. */
 export function MessageChamp({ id, erreur, aide }: { id: string; erreur?: string; aide?: ReactNode }) {

@@ -70,3 +70,22 @@ export function classesCarte({ interactive = false, className }: { interactive?:
     .filter(Boolean)
     .join(" ");
 }
+
+/**
+ * Champ de formulaire standard (input, select, textarea) : 48 px de haut,
+ * anneau de focus doux. Utilisé par l'authentification et l'onboarding.
+ */
+export const CLASSE_CHAMP =
+  "block w-full min-w-0 rounded-xl border border-line-strong bg-surface px-4 py-3 text-base text-ink " +
+  "shadow-[inset_0_1px_2px_rgb(var(--mw-ink)/0.04)] outline-none transition placeholder:text-ink-muted/70 " +
+  "hover:border-ink-muted/50 focus:border-brand focus:ring-4 focus:ring-brand/15 " +
+  "disabled:cursor-not-allowed disabled:bg-surface-sunken disabled:text-ink-muted";
+
+/** Variante en erreur du champ standard. */
+export const CLASSE_CHAMP_INVALIDE = CLASSE_CHAMP.replace(
+  "border-line-strong",
+  "border-danger",
+).replace("focus:border-brand focus:ring-brand/15", "focus:border-danger focus:ring-danger/15");
+
+/** Libellé de champ standard. */
+export const CLASSE_LIBELLE = "mb-2 block text-sm font-semibold text-ink";

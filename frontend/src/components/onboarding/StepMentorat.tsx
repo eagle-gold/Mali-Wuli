@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Check } from "lucide-react";
+import { CLASSE_CHAMP, classesBouton } from "@/components/ui/classes";
 
 type PlageMentorat = {
   debut: string;
@@ -354,30 +356,33 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[22px] bg-[#735133] px-6 py-8 text-surface sm:px-10 sm:py-10">
-        <h1 className="mb-4 max-w-[900px] font-display text-3xl font-bold leading-tight sm:text-4xl">
+      <section className="relative overflow-hidden rounded-3xl bg-bark px-6 py-7 text-[#f4eee1] shadow-raised sm:px-10 sm:py-9">
+        <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-gold/15 blur-3xl" />
+        <h1 className="relative max-w-[720px] font-display text-[1.75rem] font-bold leading-tight text-white sm:text-4xl">
           Souhaitez-vous être volontaire pour le mentorat&nbsp;?
         </h1>
-        <p className="max-w-[930px] text-base leading-[1.7] sm:text-lg">
-          Un lycéen de Sikasso qui hésite entre deux concours, une sage-femme de Kayes qui cherche une formation,
-          un jeune diplômé qui prépare un entretien : ils ouvrent votre profil et réservent un créneau, comme on
-          prend rendez-vous. Vous restez maître de votre agenda et pouvez tout fermer en un clic.
+        <p className="relative mt-3 max-w-[720px] text-[15px] leading-relaxed text-bark-text sm:text-base">
+          Un lycéen de Sikasso qui hésite entre deux concours, une sage-femme de Kayes qui cherche une formation :
+          ils réservent un créneau sur votre profil. Vous restez maître de votre agenda.
         </p>
-        <div className="mt-7 grid gap-4 md:grid-cols-3">
+        <ul className="relative mt-6 grid gap-2.5 sm:grid-cols-3 sm:gap-3">
           {[
-            ["Vous choisissez la durée", "20, 30 ou 45 minutes. Jamais plus si vous ne le voulez pas."],
-            ["Aucune obligation", "Vous fixez un plafond mensuel, le calendrier s’arrête tout seul."],
-            ["Gratuit, toujours", "Le mentorat ne se monnaie pas sur Mali Wuli. C’est la charte."],
+            ["Vous choisissez la durée", "20, 30 ou 45 minutes, jamais plus."],
+            ["Aucune obligation", "Un plafond mensuel, puis le calendrier s’arrête."],
+            ["Gratuit, toujours", "Le mentorat ne se monnaie pas : c’est la charte."],
           ].map(([titre, texte]) => (
-            <article key={titre} className="rounded-[16px] bg-white/10 px-5 py-5">
-              <h2 className="mb-2 titre-element text-surface">{titre}</h2>
-              <p className="text-sm leading-relaxed text-surface">{texte}</p>
-            </article>
+            <li key={titre} className="flex gap-3 rounded-2xl bg-white/[0.07] px-4 py-3 ring-1 ring-white/10 sm:flex-col sm:gap-1 sm:py-4">
+              <Check size={18} strokeWidth={2.6} aria-hidden="true" className="mt-0.5 shrink-0 text-gold" />
+              <span>
+                <span className="block text-sm font-semibold text-white">{titre}</span>
+                <span className="block text-[13px] leading-relaxed text-bark-text">{texte}</span>
+              </span>
+            </li>
           ))}
-        </div>
+        </ul>
       </section>
 
-      <section className="rounded-[22px] border border-line-soft bg-surface p-5 shadow-sm sm:p-8">
+      <section className="rounded-3xl border border-line-soft bg-surface p-5 shadow-card sm:p-8">
         <div id="mentorat-reponse" className="scroll-mt-8">
           <EnteteEtapeMentorat
             numero={1}
@@ -415,7 +420,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
         {estVolontaire === false && (
           <p className="mt-5 rounded-[14px] bg-surface-sunken px-5 py-4 text-sm leading-relaxed text-ink">
             Aucun souci, vous pourrez ouvrir des créneaux à tout moment depuis votre profil. En attendant, vous
-            pouvez répondre au forum ou recommander une offre d’emploi.
+            pouvez répondre aux publications du fil ou partager une offre d’emploi.
           </p>
         )}
 
@@ -430,7 +435,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
               role="dialog"
               aria-modal="true"
               aria-labelledby="titre-modal-etape-mentorat"
-              className="w-full max-w-md rounded-[22px] border border-line-soft bg-surface p-6 shadow-2xl sm:p-7"
+              className="w-full max-w-md rounded-3xl border border-line-soft bg-surface-raised p-6 shadow-overlay sm:p-7"
             >
               <div className="mb-5 flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
@@ -607,19 +612,19 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
               <div className="mb-5 grid gap-4 md:grid-cols-3">
                 <div className="min-w-0">
                   <label htmlFor="fuseau-mentorat" className="mb-2 block text-sm font-semibold text-ink">Votre fuseau horaire</label>
-                  <select id="fuseau-mentorat" value={fuseauHoraire} onChange={(event) => setFuseauHoraire(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-line-strong bg-surface px-4 py-3 text-sm text-ink outline-none focus:border-brand">
+                  <select id="fuseau-mentorat" value={fuseauHoraire} onChange={(event) => setFuseauHoraire(event.target.value)} className={CLASSE_CHAMP}>
                     {FUSEAUX.map((fuseau) => <option key={fuseau.value} value={fuseau.value}>{fuseau.label}</option>)}
                   </select>
                   <p className="mt-2 text-xs text-ink">Les créneaux suivront ce fuseau, même en voyage.</p>
                 </div>
                 <div>
                   <label htmlFor="debut-mentorat" className="mb-2 block text-sm font-semibold text-ink">Disponible à partir du</label>
-                  <input id="debut-mentorat" type="date" value={dateDebut} onChange={(event) => setDateDebut(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-line-strong bg-surface px-4 py-3 text-sm text-ink outline-none focus:border-brand" />
+                  <input id="debut-mentorat" type="date" value={dateDebut} onChange={(event) => setDateDebut(event.target.value)} className={CLASSE_CHAMP} />
                   <p className="mt-2 text-xs text-ink">Laissez vide pour être disponible dès maintenant.</p>
                 </div>
                 <div>
                   <label htmlFor="fin-mentorat" className="mb-2 block text-sm font-semibold text-ink">Jusqu’au <span className="font-normal">(optionnel)</span></label>
-                  <input id="fin-mentorat" type="date" min={dateDebut || undefined} value={dateFin} disabled={sansDateFin} onChange={(event) => setDateFin(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-line-strong bg-surface px-4 py-3 text-sm text-ink outline-none disabled:bg-[#f1e4d1] disabled:text-ink disabled:opacity-60 focus:border-brand" />
+                  <input id="fin-mentorat" type="date" min={dateDebut || undefined} value={dateFin} disabled={sansDateFin} onChange={(event) => setDateFin(event.target.value)} className={CLASSE_CHAMP} />
                   <label className="mt-2 flex items-center gap-2 text-xs text-ink">
                     <input type="checkbox" checked={sansDateFin} onChange={(event) => setSansDateFin(event.target.checked)} className="h-4 w-4 accent-brand" />
                     Sans date de fin
@@ -691,8 +696,8 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
         )}
 
         <div className="mt-7 flex flex-col gap-3 border-t border-line-soft pt-6 sm:flex-row">
-          <button type="button" onClick={onBack} className="rounded-[12px] border border-line-strong bg-surface px-6 py-3 font-semibold text-ink hover:bg-surface-sunken">Retour</button>
-          <button type="button" onClick={continuerOuTerminer} className={`flex-1 rounded-full px-6 py-4 text-base font-semibold transition ${canContinue ? "bg-brand text-white hover:bg-brand-700" : "bg-[#eee2d0] text-ink hover:bg-[#e4d5bf]"}`}>
+          <button type="button" onClick={onBack} className={classesBouton({ variante: "secondaire", taille: "lg", className: "sm:min-w-[140px]" })}>Retour</button>
+          <button type="button" onClick={continuerOuTerminer} className={classesBouton({ variante: canContinue ? "primaire" : "secondaire", taille: "lg", className: "flex-1 text-center" })}>
             {canContinue ? libelleSuivant : `Continuer — étape ${prochaineEtape?.numero || 1} : ${prochaineEtape?.actionCourte || "choisir une réponse"}`}
           </button>
         </div>

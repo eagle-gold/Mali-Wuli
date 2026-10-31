@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-10-31 (refonte lot 2 inscription/onboarding, non commité ; migration appliquée en LOCAL seulement).
+LIBRE — dernière session : Claude, 2026-10-31 (refonte lot 3, non commité).
 
 ## Modèle d'entrée
 
@@ -30,8 +30,19 @@ LIBRE — dernière session : Claude, 2026-10-31 (refonte lot 2 inscription/onbo
 
 ## Entrées
 
-### 2026-10-31 — Claude — Refonte lot 2 : inscription et création de profil
+### 2026-10-31 — Claude — Refonte lot 3 : connexion, mot de passe oublié, étapes de l'onboarding
 - Statut : TERMINÉ (code local, non commité ; ni push ni déploiement)
+- Demande de l'utilisateur : « go » sur la suite proposée (connexion et mot de passe dans le style de l'inscription, intérieur des étapes de l'onboarding, puis lot sécurité).
+- État Git au début : refonte/lot-1-design-system, HEAD e37f348.
+- Fichiers touchés : frontend `app/(auth)/login`, `forgot-password`, `reset-password` (réécrits sur CoqueAuth), `components/ui/classes.ts` (CLASSE_CHAMP, CLASSE_LIBELLE), `components/auth/Champs.tsx`, `components/onboarding/Step*.tsx`, `SearchCombobox.tsx`, `StarRating.tsx`, `MaliWuliHeader.tsx` (plus d'en-tête marron sur les pages d'authentification) ; docs `progress.md`, `roadmap.md`.
+- Fait et vérifié : type-check OK, 40/40. Chrome 1440/390 : connexion par code (code faux, Modifier), par mot de passe (faux puis succès vers /dashboard), mot de passe oublié puis réinitialisation (validation, focus, code faux), formulaires d'ajout de l'onboarding, parcours inscription puis onboarding complet rejoué sans erreur JS.
+- Fait mais non vérifié : succès réel d'une connexion par code et d'une réinitialisation (codes hachés, pas d'e-mail en local ; logique serveur inchangée).
+- Actions à effet externe : base LOCALE — comptes QA qa-connexion et qa-inscription-d créés puis supprimés.
+- Dépendances : next 15.5.28, multer 2.5.0, nodemailer 10.3.1, npm audit fix (sans --force), zod retiré du frontend. Audit : 0 alerte côté frontend, 9 côté backend (zod 3, chaîne exceljs). Attention : `npm audit fix --omit=dev` retire les devDependencies de node_modules ; elles ont été réinstallées avec `npm install`. Après les mises à jour : tsc OK, 40/40 et 229/229, build de production local OK.
+- Prochaine action : revue utilisateur et commit ; puis déconnexion côté serveur ; la suppression de compte demande des décisions produit.
+
+### 2026-10-31 — Claude — Refonte lot 2 : inscription et création de profil
+- Statut : TERMINÉ (commit local e37f348 ; ni push ni déploiement)
 - Demande de l'utilisateur : inscription et création de profil « niveau Google / LinkedIn, ultra clean ».
 - État Git au début : refonte/lot-1-design-system, HEAD c7a5bd0 (lot 1 commité en local à la demande de l'utilisateur).
 - Fichiers touchés : backend `prisma/schema.prisma` (EmailVerification.tentatives) + migration `20261031120000_tentatives_code_inscription`, `lib/code-inscription.ts` (+ test), `routes/auth.routes.ts` (code haché, 5 essais atomiques, routes /verify-email et /resend-code supprimées) ; frontend `components/auth/CoqueAuth.tsx`, `Champs.tsx`, `SaisieCode.tsx`, `lib/mot-de-passe.ts`, `lib/saisie-code.ts` (+ tests), pages `register`, `verify-email`, `register/details`, `onboarding` ; `components/onboarding/StepIndicator.tsx`, `EnTeteOnboarding.tsx` ; boutons « Passer » de StepFormations/StepExperiences ; `MaliWuliHeader.tsx` (AuthFlowHeader).

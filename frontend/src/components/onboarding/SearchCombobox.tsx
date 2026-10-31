@@ -2,6 +2,7 @@
 
 import { Search, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { CLASSE_CHAMP, CLASSE_LIBELLE } from "@/components/ui/classes";
 
 export type SearchOption = {
   id: string;
@@ -35,8 +36,7 @@ type SearchComboboxProps = {
   children?: ReactNode;
 };
 
-const INPUT_CLASS =
-  "w-full rounded-[14px] border border-line-strong bg-surface py-4 pl-12 pr-14 text-base text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:cursor-not-allowed disabled:bg-[#f2eadf] disabled:text-[#9d8f7e] sm:text-lg";
+const INPUT_CLASS = `${CLASSE_CHAMP} !pl-11 !pr-12`;
 
 const normaliser = (valeur: string) =>
   valeur
@@ -73,7 +73,7 @@ export default function SearchCombobox({
   otherLabel,
   onOther,
   className = "min-w-0",
-  labelClassName = "mb-2 block text-base font-semibold text-ink",
+  labelClassName = CLASSE_LIBELLE,
   inputClassName = INPUT_CLASS,
   showIcon = true,
   invalid,

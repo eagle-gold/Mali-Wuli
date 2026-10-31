@@ -10,6 +10,7 @@ import {
   periodeEstValide,
   trierParDateDebut,
 } from "@/lib/periode";
+import { CLASSE_CHAMP, CLASSE_LIBELLE, classesBouton } from "@/components/ui/classes";
 
 export interface Experience {
   id: string;
@@ -60,9 +61,8 @@ const PAYS_DE_SECOURS: PaysOption[] = [
   { code: "FR", nom: "France", drapeau: "🇫🇷" },
 ];
 
-const FIELD_CLASS =
-  "w-full min-w-0 rounded-[14px] border border-line-strong bg-surface px-5 py-4 text-base text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:cursor-not-allowed disabled:bg-[#eee2d0] disabled:text-ink-muted sm:text-lg";
-const LABEL_CLASS = "mb-2 block text-base font-semibold text-ink";
+const FIELD_CLASS = CLASSE_CHAMP;
+const LABEL_CLASS = CLASSE_LIBELLE;
 
 const creerExperienceVide = (): Omit<Experience, "id"> => ({
   poste: "",
@@ -292,7 +292,7 @@ function ExperienceForm({
 
       <div className="mb-5">
         <label className={LABEL_CLASS}>Période <span className="text-clay">*</span></label>
-        <div className="grid min-w-0 items-center gap-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto]">
+        <div className="grid min-w-0 items-center gap-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
           <div className="grid min-w-0 gap-3 sm:grid-cols-2">
             <select aria-label="Mois de début" value={form.moisDebut} onChange={(event) => set("moisDebut", event.target.value)} className={FIELD_CLASS}>
               <option value="">Mois de début</option>
@@ -318,7 +318,7 @@ function ExperienceForm({
               className={FIELD_CLASS}
             />
           </div>
-          <label className="flex cursor-pointer items-center gap-3 whitespace-nowrap text-base font-semibold text-ink lg:pl-1">
+          <label className="flex cursor-pointer items-center gap-3 whitespace-nowrap text-sm font-semibold text-ink lg:col-span-3">
             <input
               type="checkbox"
               checked={form.posteActuel}
@@ -354,7 +354,7 @@ function ExperienceForm({
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row">
-        <button type="button" onClick={onCancel} className="rounded-[14px] border border-line-strong bg-surface px-7 py-4 text-base font-semibold text-ink hover:bg-surface-sunken">
+        <button type="button" onClick={onCancel} className={classesBouton({ variante: "secondaire", taille: "lg", className: "sm:min-w-[140px]" })}>
           Annuler
         </button>
         <button
@@ -364,7 +364,7 @@ function ExperienceForm({
             if (!canSave) return;
             onSave({ ...form, lieu: `${form.ville}, ${form.pays}`, id: initialData?.id || crypto.randomUUID() });
           }}
-          className={`flex-1 rounded-[14px] px-7 py-4 text-base font-semibold text-white transition-colors ${canSave ? "bg-brand hover:bg-brand-700" : "cursor-not-allowed bg-brand/40"}`}
+          className={classesBouton({ taille: "lg", className: `flex-1 ${canSave ? "" : "cursor-not-allowed opacity-50"}` })}
         >
           {initialData ? "Enregistrer les modifications" : "Enregistrer cette expérience"}
         </button>
@@ -394,7 +394,7 @@ export default function StepExperiences({ onNext, onBack, initialData }: StepExp
   };
 
   return (
-    <section className="min-w-0 rounded-[22px] border border-line bg-surface p-5 shadow-sm sm:p-8 lg:p-9">
+    <section className="min-w-0 rounded-3xl border border-line-soft bg-surface p-5 shadow-card sm:p-8 lg:p-9">
       <h2 className="mb-2 titre-section">Vos expériences</h2>
       <p className="mb-7 max-w-[1050px] text-sm leading-relaxed text-ink sm:text-base">
         Postes, missions, stages, engagements associatifs. C’est ce qui permet aux autres membres de savoir quoi vous demander, et à vous de recevoir les bonnes sollicitations.
@@ -431,13 +431,13 @@ export default function StepExperiences({ onNext, onBack, initialData }: StepExp
       )}
 
       <div className="flex flex-col gap-3 sm:flex-row">
-        <button type="button" onClick={onBack} className="rounded-[14px] border border-line-strong bg-surface px-7 py-4 text-base font-semibold text-ink hover:bg-surface-sunken">
+        <button type="button" onClick={onBack} className={classesBouton({ variante: "secondaire", taille: "lg", className: "sm:min-w-[140px]" })}>
           Retour
         </button>
         <button
           type="button"
           onClick={() => onNext(trierParDateDebut(experiences))}
-          className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${experiences.length ? "bg-brand hover:bg-brand-700" : "border border-line-strong bg-surface-raised !text-ink hover:border-brand hover:!text-brand"}`}
+          className={classesBouton({ variante: experiences.length ? "primaire" : "secondaire", taille: "lg", className: "flex-1" })}
         >
           {experiences.length ? "Continuer vers le mentorat" : "Passer cette étape"}
         </button>

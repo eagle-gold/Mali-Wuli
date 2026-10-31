@@ -433,7 +433,7 @@ export function MemberHeader() {
 }
 
 /** Écrans qui portent leur propre barre minimale (CoqueAuth). */
-const PAGES_COQUE_AUTH = new Set(["/register", "/register/details", "/verify-email"]);
+const PAGES_COQUE_AUTH = new Set(["/login", "/register", "/register/details", "/verify-email", "/forgot-password", "/reset-password"]);
 
 export function AuthFlowHeader() {
   const pathname = usePathname();

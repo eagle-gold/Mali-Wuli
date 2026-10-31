@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { erreurLienSocial, LONGUEUR_MAX_LIEN_SOCIAL, normaliserReseauxSociaux, RESEAUX_SOCIAUX, type ReseauSocial, type ReseauxSociaux } from "@/lib/reseaux-sociaux";
+import { CLASSE_CHAMP, CLASSE_LIBELLE, classesBouton } from "@/components/ui/classes";
 
 interface StepInformationsProps {
   onNext: (data: InfoData) => void;
@@ -45,8 +46,7 @@ const PAYS_DE_SECOURS: PaysOption[] = [
   { code: "FR", nom: "France", indicatif: "33", drapeau: "🇫🇷" },
 ];
 
-const CHAMP_CLASS =
-  "w-full rounded-[14px] border border-line-strong bg-surface px-5 py-4 text-base text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 sm:text-lg";
+const CHAMP_CLASS = CLASSE_CHAMP;
 
 export default function StepInformations({ onNext, onBack, initialData }: StepInformationsProps) {
   const [form, setForm] = useState<InfoData>(() => ({
@@ -221,7 +221,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="rounded-[22px] border border-line bg-surface p-6 shadow-sm sm:p-9 lg:p-12"
+      className="rounded-3xl border border-line-soft bg-surface p-6 shadow-card sm:p-8 lg:p-10"
     >
       <h1 className="mb-3 font-display text-3xl font-bold text-ink sm:text-[36px]">
         Vos informations personnelles
@@ -233,7 +233,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
 
       <div className="mb-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6">
         <div>
-          <label htmlFor="prenom" className="mb-2 block text-base font-semibold text-ink">
+          <label htmlFor="prenom" className={CLASSE_LIBELLE}>
             Prénom <span className="text-clay">*</span>
           </label>
           <input
@@ -248,7 +248,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
         </div>
 
         <div>
-          <label htmlFor="nom" className="mb-2 block text-base font-semibold text-ink">
+          <label htmlFor="nom" className={CLASSE_LIBELLE}>
             Nom <span className="text-clay">*</span>
           </label>
           <input
@@ -264,7 +264,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
       </div>
 
       <div className="mb-6">
-        <label htmlFor="titre" className="mb-2 block text-base font-semibold text-ink">
+        <label htmlFor="titre" className={CLASSE_LIBELLE}>
           Titre personnalisé <span className="font-normal">· optionnel</span>
         </label>
         <input
@@ -285,7 +285,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
       </div>
 
       <div className="mb-6">
-        <label htmlFor="indicatif" className="mb-2 block text-base font-semibold text-ink">
+        <label htmlFor="indicatif" className={CLASSE_LIBELLE}>
           Numéro de téléphone <span className="font-normal">· optionnel</span>
         </label>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-[320px_1fr]">
@@ -319,7 +319,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
 
       <div className="mb-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6">
         <div>
-          <label htmlFor="pays" className="mb-2 block text-base font-semibold text-ink">
+          <label htmlFor="pays" className={CLASSE_LIBELLE}>
             Pays de résidence <span className="text-clay">*</span>
           </label>
           <select
@@ -337,7 +337,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
         </div>
 
         <div className="min-w-0">
-          <label htmlFor="ville" className="mb-2 block text-base font-semibold text-ink">
+          <label htmlFor="ville" className={CLASSE_LIBELLE}>
             Ville <span className="text-clay">*</span>
           </label>
           <input
@@ -414,7 +414,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
         <p id="reseaux-sociaux-description" className="mb-5 text-sm leading-relaxed text-ink-muted">Ces liens seront visibles sur votre profil. Vous pouvez les modifier ou les retirer à tout moment.</p>
         <div className="grid min-w-0 grid-cols-1 gap-5 md:grid-cols-2">
           {RESEAUX_SOCIAUX.map(({ cle, nom, exemple }) => <div key={cle} className="min-w-0">
-            <label htmlFor={`reseau-${cle}`} className="mb-2 block text-base font-semibold text-ink">{nom}</label>
+            <label htmlFor={`reseau-${cle}`} className={CLASSE_LIBELLE}>{nom}</label>
             <input id={`reseau-${cle}`} name={cle} type="url" inputMode="url" autoComplete="off" autoCapitalize="none" spellCheck={false} maxLength={LONGUEUR_MAX_LIEN_SOCIAL} value={form[cle] || ""} onChange={(event) => handleChange(cle, event.target.value)} onBlur={() => { const message = erreurLienSocial(form[cle], nom); setErreursLiens((precedent) => ({ ...precedent, [cle]: message || undefined })); }} placeholder={exemple} aria-invalid={Boolean(erreursLiens[cle])} aria-describedby={erreursLiens[cle] ? `erreur-reseau-${cle}` : "reseaux-sociaux-description"} className={CHAMP_CLASS + " min-w-0"} />
             {erreursLiens[cle] && <p id={`erreur-reseau-${cle}`} className="mt-2 text-sm text-[#8a3e27]" role="alert">{erreursLiens[cle]}</p>}
           </div>)}
@@ -431,18 +431,14 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
         <button
           type="button"
           onClick={onBack}
-          className="rounded-[14px] border border-line-strong bg-surface px-8 py-4 text-base font-semibold text-ink transition-colors hover:bg-surface-sunken sm:w-[140px] sm:text-lg"
+          className={classesBouton({ variante: "secondaire", taille: "lg", className: "sm:min-w-[140px]" })}
         >
           Retour
         </button>
         <button
           type="submit"
           disabled={!canContinue}
-          className={`flex-1 rounded-full px-8 py-4 text-base font-semibold transition-colors sm:text-lg ${
-            canContinue
-              ? "bg-brand text-white hover:bg-brand-700"
-              : "cursor-not-allowed bg-[#eee2d0] text-[#ad9d89]"
-          }`}
+className={classesBouton({ taille: "lg", className: "flex-1" })}
         >
           Continuer
         </button>

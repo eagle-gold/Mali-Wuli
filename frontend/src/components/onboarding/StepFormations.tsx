@@ -25,6 +25,7 @@ import {
   type DemarcheApresFormation,
   type LienEmploiFormation,
 } from "@/lib/education/suivi";
+import { CLASSE_CHAMP, CLASSE_LIBELLE, classesBouton } from "@/components/ui/classes";
 
 type TypeSuggestionCatalogue = "ETABLISSEMENT" | "PROGRAMME" | "SPECIALITE" | "SERIE" | "DIPLOME";
 
@@ -166,10 +167,9 @@ const TYPE_TITRES: Record<FormationType, string> = {
   universite: "Université / école privée",
 };
 
-const FIELD_CLASS =
-  "w-full rounded-[14px] border border-line-strong bg-surface px-5 py-4 text-base text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 sm:text-lg";
+const FIELD_CLASS = CLASSE_CHAMP;
 
-const LABEL_CLASS = "mb-2 block text-base font-semibold text-ink";
+const LABEL_CLASS = CLASSE_LIBELLE;
 
 const DEMARCHES_APRES_FORMATION: Array<{
   valeur: DemarcheApresFormation;
@@ -549,7 +549,7 @@ function SelectAvecAutre({
     return (
       <div>
         <div className="mb-2 flex flex-col items-start gap-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between min-[420px]:gap-3">
-          <label htmlFor={`${id}-autre`} className="text-base font-semibold text-ink">
+          <label htmlFor={`${id}-autre`} className="text-sm font-semibold text-ink">
             {label} {required && <span className="text-clay">*</span>}
           </label>
           <button type="button" onClick={() => onSelect("", false)} className="text-sm font-semibold text-brand hover:underline">
@@ -1235,7 +1235,7 @@ function FormationForm({
         {etablissementAutre ? (
           <div>
             <div className="mb-2 flex flex-col items-start gap-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between min-[420px]:gap-3">
-              <label htmlFor="etablissement-autre" className="text-base font-semibold text-ink">
+              <label htmlFor="etablissement-autre" className="text-sm font-semibold text-ink">
                 Nom de l’établissement <span className="text-clay">*</span>
               </label>
               <button type="button" onClick={() => {
@@ -1342,7 +1342,7 @@ function FormationForm({
           {programmeAutre ? (
             <div>
               <div className="mb-2 flex flex-col items-start gap-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between min-[420px]:gap-3">
-                <label htmlFor="programme-autre" className="text-base font-semibold text-ink">
+                <label htmlFor="programme-autre" className="text-sm font-semibold text-ink">
                   Formation <span className="text-clay">*</span>
                 </label>
                 <button
@@ -1520,7 +1520,7 @@ function FormationForm({
             role="dialog"
             aria-modal="true"
             aria-labelledby="titre-modal-statut-formation"
-            className="w-full max-w-md rounded-[22px] border border-line-soft bg-surface p-6 shadow-2xl sm:p-7"
+            className="w-full max-w-md rounded-3xl border border-line-soft bg-surface-raised p-6 shadow-overlay sm:p-7"
           >
             <div className="mb-5 flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
@@ -1806,7 +1806,7 @@ function FormationForm({
             role="dialog"
             aria-modal="true"
             aria-labelledby="titre-modal-etape-manquante"
-            className="w-full max-w-md rounded-[22px] border border-line-soft bg-surface p-6 shadow-2xl sm:p-7"
+            className="w-full max-w-md rounded-3xl border border-line-soft bg-surface-raised p-6 shadow-overlay sm:p-7"
           >
             <div className="mb-5 flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
@@ -1841,7 +1841,7 @@ function FormationForm({
       )}
 
       <div className="flex flex-col gap-3 sm:flex-row">
-        <button type="button" onClick={onCancel} className="rounded-[14px] border border-line-strong bg-surface px-8 py-4 text-base font-semibold text-ink hover:bg-surface-sunken">
+        <button type="button" onClick={onCancel} className={classesBouton({ variante: "secondaire", taille: "lg", className: "sm:min-w-[140px]" })}>
           Annuler
         </button>
         <button
@@ -1877,7 +1877,7 @@ function FormationForm({
               mentionEstAutre: mentionAutre,
             });
           }}
-          className={`flex-1 rounded-[14px] px-8 py-4 text-base font-semibold transition-colors ${canSave ? "bg-brand text-white hover:bg-brand-700" : "cursor-not-allowed bg-[#eee2d0] text-[#ad9d89]"}`}
+          className={classesBouton({ taille: "lg", className: `flex-1 ${canSave ? "" : "cursor-not-allowed opacity-50"}` })}
         >
           {initialData ? "Enregistrer les modifications" : "Enregistrer cette formation"}
         </button>
@@ -2030,7 +2030,7 @@ export default function StepFormations({ onNext, onBack, initialData }: StepForm
   };
 
   return (
-    <section className="min-w-0 overflow-hidden rounded-[22px] border border-line bg-surface p-4 shadow-sm sm:p-9 lg:p-12">
+    <section className="min-w-0 overflow-hidden rounded-3xl border border-line-soft bg-surface p-4 shadow-card sm:p-8 lg:p-10">
       <h1 className="mb-3 font-display text-3xl font-bold text-ink sm:text-[36px]">Votre parcours de formation</h1>
       <p className="mb-8 max-w-[1160px] text-base leading-relaxed text-ink sm:text-lg">
         Ajoutez vos établissements : ils seront classés automatiquement du plus récent au plus ancien. Regroupez le brevet ou DEF, le bac et vos autres diplômes sur une seule fiche par école ou lycée. Les questions sur l’insertion concernent uniquement le supérieur.
@@ -2071,13 +2071,13 @@ export default function StepFormations({ onNext, onBack, initialData }: StepForm
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-            <button type="button" onClick={onBack} className="rounded-[14px] border border-line-strong bg-surface px-8 py-4 text-base font-semibold text-ink hover:bg-surface-sunken sm:w-[140px] sm:text-lg">
+            <button type="button" onClick={onBack} className={classesBouton({ variante: "secondaire", taille: "lg", className: "sm:min-w-[140px]" })}>
               Retour
             </button>
             <button
               type="button"
               onClick={() => onNext(trierParDateDebut(formations).map(nettoyerAvisNonEligible))}
-              className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${formations.length ? "bg-brand hover:bg-brand-700" : "border border-line-strong bg-surface-raised !text-ink hover:border-brand hover:!text-brand"}`}
+              className={classesBouton({ variante: formations.length ? "primaire" : "secondaire", taille: "lg", className: "flex-1" })}
             >
               {formations.length ? "Continuer vers les expériences" : "Passer cette étape"}
             </button>

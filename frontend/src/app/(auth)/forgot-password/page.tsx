@@ -1,105 +1,79 @@
 "use client";
 
-import Link from "next/link";
+import { useEffect, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import axios from "axios";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import CoqueAuth from "@/components/auth/CoqueAuth";
+import { Alerte, ChampTexte } from "@/components/auth/Champs";
+import { classesBouton } from "@/components/ui/classes";
 import api from "@/lib/api";
-
-const emailEstValide = (valeur: string) =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valeur.trim());
+import { emailValide } from "@/lib/mot-de-passe";
 
 export default function ForgotPasswordPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [touche, setTouche] = useState(false);
+  const [envoi, setEnvoi] = useState(false);
   const [erreur, setErreur] = useState("");
-  const emailValide = emailEstValide(email);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    const precedent = sessionStorage.getItem("mali_wuli_reset_email");
+    if (precedent) setEmail(precedent);
+  }, []);
+
+  const envoyer = async (event: FormEvent) => {
     event.preventDefault();
-    if (!emailValide || loading) return;
-
-    setLoading(true);
+    setTouche(true);
+    if (!emailValide(email) || envoi) return;
+    setEnvoi(true);
     setErreur("");
-    const emailNormalise = email.trim().toLowerCase();
-
+    const adresse = email.trim().toLowerCase();
     try {
-      await api.post("/auth/forgot-password", { email: emailNormalise });
-      sessionStorage.setItem("mali_wuli_reset_email", emailNormalise);
+      await api.post("/auth/forgot-password", { email: adresse });
+      sessionStorage.setItem("mali_wuli_reset_email", adresse);
+      sessionStorage.setItem("mali_wuli_reset_envoye_le", String(Date.now()));
       router.push("/reset-password");
-    } catch (err: unknown) {
-      const erreurApi = err as { response?: { data?: { message?: string } } };
-      setErreur(
-        erreurApi.response?.data?.message ||
-          "Le service est momentanément indisponible. Réessayez dans quelques instants.",
-      );
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      const reponse = axios.isAxiosError<{ message?: string }>(err) ? err.response : undefined;
+      setErreur(reponse?.status === 429
+        ? "Trop de demandes. Patientez un instant puis réessayez."
+        : reponse?.data?.message || "Le service est momentanément indisponible. Réessayez dans quelques instants.");
+      setEnvoi(false);
     }
   };
 
   return (
-    <main className="min-h-screen bg-[var(--color-page)] flex items-center justify-center px-4 py-10">
-      <section className="bg-surface rounded-2xl shadow-sm border border-line w-full max-w-md p-8">
-        <h1 className="font-display text-3xl font-bold text-ink mb-3">
-          Mot de passe oublié
-        </h1>
-        <p className="text-sm leading-relaxed text-ink-muted mb-8">
-          Entrez l&apos;adresse e-mail de votre compte. Si elle est reconnue, vous recevrez
-          un code à 6 chiffres valable 15 minutes.
-        </p>
-
-        {erreur && (
-          <p
-            role="alert"
-            className="mb-5 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700"
-          >
-            {erreur}
-          </p>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-ink mb-1">
-              Adresse e-mail
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={email}
-              onChange={(event) => {
-                setEmail(event.target.value);
-                setErreur("");
-              }}
-              placeholder="prenom.nom@exemple.com"
-              autoComplete="email"
-              inputMode="email"
-              required
-              autoFocus
-              className="w-full border border-line-strong rounded-xl px-4 py-3 text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-brand text-sm"
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={!emailValide || loading}
-            className={`w-full py-4 rounded-xl font-semibold text-sm transition-colors ${
-              emailValide && !loading
-                ? "bg-brand text-white hover:bg-brand-700"
-                : "bg-[#eee2d0] text-[#ad9d89] cursor-not-allowed"
-            }`}
-          >
-            {loading ? "Envoi en cours..." : "Recevoir mon code"}
-          </button>
-        </form>
-
-        <p className="mt-6 text-center text-sm">
-          <Link href="/login" className="font-semibold text-brand hover:underline">
-            Retour à la connexion
-          </Link>
-        </p>
-      </section>
-    </main>
+    <CoqueAuth
+      titre="Mot de passe oublié ?"
+      sousTitre="Indiquez l’adresse de votre compte. Si elle est reconnue, vous recevrez un code valable 15 minutes pour choisir un nouveau mot de passe."
+      lienHaut={{ texte: "Vous vous en souvenez ?", libelle: "Se connecter", href: "/login" }}
+    >
+      {erreur && <Alerte>{erreur}</Alerte>}
+      <form onSubmit={envoyer} noValidate className="space-y-6">
+        <ChampTexte
+          label="Adresse e-mail"
+          type="email"
+          inputMode="email"
+          autoComplete="email"
+          autoCapitalize="none"
+          spellCheck={false}
+          autoFocus
+          value={email}
+          onChange={(event) => { setEmail(event.target.value); setErreur(""); }}
+          onBlur={() => setTouche(true)}
+          erreur={touche && email.trim() && !emailValide(email) ? "Saisissez une adresse e-mail valide." : undefined}
+        />
+        <button type="submit" disabled={envoi} aria-busy={envoi} className={classesBouton({ taille: "lg", pleineLargeur: true })}>
+          {envoi ? <><span aria-hidden="true" className="h-4 w-4 animate-spin rounded-full border-2 border-white/40 border-t-white" />Envoi du code…</> : "Recevoir un code"}
+        </button>
+      </form>
+      <p className="mt-6 text-center">
+        <Link href="/login" className="inline-flex items-center gap-1.5 rounded text-sm font-semibold text-ink-soft underline-offset-4 hover:text-brand hover:underline focus-anneau">
+          <ArrowLeft size={15} aria-hidden="true" />Retour à la connexion
+        </Link>
+      </p>
+    </CoqueAuth>
   );
 }
