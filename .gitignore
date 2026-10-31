@@ -57,3 +57,10 @@ Thumbs.db
 backend/uploads/
 
 docker-compose.yml
+
+# ========================
+# NOTES LOCALES (non publiées)
+# ========================
+.claude/
+CLAUDE.md
+docs/

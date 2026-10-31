@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-10-31 (correctif avatars, non commité).
+LIBRE — dernière session : Claude, 2026-10-31 (correctif avatars commité).
 
 ## Modèle d'entrée
 
@@ -31,7 +31,7 @@ LIBRE — dernière session : Claude, 2026-10-31 (correctif avatars, non commit�
 ## Entrées
 
 ### 2026-10-31 — Claude — Correctif : avatars de repli
-- Statut : TERMINÉ (code local, non commité)
+- Statut : TERMINÉ (commité en local)
 - Demande de l'utilisateur : commit du lot 4 (fait : e360611) et correction de l'image cassée quand une photo de profil manque.
 - Fichiers touchés : frontend `components/ui/ImageAvecRepli.tsx` (+ test), `feed/ActualiteFeed.tsx`, `feed/ComposerPublication.tsx`, `MenuCompte.tsx`, `profile/ProfilMembre.tsx`, `directory/DirectoryUi.tsx`, `evenements/EvenementUi.tsx`, `offres/DetailOffre.tsx`, `education/FicheEtablissement.tsx`, `app/(platform)/synergies`, `volontaires`.
 - Fait et vérifié : type-check OK, 42/42 ; Chrome : 0 image cassée sur 4 pages avec des photos introuvables.
