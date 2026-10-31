@@ -167,9 +167,9 @@ const TYPE_TITRES: Record<FormationType, string> = {
 };
 
 const FIELD_CLASS =
-  "w-full rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-5 py-4 text-base text-[#2e261f] outline-none transition focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 sm:text-lg";
+  "w-full rounded-[14px] border border-line-strong bg-surface px-5 py-4 text-base text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 sm:text-lg";
 
-const LABEL_CLASS = "mb-2 block text-base font-semibold text-[#2e261f]";
+const LABEL_CLASS = "mb-2 block text-base font-semibold text-ink";
 
 const DEMARCHES_APRES_FORMATION: Array<{
   valeur: DemarcheApresFormation;
@@ -216,7 +216,7 @@ const LIENS_EMPLOI_FORMATION: Array<{ valeur: LienEmploiFormation; libelle: stri
 ];
 
 const CLASSE_CHOIX =
-  "min-h-14 rounded-[13px] border px-4 py-3 text-left text-sm font-semibold leading-snug transition focus:outline-none focus:ring-2 focus:ring-[#0d6738]/25 sm:text-base";
+  "min-h-14 rounded-[13px] border px-4 py-3 text-left text-sm font-semibold leading-snug transition focus:outline-none focus:ring-2 focus:ring-brand/25 sm:text-base";
 
 const avecPrepositionDe = (mois: string, annee: number) => {
   const nom = mois.toLocaleLowerCase("fr");
@@ -254,9 +254,9 @@ function ZoneGuidee({ bloquee, indication, onBlockedClick, children, className =
           type="button"
           onClick={onBlockedClick}
           aria-label={`${indication}. Cliquez pour savoir quoi compléter.`}
-          className="absolute inset-0 z-10 flex cursor-help items-start justify-end rounded-[14px] p-2 text-left focus:outline-none focus:ring-2 focus:ring-[#0d6738]/30"
+          className="absolute inset-0 z-10 flex cursor-help items-start justify-end rounded-[14px] p-2 text-left focus:outline-none focus:ring-2 focus:ring-brand/30"
         >
-          <span className="rounded-full border border-[#d8c5a7] bg-[#fffaf4] px-3 py-1 text-xs font-semibold text-[#56493e] shadow-sm">
+          <span className="rounded-full border border-[#d8c5a7] bg-surface px-3 py-1 text-xs font-semibold text-ink-soft shadow-sm">
             🔒 {indication}
           </span>
         </button>
@@ -470,8 +470,8 @@ function FormationCard({
   ].filter(Boolean);
 
   return (
-    <article className="mb-5 flex min-w-0 flex-col gap-4 overflow-hidden rounded-[18px] border border-[#e4d2b3] bg-[#fffbf5] p-4 sm:flex-row sm:p-7">
-      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[13px] bg-[#eee2d0] text-lg font-bold text-[#2e261f]">
+    <article className="mb-5 flex min-w-0 flex-col gap-4 overflow-hidden rounded-[18px] border border-line bg-surface p-4 sm:flex-row sm:p-7">
+      <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-[13px] bg-[#eee2d0] text-lg font-bold text-ink">
         {initiales}
       </div>
       <div className="w-full min-w-0 flex-1">
@@ -479,7 +479,7 @@ function FormationCard({
           <div className="min-w-0">
             <div className="mb-1 flex flex-wrap items-center gap-2">
               <h3 className="titre-element min-w-0 break-words [overflow-wrap:anywhere]">{formation.etablissement}</h3>
-              <span className="max-w-full break-words rounded-[7px] bg-[#eee2d0] px-3 py-1 text-xs font-bold text-[#2e261f] [overflow-wrap:anywhere] sm:text-sm">
+              <span className="max-w-full break-words rounded-[7px] bg-[#eee2d0] px-3 py-1 text-xs font-bold text-ink [overflow-wrap:anywhere] sm:text-sm">
                 {TYPE_LABELS[formation.type]}
               </span>
               {formation.synchronisationCatalogue === "EN_COURS" && (
@@ -493,15 +493,15 @@ function FormationCard({
                 </span>
               )}
             </div>
-            <p className="break-words text-sm leading-relaxed text-[#2e261f] [overflow-wrap:anywhere] sm:text-base">
+            <p className="break-words text-sm leading-relaxed text-ink [overflow-wrap:anywhere] sm:text-base">
               {informations.join(" · ")}
             </p>
           </div>
           <div className="flex min-w-0 flex-wrap gap-x-4 gap-y-2 sm:shrink-0 sm:flex-col sm:items-end sm:gap-2">
-            <button type="button" onClick={onModifier} className="font-semibold text-[#0d6738] hover:underline">
+            <button type="button" onClick={onModifier} className="font-semibold text-brand hover:underline">
               Modifier
             </button>
-            <button type="button" onClick={onRetirer} className="font-semibold text-[#2e261f] hover:text-[#b84f25]">
+            <button type="button" onClick={onRetirer} className="font-semibold text-ink hover:text-[#b84f25]">
               Retirer
             </button>
           </div>
@@ -512,11 +512,11 @@ function FormationCard({
             <span aria-label={`${moyenne.toFixed(1)} sur 5`} className="whitespace-nowrap text-lg tracking-[0.04em] text-[#c45b2a] sm:text-xl sm:tracking-[0.08em]">
               {[1, 2, 3, 4, 5].map((note) => (note <= Math.round(moyenne) ? "★" : "☆")).join("")}
             </span>
-            <strong className="shrink-0 text-sm text-[#2e261f] sm:text-base">{moyenne.toFixed(1)}/5</strong>
+            <strong className="shrink-0 text-sm text-ink sm:text-base">{moyenne.toFixed(1)}/5</strong>
           </div>
         )}
         {formation.commentaire && (
-          <p className="mt-3 break-words text-sm italic text-[#56493e] [overflow-wrap:anywhere] sm:text-base">« {formation.commentaire} »</p>
+          <p className="mt-3 break-words text-sm italic text-ink-soft [overflow-wrap:anywhere] sm:text-base">« {formation.commentaire} »</p>
         )}
       </div>
     </article>
@@ -549,10 +549,10 @@ function SelectAvecAutre({
     return (
       <div>
         <div className="mb-2 flex flex-col items-start gap-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between min-[420px]:gap-3">
-          <label htmlFor={`${id}-autre`} className="text-base font-semibold text-[#2e261f]">
-            {label} {required && <span className="text-[#c65327]">*</span>}
+          <label htmlFor={`${id}-autre`} className="text-base font-semibold text-ink">
+            {label} {required && <span className="text-clay">*</span>}
           </label>
-          <button type="button" onClick={() => onSelect("", false)} className="text-sm font-semibold text-[#0d6738] hover:underline">
+          <button type="button" onClick={() => onSelect("", false)} className="text-sm font-semibold text-brand hover:underline">
             Revenir à la liste
           </button>
         </div>
@@ -570,7 +570,7 @@ function SelectAvecAutre({
   return (
     <div>
       <label htmlFor={id} className={LABEL_CLASS}>
-        {label} {required && <span className="text-[#c65327]">*</span>}
+        {label} {required && <span className="text-clay">*</span>}
       </label>
       <select
         id={id}
@@ -1163,13 +1163,13 @@ function FormationForm({
   return (
     <section className="mb-8 rounded-[18px] border border-[#cfe0d2] bg-[#f8f1e6] p-5 sm:p-8">
       <h2 className="mb-1 titre-section">{TYPE_TITRES[type]}</h2>
-      <p className="mb-7 text-sm text-[#56493e] sm:text-base">
+      <p className="mb-7 text-sm text-ink-soft sm:text-base">
         Commencez par le lieu : les établissements proposés respectent le pays et le niveau choisis.
       </p>
 
       <div className="mb-6 grid gap-5 md:grid-cols-2">
         <div>
-          <label htmlFor="formation-pays" className={LABEL_CLASS}>Pays <span className="text-[#c65327]">*</span></label>
+          <label htmlFor="formation-pays" className={LABEL_CLASS}>Pays <span className="text-clay">*</span></label>
           <select id="formation-pays" value={form.paysCode} onChange={(event) => handlePaysChange(event.target.value)} className={FIELD_CLASS}>
             {pays.map((item) => <option key={item.code} value={item.code}>{item.drapeau} {item.nom}</option>)}
           </select>
@@ -1235,8 +1235,8 @@ function FormationForm({
         {etablissementAutre ? (
           <div>
             <div className="mb-2 flex flex-col items-start gap-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between min-[420px]:gap-3">
-              <label htmlFor="etablissement-autre" className="text-base font-semibold text-[#2e261f]">
-                Nom de l’établissement <span className="text-[#c65327]">*</span>
+              <label htmlFor="etablissement-autre" className="text-base font-semibold text-ink">
+                Nom de l’établissement <span className="text-clay">*</span>
               </label>
               <button type="button" onClick={() => {
                 setEtablissementAutre(false);
@@ -1249,7 +1249,7 @@ function FormationForm({
                   specialite: "",
                   diplome: "",
                 }));
-              }} className="text-sm font-semibold text-[#0d6738] hover:underline">
+              }} className="text-sm font-semibold text-brand hover:underline">
                 Revenir à la liste
               </button>
             </div>
@@ -1319,7 +1319,7 @@ function FormationForm({
 
       {estEtablissementScolaire && (
         <div className="mb-6">
-          <label htmlFor="formation-systeme" className={LABEL_CLASS}>Programme scolaire <span className="text-[#c65327]">*</span></label>
+          <label htmlFor="formation-systeme" className={LABEL_CLASS}>Programme scolaire <span className="text-clay">*</span></label>
           <select id="formation-systeme" value={form.systemeEducatifCode || form.paysCode} onChange={(event) => {
             programmeScolaireChoisi.current = true;
             const systemeEducatifCode = event.target.value;
@@ -1328,7 +1328,7 @@ function FormationForm({
             {pays.map((item) => <option key={item.code} value={item.code}>{libelleSystemeEducatif(item.code)}</option>)}
             <option value="AUTRE">Autre programme / programme international</option>
           </select>
-          <p className="mt-2 text-sm text-[#56493e]">Choisissez le programme suivi, indépendamment du pays où se trouve l’établissement. Par exemple, Liberté à Bamako suit le programme français.</p>
+          <p className="mt-2 text-sm text-ink-soft">Choisissez le programme suivi, indépendamment du pays où se trouve l’établissement. Par exemple, Liberté à Bamako suit le programme français.</p>
         </div>
       )}
 
@@ -1342,8 +1342,8 @@ function FormationForm({
           {programmeAutre ? (
             <div>
               <div className="mb-2 flex flex-col items-start gap-1 min-[420px]:flex-row min-[420px]:items-center min-[420px]:justify-between min-[420px]:gap-3">
-                <label htmlFor="programme-autre" className="text-base font-semibold text-[#2e261f]">
-                  Formation <span className="text-[#c65327]">*</span>
+                <label htmlFor="programme-autre" className="text-base font-semibold text-ink">
+                  Formation <span className="text-clay">*</span>
                 </label>
                 <button
                   type="button"
@@ -1352,7 +1352,7 @@ function FormationForm({
                     setForm((precedent) => ({ ...precedent, programme: "", programmeId: "", diplome: "" }));
                     setDiplomeAutre(false);
                   }}
-                  className="text-sm font-semibold text-[#0d6738] hover:underline"
+                  className="text-sm font-semibold text-brand hover:underline"
                 >
                   Revenir à la liste
                 </button>
@@ -1413,7 +1413,7 @@ function FormationForm({
           >
           <div>
             <label htmlFor="formation-specialite" className={LABEL_CLASS}>
-              Spécialité / parcours <span className="font-normal text-[#74685c]">· facultatif</span>
+              Spécialité / parcours <span className="font-normal text-ink-muted">· facultatif</span>
             </label>
             <input
               id="formation-specialite"
@@ -1425,7 +1425,7 @@ function FormationForm({
               placeholder="Ex. Sciences biomédicales, finance, droit des affaires…"
               className={FIELD_CLASS}
             />
-            <p className="mt-2 text-xs text-[#74685c]">
+            <p className="mt-2 text-xs text-ink-muted">
               Saisissez l’intitulé tel qu’il apparaît dans votre parcours.
             </p>
           </div>
@@ -1449,7 +1449,7 @@ function FormationForm({
             : demanderParcours}
       >
       <div className="mb-6">
-        <label className={LABEL_CLASS}>Période <span className="text-[#c65327]">*</span></label>
+        <label className={LABEL_CLASS}>Période <span className="text-clay">*</span></label>
         <div className="grid items-center gap-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)]">
           <div className="grid min-w-0 gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
             <select aria-label="Mois de début" value={form.moisDebut} onChange={(event) => set("moisDebut", event.target.value)} className={FIELD_CLASS}>
@@ -1458,7 +1458,7 @@ function FormationForm({
             </select>
             <input aria-label="Année de début" type="text" inputMode="numeric" maxLength={4} value={form.anneeDebut} onChange={(event) => set("anneeDebut", normaliserAnnee(event.target.value))} placeholder="Année de début" className={FIELD_CLASS} />
           </div>
-          <span aria-hidden="true" className="hidden text-xl text-[#2e261f] sm:block">→</span>
+          <span aria-hidden="true" className="hidden text-xl text-ink sm:block">→</span>
           <div className="grid min-w-0 gap-3 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
             <select aria-label="Mois de fin" value={form.moisFin} onChange={(event) => set("moisFin", event.target.value)} className={FIELD_CLASS}>
               <option value="">Mois de fin</option>
@@ -1490,7 +1490,7 @@ function FormationForm({
                   type="button"
                   aria-pressed={selectionne}
                   onClick={() => choisirStatutDiplome(valeur)}
-                  className={`h-[74px] w-full rounded-[13px] border px-10 py-3 text-base font-semibold leading-tight transition-colors ${selectionne ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#dfc9a8] bg-[#fffbf5] text-[#776b5e] hover:border-[#0d6738] hover:text-[#0d6738]"}`}
+                  className={`h-[74px] w-full rounded-[13px] border px-10 py-3 text-base font-semibold leading-tight transition-colors ${selectionne ? "border-brand bg-brand text-white" : "border-line-strong bg-surface text-ink-muted hover:border-brand hover:text-brand"}`}
                 >
                   {estEtablissementScolaire && valeur === "OBTENU" ? "Diplôme(s) obtenu(s)" : libelle}
                 </button>
@@ -1499,7 +1499,7 @@ function FormationForm({
                   aria-label={`En savoir plus : ${libelle}`}
                   aria-expanded={statutInfoOuvert === valeur}
                   onClick={() => setStatutInfoOuvert((ouvert) => ouvert === valeur ? null : valeur)}
-                  className={`absolute right-3 top-3 flex h-[18px] w-[18px] items-center justify-center rounded-full border text-[10px] font-bold leading-none transition hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#0d6738]/30 ${selectionne ? "border-white/70 text-white" : "border-[#8e806f] text-[#2e261f]"}`}
+                  className={`absolute right-3 top-3 flex h-[18px] w-[18px] items-center justify-center rounded-full border text-[10px] font-bold leading-none transition hover:scale-110 focus:outline-none focus:ring-2 focus:ring-brand/30 ${selectionne ? "border-white/70 text-white" : "border-[#8e806f] text-ink"}`}
                 >
                   i
                 </button>
@@ -1511,7 +1511,7 @@ function FormationForm({
 
       {statutInfoAffiche && (
         <div
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2e261f]/45 p-4 backdrop-blur-[2px]"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/45 p-4 backdrop-blur-[2px]"
           onMouseDown={(event) => {
             if (event.currentTarget === event.target) setStatutInfoOuvert(null);
           }}
@@ -1520,18 +1520,18 @@ function FormationForm({
             role="dialog"
             aria-modal="true"
             aria-labelledby="titre-modal-statut-formation"
-            className="w-full max-w-md rounded-[22px] border border-[#ead8bd] bg-[#fffbf5] p-6 shadow-2xl sm:p-7"
+            className="w-full max-w-md rounded-[22px] border border-line-soft bg-surface p-6 shadow-2xl sm:p-7"
           >
             <div className="mb-5 flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#e4f0e8] text-sm font-bold text-[#0d6738]">i</span>
-                <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#0d6738]">Statut de la formation</p>
+                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#e4f0e8] text-sm font-bold text-brand">i</span>
+                <p className="text-xs font-bold uppercase tracking-[0.08em] text-brand">Statut de la formation</p>
               </div>
               <button
                 type="button"
                 aria-label="Fermer la fenêtre d’information"
                 onClick={() => setStatutInfoOuvert(null)}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-xl text-[#2e261f] transition hover:bg-[#f1e4d1]"
+                className="flex h-8 w-8 items-center justify-center rounded-full text-xl text-ink transition hover:bg-[#f1e4d1]"
               >
                 ×
               </button>
@@ -1539,11 +1539,11 @@ function FormationForm({
             <h3 id="titre-modal-statut-formation" className="mb-3 titre-section">
               {statutInfoAffiche.libelle}
             </h3>
-            <p className="text-base leading-relaxed text-[#2e261f]">{statutInfoAffiche.explication}</p>
+            <p className="text-base leading-relaxed text-ink">{statutInfoAffiche.explication}</p>
             <button
               type="button"
               onClick={() => setStatutInfoOuvert(null)}
-              className="mt-6 w-full rounded-full bg-[#0d6738] px-5 py-3 font-semibold text-white transition hover:bg-[#09572f]"
+              className="mt-6 w-full rounded-full bg-brand px-5 py-3 font-semibold text-white transition hover:bg-brand-700"
             >
               J’ai compris
             </button>
@@ -1554,12 +1554,12 @@ function FormationForm({
       {estEtablissementScolaire && diplomeAttendu && (
         <section className="mb-8 space-y-4" aria-labelledby="diplomes-scolaires-titre">
           <h3 id="diplomes-scolaires-titre" className="titre-element">Diplômes dans cet établissement</h3>
-          <p className="text-sm text-[#56493e]">Vous pouvez ajouter le brevet ou DEF et le bac à des années différentes pendant la même scolarité, ainsi que tout autre diplôme.</p>
+          <p className="text-sm text-ink-soft">Vous pouvez ajouter le brevet ou DEF et le bac à des années différentes pendant la même scolarité, ainsi que tout autre diplôme.</p>
           {diplomesScolaires.map((diplome, index) => (
-            <fieldset key={clesDiplomesScolaires.current[index]} className="rounded-[14px] border border-[#dfc9a8] p-4 sm:p-5">
-              <legend className="px-2 font-semibold text-[#2e261f]">{diplome.type === "BAC" ? "Baccalauréat" : diplome.type === "BREVET" ? "Brevet / DEF" : "Autre diplôme"}</legend>
+            <fieldset key={clesDiplomesScolaires.current[index]} className="rounded-[14px] border border-line-strong p-4 sm:p-5">
+              <legend className="px-2 font-semibold text-ink">{diplome.type === "BAC" ? "Baccalauréat" : diplome.type === "BREVET" ? "Brevet / DEF" : "Autre diplôme"}</legend>
               <div className="mb-4 flex justify-end">
-                <button type="button" onClick={() => retirerDiplomeScolaire(index)} className="text-sm font-semibold text-[#0d6738] hover:underline">Retirer ce diplôme</button>
+                <button type="button" onClick={() => retirerDiplomeScolaire(index)} className="text-sm font-semibold text-brand hover:underline">Retirer ce diplôme</button>
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <SelectScolaireAvecAutre
@@ -1580,7 +1580,7 @@ function FormationForm({
                   </div>
                 )}
                 <div>
-                  <label htmlFor={`annee-scolaire-${index}`} className={LABEL_CLASS}>{diplome.statut === "EN_COURS" ? "Année prévue" : "Année d’obtention"} <span className="text-[#c65327]">*</span></label>
+                  <label htmlFor={`annee-scolaire-${index}`} className={LABEL_CLASS}>{diplome.statut === "EN_COURS" ? "Année prévue" : "Année d’obtention"} <span className="text-clay">*</span></label>
                   <input id={`annee-scolaire-${index}`} inputMode="numeric" maxLength={4} value={diplome.anneeObtention} onChange={(event) => modifierDiplomeScolaire(index, { anneeObtention: normaliserAnnee(event.target.value) })} placeholder="Ex. 2014" className={FIELD_CLASS} aria-describedby={erreursDiplomesScolaires[index] && diplome.anneeObtention ? `erreur-scolaire-${index}` : undefined} />
                 </div>
                 {diplome.statut !== "EN_COURS" && (
@@ -1613,7 +1613,7 @@ function FormationForm({
           ))}
           <div className="flex flex-wrap gap-3">
             {(["BREVET", "BAC", "AUTRE"] as const).filter((typeDiplome) => typeDiplome === "AUTRE" || !diplomesScolaires.some((item) => item.type === typeDiplome)).map((typeDiplome) => (
-              <button key={typeDiplome} type="button" onClick={() => ajouterDiplomeScolaire(typeDiplome)} className="rounded-[12px] border border-dashed border-[#d7b98d] px-4 py-3 font-semibold text-[#0d6738] hover:bg-[#eee2d0]">+ {typeDiplome === "BREVET" ? "Ajouter le brevet / DEF" : typeDiplome === "BAC" ? "Ajouter le bac" : "Autre diplôme obtenu"}</button>
+              <button key={typeDiplome} type="button" onClick={() => ajouterDiplomeScolaire(typeDiplome)} className="rounded-[12px] border border-dashed border-[#d7b98d] px-4 py-3 font-semibold text-brand hover:bg-[#eee2d0]">+ {typeDiplome === "BREVET" ? "Ajouter le brevet / DEF" : typeDiplome === "BAC" ? "Ajouter le bac" : "Autre diplôme obtenu"}</button>
             ))}
           </div>
         </section>
@@ -1632,13 +1632,13 @@ function FormationForm({
               onSelect={(value, autre) => { setDiplomeAutre(autre); set("diplome", value); }}
               onOtherChange={(value) => set("diplome", value)}
             />
-            <p className="mt-2 text-xs text-[#74685c]">
+            <p className="mt-2 text-xs text-ink-muted">
               La liste dépend du niveau, du pays et, lorsqu’elle est connue, de la formation choisie.
             </p>
           </div>
           <div>
             <label htmlFor="formation-promotion" className={LABEL_CLASS}>
-              {form.statutDiplome === "OBTENU" ? "Année d’obtention du diplôme" : "Année de diplôme prévue"} <span className="text-[#c65327]">*</span>
+              {form.statutDiplome === "OBTENU" ? "Année d’obtention du diplôme" : "Année de diplôme prévue"} <span className="text-clay">*</span>
             </label>
             <input id="formation-promotion" type="text" inputMode="numeric" maxLength={4} value={form.anneePromo} onChange={(event) => set("anneePromo", normaliserAnnee(event.target.value))} placeholder={form.statutDiplome === "OBTENU" ? "Ex. 2023" : "Ex. 2027"} className={FIELD_CLASS} />
             {form.anneePromo && !anneeEstValide(form.anneePromo) && (
@@ -1662,23 +1662,23 @@ function FormationForm({
       )}
 
       {insertionDemandee && (
-        <section className="mb-8 border-t border-[#e4d2b3] pt-7" aria-labelledby="titre-suivi-insertion">
+        <section className="mb-8 border-t border-line pt-7" aria-labelledby="titre-suivi-insertion">
           <h3 id="titre-suivi-insertion" className="mb-1 titre-element">
             Après la formation
           </h3>
-          <p className="mb-5 max-w-4xl text-sm leading-relaxed text-[#56493e] sm:text-base">
+          <p className="mb-5 max-w-4xl text-sm leading-relaxed text-ink-soft sm:text-base">
             Quelques réponses simples nous permettent de calculer le taux d’insertion à 12 mois de l’établissement.
             Seuls des résultats regroupés seront affichés.
           </p>
           {ancienneteFormationEnMois !== null && !douzeMoisEcoules && !dateFinEstFuture && (
-            <p className="mb-5 rounded-[13px] border border-[#d4e4d7] bg-[#edf5ef] px-4 py-3 text-sm leading-relaxed text-[#2e261f] sm:text-base" role="note">
+            <p className="mb-5 rounded-[13px] border border-[#d4e4d7] bg-[#edf5ef] px-4 py-3 text-sm leading-relaxed text-ink sm:text-base" role="note">
               Votre formation s’est terminée il y a moins de 12 mois. Votre réponse est enregistrée, mais elle ne sera intégrée au taux qu’une fois les 12 mois écoulés.
             </p>
           )}
 
           <fieldset className="mb-6">
             <legend className={LABEL_CLASS}>
-              Après cette formation, quel était votre projet principal ? <span className="text-[#c65327]">*</span>
+              Après cette formation, quel était votre projet principal ? <span className="text-clay">*</span>
             </legend>
             <div className="grid gap-3 md:grid-cols-3">
               {DEMARCHES_APRES_FORMATION.map(({ valeur, libelle, precision }) => {
@@ -1689,10 +1689,10 @@ function FormationForm({
                     type="button"
                     aria-pressed={selectionne}
                     onClick={() => choisirDemarcheApresFormation(valeur)}
-                    className={`${CLASSE_CHOIX} ${selectionne ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#dfc9a8] bg-[#fffbf5] text-[#2e261f] hover:border-[#0d6738]"}`}
+                    className={`${CLASSE_CHOIX} ${selectionne ? "border-brand bg-brand text-white" : "border-line-strong bg-surface text-ink hover:border-brand"}`}
                   >
                     <span className="block">{libelle}</span>
-                    <span className={`mt-1 block text-xs font-normal ${selectionne ? "text-white/85" : "text-[#56493e]"}`}>
+                    <span className={`mt-1 block text-xs font-normal ${selectionne ? "text-white/85" : "text-ink-soft"}`}>
                       {precision}
                     </span>
                   </button>
@@ -1704,7 +1704,7 @@ function FormationForm({
           {form.demarcheApresFormation === "RECHERCHE_EMPLOI" && (
             <fieldset className="mb-6">
               <legend className={LABEL_CLASS}>
-                Avez-vous obtenu un emploi ou commencé une activité dans les 12 mois après cette formation ? <span className="text-[#c65327]">*</span>
+                Avez-vous obtenu un emploi ou commencé une activité dans les 12 mois après cette formation ? <span className="text-clay">*</span>
               </legend>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {delaisPremierEmploiDisponibles.map(({ valeur, libelle }) => {
@@ -1715,7 +1715,7 @@ function FormationForm({
                       type="button"
                       aria-pressed={selectionne}
                       onClick={() => choisirDelaiPremierEmploi(valeur)}
-                      className={`${CLASSE_CHOIX} text-center ${selectionne ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#dfc9a8] bg-[#fffbf5] text-[#2e261f] hover:border-[#0d6738]"}`}
+                      className={`${CLASSE_CHOIX} text-center ${selectionne ? "border-brand bg-brand text-white" : "border-line-strong bg-surface text-ink hover:border-brand"}`}
                     >
                       {libelle}
                     </button>
@@ -1728,7 +1728,7 @@ function FormationForm({
           {form.demarcheApresFormation === "RECHERCHE_EMPLOI" && emploiTrouve(form.delaiPremierEmploi) && (
             <fieldset>
               <legend className={LABEL_CLASS}>
-                Cette première activité était-elle liée à votre formation ? <span className="text-[#c65327]">*</span>
+                Cette première activité était-elle liée à votre formation ? <span className="text-clay">*</span>
               </legend>
               <div className="grid gap-3 sm:grid-cols-3">
                 {LIENS_EMPLOI_FORMATION.map(({ valeur, libelle }) => {
@@ -1739,7 +1739,7 @@ function FormationForm({
                       type="button"
                       aria-pressed={selectionne}
                       onClick={() => set("lienEmploiFormation", valeur)}
-                      className={`${CLASSE_CHOIX} text-center ${selectionne ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#dfc9a8] bg-[#fffbf5] text-[#2e261f] hover:border-[#0d6738]"}`}
+                      className={`${CLASSE_CHOIX} text-center ${selectionne ? "border-brand bg-brand text-white" : "border-line-strong bg-surface text-ink hover:border-brand"}`}
                     >
                       {libelle}
                     </button>
@@ -1753,12 +1753,12 @@ function FormationForm({
 
       {avisDisponible ? (
         <>
-          <div className="border-t border-[#e4d2b3] pt-7">
+          <div className="border-t border-line pt-7">
             <h3 className="mb-1 titre-element">Votre avis sur cette formation</h3>
-            <p className="mb-4 text-sm text-[#56493e] sm:text-base">
+            <p className="mb-4 text-sm text-ink-soft sm:text-base">
               {nombreNotes} notes sur 5, puis un mot sur votre expérience. Ces avis aideront les membres du réseau à s’orienter.
             </p>
-            <div className="divide-y divide-[#e4d2b3]">
+            <div className="divide-y divide-line">
               <StarRating label="Qualité des enseignants" description="Compétence, disponibilité, suivi" value={form.noteEnseignants} onChange={(value) => set("noteEnseignants", value)} />
               <StarRating label="Contenu de la formation" description="Programme, niveau, utilité réelle" value={form.noteContenu} onChange={(value) => set("noteContenu", value)} />
               <StarRating label="Cadre & équipements" description="Locaux, bibliothèque, labos, vie étudiante" value={form.noteCadre} onChange={(value) => set("noteCadre", value)} />
@@ -1766,7 +1766,7 @@ function FormationForm({
           </div>
 
           <div className="mb-6 mt-6">
-            <label htmlFor="formation-commentaire" className={LABEL_CLASS}>Commentaire global sur votre expérience <span className="text-[#c65327]">*</span></label>
+            <label htmlFor="formation-commentaire" className={LABEL_CLASS}>Commentaire global sur votre expérience <span className="text-clay">*</span></label>
             <textarea
               id="formation-commentaire"
               value={form.commentaire}
@@ -1778,8 +1778,8 @@ function FormationForm({
           </div>
         </>
       ) : (
-        <div className="mb-6 border-t border-[#e4d2b3] pt-7" role="note">
-          <div className="rounded-[14px] border border-[#d4e4d7] bg-[#edf5ef] px-5 py-4 text-[#2e261f]">
+        <div className="mb-6 border-t border-line pt-7" role="note">
+          <div className="rounded-[14px] border border-[#d4e4d7] bg-[#edf5ef] px-5 py-4 text-ink">
             <p className="font-semibold">Votre avis sera demandé plus tard</p>
             <p className="mt-1 text-sm leading-relaxed sm:text-base">
               {form.statutDiplome !== "OBTENU"
@@ -1797,7 +1797,7 @@ function FormationForm({
 
       {blocageFormulaire && (
         <div
-          className="fixed inset-0 z-[110] flex items-center justify-center bg-[#2e261f]/45 p-4 backdrop-blur-[2px]"
+          className="fixed inset-0 z-[110] flex items-center justify-center bg-ink/45 p-4 backdrop-blur-[2px]"
           onMouseDown={(event) => {
             if (event.currentTarget === event.target) setBlocageFormulaire(null);
           }}
@@ -1806,18 +1806,18 @@ function FormationForm({
             role="dialog"
             aria-modal="true"
             aria-labelledby="titre-modal-etape-manquante"
-            className="w-full max-w-md rounded-[22px] border border-[#ead8bd] bg-[#fffbf5] p-6 shadow-2xl sm:p-7"
+            className="w-full max-w-md rounded-[22px] border border-line-soft bg-surface p-6 shadow-2xl sm:p-7"
           >
             <div className="mb-5 flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e4f0e8] text-base font-bold text-[#0d6738]">→</span>
-                <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#0d6738]">Parcours guidé</p>
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#e4f0e8] text-base font-bold text-brand">→</span>
+                <p className="text-xs font-bold uppercase tracking-[0.08em] text-brand">Parcours guidé</p>
               </div>
               <button
                 type="button"
                 aria-label="Fermer la fenêtre"
                 onClick={() => setBlocageFormulaire(null)}
-                className="flex h-8 w-8 items-center justify-center rounded-full text-xl text-[#2e261f] transition hover:bg-[#f1e4d1]"
+                className="flex h-8 w-8 items-center justify-center rounded-full text-xl text-ink transition hover:bg-[#f1e4d1]"
               >
                 ×
               </button>
@@ -1825,14 +1825,14 @@ function FormationForm({
             <h3 id="titre-modal-etape-manquante" className="mb-3 titre-section">
               {blocageFormulaire.titre}
             </h3>
-            <p className="text-base leading-relaxed text-[#2e261f]">{blocageFormulaire.message}</p>
-            <p className="mt-4 rounded-[12px] bg-[#f6efe3] px-4 py-3 text-sm leading-relaxed text-[#2e261f]">
+            <p className="text-base leading-relaxed text-ink">{blocageFormulaire.message}</p>
+            <p className="mt-4 rounded-[12px] bg-surface-sunken px-4 py-3 text-sm leading-relaxed text-ink">
               Pas d’inquiétude : le formulaire s’ouvrira progressivement à mesure que vous avancez.
             </p>
             <button
               type="button"
               onClick={revenirAuChampManquant}
-              className="mt-6 w-full rounded-full bg-[#0d6738] px-5 py-3 font-semibold text-white transition hover:bg-[#09572f]"
+              className="mt-6 w-full rounded-full bg-brand px-5 py-3 font-semibold text-white transition hover:bg-brand-700"
             >
               {blocageFormulaire.action}
             </button>
@@ -1841,7 +1841,7 @@ function FormationForm({
       )}
 
       <div className="flex flex-col gap-3 sm:flex-row">
-        <button type="button" onClick={onCancel} className="rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-8 py-4 text-base font-semibold text-[#2e261f] hover:bg-[#f6efe3]">
+        <button type="button" onClick={onCancel} className="rounded-[14px] border border-line-strong bg-surface px-8 py-4 text-base font-semibold text-ink hover:bg-surface-sunken">
           Annuler
         </button>
         <button
@@ -1877,12 +1877,12 @@ function FormationForm({
               mentionEstAutre: mentionAutre,
             });
           }}
-          className={`flex-1 rounded-[14px] px-8 py-4 text-base font-semibold transition-colors ${canSave ? "bg-[#0d6738] text-white hover:bg-[#09572f]" : "cursor-not-allowed bg-[#eee2d0] text-[#ad9d89]"}`}
+          className={`flex-1 rounded-[14px] px-8 py-4 text-base font-semibold transition-colors ${canSave ? "bg-brand text-white hover:bg-brand-700" : "cursor-not-allowed bg-[#eee2d0] text-[#ad9d89]"}`}
         >
           {initialData ? "Enregistrer les modifications" : "Enregistrer cette formation"}
         </button>
       </div>
-      <p className="mt-3 text-sm text-[#56493e]">
+      <p className="mt-3 text-sm text-ink-soft">
         {canSave
           ? avisDisponible
             ? "Tout est bon, vous pourrez modifier cet avis plus tard."
@@ -2030,9 +2030,9 @@ export default function StepFormations({ onNext, onBack, initialData }: StepForm
   };
 
   return (
-    <section className="min-w-0 overflow-hidden rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-4 shadow-sm sm:p-9 lg:p-12">
-      <h1 className="mb-3 font-display text-3xl font-bold text-[#292119] sm:text-[36px]">Votre parcours de formation</h1>
-      <p className="mb-8 max-w-[1160px] text-base leading-relaxed text-[#2e261f] sm:text-lg">
+    <section className="min-w-0 overflow-hidden rounded-[22px] border border-line bg-surface p-4 shadow-sm sm:p-9 lg:p-12">
+      <h1 className="mb-3 font-display text-3xl font-bold text-ink sm:text-[36px]">Votre parcours de formation</h1>
+      <p className="mb-8 max-w-[1160px] text-base leading-relaxed text-ink sm:text-lg">
         Ajoutez vos établissements : ils seront classés automatiquement du plus récent au plus ancien. Regroupez le brevet ou DEF, le bac et vos autres diplômes sur une seule fiche par école ou lycée. Les questions sur l’insertion concernent uniquement le supérieur.
       </p>
 
@@ -2063,7 +2063,7 @@ export default function StepFormations({ onNext, onBack, initialData }: StepForm
                 key={type}
                 type="button"
                 onClick={() => { setFormOuvert(type); setEditionId(null); }}
-                className="rounded-[14px] border border-dashed border-[#d7b98d] bg-[#fffbf5] px-6 py-4 text-left text-base font-semibold text-[#0d6738] transition-colors hover:border-[#0d6738] hover:bg-[#f6efe3] focus:outline-none focus:ring-2 focus:ring-[#0d6738]/25 sm:text-lg"
+                className="rounded-[14px] border border-dashed border-[#d7b98d] bg-surface px-6 py-4 text-left text-base font-semibold text-brand transition-colors hover:border-brand hover:bg-surface-sunken focus:outline-none focus:ring-2 focus:ring-brand/25 sm:text-lg"
               >
                 + Ajouter {type === "ecole" ? "une école / un lycée" : "un établissement supérieur"}
               </button>
@@ -2071,13 +2071,13 @@ export default function StepFormations({ onNext, onBack, initialData }: StepForm
           </div>
 
           <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
-            <button type="button" onClick={onBack} className="rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-8 py-4 text-base font-semibold text-[#2e261f] hover:bg-[#f6efe3] sm:w-[140px] sm:text-lg">
+            <button type="button" onClick={onBack} className="rounded-[14px] border border-line-strong bg-surface px-8 py-4 text-base font-semibold text-ink hover:bg-surface-sunken sm:w-[140px] sm:text-lg">
               Retour
             </button>
             <button
               type="button"
               onClick={() => onNext(trierParDateDebut(formations).map(nettoyerAvisNonEligible))}
-              className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${formations.length ? "bg-[#0d6738] hover:bg-[#09572f]" : "bg-[#aa997f] hover:bg-[#96866e]"}`}
+              className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${formations.length ? "bg-brand hover:bg-brand-700" : "bg-[#aa997f] hover:bg-[#96866e]"}`}
             >
               {formations.length ? "Continuer vers les expériences" : "Passer cette étape"}
             </button>

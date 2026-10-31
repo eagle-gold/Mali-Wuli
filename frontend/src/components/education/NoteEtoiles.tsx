@@ -10,7 +10,7 @@ export default function NoteEtoiles({ note, compacte = false }: { note: number; 
           aria-hidden="true"
           size={compacte ? 17 : 21}
           strokeWidth={2}
-          className="text-[#f4b400]"
+          className="text-gold"
           fill={index < remplies ? "currentColor" : "none"}
         />
       ))}

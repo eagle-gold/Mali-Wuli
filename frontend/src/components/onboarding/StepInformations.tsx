@@ -46,7 +46,7 @@ const PAYS_DE_SECOURS: PaysOption[] = [
 ];
 
 const CHAMP_CLASS =
-  "w-full rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-5 py-4 text-base text-[#2e261f] outline-none transition focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 sm:text-lg";
+  "w-full rounded-[14px] border border-line-strong bg-surface px-5 py-4 text-base text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 sm:text-lg";
 
 export default function StepInformations({ onNext, onBack, initialData }: StepInformationsProps) {
   const [form, setForm] = useState<InfoData>(() => ({
@@ -221,20 +221,20 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
     <form
       onSubmit={handleSubmit}
       noValidate
-      className="rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-6 shadow-sm sm:p-9 lg:p-12"
+      className="rounded-[22px] border border-line bg-surface p-6 shadow-sm sm:p-9 lg:p-12"
     >
-      <h1 className="mb-3 font-display text-3xl font-bold text-[#292119] sm:text-[36px]">
+      <h1 className="mb-3 font-display text-3xl font-bold text-ink sm:text-[36px]">
         Vos informations personnelles
       </h1>
-      <p className="mb-9 max-w-[1120px] text-base leading-relaxed text-[#2e261f] sm:text-lg">
+      <p className="mb-9 max-w-[1120px] text-base leading-relaxed text-ink sm:text-lg">
         Ce qui vous identifie dans l&apos;annuaire et permet aux autres membres de vous retrouver.
         Les champs marqués d&apos;un astérisque sont obligatoires.
       </p>
 
       <div className="mb-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6">
         <div>
-          <label htmlFor="prenom" className="mb-2 block text-base font-semibold text-[#2e261f]">
-            Prénom <span className="text-[#c65327]">*</span>
+          <label htmlFor="prenom" className="mb-2 block text-base font-semibold text-ink">
+            Prénom <span className="text-clay">*</span>
           </label>
           <input
             id="prenom"
@@ -248,8 +248,8 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
         </div>
 
         <div>
-          <label htmlFor="nom" className="mb-2 block text-base font-semibold text-[#2e261f]">
-            Nom <span className="text-[#c65327]">*</span>
+          <label htmlFor="nom" className="mb-2 block text-base font-semibold text-ink">
+            Nom <span className="text-clay">*</span>
           </label>
           <input
             id="nom"
@@ -264,7 +264,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
       </div>
 
       <div className="mb-6">
-        <label htmlFor="titre" className="mb-2 block text-base font-semibold text-[#2e261f]">
+        <label htmlFor="titre" className="mb-2 block text-base font-semibold text-ink">
           Titre personnalisé <span className="font-normal">· optionnel</span>
         </label>
         <input
@@ -278,14 +278,14 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
           aria-describedby="titre-aide"
           className={CHAMP_CLASS}
         />
-        <p id="titre-aide" className="mt-2 text-sm text-[#2e261f] sm:text-base">
+        <p id="titre-aide" className="mt-2 text-sm text-ink sm:text-base">
           Affiché sous votre nom dans tout le réseau. Laissez ce champ vide : il suit automatiquement votre parcours,
           « Poste - Entreprise » ou « Étudiant(e) - Université » si vous étudiez, sinon « Membre du réseau ».
         </p>
       </div>
 
       <div className="mb-6">
-        <label htmlFor="indicatif" className="mb-2 block text-base font-semibold text-[#2e261f]">
+        <label htmlFor="indicatif" className="mb-2 block text-base font-semibold text-ink">
           Numéro de téléphone <span className="font-normal">· optionnel</span>
         </label>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-[320px_1fr]">
@@ -312,15 +312,15 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
             className={CHAMP_CLASS}
           />
         </div>
-        <p className="mt-2 text-sm text-[#2e261f] sm:text-base">
+        <p className="mt-2 text-sm text-ink sm:text-base">
           Jamais affiché publiquement.
         </p>
       </div>
 
       <div className="mb-6 grid grid-cols-1 gap-5 md:grid-cols-2 lg:gap-6">
         <div>
-          <label htmlFor="pays" className="mb-2 block text-base font-semibold text-[#2e261f]">
-            Pays de résidence <span className="text-[#c65327]">*</span>
+          <label htmlFor="pays" className="mb-2 block text-base font-semibold text-ink">
+            Pays de résidence <span className="text-clay">*</span>
           </label>
           <select
             id="pays"
@@ -337,8 +337,8 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
         </div>
 
         <div className="min-w-0">
-          <label htmlFor="ville" className="mb-2 block text-base font-semibold text-[#2e261f]">
-            Ville <span className="text-[#c65327]">*</span>
+          <label htmlFor="ville" className="mb-2 block text-base font-semibold text-ink">
+            Ville <span className="text-clay">*</span>
           </label>
           <input
             id="ville"
@@ -364,10 +364,10 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
                 id="resultats-villes"
                 role="listbox"
                 aria-label={`Villes de ${form.pays}`}
-                className="mt-2 max-h-60 overflow-y-auto rounded-[14px] border border-[#dfc9a8] bg-white p-2 shadow-lg"
+                className="mt-2 max-h-60 overflow-y-auto rounded-[14px] border border-line-strong bg-white p-2 shadow-lg"
               >
                 {erreurRechercheVille ? (
-                  <p className="px-4 py-3 text-sm text-[#74685c]" role="status">
+                  <p className="px-4 py-3 text-sm text-ink-muted" role="status">
                     La recherche est momentanément indisponible. Saisissez le nom complet de votre
                     ville pour continuer.
                   </p>
@@ -383,45 +383,45 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
                       onMouseEnter={() => setVilleActive(index)}
                       className={`flex w-full items-center justify-between gap-4 rounded-[10px] px-4 py-3 text-left text-sm transition-colors sm:text-base ${
                         index === villeActive
-                          ? "bg-[#eaf1e9] text-[#0d6738]"
-                          : "text-[#2e261f] hover:bg-[#f6efe3]"
+                          ? "bg-[#eaf1e9] text-brand"
+                          : "text-ink hover:bg-surface-sunken"
                       }`}
                     >
                       <span className="font-semibold">{ville.nom}</span>
                       {ville.region && (
-                        <span className="truncate text-xs text-[#74685c] sm:text-sm">
+                        <span className="truncate text-xs text-ink-muted sm:text-sm">
                           {ville.region}
                         </span>
                       )}
                     </button>
                   ))
                 ) : (
-                  <p className="px-4 py-3 text-sm text-[#74685c]">
+                  <p className="px-4 py-3 text-sm text-ink-muted">
                     Aucune ville trouvée. Vérifiez l&apos;orthographe ou essayez un autre nom.
                   </p>
                 )}
               </div>
             )}
 
-          <p className="mt-2 text-xs text-[#74685c]">
+          <p className="mt-2 text-xs text-ink-muted">
             Tapez au moins 2 lettres. Si votre ville n&apos;apparaît pas, saisissez son nom complet.
           </p>
         </div>
       </div>
 
-      <fieldset className="mb-8 min-w-0 border-t border-[#e4d2b3] pt-6" aria-describedby="reseaux-sociaux-description">
-        <legend className="px-1 text-lg font-semibold text-[#2e261f]">Réseaux sociaux (facultatif)</legend>
-        <p id="reseaux-sociaux-description" className="mb-5 text-sm leading-relaxed text-[#695c4b]">Ces liens seront visibles sur votre profil. Vous pouvez les modifier ou les retirer à tout moment.</p>
+      <fieldset className="mb-8 min-w-0 border-t border-line pt-6" aria-describedby="reseaux-sociaux-description">
+        <legend className="px-1 text-lg font-semibold text-ink">Réseaux sociaux (facultatif)</legend>
+        <p id="reseaux-sociaux-description" className="mb-5 text-sm leading-relaxed text-ink-muted">Ces liens seront visibles sur votre profil. Vous pouvez les modifier ou les retirer à tout moment.</p>
         <div className="grid min-w-0 grid-cols-1 gap-5 md:grid-cols-2">
           {RESEAUX_SOCIAUX.map(({ cle, nom, exemple }) => <div key={cle} className="min-w-0">
-            <label htmlFor={`reseau-${cle}`} className="mb-2 block text-base font-semibold text-[#2e261f]">{nom}</label>
+            <label htmlFor={`reseau-${cle}`} className="mb-2 block text-base font-semibold text-ink">{nom}</label>
             <input id={`reseau-${cle}`} name={cle} type="url" inputMode="url" autoComplete="off" autoCapitalize="none" spellCheck={false} maxLength={LONGUEUR_MAX_LIEN_SOCIAL} value={form[cle] || ""} onChange={(event) => handleChange(cle, event.target.value)} onBlur={() => { const message = erreurLienSocial(form[cle], nom); setErreursLiens((precedent) => ({ ...precedent, [cle]: message || undefined })); }} placeholder={exemple} aria-invalid={Boolean(erreursLiens[cle])} aria-describedby={erreursLiens[cle] ? `erreur-reseau-${cle}` : "reseaux-sociaux-description"} className={CHAMP_CLASS + " min-w-0"} />
             {erreursLiens[cle] && <p id={`erreur-reseau-${cle}`} className="mt-2 text-sm text-[#8a3e27]" role="alert">{erreursLiens[cle]}</p>}
           </div>)}
         </div>
       </fieldset>
 
-      <div className="mb-9 rounded-[14px] bg-[#f6efe3] px-5 py-4 text-base text-[#2e261f] sm:text-lg">
+      <div className="mb-9 rounded-[14px] bg-surface-sunken px-5 py-4 text-base text-ink sm:text-lg">
         Vous apparaîtrez comme{" "}
         <strong>{nomAnnuaire}{form.titre?.trim() ? ` · ${form.titre.trim()}` : ""} · {villeAnnuaire}, {form.pays}</strong>{" "}
         dans l&apos;annuaire.
@@ -431,7 +431,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
         <button
           type="button"
           onClick={onBack}
-          className="rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-8 py-4 text-base font-semibold text-[#2e261f] transition-colors hover:bg-[#f6efe3] sm:w-[140px] sm:text-lg"
+          className="rounded-[14px] border border-line-strong bg-surface px-8 py-4 text-base font-semibold text-ink transition-colors hover:bg-surface-sunken sm:w-[140px] sm:text-lg"
         >
           Retour
         </button>
@@ -440,7 +440,7 @@ export default function StepInformations({ onNext, onBack, initialData }: StepIn
           disabled={!canContinue}
           className={`flex-1 rounded-full px-8 py-4 text-base font-semibold transition-colors sm:text-lg ${
             canContinue
-              ? "bg-[#0d6738] text-white hover:bg-[#09572f]"
+              ? "bg-brand text-white hover:bg-brand-700"
               : "cursor-not-allowed bg-[#eee2d0] text-[#ad9d89]"
           }`}
         >

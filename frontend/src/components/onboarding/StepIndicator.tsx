@@ -27,7 +27,7 @@ export default function StepIndicator({ currentStep, steps }: StepIndicatorProps
             >
               <div
                 className={`mb-3 h-1 w-full rounded-full transition-colors ${
-                  isActive ? "bg-[#0d6738]" : "bg-[#e3d8c4]"
+                  isActive ? "bg-brand" : "bg-[#e3d8c4]"
                 }`}
               />
 
@@ -35,9 +35,9 @@ export default function StepIndicator({ currentStep, steps }: StepIndicatorProps
                 <span
                   className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold transition-colors sm:h-8 sm:w-8 sm:text-sm ${
                     isCurrent
-                      ? "bg-[#2e261f] text-white"
+                      ? "bg-ink text-white"
                       : isCompleted
-                        ? "bg-[#0d6738] text-white"
+                        ? "bg-brand text-white"
                         : "bg-[#e3d8c4] text-[#ad9d89]"
                   }`}
                 >
@@ -60,9 +60,9 @@ export default function StepIndicator({ currentStep, steps }: StepIndicatorProps
                 <span
                   className={`block min-w-0 break-words text-[10px] font-semibold leading-tight transition-colors sm:text-sm lg:text-base ${
                     isCurrent
-                      ? "text-[#2e261f]"
+                      ? "text-ink"
                       : isCompleted
-                        ? "text-[#0d6738]"
+                        ? "text-brand"
                         : "text-[#ad9d89]"
                   }`}
                 >

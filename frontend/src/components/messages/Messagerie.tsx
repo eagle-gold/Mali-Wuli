@@ -60,7 +60,7 @@ type ConversationLocale = {
 };
 
 const TONS: Record<TonAvatar, string> = {
-  vert: "bg-[#e4f1ea] text-[#0d6738]",
+  vert: "bg-[#e4f1ea] text-brand",
   orange: "bg-[#f7e5d8] text-[#bd592d]",
   sable: "bg-[#efe4d1] text-[#705136]",
 };
@@ -514,14 +514,14 @@ export default function Messagerie() {
   return (
     <section
       aria-label="Messagerie"
-      className="flex h-[calc(100dvh-156px)] min-h-[320px] overflow-hidden border-t border-[#eadfce] bg-[var(--color-page)] sm:h-[calc(100dvh-176px)] md:h-[calc(100dvh-96px)] lg:h-[calc(100dvh-112px)]"
+      className="flex h-[calc(100dvh-var(--mw-header-h)-64px)] min-h-[320px] overflow-hidden border-t border-line-soft bg-[var(--color-page)] lg:h-[calc(100dvh-var(--mw-header-h))]"
     >
       <aside
         aria-label="Conversations"
-        className={`${conversationMobile ? "hidden md:flex" : "flex"} min-w-0 w-full shrink-0 flex-col border-r border-[#eadfce] bg-[#fffaf3] md:w-[350px] xl:w-[480px]`}
+        className={`${conversationMobile ? "hidden md:flex" : "flex"} min-w-0 w-full shrink-0 flex-col border-r border-line-soft bg-[#fffaf3] md:w-[350px] xl:w-[480px]`}
       >
         <div className="flex min-h-[86px] items-center justify-between gap-2 px-3 py-4 min-[360px]:gap-3 min-[360px]:px-4 sm:px-6">
-          <h1 className="font-display text-2xl font-bold leading-none text-[#292119] min-[360px]:text-3xl sm:text-4xl">Messages</h1>
+          <h1 className="font-display text-2xl font-bold leading-none text-ink min-[360px]:text-3xl sm:text-4xl">Messages</h1>
           <button
             ref={boutonNouvelleConversation}
             type="button"
@@ -529,7 +529,7 @@ export default function Messagerie() {
               setNouveauMessage(true);
               setRechercheContact("");
             }}
-            className="min-h-12 shrink-0 rounded-xl bg-[#0d6738] px-3 py-3 text-xs font-bold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 min-[360px]:px-4 min-[360px]:text-sm sm:px-5 sm:text-base"
+            className="min-h-12 shrink-0 rounded-xl bg-brand px-3 py-3 text-xs font-bold text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 min-[360px]:px-4 min-[360px]:text-sm sm:px-5 sm:text-base"
           >
             Nouveau message
           </button>
@@ -537,7 +537,7 @@ export default function Messagerie() {
 
         {nouveauMessage ? (
           <div className="min-h-0 flex-1 px-4 pb-4 sm:px-6">
-            <section className="flex max-h-full min-h-0 flex-col rounded-2xl border border-[#eadfce] bg-[#fffdf9] p-4 sm:p-5">
+            <section className="flex max-h-full min-h-0 flex-col rounded-2xl border border-line-soft bg-surface-raised p-4 sm:p-5">
               <div className="flex items-center justify-between gap-4">
                 <h2 className="titre-element">À qui écrivez-vous ?</h2>
                 <button
@@ -546,7 +546,7 @@ export default function Messagerie() {
                     setNouveauMessage(false);
                     window.setTimeout(() => boutonNouvelleConversation.current?.focus(), 0);
                   }}
-                  className="min-h-11 rounded-lg px-2 font-semibold text-[#978775] hover:text-[#2d241d] focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
+                  className="min-h-11 rounded-lg px-2 font-semibold text-[#978775] hover:text-ink focus:outline-none focus:ring-2 focus:ring-brand"
                 >
                   Annuler
                 </button>
@@ -559,12 +559,12 @@ export default function Messagerie() {
                   value={rechercheContact}
                   onChange={(event) => setRechercheContact(event.target.value)}
                   placeholder="Nom ou prénom d’un membre"
-                  className="h-14 w-full rounded-full border border-[#eee3d0] bg-[#f4ecdc] px-5 text-base text-[#2d241d] outline-none placeholder:text-[#8f8b86] focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 sm:text-lg"
+                  className="h-14 w-full rounded-full border border-[#eee3d0] bg-[#f4ecdc] px-5 text-base text-ink outline-none placeholder:text-[#8f8b86] focus:border-brand focus:ring-2 focus:ring-brand/20 sm:text-lg"
                 />
               </label>
               <div className="mt-3 min-h-0 flex-1 overflow-y-auto overscroll-contain" aria-live="polite">
                 {chargementContacts ? (
-                  <p className="px-3 py-8 text-center text-sm text-[#887764]">Recherche des membres…</p>
+                  <p className="px-3 py-8 text-center text-sm text-ink-muted">Recherche des membres…</p>
                 ) : erreurContacts ? (
                   <p className="px-3 py-8 text-center text-sm font-medium text-[#bd592d]" role="alert">{erreurContacts}</p>
                 ) : contactsAffiches.length ? (
@@ -578,20 +578,20 @@ export default function Messagerie() {
                       type="button"
                       disabled={creationConversation}
                       onClick={() => void choisirContact(contact)}
-                      className="flex min-h-[76px] w-full items-center gap-4 rounded-xl px-2 py-3 text-left transition hover:bg-[#f4ecdc] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#0d6738] disabled:opacity-60 sm:px-3"
+                      className="flex min-h-[76px] w-full items-center gap-4 rounded-xl px-2 py-3 text-left transition hover:bg-[#f4ecdc] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand disabled:opacity-60 sm:px-3"
                     >
                       <Avatar personne={contact} />
                       <span className="min-w-0">
-                        <strong className="block truncate text-base text-[#2d241d] sm:text-lg">{contact.nom}</strong>
-                        <span className="block truncate text-sm text-[#887764] sm:text-base">{[contact.fonction, contact.ville].filter(Boolean).join(" · ")}</span>
+                        <strong className="block truncate text-base text-ink sm:text-lg">{contact.nom}</strong>
+                        <span className="block truncate text-sm text-ink-muted sm:text-base">{[contact.fonction, contact.ville].filter(Boolean).join(" · ")}</span>
                       </span>
                     </button>
                     ))}
                   </>
                 ) : rechercheContactActive && rechercheContactFaite ? (
-                  <p className="px-3 py-8 text-center text-sm text-[#887764]">Aucun membre trouvé.</p>
+                  <p className="px-3 py-8 text-center text-sm text-ink-muted">Aucun membre trouvé.</p>
                 ) : (
-                  <p className="px-3 py-8 text-center text-sm text-[#887764]">Tapez au moins 2 lettres du nom.</p>
+                  <p className="px-3 py-8 text-center text-sm text-ink-muted">Tapez au moins 2 lettres du nom.</p>
                 )}
               </div>
             </section>
@@ -605,16 +605,16 @@ export default function Messagerie() {
                 value={recherche}
                 onChange={(event) => setRecherche(event.target.value)}
                 placeholder="Rechercher une conversation"
-                className="h-14 w-full rounded-full border border-[#eee3d0] bg-[#f4ecdc] px-5 text-base text-[#2d241d] outline-none placeholder:text-[#8f8b86] focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"
+                className="h-14 w-full rounded-full border border-[#eee3d0] bg-[#f4ecdc] px-5 text-base text-ink outline-none placeholder:text-[#8f8b86] focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
             </label>
             <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain pb-3" aria-label="Liste des conversations" aria-live="polite">
               {chargementConversations ? (
-                <p className="px-6 py-10 text-center text-sm text-[#887764]">Chargement de vos conversations…</p>
+                <p className="px-6 py-10 text-center text-sm text-ink-muted">Chargement de vos conversations…</p>
               ) : erreurConversations ? (
                 <div className="px-6 py-10 text-center">
                   <p className="text-sm font-medium text-[#bd592d]" role="alert">{erreurConversations}</p>
-                  <button type="button" onClick={() => void chargerConversations()} className="mt-3 min-h-10 rounded-lg border border-[#0d6738] px-4 text-sm font-bold text-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738]">Réessayer</button>
+                  <button type="button" onClick={() => void chargerConversations()} className="mt-3 min-h-10 rounded-lg border border-brand px-4 text-sm font-bold text-brand focus:outline-none focus:ring-2 focus:ring-brand">Réessayer</button>
                 </div>
               ) : conversationsFiltrees.length ? (
                 conversationsFiltrees.map((conversation) => {
@@ -627,22 +627,22 @@ export default function Messagerie() {
                       aria-label={`Ouvrir la conversation avec ${conversation.interlocuteur.nom}`}
                       aria-current={active ? "true" : undefined}
                       onClick={() => ouvrirConversation(conversation.id)}
-                      className={`relative flex min-h-[88px] w-full items-center gap-4 border-l-4 px-4 py-3 text-left transition focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#0d6738] sm:px-5 ${active ? "border-[#0d6738] bg-[#edf5f0]" : "border-transparent hover:bg-[#f8f1e6]"}`}
+                      className={`relative flex min-h-[88px] w-full items-center gap-4 border-l-4 px-4 py-3 text-left transition focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand sm:px-5 ${active ? "border-brand bg-[#edf5f0]" : "border-transparent hover:bg-[#f8f1e6]"}`}
                     >
                       <Avatar personne={conversation.interlocuteur} />
                       <span className="min-w-0 flex-1">
                         <span className="flex items-center gap-2">
-                          <strong className="min-w-0 flex-1 truncate text-base text-[#2d241d] sm:text-lg">{conversation.interlocuteur.nom}</strong>
+                          <strong className="min-w-0 flex-1 truncate text-base text-ink sm:text-lg">{conversation.interlocuteur.nom}</strong>
                           <span className="shrink-0 text-xs text-[#a39583] sm:text-sm">{heureConversationDe(conversation.derniereActivite)}</span>
                         </span>
-                        <span className={`mt-1 block truncate text-sm sm:text-base ${conversation.nonLus ? "font-semibold text-[#55483b]" : "text-[#887764]"}`}>{conversation.apercu}</span>
+                        <span className={`mt-1 block truncate text-sm sm:text-base ${conversation.nonLus ? "font-semibold text-[#55483b]" : "text-ink-muted"}`}>{conversation.apercu}</span>
                       </span>
                       {conversation.nonLus > 0 && <span className="sr-only">{conversation.nonLus} message non lu</span>}
                     </button>
                   );
                 })
               ) : (
-                <p className="px-6 py-10 text-center text-sm text-[#887764]">
+                <p className="px-6 py-10 text-center text-sm text-ink-muted">
                   {conversations.length ? "Aucune conversation ne correspond à votre recherche." : "Vous n’avez pas encore de conversation."}
                 </p>
               )}
@@ -656,7 +656,7 @@ export default function Messagerie() {
           aria-label={`Conversation avec ${conversationActive.interlocuteur.nom}`}
           className={`${conversationMobile ? "flex" : "hidden md:flex"} min-w-0 flex-1 flex-col bg-[#fcf9f3]`}
         >
-          <header className="flex min-h-[92px] shrink-0 items-center gap-3 border-b border-[#eadfce] bg-[#fffdf9] px-4 py-3 sm:gap-4 sm:px-7 lg:min-h-[108px]">
+          <header className="flex min-h-[92px] shrink-0 items-center gap-3 border-b border-line-soft bg-surface-raised px-4 py-3 sm:gap-4 sm:px-7 lg:min-h-[108px]">
             <button
               type="button"
               aria-label="Revenir aux conversations"
@@ -664,24 +664,24 @@ export default function Messagerie() {
                 setConversationMobile(false);
                 window.setTimeout(() => boutonConversationActive.current?.focus(), 0);
               }}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-[#2d241d] hover:bg-[#f4ecdc] focus:outline-none focus:ring-2 focus:ring-[#0d6738] md:hidden"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink hover:bg-[#f4ecdc] focus:outline-none focus:ring-2 focus:ring-brand md:hidden"
             >
               <ArrowLeft aria-hidden="true" size={23} />
             </button>
             <Avatar personne={conversationActive.interlocuteur} grand />
             <div className="min-w-0">
               <h2 className="truncate titre-element">{conversationActive.interlocuteur.nom}</h2>
-              <p className="truncate text-sm text-[#887764] sm:text-lg">{[conversationActive.interlocuteur.fonction, conversationActive.interlocuteur.ville].filter(Boolean).join(" · ")}</p>
+              <p className="truncate text-sm text-ink-muted sm:text-lg">{[conversationActive.interlocuteur.fonction, conversationActive.interlocuteur.ville].filter(Boolean).join(" · ")}</p>
             </div>
           </header>
 
           <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-6 sm:px-7 sm:py-7">
             {chargementDetail && !conversationActive.detailCharge ? (
-              <div className="flex h-full min-h-48 items-center justify-center text-sm text-[#887764]">Chargement des messages…</div>
+              <div className="flex h-full min-h-48 items-center justify-center text-sm text-ink-muted">Chargement des messages…</div>
             ) : erreurDetail && !conversationActive.detailCharge ? (
               <div className="flex h-full min-h-48 flex-col items-center justify-center text-center">
                 <p className="text-sm font-medium text-[#bd592d]" role="alert">{erreurDetail}</p>
-                <button type="button" onClick={() => void chargerDetail(conversationActive.id)} className="mt-3 min-h-10 rounded-lg border border-[#0d6738] px-4 text-sm font-bold text-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738]">Réessayer</button>
+                <button type="button" onClick={() => void chargerDetail(conversationActive.id)} className="mt-3 min-h-10 rounded-lg border border-brand px-4 text-sm font-bold text-brand focus:outline-none focus:ring-2 focus:ring-brand">Réessayer</button>
               </div>
             ) : conversationActive.messages.length ? (
               <div className="space-y-5" role="log" aria-live="polite" aria-relevant="additions">
@@ -691,7 +691,7 @@ export default function Messagerie() {
                       type="button"
                       disabled={chargementAnciens}
                       onClick={() => void chargerDetail(conversationActive.id, conversationActive.nextCursor || undefined)}
-                      className="min-h-10 rounded-full border border-[#d9c7ad] bg-[#fffdf9] px-4 text-sm font-semibold text-[#765131] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:opacity-60"
+                      className="min-h-10 rounded-full border border-[#d9c7ad] bg-surface-raised px-4 text-sm font-semibold text-[#765131] focus:outline-none focus:ring-2 focus:ring-brand disabled:opacity-60"
                     >
                       {chargementAnciens ? "Chargement…" : "Afficher les messages précédents"}
                     </button>
@@ -699,7 +699,7 @@ export default function Messagerie() {
                 )}
                 {conversationActive.messages.map((message) => (
                   <div key={message.id} className={`flex flex-col ${message.auteur === "moi" ? "items-end" : "items-start"}`}>
-                    <p className={`min-w-0 max-w-[90%] whitespace-pre-wrap [overflow-wrap:anywhere] rounded-[18px] px-5 py-4 text-base leading-relaxed sm:max-w-[76%] sm:px-6 sm:py-5 sm:text-lg lg:text-[22px] ${message.auteur === "moi" ? "bg-[#765131] text-white" : "bg-[#f0e5d0] text-[#2d241d]"}`}>
+                    <p className={`min-w-0 max-w-[90%] whitespace-pre-wrap [overflow-wrap:anywhere] rounded-[18px] px-5 py-4 text-base leading-relaxed sm:max-w-[76%] sm:px-6 sm:py-5 sm:text-lg lg:text-[22px] ${message.auteur === "moi" ? "bg-[#765131] text-white" : "bg-[#f0e5d0] text-ink"}`}>
                       <ContenuMessage contenu={message.contenu} />
                     </p>
                     <div className="mt-2 flex items-center gap-2">
@@ -710,7 +710,7 @@ export default function Messagerie() {
                           aria-haspopup="dialog"
                           aria-label={`Signaler ce message de ${conversationActive.interlocuteur.nom}`}
                           onClick={() => setMessageASignaler(message.id)}
-                          className="inline-flex min-h-8 items-center gap-1 rounded-md px-1.5 text-xs font-semibold text-[#a39583] transition hover:bg-[#f5ecdf] hover:text-[#a3321f] focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
+                          className="inline-flex min-h-8 items-center gap-1 rounded-md px-1.5 text-xs font-semibold text-[#a39583] transition hover:bg-surface-sunken hover:text-danger focus:outline-none focus:ring-2 focus:ring-brand"
                         >
                           <Flag aria-hidden="true" size={13} />
                           Signaler
@@ -726,14 +726,14 @@ export default function Messagerie() {
               <div className="flex h-full min-h-48 items-center justify-center text-center">
                 <div>
                   <Avatar personne={conversationActive.interlocuteur} grand />
-                  <p className="mt-4 font-semibold text-[#2d241d]">Commencez la conversation avec {conversationActive.interlocuteur.nom}.</p>
+                  <p className="mt-4 font-semibold text-ink">Commencez la conversation avec {conversationActive.interlocuteur.nom}.</p>
                   {erreurEnvoi && <p className="mt-2 text-sm font-medium text-[#bd592d]" role="alert">{erreurEnvoi}</p>}
                 </div>
               </div>
             )}
           </div>
 
-          <form onSubmit={(event) => void envoyer(event)} className="flex shrink-0 items-end gap-3 border-t border-[#eadfce] bg-[#fffdf9] p-4 sm:px-7 sm:py-5">
+          <form onSubmit={(event) => void envoyer(event)} className="flex shrink-0 items-end gap-3 border-t border-line-soft bg-surface-raised p-4 sm:px-7 sm:py-5">
             <label className="min-w-0 flex-1">
               <span className="sr-only">Écrire un message</span>
               <textarea
@@ -749,13 +749,13 @@ export default function Messagerie() {
                 }}
                 onKeyDown={gererClavier}
                 placeholder="Écrire un message"
-                className="block max-h-32 min-h-14 w-full resize-none rounded-[28px] border border-[#eee3d0] bg-[#f4ecdc] px-5 py-4 text-base leading-6 text-[#2d241d] outline-none placeholder:text-[#8f8b86] focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 disabled:opacity-70 sm:px-6 sm:text-lg"
+                className="block max-h-32 min-h-14 w-full resize-none rounded-[28px] border border-[#eee3d0] bg-[#f4ecdc] px-5 py-4 text-base leading-6 text-ink outline-none placeholder:text-[#8f8b86] focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:opacity-70 sm:px-6 sm:text-lg"
               />
             </label>
             <button
               type="submit"
               disabled={!contenu.trim() || envoiEnCours}
-              className="flex min-h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-[#0d6738] px-5 font-bold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:min-w-[150px] sm:px-7 sm:text-lg"
+              className="flex min-h-14 shrink-0 items-center justify-center gap-2 rounded-full bg-brand px-5 font-bold text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 sm:min-w-[150px] sm:px-7 sm:text-lg"
             >
               <Send aria-hidden="true" size={19} className="sm:hidden" />
               <span className="hidden sm:inline">{envoiEnCours ? "Envoi…" : "Envoyer"}</span>
@@ -764,7 +764,7 @@ export default function Messagerie() {
           </form>
         </article>
       ) : (
-        <div className="hidden flex-1 items-center justify-center text-[#887764] md:flex">
+        <div className="hidden flex-1 items-center justify-center text-ink-muted md:flex">
           {chargementConversations ? "Chargement…" : "Sélectionnez une conversation."}
         </div>
       )}

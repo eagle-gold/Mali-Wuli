@@ -232,16 +232,16 @@ export default function LoginPage() {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-[var(--color-page)] px-4 py-10">
-      <section className="w-full max-w-md rounded-2xl border border-[#e4d2b3] bg-[#fffbf5] p-6 shadow-sm sm:p-8">
-        <p className="mb-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-[#0d6738]">
+      <section className="w-full max-w-md rounded-2xl border border-line bg-surface p-6 shadow-sm sm:p-8">
+        <p className="mb-3 text-center text-xs font-bold uppercase tracking-[0.16em] text-brand">
           {modeConnexion === "otp"
             ? `Code reçu par e-mail · étape ${etape === "email" ? "1" : "2"} sur 2`
             : "Avec mon mot de passe"}
         </p>
-        <h1 className="mb-3 text-center font-display text-3xl font-bold text-[#292119]">
+        <h1 className="mb-3 text-center font-display text-3xl font-bold text-ink">
           Se connecter
         </h1>
-        <p className="mb-5 text-center text-sm leading-relaxed text-[#776b5e]">
+        <p className="mb-5 text-center text-sm leading-relaxed text-ink-muted">
           {modeConnexion === "mot-de-passe"
             ? "Connectez-vous avec le mot de passe créé lors de votre inscription."
             : etape === "email"
@@ -259,10 +259,10 @@ export default function LoginPage() {
             onClick={() => choisirMode("otp")}
             disabled={chargement}
             aria-pressed={modeConnexion === "otp"}
-            className={`min-h-12 rounded-lg px-3 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-1 ${
+            className={`min-h-12 rounded-lg px-3 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-1 ${
               modeConnexion === "otp"
-                ? "bg-[#0d6738] text-white shadow-sm"
-                : "bg-transparent text-[#2e261f] hover:bg-[#fffbf5]"
+                ? "bg-brand text-white shadow-sm"
+                : "bg-transparent text-ink hover:bg-surface"
             }`}
           >
             Recevoir un code
@@ -272,10 +272,10 @@ export default function LoginPage() {
             onClick={() => choisirMode("mot-de-passe")}
             disabled={chargement}
             aria-pressed={modeConnexion === "mot-de-passe"}
-            className={`min-h-12 rounded-lg px-3 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-1 ${
+            className={`min-h-12 rounded-lg px-3 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-1 ${
               modeConnexion === "mot-de-passe"
-                ? "bg-[#0d6738] text-white shadow-sm"
-                : "bg-transparent text-[#2e261f] hover:bg-[#fffbf5]"
+                ? "bg-brand text-white shadow-sm"
+                : "bg-transparent text-ink hover:bg-surface"
             }`}
           >
             Utiliser mon mot de passe
@@ -296,7 +296,7 @@ export default function LoginPage() {
           <p
             role="status"
             aria-live="polite"
-            className="mb-5 rounded-xl border border-[#bfddcd] bg-[#edf7f1] px-4 py-3 text-sm leading-relaxed text-[#0d6738]"
+            className="mb-5 rounded-xl border border-[#bfddcd] bg-[#edf7f1] px-4 py-3 text-sm leading-relaxed text-brand"
           >
             {information}
           </p>
@@ -311,7 +311,7 @@ export default function LoginPage() {
             <div>
               <label
                 htmlFor="email-mot-de-passe"
-                className="mb-1.5 block text-sm font-semibold text-[#2e261f]"
+                className="mb-1.5 block text-sm font-semibold text-ink"
               >
                 Adresse e-mail
               </label>
@@ -335,7 +335,7 @@ export default function LoginPage() {
                   erreur ? "erreur-connexion" : emailInvalide ? "aide-email-mot-de-passe" : undefined
                 }
                 required
-                className="w-full rounded-xl border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3.5 text-base text-[#2e261f] outline-none transition focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"
+                className="w-full rounded-xl border border-line-strong bg-surface px-4 py-3.5 text-base text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
               {emailInvalide && (
                 <p
@@ -351,13 +351,13 @@ export default function LoginPage() {
               <div className="mb-1.5 flex items-center justify-between gap-3">
                 <label
                   htmlFor="mot-de-passe"
-                  className="block text-sm font-semibold text-[#2e261f]"
+                  className="block text-sm font-semibold text-ink"
                 >
                   Mot de passe
                 </label>
                 <Link
                   href="/forgot-password"
-                  className="text-xs font-semibold text-[#0d6738] underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
+                  className="text-xs font-semibold text-brand underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-brand"
                 >
                   Mot de passe oublié ?
                 </Link>
@@ -377,13 +377,13 @@ export default function LoginPage() {
                   aria-invalid={Boolean(erreur)}
                   aria-describedby={erreur ? "erreur-connexion" : undefined}
                   required
-                  className="w-full rounded-xl border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3.5 pr-12 text-base text-[#2e261f] outline-none transition focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"
+                  className="w-full rounded-xl border border-line-strong bg-surface px-4 py-3.5 pr-12 text-base text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20"
                 />
                 <button
                   type="button"
                   onClick={() => setMotDePasseVisible((visible) => !visible)}
                   aria-label={motDePasseVisible ? "Masquer le mot de passe" : "Afficher le mot de passe"}
-                  className="absolute inset-y-0 right-0 flex w-12 items-center justify-center rounded-r-xl text-[#776b5e] hover:text-[#0d6738] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-[#0d6738]"
+                  className="absolute inset-y-0 right-0 flex w-12 items-center justify-center rounded-r-xl text-ink-muted hover:text-brand focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand"
                 >
                   {motDePasseVisible ? <EyeOff size={19} /> : <Eye size={19} />}
                 </button>
@@ -393,9 +393,9 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={!emailValide || !motDePasse || chargement}
-              className={`w-full rounded-xl py-4 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 ${
+              className={`w-full rounded-xl py-4 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 ${
                 emailValide && motDePasse && !chargement
-                  ? "bg-[#0d6738] text-white hover:bg-[#09572f]"
+                  ? "bg-brand text-white hover:bg-brand-700"
                   : "cursor-not-allowed bg-[#eee2d0] text-[#8a7c6b]"
               }`}
             >
@@ -405,7 +405,7 @@ export default function LoginPage() {
         ) : etape === "email" ? (
           <form onSubmit={handleDemande} className="space-y-5" aria-busy={chargement}>
             <div>
-              <label htmlFor="email" className="mb-1.5 block text-sm font-semibold text-[#2e261f]">
+              <label htmlFor="email" className="mb-1.5 block text-sm font-semibold text-ink">
                 Adresse e-mail
               </label>
               <input
@@ -429,7 +429,7 @@ export default function LoginPage() {
                   erreur ? "erreur-connexion" : emailInvalide ? "aide-email" : undefined
                 }
                 required
-                className="w-full rounded-xl border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3.5 text-base text-[#2e261f] outline-none transition focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"
+                className="w-full rounded-xl border border-line-strong bg-surface px-4 py-3.5 text-base text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
               {emailInvalide && (
                 <p id="aide-email" className="mt-2 text-xs leading-relaxed text-[#9b3b2b]">
@@ -441,9 +441,9 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={!emailValide || chargement}
-              className={`w-full rounded-xl py-4 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 ${
+              className={`w-full rounded-xl py-4 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 ${
                 emailValide && !chargement
-                  ? "bg-[#0d6738] text-white hover:bg-[#09572f]"
+                  ? "bg-brand text-white hover:bg-brand-700"
                   : "cursor-not-allowed bg-[#eee2d0] text-[#8a7c6b]"
               }`}
             >
@@ -453,22 +453,22 @@ export default function LoginPage() {
         ) : (
           <form onSubmit={handleVerification} className="space-y-5" aria-busy={chargement}>
             <div className="rounded-xl border border-[#eadcc5] bg-[#f8f1e6] px-4 py-3">
-              <p className="text-xs font-medium text-[#776b5e]">Code envoyé à</p>
-              <p className="mt-0.5 break-all text-sm font-semibold text-[#2e261f]">
+              <p className="text-xs font-medium text-ink-muted">Code envoyé à</p>
+              <p className="mt-0.5 break-all text-sm font-semibold text-ink">
                 {emailNormalise}
               </p>
               <button
                 type="button"
                 onClick={changerAdresse}
                 disabled={chargement}
-                className="mt-2 min-h-11 text-sm font-semibold text-[#0d6738] underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
+                className="mt-2 min-h-11 text-sm font-semibold text-brand underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-brand"
               >
                 Changer d’adresse e-mail
               </button>
             </div>
 
             <div>
-              <label htmlFor="code-otp" className="mb-1.5 block text-sm font-semibold text-[#2e261f]">
+              <label htmlFor="code-otp" className="mb-1.5 block text-sm font-semibold text-ink">
                 Code reçu par e-mail (6 chiffres)
               </label>
               <input
@@ -490,9 +490,9 @@ export default function LoginPage() {
                 aria-invalid={Boolean(erreur)}
                 aria-describedby={`aide-code${erreur ? " erreur-connexion" : ""}`}
                 required
-                className="w-full rounded-xl border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3.5 text-center font-mono text-2xl font-bold tracking-[0.4em] text-[#2e261f] outline-none transition placeholder:tracking-[0.4em] placeholder:text-[#c8b99f] focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"
+                className="w-full rounded-xl border border-line-strong bg-surface px-4 py-3.5 text-center font-mono text-2xl font-bold tracking-[0.4em] text-ink outline-none transition placeholder:tracking-[0.4em] placeholder:text-[#c8b99f] focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
-              <p id="aide-code" className="mt-2 text-xs leading-relaxed text-[#776b5e]">
+              <p id="aide-code" className="mt-2 text-xs leading-relaxed text-ink-muted">
                 Le code est temporaire et ne peut être utilisé qu’une seule fois.
               </p>
             </div>
@@ -500,9 +500,9 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={!codeValide || chargement}
-              className={`w-full rounded-xl py-4 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 ${
+              className={`w-full rounded-xl py-4 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 ${
                 codeValide && !chargement
-                  ? "bg-[#0d6738] text-white hover:bg-[#09572f]"
+                  ? "bg-brand text-white hover:bg-brand-700"
                   : "cursor-not-allowed bg-[#eee2d0] text-[#8a7c6b]"
               }`}
             >
@@ -511,7 +511,7 @@ export default function LoginPage() {
 
             <div className="text-center text-sm">
               {secondesAvantRenvoi > 0 ? (
-                <p className="text-[#776b5e]">
+                <p className="text-ink-muted">
                   Nouveau code disponible dans {secondesAvantRenvoi} s
                 </p>
               ) : (
@@ -519,7 +519,7 @@ export default function LoginPage() {
                   type="button"
                   onClick={() => void demanderCode(true)}
                   disabled={chargement}
-                  className="min-h-11 font-semibold text-[#0d6738] underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
+                  className="min-h-11 font-semibold text-brand underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-brand"
                 >
                   {actionEnCours === "renvoi" ? "Renvoi en cours…" : "Renvoyer un code"}
                 </button>
@@ -528,9 +528,9 @@ export default function LoginPage() {
           </form>
         )}
 
-        <p className="mt-6 text-center text-sm text-[#2e261f]">
+        <p className="mt-6 text-center text-sm text-ink">
           Pas encore membre ?{" "}
-          <Link href="/register" className="font-semibold text-[#0d6738] hover:underline">
+          <Link href="/register" className="font-semibold text-brand hover:underline">
             S&apos;inscrire
           </Link>
         </p>

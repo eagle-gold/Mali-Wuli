@@ -103,35 +103,35 @@ export default function SignalerContenu({ ouvert, onFermer, cibleType, cibleId, 
     }
   };
 
-  const boutonSecondaire = "inline-flex min-h-11 items-center justify-center rounded-lg border border-[#e4d2b3] bg-white px-4 text-sm font-semibold text-[#4f4339] hover:bg-[#f5ecdf] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:opacity-60";
+  const boutonSecondaire = "inline-flex min-h-11 items-center justify-center rounded-lg border border-line bg-white px-4 text-sm font-semibold text-[#4f4339] hover:bg-surface-sunken focus:outline-none focus:ring-2 focus:ring-brand disabled:opacity-60";
 
   let contenu: ReactNode;
   if (etat.type !== "formulaire") {
     contenu = <div className="px-5 py-5">
-      <p role="status" className={`rounded-xl border p-3 text-sm leading-6 ${etat.type === "succes" ? "border-[#c8dccd] bg-[#edf4ee] text-[#0d6738]" : "border-[#e4d2b3] bg-[#fff8ec] text-[#6b4f2e]"}`}>{etat.message}</p>
+      <p role="status" className={`rounded-xl border p-3 text-sm leading-6 ${etat.type === "succes" ? "border-[#c8dccd] bg-[#edf4ee] text-brand" : "border-line bg-[#fff8ec] text-[#6b4f2e]"}`}>{etat.message}</p>
       <div className="mt-4 flex justify-end">
-        <button type="button" autoFocus onClick={onFermer} className="inline-flex min-h-11 items-center justify-center rounded-lg bg-[#0d6738] px-5 text-sm font-bold text-white hover:bg-[#0a552e] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2">Fermer</button>
+        <button type="button" autoFocus onClick={onFermer} className="inline-flex min-h-11 items-center justify-center rounded-lg bg-brand px-5 text-sm font-bold text-white hover:bg-[#0a552e] focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2">Fermer</button>
       </div>
     </div>;
   } else {
     contenu = <form onSubmit={(event) => void envoyer(event)} className="flex min-h-0 flex-1 flex-col">
       <div className="min-h-0 flex-1 overflow-y-auto px-5 py-4">
         <fieldset>
-          <legend className="text-sm font-semibold text-[#2f261e]">Motif du signalement <span className="text-[#a3321f]" aria-hidden="true">*</span><span className="sr-only">(obligatoire)</span></legend>
+          <legend className="text-sm font-semibold text-ink">Motif du signalement <span className="text-danger" aria-hidden="true">*</span><span className="sr-only">(obligatoire)</span></legend>
           <div className="mt-2 space-y-2">
             {MOTIFS_SIGNALEMENT.map((option) => {
               const choisi = motif === option.code;
-              return <label key={option.code} className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3 transition focus-within:ring-2 focus-within:ring-[#0d6738] ${choisi ? "border-[#0d6738] bg-[#edf4ee]" : "border-[#e4d2b3] bg-white hover:bg-[#fffbf5]"}`}>
-                <input type="radio" name="motif-signalement" value={option.code} checked={choisi} onChange={() => setMotif(option.code)} disabled={enCours} className="mt-1 h-4 w-4 accent-[#0d6738]" />
+              return <label key={option.code} className={`flex cursor-pointer items-start gap-3 rounded-xl border p-3 transition focus-within:ring-2 focus-within:ring-brand ${choisi ? "border-brand bg-[#edf4ee]" : "border-line bg-white hover:bg-surface"}`}>
+                <input type="radio" name="motif-signalement" value={option.code} checked={choisi} onChange={() => setMotif(option.code)} disabled={enCours} className="mt-1 h-4 w-4 accent-brand" />
                 <span className="min-w-0">
-                  <span className="block text-sm font-semibold text-[#2f261e]">{option.libelle}</span>
-                  <span className="block text-xs leading-5 text-[#806f5e]">{option.aide}</span>
+                  <span className="block text-sm font-semibold text-ink">{option.libelle}</span>
+                  <span className="block text-xs leading-5 text-ink-muted">{option.aide}</span>
                 </span>
               </label>;
             })}
           </div>
         </fieldset>
-        <label htmlFor={detailsId} className="mt-4 block text-sm font-semibold text-[#2f261e]">Détails <span className="font-normal text-[#806f5e]">(facultatif)</span></label>
+        <label htmlFor={detailsId} className="mt-4 block text-sm font-semibold text-ink">Détails <span className="font-normal text-ink-muted">(facultatif)</span></label>
         <textarea
           id={detailsId}
           value={details}
@@ -141,14 +141,14 @@ export default function SignalerContenu({ ouvert, onFermer, cibleType, cibleId, 
           disabled={enCours}
           aria-describedby={aideDetailsId}
           placeholder="Aidez l’équipe de modération à comprendre le problème."
-          className="mt-1 w-full resize-y rounded-xl border border-[#e4d2b3] bg-[#fffbf5] px-3 py-2 text-sm leading-6 text-[#342a22] outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/25 disabled:opacity-70"
+          className="mt-1 w-full resize-y rounded-xl border border-line bg-surface px-3 py-2 text-sm leading-6 text-[#342a22] outline-none focus:border-brand focus:ring-2 focus:ring-brand/25 disabled:opacity-70"
         />
         <p id={aideDetailsId} className="mt-1 text-right text-xs text-[#8b7b69]" aria-live="polite">{details.length}/{LONGUEUR_MAX_DETAILS}</p>
-        {erreur && <p role="alert" className="mt-2 rounded-lg border border-[#e8c8b8] bg-[#fff4ef] p-3 text-sm text-[#a3321f]">{erreur}</p>}
+        {erreur && <p role="alert" className="mt-2 rounded-lg border border-[#e8c8b8] bg-[#fff4ef] p-3 text-sm text-danger">{erreur}</p>}
       </div>
-      <div className="flex flex-wrap justify-end gap-2 border-t border-[#eadcc7] px-5 py-3">
+      <div className="flex flex-wrap justify-end gap-2 border-t border-line-soft px-5 py-3">
         <button type="button" onClick={onFermer} disabled={enCours} className={boutonSecondaire}>Annuler</button>
-        <button type="submit" disabled={!motif || enCours} className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-[#0d6738] px-4 text-sm font-bold text-white hover:bg-[#0a552e] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60">
+        <button type="submit" disabled={!motif || enCours} className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-brand px-4 text-sm font-bold text-white hover:bg-[#0a552e] focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60">
           {enCours ? <LoaderCircle aria-hidden="true" size={16} className="animate-spin" /> : <Flag aria-hidden="true" size={16} />}
           {enCours ? "Envoi…" : "Envoyer le signalement"}
         </button>
@@ -168,14 +168,14 @@ export default function SignalerContenu({ ouvert, onFermer, cibleType, cibleId, 
         aria-modal="true"
         aria-labelledby={titreId}
         aria-describedby={descriptionId}
-        className="flex max-h-[92vh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl border border-[#e4d2b3] bg-[#fffbf5] text-[#2f261e] shadow-2xl sm:rounded-2xl"
+        className="flex max-h-[92vh] w-full max-w-lg flex-col overflow-hidden rounded-t-2xl border border-line bg-surface text-ink shadow-2xl sm:rounded-2xl"
       >
-        <header className="flex items-start justify-between gap-4 border-b border-[#eadcc7] px-5 py-4">
+        <header className="flex items-start justify-between gap-4 border-b border-line-soft px-5 py-4">
           <div className="min-w-0">
             <h2 id={titreId} className="titre-section">Signaler {libelleCible}</h2>
-            <p id={descriptionId} className="mt-1 text-sm leading-6 text-[#806f5e]">Votre signalement est confidentiel : la personne concernée ne saura pas qui l’a envoyé.</p>
+            <p id={descriptionId} className="mt-1 text-sm leading-6 text-ink-muted">Votre signalement est confidentiel : la personne concernée ne saura pas qui l’a envoyé.</p>
           </div>
-          <button type="button" onClick={onFermer} disabled={enCours} aria-label="Fermer la fenêtre de signalement" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#5e5044] transition hover:bg-[#f2e7d8] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:opacity-50">
+          <button type="button" onClick={onFermer} disabled={enCours} aria-label="Fermer la fenêtre de signalement" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#5e5044] transition hover:bg-[#f2e7d8] focus:outline-none focus:ring-2 focus:ring-brand disabled:opacity-50">
             <X aria-hidden="true" size={20} />
           </button>
         </header>
@@ -194,7 +194,7 @@ export function BoutonSignaler({ cibleType, cibleId, libelleCible, className = "
       type="button"
       aria-haspopup="dialog"
       onClick={() => setOuvert(true)}
-      className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2 text-xs font-semibold text-[#806f5e] transition hover:bg-[#f5ecdf] hover:text-[#a3321f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] ${className}`}
+      className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg px-2 text-xs font-semibold text-ink-muted transition hover:bg-surface-sunken hover:text-danger focus:outline-none focus:ring-2 focus:ring-brand ${className}`}
     >
       <Flag aria-hidden="true" size={14} />
       Signaler

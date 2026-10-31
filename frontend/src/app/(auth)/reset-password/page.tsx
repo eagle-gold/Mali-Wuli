@@ -99,19 +99,19 @@ export default function ResetPasswordPage() {
   if (termine) {
     return (
       <main className="min-h-screen bg-[var(--color-page)] flex items-center justify-center px-4 py-10">
-        <section className="bg-[#fffbf5] rounded-2xl shadow-sm border border-[#e4d2b3] w-full max-w-md p-8 text-center">
-          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#e2efe8] text-2xl font-bold text-[#0d6738]">
+        <section className="bg-surface rounded-2xl shadow-sm border border-line w-full max-w-md p-8 text-center">
+          <div className="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#e2efe8] text-2xl font-bold text-brand">
             ✓
           </div>
-          <h1 className="font-display text-3xl font-bold text-[#292119] mb-3">
+          <h1 className="font-display text-3xl font-bold text-ink mb-3">
             Mot de passe modifié
           </h1>
-          <p className="mb-8 text-sm leading-relaxed text-[#776b5e]">
+          <p className="mb-8 text-sm leading-relaxed text-ink-muted">
             Votre nouveau mot de passe est enregistré. Vous pouvez maintenant vous connecter.
           </p>
           <Link
             href="/login"
-            className="block w-full rounded-xl bg-[#0d6738] py-4 text-sm font-semibold text-white hover:bg-[#09572f]"
+            className="block w-full rounded-xl bg-brand py-4 text-sm font-semibold text-white hover:bg-brand-700"
           >
             Se connecter
           </Link>
@@ -122,11 +122,11 @@ export default function ResetPasswordPage() {
 
   return (
     <main className="min-h-screen bg-[var(--color-page)] flex items-center justify-center px-4 py-10">
-      <section className="bg-[#fffbf5] rounded-2xl shadow-sm border border-[#e4d2b3] w-full max-w-md p-8">
-        <h1 className="font-display text-3xl font-bold text-[#292119] mb-3">
+      <section className="bg-surface rounded-2xl shadow-sm border border-line w-full max-w-md p-8">
+        <h1 className="font-display text-3xl font-bold text-ink mb-3">
           Choisissez un nouveau mot de passe
         </h1>
-        <p className="text-sm leading-relaxed text-[#776b5e] mb-7">
+        <p className="text-sm leading-relaxed text-ink-muted mb-7">
           Saisissez le code reçu par e-mail, puis créez un mot de passe d&apos;au moins
           8 caractères.
         </p>
@@ -140,14 +140,14 @@ export default function ResetPasswordPage() {
           </p>
         )}
         {information && (
-          <p className="mb-5 rounded-xl border border-[#bcd8ca] bg-[#edf6f1] px-4 py-3 text-sm text-[#0d6738]">
+          <p className="mb-5 rounded-xl border border-[#bcd8ca] bg-[#edf6f1] px-4 py-3 text-sm text-brand">
             {information}
           </p>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-[#2e261f] mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-ink mb-1">
               Adresse e-mail
             </label>
             <input
@@ -161,12 +161,12 @@ export default function ResetPasswordPage() {
               autoComplete="email"
               inputMode="email"
               required
-              className="w-full border border-[#dfc9a8] rounded-xl px-4 py-3 text-[#2e261f] bg-[#fffbf5] focus:outline-none focus:ring-2 focus:ring-[#0d6738] text-sm"
+              className="w-full border border-line-strong rounded-xl px-4 py-3 text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-brand text-sm"
             />
           </div>
 
           <div>
-            <label htmlFor="code" className="block text-sm font-medium text-[#2e261f] mb-1">
+            <label htmlFor="code" className="block text-sm font-medium text-ink mb-1">
               Code à 6 chiffres
             </label>
             <input
@@ -182,12 +182,12 @@ export default function ResetPasswordPage() {
               maxLength={6}
               placeholder="000000"
               required
-              className="w-full border border-[#dfc9a8] rounded-xl px-4 py-3 text-center text-xl font-bold tracking-[0.45em] text-[#2e261f] bg-[#fffbf5] focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
+              className="w-full border border-line-strong rounded-xl px-4 py-3 text-center text-xl font-bold tracking-[0.45em] text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-brand"
             />
           </div>
 
           <div>
-            <label htmlFor="motDePasse" className="block text-sm font-medium text-[#2e261f] mb-1">
+            <label htmlFor="motDePasse" className="block text-sm font-medium text-ink mb-1">
               Nouveau mot de passe
             </label>
             <input
@@ -201,13 +201,13 @@ export default function ResetPasswordPage() {
               minLength={8}
               autoComplete="new-password"
               required
-              className="w-full border border-[#dfc9a8] rounded-xl px-4 py-3 text-[#2e261f] bg-[#fffbf5] focus:outline-none focus:ring-2 focus:ring-[#0d6738] text-sm"
+              className="w-full border border-line-strong rounded-xl px-4 py-3 text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-brand text-sm"
             />
             <ul className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1" aria-label="Règles du mot de passe">
               {criteresMotDePasse(motDePasse).map((critere) => (
                 <li
                   key={critere.label}
-                  className={`text-xs ${critere.valide ? "text-[#0d6738]" : "text-[#776b5e]"}`}
+                  className={`text-xs ${critere.valide ? "text-brand" : "text-ink-muted"}`}
                 >
                   {critere.valide ? "✓" : "○"} {critere.label}
                 </li>
@@ -216,7 +216,7 @@ export default function ResetPasswordPage() {
           </div>
 
           <div>
-            <label htmlFor="confirmation" className="block text-sm font-medium text-[#2e261f] mb-1">
+            <label htmlFor="confirmation" className="block text-sm font-medium text-ink mb-1">
               Confirmez le mot de passe
             </label>
             <input
@@ -230,7 +230,7 @@ export default function ResetPasswordPage() {
               minLength={8}
               autoComplete="new-password"
               required
-              className="w-full border border-[#dfc9a8] rounded-xl px-4 py-3 text-[#2e261f] bg-[#fffbf5] focus:outline-none focus:ring-2 focus:ring-[#0d6738] text-sm"
+              className="w-full border border-line-strong rounded-xl px-4 py-3 text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-brand text-sm"
             />
           </div>
 
@@ -239,7 +239,7 @@ export default function ResetPasswordPage() {
             disabled={!formulaireValide || loading}
             className={`w-full py-4 rounded-xl font-semibold text-sm transition-colors ${
               formulaireValide && !loading
-                ? "bg-[#0d6738] text-white hover:bg-[#09572f]"
+                ? "bg-brand text-white hover:bg-brand-700"
                 : "bg-[#eee2d0] text-[#ad9d89] cursor-not-allowed"
             }`}
           >
@@ -248,14 +248,14 @@ export default function ResetPasswordPage() {
         </form>
 
         <div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-sm">
-          <Link href="/login" className="font-semibold text-[#0d6738] hover:underline">
+          <Link href="/login" className="font-semibold text-brand hover:underline">
             Retour à la connexion
           </Link>
           <button
             type="button"
             onClick={handleResend}
             disabled={!emailEstValide(email) || renvoiEnCours}
-            className="font-semibold text-[#0d6738] hover:underline disabled:cursor-not-allowed disabled:text-[#ad9d89]"
+            className="font-semibold text-brand hover:underline disabled:cursor-not-allowed disabled:text-[#ad9d89]"
           >
             {renvoiEnCours ? "Envoi..." : "Renvoyer un code"}
           </button>

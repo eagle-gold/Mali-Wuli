@@ -36,7 +36,7 @@ type SearchComboboxProps = {
 };
 
 const INPUT_CLASS =
-  "w-full rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] py-4 pl-12 pr-14 text-base text-[#2e261f] outline-none transition focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 disabled:cursor-not-allowed disabled:bg-[#f2eadf] disabled:text-[#9d8f7e] sm:text-lg";
+  "w-full rounded-[14px] border border-line-strong bg-surface py-4 pl-12 pr-14 text-base text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:cursor-not-allowed disabled:bg-[#f2eadf] disabled:text-[#9d8f7e] sm:text-lg";
 
 const normaliser = (valeur: string) =>
   valeur
@@ -73,7 +73,7 @@ export default function SearchCombobox({
   otherLabel,
   onOther,
   className = "min-w-0",
-  labelClassName = "mb-2 block text-base font-semibold text-[#2e261f]",
+  labelClassName = "mb-2 block text-base font-semibold text-ink",
   inputClassName = INPUT_CLASS,
   showIcon = true,
   invalid,
@@ -127,7 +127,7 @@ export default function SearchCombobox({
   return (
     <div className={className}>
       <label htmlFor={id} className={labelClassName}>
-        {label} {required && <span className="text-[#c65327]">*</span>}
+        {label} {required && <span className="text-clay">*</span>}
       </label>
       <div className="relative">
         {showIcon && <Search aria-hidden="true" className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-[#8b7a68]" />}
@@ -162,9 +162,9 @@ export default function SearchCombobox({
             aria-label="Recherche en cours"
             className="absolute right-5 top-1/2 flex -translate-y-1/2 items-center gap-1"
           >
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#0d6738]" />
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#0d6738] [animation-delay:150ms]" />
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#0d6738] [animation-delay:300ms]" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand [animation-delay:150ms]" />
+            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand [animation-delay:300ms]" />
           </span>
         ) : value && !disabled ? (
           <button
@@ -176,7 +176,7 @@ export default function SearchCombobox({
               setOuvert(true);
               inputRef.current?.focus();
             }}
-            className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-[#74685c] transition hover:bg-[#eee2d0] hover:text-[#2e261f]"
+            className="absolute right-3 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full text-ink-muted transition hover:bg-[#eee2d0] hover:text-ink"
           >
             <X aria-hidden="true" className="h-5 w-5" />
           </button>
@@ -188,10 +188,10 @@ export default function SearchCombobox({
           id={`${id}-resultats`}
           role="listbox"
           aria-label={`Résultats pour ${label}`}
-          className="mt-2 max-h-72 overflow-y-auto overscroll-contain rounded-[14px] border border-[#dfc9a8] bg-white p-2 shadow-lg"
+          className="mt-2 max-h-72 overflow-y-auto overscroll-contain rounded-[14px] border border-line-strong bg-white p-2 shadow-lg"
         >
           {optionsTriees.length > 0 && (
-            <div className="flex items-center justify-between gap-3 px-3 pb-2 pt-1 text-xs text-[#74685c]">
+            <div className="flex items-center justify-between gap-3 px-3 pb-2 pt-1 text-xs text-ink-muted">
               <span>{optionsTriees.length} résultat{optionsTriees.length > 1 ? "s" : ""} proposé{optionsTriees.length > 1 ? "s" : ""}</span>
               <span className="hidden sm:inline">↑ ↓ pour parcourir · Entrée pour choisir</span>
             </div>
@@ -209,13 +209,13 @@ export default function SearchCombobox({
               onClick={() => choisir(option)}
               className={`flex w-full min-w-0 flex-col items-start gap-1 rounded-[10px] px-4 py-3 text-left text-sm transition-colors sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:text-base ${
                 index === actif
-                  ? "bg-[#eaf1e9] text-[#0d6738]"
-                  : "text-[#2e261f] hover:bg-[#f6efe3]"
+                  ? "bg-[#eaf1e9] text-brand"
+                  : "text-ink hover:bg-surface-sunken"
               }`}
             >
               <span className="min-w-0 break-words font-semibold [overflow-wrap:anywhere]">{option.label}</span>
               {option.secondary && (
-                <span className="max-w-full break-words text-xs text-[#74685c] [overflow-wrap:anywhere] sm:shrink-0 sm:text-sm">{option.secondary}</span>
+                <span className="max-w-full break-words text-xs text-ink-muted [overflow-wrap:anywhere] sm:shrink-0 sm:text-sm">{option.secondary}</span>
               )}
             </button>
           ))}
@@ -223,13 +223,13 @@ export default function SearchCombobox({
           {loading && optionsTriees.length === 0 && (
             <div aria-hidden="true" className="space-y-2 px-2 py-1">
               {[0, 1, 2].map((item) => (
-                <div key={item} className="h-12 animate-pulse rounded-[10px] bg-[#f6efe3]" />
+                <div key={item} className="h-12 animate-pulse rounded-[10px] bg-surface-sunken" />
               ))}
             </div>
           )}
 
           {!loading && optionsTriees.length === 0 && (
-            <p className="px-4 py-3 text-sm text-[#74685c]">{emptyMessage}</p>
+            <p className="px-4 py-3 text-sm text-ink-muted">{emptyMessage}</p>
           )}
 
           {otherLabel && onOther && (
@@ -240,7 +240,7 @@ export default function SearchCombobox({
                 onOther();
                 setOuvert(false);
               }}
-              className="mt-1 w-full rounded-[10px] border border-dashed border-[#d7b98d] px-4 py-3 text-left text-sm font-semibold text-[#0d6738] hover:bg-[#f6efe3] sm:text-base"
+              className="mt-1 w-full rounded-[10px] border border-dashed border-[#d7b98d] px-4 py-3 text-left text-sm font-semibold text-brand hover:bg-surface-sunken sm:text-base"
             >
               + {otherLabel}
             </button>
@@ -251,7 +251,7 @@ export default function SearchCombobox({
       <span role="status" aria-live="polite" className="sr-only">
         {loading ? "Recherche en cours" : peutAfficher ? `${optionsTriees.length} résultats disponibles` : ""}
       </span>
-      {helperText && <p className="mt-2 text-xs text-[#74685c]">{helperText}</p>}
+      {helperText && <p className="mt-2 text-xs text-ink-muted">{helperText}</p>}
       {children}
     </div>
   );

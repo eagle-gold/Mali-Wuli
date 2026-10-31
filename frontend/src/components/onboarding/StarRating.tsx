@@ -11,8 +11,8 @@ export default function StarRating({ label, description, value, onChange }: Star
   return (
     <div className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <p className="text-base font-semibold text-[#2e261f]">{label}</p>
-        {description && <p className="text-sm text-[#56493e]">{description}</p>}
+        <p className="text-base font-semibold text-ink">{label}</p>
+        {description && <p className="text-sm text-ink-soft">{description}</p>}
       </div>
       <div className="flex items-center gap-1.5">
         {[1, 2, 3, 4, 5].map((star) => (
@@ -22,7 +22,7 @@ export default function StarRating({ label, description, value, onChange }: Star
             aria-label={`${star} étoile${star > 1 ? "s" : ""} sur 5 pour ${label}`}
             aria-pressed={value === star}
             onClick={() => onChange(value === star ? null : star)}
-            className="rounded transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-[#0d6738]/30"
+            className="rounded transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-brand/30"
           >
             <svg
               className={`h-7 w-7 ${value !== null && star <= value ? "text-[#c45b2a]" : "text-[#dfcfb3]"}`}
@@ -33,7 +33,7 @@ export default function StarRating({ label, description, value, onChange }: Star
             </svg>
           </button>
         ))}
-        <span className="ml-3 min-w-8 text-sm font-medium text-[#2e261f]">
+        <span className="ml-3 min-w-8 text-sm font-medium text-ink">
           {value === null ? "—" : `${value}/5`}
         </span>
       </div>

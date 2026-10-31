@@ -93,9 +93,9 @@ const nombreCreneaux = (plages: PlageMentorat[], duree: number) =>
   }, 0);
 
 const BOUTON_CHOIX =
-  "rounded-[16px] border px-5 py-5 text-left transition focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2";
+  "rounded-[16px] border px-5 py-5 text-left transition focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2";
 const PETIT_BOUTON =
-  "min-w-0 rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-2 py-3 text-sm font-semibold sm:px-4 text-[#2e261f] transition hover:border-[#0d6738] hover:text-[#0d6738]";
+  "min-w-0 rounded-[12px] border border-line-strong bg-surface px-2 py-3 text-sm font-semibold sm:px-4 text-ink transition hover:border-brand hover:text-brand";
 
 interface EnteteEtapeMentoratProps {
   numero: number;
@@ -113,10 +113,10 @@ function EnteteEtapeMentorat({ numero, titre, instruction, terminee, active, inf
       <span
         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
           terminee
-            ? "bg-[#0d6738] text-white"
+            ? "bg-brand text-white"
             : active
-              ? "bg-[#2e261f] text-white"
-              : "bg-[#eee2d0] text-[#2e261f]"
+              ? "bg-ink text-white"
+              : "bg-[#eee2d0] text-ink"
         }`}
       >
         {numero}
@@ -127,7 +127,7 @@ function EnteteEtapeMentorat({ numero, titre, instruction, terminee, active, inf
         aria-label={`Afficher l’aide de l’étape ${numero} : ${instruction}`}
         aria-expanded={infoOuverte}
         onClick={onOpenInfo}
-        className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[#8e806f] bg-transparent text-[9px] font-bold leading-none text-[#2e261f] transition hover:border-[#0d6738] hover:text-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738]/30"
+        className="flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-[#8e806f] bg-transparent text-[9px] font-bold leading-none text-ink transition hover:border-brand hover:text-brand focus:outline-none focus:ring-2 focus:ring-brand/30"
       >
         i
       </button>
@@ -354,7 +354,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
 
   return (
     <div className="space-y-6">
-      <section className="rounded-[22px] bg-[#735133] px-6 py-8 text-[#fffaf4] sm:px-10 sm:py-10">
+      <section className="rounded-[22px] bg-[#735133] px-6 py-8 text-surface sm:px-10 sm:py-10">
         <h1 className="mb-4 max-w-[900px] font-display text-3xl font-bold leading-tight sm:text-4xl">
           Souhaitez-vous être volontaire pour le mentorat ?
         </h1>
@@ -370,14 +370,14 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
             ["Gratuit, toujours", "Le mentorat ne se monnaie pas sur Mali Wuli. C’est la charte."],
           ].map(([titre, texte]) => (
             <article key={titre} className="rounded-[16px] bg-white/10 px-5 py-5">
-              <h2 className="mb-2 titre-element text-[#fffaf4]">{titre}</h2>
-              <p className="text-sm leading-relaxed text-[#fffaf4]">{texte}</p>
+              <h2 className="mb-2 titre-element text-surface">{titre}</h2>
+              <p className="text-sm leading-relaxed text-surface">{texte}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="rounded-[22px] border border-[#ead8bd] bg-[#fffbf5] p-5 shadow-sm sm:p-8">
+      <section className="rounded-[22px] border border-line-soft bg-surface p-5 shadow-sm sm:p-8">
         <div id="mentorat-reponse" className="scroll-mt-8">
           <EnteteEtapeMentorat
             numero={1}
@@ -393,27 +393,27 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
               type="button"
               aria-pressed={estVolontaire === true}
               onClick={() => setEstVolontaire(true)}
-              className={`${BOUTON_CHOIX} ${estVolontaire === true ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#ead8bd] bg-[#fffbf5] hover:border-[#0d6738]"}`}
+              className={`${BOUTON_CHOIX} ${estVolontaire === true ? "border-brand bg-brand text-white" : "border-line-soft bg-surface hover:border-brand"}`}
             >
-              <span className={`mb-1 block text-base font-bold ${estVolontaire === true ? "text-white" : "text-[#2e261f]"}`}>
+              <span className={`mb-1 block text-base font-bold ${estVolontaire === true ? "text-white" : "text-ink"}`}>
                 Oui, je veux mentorer
               </span>
-              <span className={`block text-sm ${estVolontaire === true ? "text-white" : "text-[#2e261f]"}`}>J’ouvre des créneaux et je réponds aux demandes.</span>
+              <span className={`block text-sm ${estVolontaire === true ? "text-white" : "text-ink"}`}>J’ouvre des créneaux et je réponds aux demandes.</span>
             </button>
             <button
               type="button"
               aria-pressed={estVolontaire === false}
               onClick={() => setEstVolontaire(false)}
-              className={`${BOUTON_CHOIX} ${estVolontaire === false ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#ead8bd] bg-[#fffbf5] hover:border-[#735133]"}`}
+              className={`${BOUTON_CHOIX} ${estVolontaire === false ? "border-brand bg-brand text-white" : "border-line-soft bg-surface hover:border-[#735133]"}`}
             >
-              <span className={`mb-1 block text-base font-bold ${estVolontaire === false ? "text-white" : "text-[#2e261f]"}`}>Pas pour l’instant</span>
-              <span className={`block text-sm ${estVolontaire === false ? "text-white" : "text-[#2e261f]"}`}>Je rejoins le réseau sans ouvrir de créneaux.</span>
+              <span className={`mb-1 block text-base font-bold ${estVolontaire === false ? "text-white" : "text-ink"}`}>Pas pour l’instant</span>
+              <span className={`block text-sm ${estVolontaire === false ? "text-white" : "text-ink"}`}>Je rejoins le réseau sans ouvrir de créneaux.</span>
             </button>
           </div>
         </div>
 
         {estVolontaire === false && (
-          <p className="mt-5 rounded-[14px] bg-[#f6efe3] px-5 py-4 text-sm leading-relaxed text-[#2e261f]">
+          <p className="mt-5 rounded-[14px] bg-surface-sunken px-5 py-4 text-sm leading-relaxed text-ink">
             Aucun souci, vous pourrez ouvrir des créneaux à tout moment depuis votre profil. En attendant, vous
             pouvez répondre au forum ou recommander une offre d’emploi.
           </p>
@@ -421,7 +421,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
 
         {etapeInfoAffichee && (
           <div
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-[#2e261f]/45 p-4 backdrop-blur-[2px]"
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-ink/45 p-4 backdrop-blur-[2px]"
             onMouseDown={(event) => {
               if (event.currentTarget === event.target) setEtapeInfoOuverte(null);
             }}
@@ -430,12 +430,12 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
               role="dialog"
               aria-modal="true"
               aria-labelledby="titre-modal-etape-mentorat"
-              className="w-full max-w-md rounded-[22px] border border-[#ead8bd] bg-[#fffbf5] p-6 shadow-2xl sm:p-7"
+              className="w-full max-w-md rounded-[22px] border border-line-soft bg-surface p-6 shadow-2xl sm:p-7"
             >
               <div className="mb-5 flex items-start justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#e4f0e8] text-sm font-bold text-[#0d6738]">i</span>
-                  <p className="text-xs font-bold uppercase tracking-[0.08em] text-[#0d6738]">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#e4f0e8] text-sm font-bold text-brand">i</span>
+                  <p className="text-xs font-bold uppercase tracking-[0.08em] text-brand">
                     Étape {etapeInfoAffichee.numero} sur 6
                   </p>
                 </div>
@@ -443,7 +443,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
                   type="button"
                   aria-label="Fermer la fenêtre d’aide"
                   onClick={() => setEtapeInfoOuverte(null)}
-                  className="flex h-8 w-8 items-center justify-center rounded-full text-xl text-[#2e261f] transition hover:bg-[#f1e4d1]"
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-xl text-ink transition hover:bg-[#f1e4d1]"
                 >
                   ×
                 </button>
@@ -451,11 +451,11 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
               <h3 id="titre-modal-etape-mentorat" className="mb-3 titre-section">
                 {etapeInfoAffichee.libelle}
               </h3>
-              <p className="text-base leading-relaxed text-[#2e261f]">{etapeInfoAffichee.instruction}</p>
+              <p className="text-base leading-relaxed text-ink">{etapeInfoAffichee.instruction}</p>
               <button
                 type="button"
                 onClick={() => setEtapeInfoOuverte(null)}
-                className="mt-6 w-full rounded-full bg-[#0d6738] px-5 py-3 font-semibold text-white transition hover:bg-[#09572f]"
+                className="mt-6 w-full rounded-full bg-brand px-5 py-3 font-semibold text-white transition hover:bg-brand-700"
               >
                 J’ai compris
               </button>
@@ -464,7 +464,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
         )}
 
         {estVolontaire === true && (
-          <div className="mt-7 space-y-8 border-t border-[#ead8bd] pt-7">
+          <div className="mt-7 space-y-8 border-t border-line-soft pt-7">
             <div id="mentorat-sujets" className="scroll-mt-8">
               <EnteteEtapeMentorat
                 numero={2}
@@ -478,9 +478,9 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
               <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
                 <div>
                   <h2 className="titre-section">Sur quoi pouvez-vous aider ?</h2>
-                  <p className="text-sm text-[#2e261f]">Deux ou trois suffisent : ce sont les sujets affichés sur votre profil.</p>
+                  <p className="text-sm text-ink">Deux ou trois suffisent : ce sont les sujets affichés sur votre profil.</p>
                 </div>
-                <span className="rounded-full bg-[#f6efe3] px-3 py-1 text-xs font-semibold text-[#2e261f]">{sujets.length}/3 sujet(s)</span>
+                <span className="rounded-full bg-surface-sunken px-3 py-1 text-xs font-semibold text-ink">{sujets.length}/3 sujet(s)</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {SUJETS.map(({ nom }) => {
@@ -491,7 +491,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
                       type="button"
                       aria-pressed={selectionne}
                       onClick={() => toggleSujet(nom)}
-                      className={`rounded-full border px-4 py-2 text-sm font-medium transition ${selectionne ? "border-[#0d6738] bg-[#0d6738] text-white" : "border-[#ead8bd] bg-[#fffbf5] text-[#2e261f] hover:border-[#0d6738] hover:text-[#0d6738]"}`}
+                      className={`rounded-full border px-4 py-2 text-sm font-medium transition ${selectionne ? "border-brand bg-brand text-white" : "border-line-soft bg-surface text-ink hover:border-brand hover:text-brand"}`}
                     >
                       {nom}
                     </button>
@@ -502,7 +502,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
             </div>
 
             {sujets.length > 0 && (
-              <div id="mentorat-precisions" className="scroll-mt-8 rounded-[16px] border border-[#ead8bd] bg-[#fffdf9] p-4 sm:p-5">
+              <div id="mentorat-precisions" className="scroll-mt-8 rounded-[16px] border border-line-soft bg-surface-raised p-4 sm:p-5">
                 <EnteteEtapeMentorat
                   numero={3}
                   titre="Précisez votre aide"
@@ -513,20 +513,20 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
                   onOpenInfo={() => setEtapeInfoOuverte(3)}
                 />
                 <h3 className="mb-1 titre-element">Précisez pour chaque sujet</h3>
-                <p className="mb-4 text-sm text-[#2e261f]">Soyez concret : la personne comprend immédiatement ce qu’elle peut vous demander.</p>
+                <p className="mb-4 text-sm text-ink">Soyez concret : la personne comprend immédiatement ce qu’elle peut vous demander.</p>
                 <div className="space-y-4">
                   {sujets.map((sujet) => {
                     const configuration = SUJETS.find(({ nom }) => nom === sujet);
                     return (
                       <div key={sujet} className="grid min-w-0 gap-2 sm:grid-cols-[250px_minmax(0,1fr)] sm:items-center sm:gap-4">
-                        <label htmlFor={`precision-${sujet}`} className="text-sm font-semibold text-[#2e261f]">{sujet} <span className="text-[#c65327]">*</span></label>
+                        <label htmlFor={`precision-${sujet}`} className="text-sm font-semibold text-ink">{sujet} <span className="text-clay">*</span></label>
                         <input
                           id={`precision-${sujet}`}
                           value={precisionsSujets[sujet] || ""}
                           maxLength={180}
                           onChange={(event) => setPrecisionsSujets((precedentes) => ({ ...precedentes, [sujet]: event.target.value }))}
                           placeholder={configuration?.exemple}
-                          className="min-w-0 rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"
+                          className="min-w-0 rounded-[12px] border border-line-strong bg-surface px-4 py-3 text-sm text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
                         />
                       </div>
                     );
@@ -552,7 +552,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
                     type="button"
                     aria-pressed={duree === valeur}
                     onClick={() => choisirDuree(valeur)}
-                    className={`${PETIT_BOUTON} ${duree === valeur ? "!border-[#0d6738] !bg-[#0d6738] !text-white" : ""}`}
+                    className={`${PETIT_BOUTON} ${duree === valeur ? "!border-brand !bg-brand !text-white" : ""}`}
                   >
                     {valeur} min
                   </button>
@@ -578,7 +578,7 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
                     type="button"
                     aria-pressed={format === valeur}
                     onClick={() => choisirFormat(valeur)}
-                    className={`${PETIT_BOUTON} ${format === valeur ? "!border-[#0d6738] !bg-[#0d6738] !text-white" : ""}`}
+                    className={`${PETIT_BOUTON} ${format === valeur ? "!border-brand !bg-brand !text-white" : ""}`}
                   >
                     {valeur}
                   </button>
@@ -599,44 +599,44 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
               <div className="mb-4 flex flex-wrap items-end justify-between gap-3">
                 <div>
                   <h3 className="titre-element">Vos disponibilités</h3>
-                  <p className="text-sm text-[#2e261f]">Ouvrez les jours qui vous vont et réglez les heures précisément.</p>
+                  <p className="text-sm text-ink">Ouvrez les jours qui vous vont et réglez les heures précisément.</p>
                 </div>
-                <span className="rounded-full bg-[#e3f0e9] px-4 py-2 text-sm font-semibold text-[#0d6738]">{joursOuverts.length} jour(s), {totalCreneaux} créneau(x)</span>
+                <span className="rounded-full bg-[#e3f0e9] px-4 py-2 text-sm font-semibold text-brand">{joursOuverts.length} jour(s), {totalCreneaux} créneau(x)</span>
               </div>
 
               <div className="mb-5 grid gap-4 md:grid-cols-3">
                 <div className="min-w-0">
-                  <label htmlFor="fuseau-mentorat" className="mb-2 block text-sm font-semibold text-[#2e261f]">Votre fuseau horaire</label>
-                  <select id="fuseau-mentorat" value={fuseauHoraire} onChange={(event) => setFuseauHoraire(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none focus:border-[#0d6738]">
+                  <label htmlFor="fuseau-mentorat" className="mb-2 block text-sm font-semibold text-ink">Votre fuseau horaire</label>
+                  <select id="fuseau-mentorat" value={fuseauHoraire} onChange={(event) => setFuseauHoraire(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-line-strong bg-surface px-4 py-3 text-sm text-ink outline-none focus:border-brand">
                     {FUSEAUX.map((fuseau) => <option key={fuseau.value} value={fuseau.value}>{fuseau.label}</option>)}
                   </select>
-                  <p className="mt-2 text-xs text-[#2e261f]">Les créneaux suivront ce fuseau, même en voyage.</p>
+                  <p className="mt-2 text-xs text-ink">Les créneaux suivront ce fuseau, même en voyage.</p>
                 </div>
                 <div>
-                  <label htmlFor="debut-mentorat" className="mb-2 block text-sm font-semibold text-[#2e261f]">Disponible à partir du</label>
-                  <input id="debut-mentorat" type="date" value={dateDebut} onChange={(event) => setDateDebut(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none focus:border-[#0d6738]" />
-                  <p className="mt-2 text-xs text-[#2e261f]">Laissez vide pour être disponible dès maintenant.</p>
+                  <label htmlFor="debut-mentorat" className="mb-2 block text-sm font-semibold text-ink">Disponible à partir du</label>
+                  <input id="debut-mentorat" type="date" value={dateDebut} onChange={(event) => setDateDebut(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-line-strong bg-surface px-4 py-3 text-sm text-ink outline-none focus:border-brand" />
+                  <p className="mt-2 text-xs text-ink">Laissez vide pour être disponible dès maintenant.</p>
                 </div>
                 <div>
-                  <label htmlFor="fin-mentorat" className="mb-2 block text-sm font-semibold text-[#2e261f]">Jusqu’au <span className="font-normal">(optionnel)</span></label>
-                  <input id="fin-mentorat" type="date" min={dateDebut || undefined} value={dateFin} disabled={sansDateFin} onChange={(event) => setDateFin(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none disabled:bg-[#f1e4d1] disabled:text-[#2e261f] disabled:opacity-60 focus:border-[#0d6738]" />
-                  <label className="mt-2 flex items-center gap-2 text-xs text-[#2e261f]">
-                    <input type="checkbox" checked={sansDateFin} onChange={(event) => setSansDateFin(event.target.checked)} className="h-4 w-4 accent-[#0d6738]" />
+                  <label htmlFor="fin-mentorat" className="mb-2 block text-sm font-semibold text-ink">Jusqu’au <span className="font-normal">(optionnel)</span></label>
+                  <input id="fin-mentorat" type="date" min={dateDebut || undefined} value={dateFin} disabled={sansDateFin} onChange={(event) => setDateFin(event.target.value)} className="w-full min-w-0 rounded-[12px] border border-line-strong bg-surface px-4 py-3 text-sm text-ink outline-none disabled:bg-[#f1e4d1] disabled:text-ink disabled:opacity-60 focus:border-brand" />
+                  <label className="mt-2 flex items-center gap-2 text-xs text-ink">
+                    <input type="checkbox" checked={sansDateFin} onChange={(event) => setSansDateFin(event.target.checked)} className="h-4 w-4 accent-brand" />
                     Sans date de fin
                   </label>
                 </div>
               </div>
 
-              <div className="overflow-hidden rounded-[16px] border border-[#ead8bd] bg-[#fffdf9]">
+              <div className="overflow-hidden rounded-[16px] border border-line-soft bg-surface-raised">
                 {disponibilites.map((disponibilite) => (
-                  <div key={disponibilite.jour} className="grid min-w-0 border-b border-[#ead8bd] last:border-b-0 md:grid-cols-[180px_minmax(0,1fr)]">
-                    <label className="flex cursor-pointer items-center gap-3 border-b border-[#ead8bd] px-4 py-4 md:border-b-0 md:border-r">
-                      <input type="checkbox" checked={disponibilite.ouvert} onChange={() => toggleJour(disponibilite.jour)} className="h-5 w-5 accent-[#0d6738]" />
-                      <span className="font-semibold text-[#2e261f]">{disponibilite.jour}</span>
+                  <div key={disponibilite.jour} className="grid min-w-0 border-b border-line-soft last:border-b-0 md:grid-cols-[180px_minmax(0,1fr)]">
+                    <label className="flex cursor-pointer items-center gap-3 border-b border-line-soft px-4 py-4 md:border-b-0 md:border-r">
+                      <input type="checkbox" checked={disponibilite.ouvert} onChange={() => toggleJour(disponibilite.jour)} className="h-5 w-5 accent-brand" />
+                      <span className="font-semibold text-ink">{disponibilite.jour}</span>
                     </label>
                     <div className="min-w-0 px-4 py-4">
                       {!disponibilite.ouvert ? (
-                        <button type="button" onClick={() => toggleJour(disponibilite.jour)} className="text-left text-sm text-[#2e261f] hover:text-[#0d6738]">
+                        <button type="button" onClick={() => toggleJour(disponibilite.jour)} className="text-left text-sm text-ink hover:text-brand">
                           Indisponible — cliquez pour ouvrir ce jour
                         </button>
                       ) : (
@@ -644,23 +644,23 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
                           {disponibilite.plages.map((plage, index) => {
                             const plageValide = minutesDepuisMinuit(plage.fin) > minutesDepuisMinuit(plage.debut);
                             return (
-                              <div key={`${disponibilite.jour}-${index}`} className="flex min-w-0 flex-wrap items-center gap-2 text-sm text-[#2e261f]">
+                              <div key={`${disponibilite.jour}-${index}`} className="flex min-w-0 flex-wrap items-center gap-2 text-sm text-ink">
                                 <span>de</span>
-                                <select aria-label={`Heure de début ${disponibilite.jour}, plage ${index + 1}`} value={plage.debut} onChange={(event) => mettreAJourPlage(disponibilite.jour, index, "debut", event.target.value)} className="rounded-[10px] border border-[#dfc9a8] bg-[#fffbf5] px-3 py-2 outline-none focus:border-[#0d6738]">
+                                <select aria-label={`Heure de début ${disponibilite.jour}, plage ${index + 1}`} value={plage.debut} onChange={(event) => mettreAJourPlage(disponibilite.jour, index, "debut", event.target.value)} className="rounded-[10px] border border-line-strong bg-surface px-3 py-2 outline-none focus:border-brand">
                                   {HEURES.map((heure) => <option key={heure.value} value={heure.value}>{heure.label}</option>)}
                                 </select>
                                 <span>à</span>
-                                <select aria-label={`Heure de fin ${disponibilite.jour}, plage ${index + 1}`} value={plage.fin} onChange={(event) => mettreAJourPlage(disponibilite.jour, index, "fin", event.target.value)} className="rounded-[10px] border border-[#dfc9a8] bg-[#fffbf5] px-3 py-2 outline-none focus:border-[#0d6738]">
+                                <select aria-label={`Heure de fin ${disponibilite.jour}, plage ${index + 1}`} value={plage.fin} onChange={(event) => mettreAJourPlage(disponibilite.jour, index, "fin", event.target.value)} className="rounded-[10px] border border-line-strong bg-surface px-3 py-2 outline-none focus:border-brand">
                                   {HEURES.map((heure) => <option key={heure.value} value={heure.value}>{heure.label}</option>)}
                                 </select>
-                                <span className={`font-semibold ${plageValide && duree !== null ? "text-[#0d6738]" : "text-[#a44824]"}`}>
+                                <span className={`font-semibold ${plageValide && duree !== null ? "text-brand" : "text-[#a44824]"}`}>
                                   {duree === null ? "Choisissez d’abord une durée" : plageValide ? `${nombreCreneaux([plage], duree)} créneau(x) de ${duree} min` : "L’heure de fin doit être plus tard"}
                                 </span>
-                                <button type="button" onClick={() => retirerPlage(disponibilite.jour, index)} className="ml-auto font-semibold text-[#2e261f] hover:text-[#a44824]">Retirer</button>
+                                <button type="button" onClick={() => retirerPlage(disponibilite.jour, index)} className="ml-auto font-semibold text-ink hover:text-[#a44824]">Retirer</button>
                               </div>
                             );
                           })}
-                          <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm font-semibold text-[#0d6738]">
+                          <div className="flex flex-wrap gap-x-4 gap-y-2 text-sm font-semibold text-brand">
                             <button type="button" disabled={disponibilite.plages.length >= 3} onClick={() => ajouterPlage(disponibilite.jour)} className="disabled:cursor-not-allowed disabled:opacity-40">+ Ajouter une plage</button>
                             <button type="button" disabled={disponibilite.plages.length === 0} onClick={() => appliquerATousLesJoursOuverts(disponibilite.jour)} className="disabled:cursor-not-allowed disabled:opacity-40">Appliquer à tous les jours ouverts</button>
                           </div>
@@ -672,32 +672,32 @@ export default function StepMentorat({ onNext, onBack, initialData, libelleSuiva
               </div>
             </div>
 
-            <div className="flex flex-wrap items-center gap-3 rounded-[14px] bg-[#f6efe3] px-5 py-4">
-              <span className="text-sm font-semibold text-[#2e261f]">Pas plus de</span>
+            <div className="flex flex-wrap items-center gap-3 rounded-[14px] bg-surface-sunken px-5 py-4">
+              <span className="text-sm font-semibold text-ink">Pas plus de</span>
               {MAX_RDV.map((valeur) => (
-                <button key={valeur ?? "illimite"} type="button" aria-pressed={maxRdvMois === valeur} onClick={() => setMaxRdvMois(valeur)} className={`${PETIT_BOUTON} !px-4 !py-2 ${maxRdvMois === valeur ? "!border-[#0d6738] !bg-[#0d6738] !text-white" : ""}`}>
+                <button key={valeur ?? "illimite"} type="button" aria-pressed={maxRdvMois === valeur} onClick={() => setMaxRdvMois(valeur)} className={`${PETIT_BOUTON} !px-4 !py-2 ${maxRdvMois === valeur ? "!border-brand !bg-brand !text-white" : ""}`}>
                   {valeur === null ? "Sans limite" : valeur}
                 </button>
               ))}
-              <span className="text-sm font-semibold text-[#2e261f]">rendez-vous par mois.</span>
+              <span className="text-sm font-semibold text-ink">rendez-vous par mois.</span>
             </div>
 
             {totalCreneaux > 0 && (
-              <p className="rounded-[14px] border border-[#efcdbb] bg-[#f8e4d7] px-5 py-4 text-sm leading-relaxed text-[#2e261f]">
+              <p className="rounded-[14px] border border-[#efcdbb] bg-[#f8e4d7] px-5 py-4 text-sm leading-relaxed text-ink">
                 <strong>Récapitulatif :</strong> {recap}
               </p>
             )}
           </div>
         )}
 
-        <div className="mt-7 flex flex-col gap-3 border-t border-[#ead8bd] pt-6 sm:flex-row">
-          <button type="button" onClick={onBack} className="rounded-[12px] border border-[#dfc9a8] bg-[#fffbf5] px-6 py-3 font-semibold text-[#2e261f] hover:bg-[#f6efe3]">Retour</button>
-          <button type="button" onClick={continuerOuTerminer} className={`flex-1 rounded-full px-6 py-4 text-base font-semibold transition ${canContinue ? "bg-[#0d6738] text-white hover:bg-[#09572f]" : "bg-[#eee2d0] text-[#2e261f] hover:bg-[#e4d5bf]"}`}>
+        <div className="mt-7 flex flex-col gap-3 border-t border-line-soft pt-6 sm:flex-row">
+          <button type="button" onClick={onBack} className="rounded-[12px] border border-line-strong bg-surface px-6 py-3 font-semibold text-ink hover:bg-surface-sunken">Retour</button>
+          <button type="button" onClick={continuerOuTerminer} className={`flex-1 rounded-full px-6 py-4 text-base font-semibold transition ${canContinue ? "bg-brand text-white hover:bg-brand-700" : "bg-[#eee2d0] text-ink hover:bg-[#e4d5bf]"}`}>
             {canContinue ? libelleSuivant : `Continuer — étape ${prochaineEtape?.numero || 1} : ${prochaineEtape?.actionCourte || "choisir une réponse"}`}
           </button>
         </div>
         {!canContinue && prochaineEtape && (
-          <p role="status" className="mt-3 rounded-[12px] border border-[#ead8bd] bg-[#f6efe3] px-4 py-3 text-center text-sm font-medium text-[#2e261f]">
+          <p role="status" className="mt-3 rounded-[12px] border border-line-soft bg-surface-sunken px-4 py-3 text-center text-sm font-medium text-ink">
             <strong>Étape {prochaineEtape.numero} sur 6 :</strong> {prochaineEtape.instruction}
           </p>
         )}

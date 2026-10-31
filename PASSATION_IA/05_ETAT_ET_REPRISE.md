@@ -1,5 +1,11 @@
 # État livré, sujets ouverts et preuves
 
+## 31 octobre 2026 — refonte lot 1 : design system et nouvel accueil (local, non publié)
+
+**Mission :** `docs/mission-refonte.md`. Suivi : `docs/roadmap.md`, `docs/progress.md`, `docs/audit.md`, `docs/design-system.md`, `docs/security-privacy.md`.
+
+**Décision de conception :** l'accueil public n'affiche plus aucun membre, effectif, publication ni événement fictif (exigence de la mission). Le baobab reste l'identité visuelle mais devient illustratif (feuilles anonymes, sans chiffres). Toute nouvelle couleur passe par les tokens `--mw-*` de `globals.css`.
+
 ## 3 octobre 2026 — validation des inscriptions supprimée (local, non publié)
 
 **Décision utilisateur :** un compte créé accède immédiatement au réseau. Aucune validation par l'équipe. Cette décision remplace le principe « profil vérifié et validé avant l'accès » de la spécification (§3.4, §4.1) et l'écran d'attente de l'onboarding.

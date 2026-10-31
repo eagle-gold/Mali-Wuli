@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-10-03 (suppression de la validation des inscriptions, non commité, migration non appliquée).
+LIBRE — dernière session : Claude, 2026-10-31 (refonte lot 1, branche refonte/lot-1-design-system, non commité).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,19 @@ LIBRE — dernière session : Claude, 2026-10-03 (suppression de la validation d
 ```
 
 ## Entrées
+
+### 2026-10-31 — Claude — Refonte lot 1 : diagnostic, design system, navigation, accueil
+- Statut : TERMINÉ (code local ; ni commit, ni push, ni déploiement)
+- Demande de l'utilisateur : lancer la transformation (docs/mission-refonte.md) : diagnostic priorisé, feuille de route, puis premier lot UX/UI (design system, navigation, accueil).
+- État Git au début : develop, HEAD dc8ee24 ; 2 suppressions non commitées (Specification_Fonctionnelle_Mali_Wuli.md, docs/Mali_Wuli_Passation_Ibrahima_2026-08-20.docx) et non suivis (.Rhistory, .claude/, CLAUDE.md, docs/mission-refonte.md), conservés tels quels. Nouvelle branche refonte/lot-1-design-system.
+- Fichiers touchés : frontend `app/globals.css` (tokens --mw-*), `tailwind.config.ts`, `components/ui/*` (nouveau), `MaliWuliHeader.tsx`, `BarreNavigationMobile.tsx`, `LogoMaliWuliImage.tsx`, `lib/compteur-messages.ts`, `lib/navigation.ts`, `lib/design/tokens.test.ts`, `components/landing/*` (LandingArbre réécrit, ArbreDiaspora nouveau, LandingTree.tsx et LandingArbre.module.css supprimés, landing-data réécrit sans contenu fictif), `app/not-found.tsx`, `app/error.tsx`, `app/(platform)/loading.tsx` ; remplacement mécanique de couleurs par les tokens dans 38 fichiers (1 335 occurrences) ; docs `audit.md`, `roadmap.md`, `design-system.md`, `security-privacy.md`, `progress.md`.
+- Fait et vérifié : frontend type-check OK, 32/32 tests ; backend tsc OK, 226/226. Captures Chrome 1440/390 px (accueil, login, register, dashboard, annuaire, messages, 404) sans erreur JS ni débordement ; clavier (lien d'évitement, menu + Échap, FAQ).
+- Fait mais non vérifié : rendu après remplacement des couleurs sur onboarding, profil, offres, événements, admin ; Safari/Firefox ; pastille de messages avec données réelles.
+- Actions à effet externe : base LOCALE uniquement (compte QA qa-refonte@example.invalid créé puis supprimé ; conteneur maliwuli-mysql démarré). Caches Docker build et npm vidés à la demande de l'utilisateur (disque plein). Cache .next local régénéré.
+- Décisions de l'utilisateur prises pendant la session : nettoyage des caches autorisé.
+- Décision de conception : l'accueil n'affiche plus aucun membre, effectif, publication ni événement fictif ; l'arbre est illustratif (feuilles anonymes).
+- Prochaine action : revue visuelle par l'utilisateur puis commit du lot 1 ; ensuite lot 2 sécurité (docs/roadmap.md).
+- Preuves : captures dans /tmp/mw-qa (hors dépôt, non conservées).
 
 ### 2026-10-07 — Claude — Titre de profil dynamique (retour de revue : « pas dynamique »)
 - Statut : TERMINÉ (code local ; ni commit, ni push, ni déploiement ; migration appliquée sur la base LOCALE seulement ; script de resynchronisation NON lancé en production)

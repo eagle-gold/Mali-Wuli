@@ -103,21 +103,21 @@ export default function RegisterDetailsPage() {
 
   return (
     <main className="min-h-screen bg-[var(--color-page)] flex items-center justify-center px-4 py-10">
-      <section className="bg-[#fffbf5] rounded-2xl shadow-sm border border-[#e4d2b3] w-full max-w-lg p-8">
+      <section className="bg-surface rounded-2xl shadow-sm border border-line w-full max-w-lg p-8">
         <div className="mb-7">
           <div className="mb-4 flex gap-2" aria-label="Étape 2 sur 2">
-            <span className="h-2 w-9 rounded-full bg-[#0d6738]" />
-            <span className="h-2 w-9 rounded-full bg-[#0d6738]" />
+            <span className="h-2 w-9 rounded-full bg-brand" />
+            <span className="h-2 w-9 rounded-full bg-brand" />
           </div>
-          <h1 className="font-display text-3xl font-bold text-[#292119] mb-2">
+          <h1 className="font-display text-3xl font-bold text-ink mb-2">
             Finalisez votre compte
           </h1>
-          <p className="text-sm leading-relaxed text-[#776b5e]">
+          <p className="text-sm leading-relaxed text-ink-muted">
             {chargementCompte ? (
               "Vérification de votre adresse e-mail…"
             ) : (
               <>
-                Adresse vérifiée : <strong className="text-[#2e261f]">{email}</strong>
+                Adresse vérifiée : <strong className="text-ink">{email}</strong>
               </>
             )}
           </p>
@@ -135,7 +135,7 @@ export default function RegisterDetailsPage() {
         <form onSubmit={handleSubmit} className="space-y-5">
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label htmlFor="prenom" className="block text-sm font-medium text-[#2e261f] mb-1">
+              <label htmlFor="prenom" className="block text-sm font-medium text-ink mb-1">
                 Prénom <span className="text-[#a44d28]">*</span>
               </label>
               <input
@@ -150,11 +150,11 @@ export default function RegisterDetailsPage() {
                 minLength={2}
                 maxLength={100}
                 required
-                className="w-full border border-[#dfc9a8] rounded-xl px-4 py-3 text-[#2e261f] bg-[#fffbf5] focus:outline-none focus:ring-2 focus:ring-[#0d6738] text-sm"
+                className="w-full border border-line-strong rounded-xl px-4 py-3 text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-brand text-sm"
               />
             </div>
             <div>
-              <label htmlFor="nom" className="block text-sm font-medium text-[#2e261f] mb-1">
+              <label htmlFor="nom" className="block text-sm font-medium text-ink mb-1">
                 Nom <span className="text-[#a44d28]">*</span>
               </label>
               <input
@@ -169,13 +169,13 @@ export default function RegisterDetailsPage() {
                 minLength={2}
                 maxLength={100}
                 required
-                className="w-full border border-[#dfc9a8] rounded-xl px-4 py-3 text-[#2e261f] bg-[#fffbf5] focus:outline-none focus:ring-2 focus:ring-[#0d6738] text-sm"
+                className="w-full border border-line-strong rounded-xl px-4 py-3 text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-brand text-sm"
               />
             </div>
           </div>
 
-          <div className="border-t border-[#ead8bd] pt-5">
-            <label htmlFor="motDePasse" className="block text-sm font-medium text-[#2e261f] mb-1">
+          <div className="border-t border-line-soft pt-5">
+            <label htmlFor="motDePasse" className="block text-sm font-medium text-ink mb-1">
               Mot de passe <span className="text-[#a44d28]">*</span>
             </label>
             <div className="relative">
@@ -189,13 +189,13 @@ export default function RegisterDetailsPage() {
                 }}
                 autoComplete="new-password"
                 required
-                className="w-full border border-[#dfc9a8] rounded-xl px-4 py-3 pr-12 text-[#2e261f] bg-[#fffbf5] focus:outline-none focus:ring-2 focus:ring-[#0d6738] text-sm"
+                className="w-full border border-line-strong rounded-xl px-4 py-3 pr-12 text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-brand text-sm"
               />
               <button
                 type="button"
                 onClick={() => setMotDePasseVisible((visible) => !visible)}
                 aria-label={motDePasseVisible ? "Masquer le mot de passe" : "Afficher le mot de passe"}
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-[#776b5e] hover:text-[#0d6738]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-ink-muted hover:text-brand"
               >
                 {motDePasseVisible ? <EyeOff size={19} /> : <Eye size={19} />}
               </button>
@@ -204,7 +204,7 @@ export default function RegisterDetailsPage() {
               {criteres.map((critere) => (
                 <li
                   key={critere.label}
-                  className={`text-xs ${critere.valide ? "text-[#0d6738]" : "text-[#776b5e]"}`}
+                  className={`text-xs ${critere.valide ? "text-brand" : "text-ink-muted"}`}
                 >
                   {critere.valide ? "✓" : "○"} {critere.label}
                 </li>
@@ -213,7 +213,7 @@ export default function RegisterDetailsPage() {
           </div>
 
           <div>
-            <label htmlFor="confirmation" className="block text-sm font-medium text-[#2e261f] mb-1">
+            <label htmlFor="confirmation" className="block text-sm font-medium text-ink mb-1">
               Confirmez le mot de passe <span className="text-[#a44d28]">*</span>
             </label>
             <div className="relative">
@@ -227,23 +227,23 @@ export default function RegisterDetailsPage() {
                 }}
                 autoComplete="new-password"
                 required
-                className={`w-full rounded-xl border px-4 py-3 pr-12 text-sm text-[#2e261f] bg-[#fffbf5] focus:outline-none focus:ring-2 ${
+                className={`w-full rounded-xl border px-4 py-3 pr-12 text-sm text-ink bg-surface focus:outline-none focus:ring-2 ${
                   confirmation && !motsDePasseIdentiques
                     ? "border-red-300 focus:ring-red-300"
-                    : "border-[#dfc9a8] focus:ring-[#0d6738]"
+                    : "border-line-strong focus:ring-brand"
                 }`}
               />
               <button
                 type="button"
                 onClick={() => setConfirmationVisible((visible) => !visible)}
                 aria-label={confirmationVisible ? "Masquer la confirmation" : "Afficher la confirmation"}
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-[#776b5e] hover:text-[#0d6738]"
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-ink-muted hover:text-brand"
               >
                 {confirmationVisible ? <EyeOff size={19} /> : <Eye size={19} />}
               </button>
             </div>
             {confirmation && (
-              <p className={`mt-1.5 text-xs ${motsDePasseIdentiques ? "text-[#0d6738]" : "text-red-600"}`}>
+              <p className={`mt-1.5 text-xs ${motsDePasseIdentiques ? "text-brand" : "text-red-600"}`}>
                 {motsDePasseIdentiques
                   ? "✓ Les mots de passe correspondent."
                   : "Les mots de passe ne correspondent pas."}
@@ -256,7 +256,7 @@ export default function RegisterDetailsPage() {
             disabled={!formulaireValide || loading || chargementCompte}
             className={`w-full py-4 rounded-xl font-semibold text-sm transition-colors ${
               formulaireValide && !loading && !chargementCompte
-                ? "bg-[#0d6738] text-white hover:bg-[#09572f]"
+                ? "bg-brand text-white hover:bg-brand-700"
                 : "bg-[#eee2d0] text-[#ad9d89] cursor-not-allowed"
             }`}
           >

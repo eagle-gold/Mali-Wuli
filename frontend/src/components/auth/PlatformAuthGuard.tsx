@@ -75,8 +75,8 @@ export default function PlatformAuthGuard({ children }: { children: ReactNode })
 
   if (!sessionVerifiee || sessionVerifiee.jeton !== lireJetonSession() || destinationSession(sessionVerifiee.compte, pathname) !== pathname) {
     return <main className="flex min-h-screen items-center justify-center bg-[var(--color-page)] px-4">
-      <div className="max-w-lg rounded-2xl border border-[#e4d2b3] bg-[#fffbf5] px-8 py-7 text-center shadow-sm">
-        {erreur ? <><p role="alert" className="text-[#735133]">{erreur}</p><button type="button" onClick={() => setRevision((valeur) => valeur + 1)} className="mt-5 rounded-xl bg-[#0d6738] px-5 py-3 font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#0d6738]">Réessayer</button></> : <><span className="mx-auto block h-8 w-8 animate-spin rounded-full border-4 border-[#d8c5a7] border-t-[#0d6738]" aria-hidden="true" /><p role="status" className="mt-4 font-semibold text-[#2e261f]">Vérification de votre session…</p></>}
+      <div className="max-w-lg rounded-2xl border border-line bg-surface px-8 py-7 text-center shadow-sm">
+        {erreur ? <><p role="alert" className="text-[#735133]">{erreur}</p><button type="button" onClick={() => setRevision((valeur) => valeur + 1)} className="mt-5 rounded-xl bg-brand px-5 py-3 font-semibold text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">Réessayer</button></> : <><span className="mx-auto block h-8 w-8 animate-spin rounded-full border-4 border-[#d8c5a7] border-t-brand" aria-hidden="true" /><p role="status" className="mt-4 font-semibold text-ink">Vérification de votre session…</p></>}
       </div>
     </main>;
   }

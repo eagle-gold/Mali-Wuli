@@ -186,7 +186,7 @@ export default function SynergiesPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-6 p-4 sm:p-6">
       <div>
-        <h1 className="font-display text-2xl font-bold text-[#292119]">Synergies</h1>
+        <h1 className="font-display text-2xl font-bold text-ink">Synergies</h1>
         <p className="mt-1 text-sm text-terre-300">
           Créez des liens utiles et suivez vos demandes de mise en relation.
         </p>

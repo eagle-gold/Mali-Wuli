@@ -4,13 +4,13 @@ export default function LogoMaliWuliImage({ compact = false }: { compact?: boole
     <img
       src="/images/optimized/logo-mali-wuli-128-d2b3b2f296.webp"
       srcSet="/images/optimized/logo-mali-wuli-64-a9fea92c35.webp 64w, /images/optimized/logo-mali-wuli-128-d2b3b2f296.webp 128w, /images/optimized/logo-mali-wuli-192-a20ec012bd.webp 192w, /images/optimized/logo-mali-wuli-288-f92be6a04c.webp 288w"
-      sizes={compact ? "(min-width: 640px) 64px, 56px" : "(min-width: 1024px) 92px, (min-width: 640px) 80px, 56px"}
+      sizes={compact ? "(min-width: 1024px) 52px, 44px" : "(min-width: 1024px) 56px, 48px"}
       alt="Mali Wuli"
       width={1280}
       height={1280}
       fetchPriority="high"
       decoding="async"
-      className={`${compact ? "h-14 w-14 sm:h-16 sm:w-16" : "h-14 w-14 sm:h-20 sm:w-20 lg:h-[92px] lg:w-[92px]"} object-contain`}
+      className={`${compact ? "h-11 w-11 lg:h-[52px] lg:w-[52px]" : "h-12 w-12 lg:h-14 lg:w-14"} object-contain`}
     />
   );
 }

@@ -322,7 +322,7 @@ const FILTRES: Array<{ id: FiltreFil; label: string }> = [
 ];
 
 const COULEURS_AVATAR = {
-  vert: "bg-[#e3f0e9] text-[#0d6738]",
+  vert: "bg-[#e3f0e9] text-brand",
   orange: "bg-[#f7e5d8] text-[#bd5c2c]",
   sable: "bg-[#efe3d0] text-[#6f5237]",
 };
@@ -367,7 +367,7 @@ function BadgeType({ type }: { type: TypePublication }) {
     <span
       className={`inline-flex rounded-full px-3 py-1 text-xs font-bold sm:text-sm ${
         type === "Offre"
-          ? "bg-[#e1f0e7] text-[#0d6738]"
+          ? "bg-[#e1f0e7] text-brand"
           : "bg-[#fff1bf] text-[#3c2d1f]"
       }`}
     >
@@ -432,9 +432,9 @@ function ModaleSoutiens({
         role="dialog"
         aria-modal="true"
         aria-labelledby="titre-soutiens"
-        className="flex max-h-[min(680px,85vh)] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-[#e2d2bc] bg-[#fffaf4] shadow-2xl"
+        className="flex max-h-[min(680px,85vh)] w-full max-w-lg flex-col overflow-hidden rounded-2xl border border-[#e2d2bc] bg-surface shadow-2xl"
       >
-        <header className="flex items-center justify-between gap-4 border-b border-[#eadcc7] px-5 py-4">
+        <header className="flex items-center justify-between gap-4 border-b border-line-soft px-5 py-4">
           <div>
             <h2
               id="titre-soutiens"
@@ -442,7 +442,7 @@ function ModaleSoutiens({
             >
               Personnes qui soutiennent
             </h2>
-            <p className="mt-0.5 text-sm text-[#806f5e]">
+            <p className="mt-0.5 text-sm text-ink-muted">
               {total} {total === 1 ? "soutien" : "soutiens"}
             </p>
           </div>
@@ -451,7 +451,7 @@ function ModaleSoutiens({
             onClick={fermer}
             autoFocus
             aria-label="Fermer la liste des soutiens"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#5e5044] transition hover:bg-[#f2e7d8] focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#5e5044] transition hover:bg-[#f2e7d8] focus:outline-none focus:ring-2 focus:ring-brand"
           >
             <X aria-hidden="true" size={20} />
           </button>
@@ -473,7 +473,7 @@ function ModaleSoutiens({
               <button
                 type="button"
                 onClick={reessayer}
-                className="mt-3 font-bold text-[#0d6738] underline underline-offset-2"
+                className="mt-3 font-bold text-brand underline underline-offset-2"
               >
                 Réessayer
               </button>
@@ -506,7 +506,7 @@ function ModaleSoutiens({
                         photo={urlMediaBackend(supporter.photo)}
                       />
                       <div className="min-w-0 flex-1">
-                        <p className="truncate font-bold text-[#2f261e]">
+                        <p className="truncate font-bold text-ink">
                           {nom}
                         </p>
                         <p className="truncate text-sm text-[#786958]">
@@ -516,7 +516,7 @@ function ModaleSoutiens({
                       <ThumbsUp
                         aria-label="Soutient cette publication"
                         size={18}
-                        className="shrink-0 text-[#0d6738]"
+                        className="shrink-0 text-brand"
                         fill="currentColor"
                       />
                     </li>
@@ -534,7 +534,7 @@ function ModaleSoutiens({
                   <button
                     type="button"
                     onClick={reessayer}
-                    className="mt-2 font-bold text-[#0d6738] underline underline-offset-2"
+                    className="mt-2 font-bold text-brand underline underline-offset-2"
                   >
                     Réessayer
                   </button>
@@ -545,7 +545,7 @@ function ModaleSoutiens({
                   type="button"
                   disabled={chargement}
                   onClick={voirPlus}
-                  className="mt-3 min-h-11 w-full rounded-xl border border-[#0d6738] px-4 py-2 text-sm font-bold text-[#0d6738] transition hover:bg-[#e4efe8] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:cursor-wait disabled:opacity-60"
+                  className="mt-3 min-h-11 w-full rounded-xl border border-brand px-4 py-2 text-sm font-bold text-brand transition hover:bg-[#e4efe8] focus:outline-none focus:ring-2 focus:ring-brand disabled:cursor-wait disabled:opacity-60"
                 >
                   {chargement ? "Chargement…" : "Voir plus"}
                 </button>
@@ -553,7 +553,7 @@ function ModaleSoutiens({
             </div>
           ) : (
             <div>
-              <p className="rounded-xl bg-[#f6efe3] px-4 py-6 text-center text-sm text-[#786958]">
+              <p className="rounded-xl bg-surface-sunken px-4 py-6 text-center text-sm text-[#786958]">
                 {total
                   ? "Aucun autre soutien sur cette page."
                   : "Personne n’a encore soutenu cette publication."}
@@ -563,7 +563,7 @@ function ModaleSoutiens({
                   type="button"
                   disabled={chargement}
                   onClick={voirPlus}
-                  className="mt-3 min-h-11 w-full rounded-xl border border-[#0d6738] px-4 py-2 text-sm font-bold text-[#0d6738] transition hover:bg-[#e4efe8] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:cursor-wait disabled:opacity-60"
+                  className="mt-3 min-h-11 w-full rounded-xl border border-brand px-4 py-2 text-sm font-bold text-brand transition hover:bg-[#e4efe8] focus:outline-none focus:ring-2 focus:ring-brand disabled:cursor-wait disabled:opacity-60"
                 >
                   {chargement ? "Chargement…" : "Voir plus"}
                 </button>
@@ -673,9 +673,9 @@ function MenuActions({
             setOuvert(true);
           }
         }}
-        className={`inline-flex items-center justify-center rounded-full text-[#806f5e] transition hover:bg-[#f5ecdf] hover:text-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738] ${
+        className={`inline-flex items-center justify-center rounded-full text-ink-muted transition hover:bg-surface-sunken hover:text-brand focus:outline-none focus:ring-2 focus:ring-brand ${
           compact ? "h-8 w-8" : "h-10 w-10"
-        } ${ouvert ? "bg-[#f5ecdf] text-[#0d6738]" : ""}`}
+        } ${ouvert ? "bg-surface-sunken text-brand" : ""}`}
       >
         <MoreHorizontal aria-hidden="true" size={compact ? 18 : 20} />
       </button>
@@ -686,7 +686,7 @@ function MenuActions({
           role="menu"
           aria-label={libelle}
           onKeyDown={naviguer}
-          className="absolute right-0 top-full z-30 mt-1 min-w-[10rem] overflow-hidden rounded-xl border border-[#e4d2b3] bg-[#fffbf5] py-1 shadow-[0_8px_24px_rgba(79,55,33,0.14)]"
+          className="absolute right-0 top-full z-30 mt-1 min-w-[10rem] overflow-hidden rounded-xl border border-line bg-surface py-1 shadow-[0_8px_24px_rgba(79,55,33,0.14)]"
         >
           {peutModifier && (
             <button
@@ -694,7 +694,7 @@ function MenuActions({
               role="menuitem"
               tabIndex={-1}
               onClick={() => choisir(onModifier)}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-semibold text-[#342a22] hover:bg-[#f5ecdf] focus:bg-[#e2efe7] focus:text-[#0d6738] focus:outline-none"
+              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-semibold text-[#342a22] hover:bg-surface-sunken focus:bg-[#e2efe7] focus:text-brand focus:outline-none"
             >
               <Pencil aria-hidden="true" size={15} />
               Modifier
@@ -706,7 +706,7 @@ function MenuActions({
               role="menuitem"
               tabIndex={-1}
               onClick={() => choisir(onSupprimer)}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-semibold text-[#a3321f] hover:bg-[#fbeae4] focus:bg-[#fbeae4] focus:outline-none"
+              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-semibold text-danger hover:bg-[#fbeae4] focus:bg-[#fbeae4] focus:outline-none"
             >
               <Trash2 aria-hidden="true" size={15} />
               Supprimer
@@ -719,7 +719,7 @@ function MenuActions({
               tabIndex={-1}
               aria-haspopup="dialog"
               onClick={() => choisir(onSignaler)}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-semibold text-[#342a22] hover:bg-[#f5ecdf] focus:bg-[#e2efe7] focus:text-[#0d6738] focus:outline-none"
+              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm font-semibold text-[#342a22] hover:bg-surface-sunken focus:bg-[#e2efe7] focus:text-brand focus:outline-none"
             >
               <Flag aria-hidden="true" size={15} />
               Signaler
@@ -792,18 +792,18 @@ function ConfirmationSuppression({
           onAnnuler();
         }
       }}
-      className="mt-3 rounded-xl border border-[#e4d2b3] bg-[#fffbf5] p-3"
+      className="mt-3 rounded-xl border border-line bg-surface p-3"
     >
-      <h3 id={titreId} className="text-sm font-bold text-[#2f261e]">{titre}</h3>
+      <h3 id={titreId} className="text-sm font-bold text-ink">{titre}</h3>
       <p className="mt-1 text-sm text-[#4f4339]">{consequences}</p>
-      <p className="mt-1 text-sm font-semibold text-[#a3321f]">{avertissement}</p>
+      <p className="mt-1 text-sm font-semibold text-danger">{avertissement}</p>
       <div className="mt-3 flex flex-wrap gap-2">
         <button
           type="button"
           autoFocus
           disabled={enCours}
           onClick={onAnnuler}
-          className="min-h-9 rounded-lg border border-[#e4d2b3] bg-white px-3 text-sm font-semibold text-[#4f4339] hover:bg-[#f5ecdf] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:opacity-60"
+          className="min-h-9 rounded-lg border border-line bg-white px-3 text-sm font-semibold text-[#4f4339] hover:bg-surface-sunken focus:outline-none focus:ring-2 focus:ring-brand disabled:opacity-60"
         >
           Annuler
         </button>
@@ -811,13 +811,13 @@ function ConfirmationSuppression({
           type="button"
           disabled={enCours}
           onClick={() => void supprimer()}
-          className="inline-flex min-h-9 items-center gap-2 rounded-lg bg-[#a3321f] px-3 text-sm font-bold text-white hover:bg-[#8a2918] focus:outline-none focus:ring-2 focus:ring-[#a3321f] focus:ring-offset-2 disabled:cursor-wait disabled:opacity-70"
+          className="inline-flex min-h-9 items-center gap-2 rounded-lg bg-danger px-3 text-sm font-bold text-white hover:bg-[#8a2918] focus:outline-none focus:ring-2 focus:ring-danger focus:ring-offset-2 disabled:cursor-wait disabled:opacity-70"
         >
           {enCours && <LoaderCircle aria-hidden="true" size={15} className="animate-spin" />}
           {enCours ? "Suppression…" : "Confirmer la suppression"}
         </button>
       </div>
-      {erreur && <p className="mt-2 text-sm text-[#a3321f]" role="alert">{erreur}</p>}
+      {erreur && <p className="mt-2 text-sm text-danger" role="alert">{erreur}</p>}
     </section>
   );
 }
@@ -895,7 +895,7 @@ function EditionInline({
         rows={compact ? 2 : 4}
         disabled={enCours}
         onChange={(event) => setValeur(event.target.value)}
-        className={`w-full resize-y rounded-xl border border-[#e4d2b3] bg-[#fffbf5] px-3 py-2 text-[#342a22] outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/25 disabled:opacity-70 ${
+        className={`w-full resize-y rounded-xl border border-line bg-surface px-3 py-2 text-[#342a22] outline-none focus:border-brand focus:ring-2 focus:ring-brand/25 disabled:opacity-70 ${
           compact ? "text-sm leading-6" : "text-[15px] leading-7 sm:text-[17px]"
         }`}
       />
@@ -907,20 +907,20 @@ function EditionInline({
           type="button"
           disabled={enCours}
           onClick={onAnnuler}
-          className="min-h-9 rounded-lg border border-[#e4d2b3] bg-white px-3 text-sm font-semibold text-[#4f4339] hover:bg-[#f5ecdf] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:opacity-60"
+          className="min-h-9 rounded-lg border border-line bg-white px-3 text-sm font-semibold text-[#4f4339] hover:bg-surface-sunken focus:outline-none focus:ring-2 focus:ring-brand disabled:opacity-60"
         >
           Annuler
         </button>
         <button
           type="submit"
           disabled={enCours || invalide}
-          className="inline-flex min-h-9 items-center gap-2 rounded-lg bg-[#0d6738] px-3 text-sm font-bold text-white hover:bg-[#0a552e] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+          className="inline-flex min-h-9 items-center gap-2 rounded-lg bg-brand px-3 text-sm font-bold text-white hover:bg-[#0a552e] focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
         >
           {enCours && <LoaderCircle aria-hidden="true" size={15} className="animate-spin" />}
           {enCours ? "Enregistrement…" : "Enregistrer"}
         </button>
       </div>
-      {erreur && <p className="mt-2 text-sm text-[#a3321f]" role="alert">{erreur}</p>}
+      {erreur && <p className="mt-2 text-sm text-danger" role="alert">{erreur}</p>}
     </form>
   );
 }
@@ -966,7 +966,7 @@ function CommentaireFil({
 
   return (
     <div className={niveau ? "ml-5 border-l-2 border-[#d8c5aa] pl-3 sm:ml-9" : ""}>
-      <div className="flex gap-2 rounded-lg border border-[#eadcc7] bg-[#fffaf4] p-3">
+      <div className="flex gap-2 rounded-lg border border-line-soft bg-surface p-3">
         <Avatar
           compact
           initiales={initiales}
@@ -975,7 +975,7 @@ function CommentaireFil({
         />
         <div className="min-w-0 flex-1">
           <div className="flex items-start gap-2">
-            <p className="min-w-0 flex-1 text-sm font-bold text-[#2f261e]">
+            <p className="min-w-0 flex-1 text-sm font-bold text-ink">
               {auteur}
               <span className="ml-2 font-normal text-[#8b7b69]">
                 {dateRelative(commentaire.createdAt)}
@@ -1021,7 +1021,7 @@ function CommentaireFil({
               <button
                 type="button"
                 onClick={() => repondre(racineId, auteur)}
-                className="mt-1 rounded px-1 py-0.5 text-xs font-bold text-[#0d6738] hover:underline focus:outline-none focus:ring-2 focus:ring-[#0d6738]"
+                className="mt-1 rounded px-1 py-0.5 text-xs font-bold text-brand hover:underline focus:outline-none focus:ring-2 focus:ring-brand"
               >
                 Répondre
               </button>
@@ -1435,7 +1435,7 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
   };
 
   return (
-    <article className="rounded-2xl border border-[#eadcc7] bg-[#fffaf4] p-4 shadow-[0_1px_2px_rgba(79,55,33,0.04)] sm:p-5">
+    <article className="rounded-2xl border border-line-soft bg-surface p-4 shadow-[0_1px_2px_rgba(79,55,33,0.04)] sm:p-5">
       <header className="flex items-start gap-3">
         <Avatar
           initiales={publication.initiales}
@@ -1447,7 +1447,7 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
             {publication.auteur}
           </h2>
           <p className="mt-0.5 truncate text-sm text-[#6e5b49]">{publication.fonction}</p>
-          <p className="mt-0.5 flex items-center gap-1.5 text-xs text-[#806f5e]">
+          <p className="mt-0.5 flex items-center gap-1.5 text-xs text-ink-muted">
             <span className="truncate">{publication.lieu}</span>
             <span aria-hidden="true">·</span>
             <span className="shrink-0">{publication.date}</span>
@@ -1487,14 +1487,14 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
         />
       )}
       {annonceSuppression && (
-        <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-[#0d6738]" role="status">
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-brand" role="status">
           <span>{annonceSuppression}</span>
           {commentaireEnCorbeille && (
             <button
               type="button"
               disabled={restaurationEnCours}
               onClick={() => void annulerSuppressionCommentaire()}
-              className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-[#e4d2b3] bg-white px-3 font-semibold text-[#0d6738] hover:bg-[#f5ecdf] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:cursor-wait disabled:opacity-60"
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-line bg-white px-3 font-semibold text-brand hover:bg-surface-sunken focus:outline-none focus:ring-2 focus:ring-brand disabled:cursor-wait disabled:opacity-60"
             >
               {restaurationEnCours ? <LoaderCircle aria-hidden="true" size={14} className="animate-spin" /> : <RotateCcw aria-hidden="true" size={14} />}
               Annuler
@@ -1539,16 +1539,16 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
       )}
 
       {(soutiens > 0 || nombreReponses > 0) && (
-        <div className="mt-3 flex items-center justify-between gap-3 text-sm text-[#806f5e]">
+        <div className="mt-3 flex items-center justify-between gap-3 text-sm text-ink-muted">
           {soutiens > 0 ? (
             <button
               type="button"
               onClick={ouvrirSoutiens}
               aria-haspopup="dialog"
               aria-label={`Voir ${soutiens === 1 ? "la personne" : `les ${soutiens} personnes`} qui soutiennent cette publication`}
-              className="inline-flex min-h-9 items-center gap-1.5 rounded-md px-1 hover:text-[#0d6738] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738]"
+              className="inline-flex min-h-9 items-center gap-1.5 rounded-md px-1 hover:text-brand hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
             >
-              <span aria-hidden="true" className="flex h-5 w-5 items-center justify-center rounded-full bg-[#0d6738] text-white">
+              <span aria-hidden="true" className="flex h-5 w-5 items-center justify-center rounded-full bg-brand text-white">
                 <ThumbsUp size={11} fill="currentColor" />
               </span>
               {soutiens}
@@ -1559,7 +1559,7 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
               type="button"
               onClick={basculerReponses}
               aria-expanded={reponseOuverte}
-              className="min-h-9 rounded-md px-1 hover:text-[#0d6738] hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738]"
+              className="min-h-9 rounded-md px-1 hover:text-brand hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-brand"
             >
               {nombreReponses} {nombreReponses === 1 ? "commentaire" : "commentaires"}
             </button>
@@ -1573,8 +1573,8 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
           aria-pressed={soutenu}
           disabled={reactionEnCours}
           onClick={() => void basculerSoutien()}
-          className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-semibold transition hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738] sm:text-[15px] ${
-            soutenu ? "text-[#0d6738]" : "text-[#6e5b49]"
+          className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-semibold transition hover:bg-surface-sunken focus:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:text-[15px] ${
+            soutenu ? "text-brand" : "text-[#6e5b49]"
           } disabled:cursor-wait disabled:opacity-60`}
         >
           <ThumbsUp aria-hidden="true" size={19} fill={soutenu ? "currentColor" : "none"} />
@@ -1584,7 +1584,7 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
           type="button"
           aria-expanded={reponseOuverte}
           onClick={basculerReponses}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-semibold text-[#6e5b49] transition hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738] sm:text-[15px]"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-3 text-sm font-semibold text-[#6e5b49] transition hover:bg-surface-sunken focus:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:text-[15px]"
         >
           <MessageCircle aria-hidden="true" size={19} />
           Commenter
@@ -1592,7 +1592,7 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
       </div>
 
       {reponseOuverte && (
-        <div className="mt-3 rounded-xl bg-[#f6efe3] p-2 sm:p-3">
+        <div className="mt-3 rounded-xl bg-surface-sunken p-2 sm:p-3">
           <div className="space-y-2" aria-live="polite">
             {commentaires.length > 0 ? (
               commentaires.map((commentaire) => (
@@ -1626,7 +1626,7 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
                 <button
                   type="button"
                   onClick={() => void chargerCommentaires()}
-                  className="mt-1 font-bold text-[#0d6738] underline"
+                  className="mt-1 font-bold text-brand underline"
                 >
                   Réessayer
                 </button>
@@ -1636,7 +1636,7 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
 
           <form onSubmit={envoyerReponse} className="mt-3">
             {parentReponse ? (
-              <div className="mb-2 flex items-center justify-between gap-3 rounded-lg bg-[#e4efe8] px-3 py-2 text-xs text-[#0d6738]">
+              <div className="mb-2 flex items-center justify-between gap-3 rounded-lg bg-[#e4efe8] px-3 py-2 text-xs text-brand">
                 <span className="truncate">
                   Réponse à <strong>{parentReponse.auteur}</strong>
                 </span>
@@ -1665,7 +1665,7 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
                     ? `Répondre à ${parentReponse.auteur}…`
                     : "Écrivez un commentaire…"
                 }
-                className="min-w-0 flex-1 rounded-lg border border-[#dfcdb4] bg-white px-3 py-2 text-sm text-[#2f261e] outline-none placeholder:text-[#9a8a79] focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"
+                className="min-w-0 flex-1 rounded-lg border border-[#dfcdb4] bg-white px-3 py-2 text-sm text-ink outline-none placeholder:text-[#9a8a79] focus:border-brand focus:ring-2 focus:ring-brand/20"
               />
               <button
                 type="submit"
@@ -1673,7 +1673,7 @@ function CartePublication({ publication, onSupprime, actualiser, commentaireRest
                 aria-label={
                   parentReponse ? "Envoyer la réponse" : "Publier le commentaire"
                 }
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#0d6738] text-white transition hover:bg-[#09572f] disabled:cursor-not-allowed disabled:opacity-40"
+                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand text-white transition hover:bg-brand-700 disabled:cursor-not-allowed disabled:opacity-40"
               >
                 <Send aria-hidden="true" size={17} />
               </button>
@@ -1727,7 +1727,7 @@ function ColonneProfil({
         aria-label="Chargement de mon profil"
         className="hidden space-y-5 xl:block"
       >
-        <div className="h-72 animate-pulse rounded-2xl border border-[#eadcc7] bg-[#fffaf4]" />
+        <div className="h-72 animate-pulse rounded-2xl border border-line-soft bg-surface" />
       </aside>
     );
   }
@@ -1735,12 +1735,12 @@ function ColonneProfil({
   if (!utilisateur) {
     return (
       <aside aria-label="Résumé de mon profil" className="hidden xl:block">
-        <section className="rounded-2xl border border-[#eadcc7] bg-[#fffaf4] p-5 text-sm text-[#625347]">
+        <section className="rounded-2xl border border-line-soft bg-surface p-5 text-sm text-[#625347]">
           <p>{erreur || "Votre profil n’est pas encore disponible."}</p>
           <button
             type="button"
             onClick={reessayer}
-            className="mt-3 font-bold text-[#0d6738] hover:underline"
+            className="mt-3 font-bold text-brand hover:underline"
           >
             Réessayer
           </button>
@@ -1761,16 +1761,16 @@ function ColonneProfil({
       aria-label="Résumé de mon profil"
       className="hidden space-y-5 xl:block"
     >
-      <section className="overflow-hidden rounded-2xl border border-[#eadcc7] bg-[#fffaf4]">
+      <section className="overflow-hidden rounded-2xl border border-line-soft bg-surface">
         <div
-          className="h-20 bg-[#0d6738]"
+          className="h-20 bg-brand"
           style={{
             backgroundImage:
               "radial-gradient(circle at 72% 110%, transparent 0 20px, rgba(236,179,21,.18) 21px 27px, transparent 28px 42px, rgba(236,179,21,.15) 43px 49px, transparent 50px), linear-gradient(115deg, #0d6738 0 34%, #175d39 34% 39%, #8b5a34 39% 100%)",
           }}
         />
         <div className="px-5 pb-5">
-          <div className="-mt-8 w-fit rounded-full border-4 border-[#fffaf4]">
+          <div className="-mt-8 w-fit rounded-full border-4 border-surface">
             <Avatar
               initiales={initiales}
               grand
@@ -1781,24 +1781,24 @@ function ColonneProfil({
             {nom}
           </h2>
           <p className="mt-1 text-[#4f4339]">{titreMembre(profil.titre)}</p>
-          {lieu && <p className="mt-0.5 text-sm text-[#806f5e]">{lieu}</p>}
+          {lieu && <p className="mt-0.5 text-sm text-ink-muted">{lieu}</p>}
           <dl className="mt-5 space-y-3 border-t border-[#eee1cf] pt-4 text-sm">
             <div className="flex items-center justify-between gap-4">
               <dt className="text-[#615247]">Synergies actives</dt>
-              <dd className="font-bold text-[#0d6738]">
+              <dd className="font-bold text-brand">
                 {profil.stats?.nbSynergies ?? 0}
               </dd>
             </div>
             <div className="flex items-center justify-between gap-4">
               <dt className="text-[#615247]">Contributions au réseau</dt>
-              <dd className="font-bold text-[#0d6738]">
+              <dd className="font-bold text-brand">
                 {profil.stats?.nbContributions ?? 0}
               </dd>
             </div>
           </dl>
           <Link
             href="/profil"
-            className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-[#0d6738] hover:underline"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-brand hover:underline"
           >
             Voir mon profil <ArrowRight aria-hidden="true" size={16} />
           </Link>
@@ -1808,13 +1808,13 @@ function ColonneProfil({
       {erreur ? (
         <p
           role="status"
-          className="rounded-xl border border-[#eadcc7] bg-[#fffaf4] p-3 text-xs text-[#756657]"
+          className="rounded-xl border border-line-soft bg-surface p-3 text-xs text-[#756657]"
         >
           Certaines informations n’ont pas pu être actualisées.{" "}
           <button
             type="button"
             onClick={reessayer}
-            className="font-bold text-[#0d6738] underline"
+            className="font-bold text-brand underline"
           >
             Réessayer
           </button>
@@ -1871,7 +1871,7 @@ function ColonneSuggestions({
         {[1, 2].map((item) => (
           <div
             key={item}
-            className="h-48 animate-pulse rounded-2xl border border-[#eadcc7] bg-[#fffaf4]"
+            className="h-48 animate-pulse rounded-2xl border border-line-soft bg-surface"
           />
         ))}
       </aside>
@@ -1883,8 +1883,8 @@ function ColonneSuggestions({
       aria-label="Suggestions et événements"
       className="hidden space-y-5 xl:block"
     >
-      <section className="rounded-2xl border border-[#eadcc7] bg-[#fffaf4] p-5">
-        <h2 className="titre-section">
+      <section className="rounded-2xl border border-line-soft bg-surface p-5">
+        <h2 className="titre-carte">
           Synergies suggérées
         </h2>
         {suggestions.length ? (
@@ -1915,7 +1915,7 @@ function ColonneSuggestions({
                       photo={urlMediaBackend(suggestion.photo)}
                     />
                     <div className="min-w-0">
-                      <p className="truncate font-bold text-[#2f261e]">{nom}</p>
+                      <p className="truncate font-bold text-ink">{nom}</p>
                       <p className="truncate text-sm text-[#5f5145]">
                         {[titreMembre(suggestion.titre), suggestion.ville || suggestion.pays].filter(Boolean).join(" · ")}
                       </p>
@@ -1925,7 +1925,7 @@ function ColonneSuggestions({
                     type="button"
                     disabled={actionId === suggestion.id || demandeEnvoyee}
                     onClick={() => void proposerSynergie(suggestion)}
-                    className={`mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl px-4 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 ${demandeEnvoyee ? "bg-[#e1eee7] text-[#0d6738]" : "bg-[#0d6738] text-white hover:bg-[#09572f]"} disabled:opacity-70`}
+                    className={`mt-3 flex min-h-11 w-full items-center justify-center gap-2 rounded-xl px-4 text-sm font-bold transition focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 ${demandeEnvoyee ? "bg-[#e1eee7] text-brand" : "bg-brand text-white hover:bg-brand-700"} disabled:opacity-70`}
                   >
                     {demandeEnvoyee ? (
                       <Check aria-hidden="true" size={18} />
@@ -1949,7 +1949,7 @@ function ColonneSuggestions({
             </p>
             <Link
               href="/annuaire"
-              className="mt-3 inline-flex items-center gap-1 font-bold text-[#0d6738] hover:underline"
+              className="mt-3 inline-flex items-center gap-1 font-bold text-brand hover:underline"
             >
               Voir l’annuaire <ArrowRight aria-hidden="true" size={16} />
             </Link>
@@ -1963,22 +1963,22 @@ function ColonneSuggestions({
         {confirmation ? (
           <p
             role="status"
-            className="mt-3 rounded-lg bg-[#e1eee7] px-3 py-2 text-sm font-medium text-[#0d6738]"
+            className="mt-3 rounded-lg bg-[#e1eee7] px-3 py-2 text-sm font-medium text-brand"
           >
             {confirmation}
           </p>
         ) : null}
       </section>
 
-      <section className="rounded-2xl border border-[#eadcc7] bg-[#fffaf4] p-5">
+      <section className="rounded-2xl border border-line-soft bg-surface p-5">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="titre-section">
+          <h2 className="titre-carte">
             Événements à venir
           </h2>
           <Link
             href="/evenements"
             aria-label="Voir tous les événements"
-            className="text-[#0d6738]"
+            className="text-brand"
           >
             <ArrowRight aria-hidden="true" size={18} />
           </Link>
@@ -1990,7 +1990,7 @@ function ColonneSuggestions({
               return (
                 <div key={evenement.id} className="flex items-center gap-3">
                   <div className="w-12 shrink-0 overflow-hidden rounded-lg border border-[#decbb2] text-center">
-                    <p className="bg-[#0d6738] py-1 text-[10px] font-bold text-white">
+                    <p className="bg-brand py-1 text-[10px] font-bold text-white">
                       {date.mois}
                     </p>
                     <p className="py-1 text-lg font-bold text-[#322920]">
@@ -1998,7 +1998,7 @@ function ColonneSuggestions({
                     </p>
                   </div>
                   <div className="min-w-0">
-                    <Link href={`/evenements/${encodeURIComponent(evenement.id)}`} className="block truncate font-bold text-[#2f261e] hover:text-[#0d6738] hover:underline">
+                    <Link href={`/evenements/${encodeURIComponent(evenement.id)}`} className="block truncate font-bold text-ink hover:text-brand hover:underline">
                       {evenement.titre}
                     </Link>
                     <p className="truncate text-sm text-[#625347]">
@@ -2019,12 +2019,12 @@ function ColonneSuggestions({
       </section>
 
       {erreur ? (
-        <section className="rounded-2xl border border-[#eadcc7] bg-[#fffaf4] p-4 text-sm text-[#756657]">
+        <section className="rounded-2xl border border-line-soft bg-surface p-4 text-sm text-[#756657]">
           <p>Certaines suggestions n’ont pas pu être chargées.</p>
           <button
             type="button"
             onClick={reessayer}
-            className="mt-2 font-bold text-[#0d6738] underline"
+            className="mt-2 font-bold text-brand underline"
           >
             Réessayer
           </button>
@@ -2262,9 +2262,9 @@ export default function ActualiteFeed() {
   };
 
   return (
-    <div className="min-h-full min-w-0 bg-[var(--color-page)] [overflow-wrap:anywhere] font-sans text-[#2f261e]">
+    <div className="min-h-full min-w-0 bg-[var(--color-page)] [overflow-wrap:anywhere] font-sans text-ink">
       <div className="mx-auto grid w-full max-w-[1280px] grid-cols-1 items-start gap-5 p-4 sm:p-6 xl:grid-cols-[250px_minmax(0,1fr)_320px]">
-        <div className="xl:sticky xl:top-[136px]">
+        <div className="xl:sticky xl:top-[calc(var(--mw-header-h)+1.5rem)]">
           <ColonneProfil
             utilisateur={panneaux.utilisateur}
             chargement={chargementPanneaux}
@@ -2282,7 +2282,7 @@ export default function ActualiteFeed() {
             onPublie={publicationRecue}
           />
 
-          <div className="flex items-center gap-3 text-sm text-[#806f5e]">
+          <div className="flex items-center gap-3 text-sm text-ink-muted">
             <div aria-hidden="true" className="h-px flex-1 bg-[#e3d6c0]" />
             <label className="inline-flex items-center gap-1.5">
               <span>Afficher :</span>
@@ -2290,7 +2290,7 @@ export default function ActualiteFeed() {
                 <select
                   value={filtre}
                   onChange={(event) => setFiltre(event.target.value as FiltreFil)}
-                  className="min-h-9 cursor-pointer appearance-none rounded bg-transparent py-1 pl-1 pr-6 font-bold text-[#56493e] outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738]"
+                  className="min-h-9 cursor-pointer appearance-none rounded bg-transparent py-1 pl-1 pr-6 font-bold text-ink-soft outline-none focus-visible:ring-2 focus-visible:ring-brand"
                 >
                   {FILTRES.map((option) => (
                     <option key={option.id} value={option.id}>{option.label}</option>
@@ -2308,16 +2308,16 @@ export default function ActualiteFeed() {
           </p>
 
           {annonceSuppression && (
-            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-[#c8dccd] bg-[#edf4ee] p-3 text-sm text-[#0d6738]" role="status">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 rounded-xl border border-[#c8dccd] bg-[#edf4ee] p-3 text-sm text-brand" role="status">
               <span className="min-w-0 flex-1">{annonceSuppression}</span>
               {publicationEnCorbeille && (
                 <>
-                  <Link href="/corbeille" className="font-semibold underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-[#0d6738]">Voir la corbeille</Link>
+                  <Link href="/corbeille" className="font-semibold underline underline-offset-2 focus:outline-none focus:ring-2 focus:ring-brand">Voir la corbeille</Link>
                   <button
                     type="button"
                     disabled={restaurationEnCours}
                     onClick={() => void annulerSuppressionPublication()}
-                    className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-[#e4d2b3] bg-white px-3 font-semibold text-[#0d6738] hover:bg-[#f5ecdf] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:cursor-wait disabled:opacity-60"
+                    className="inline-flex min-h-9 items-center gap-1.5 rounded-lg border border-line bg-white px-3 font-semibold text-brand hover:bg-surface-sunken focus:outline-none focus:ring-2 focus:ring-brand disabled:cursor-wait disabled:opacity-60"
                   >
                     {restaurationEnCours ? <LoaderCircle aria-hidden="true" size={14} className="animate-spin" /> : <RotateCcw aria-hidden="true" size={14} />}
                     Annuler
@@ -2332,12 +2332,12 @@ export default function ActualiteFeed() {
                 <div
                   key={index}
                   aria-hidden="true"
-                  className="animate-pulse rounded-2xl border border-[#eadcc7] bg-[#fffaf4] p-5"
+                  className="animate-pulse rounded-2xl border border-line-soft bg-surface p-5"
                 >
                   <div className="flex gap-3">
-                    <div className="h-14 w-14 rounded-full bg-[#eadfce]" />
+                    <div className="h-14 w-14 rounded-full bg-line-soft" />
                     <div className="flex-1 space-y-3 pt-1">
-                      <div className="h-5 w-2/5 rounded bg-[#eadfce]" />
+                      <div className="h-5 w-2/5 rounded bg-line-soft" />
                       <div className="h-4 w-3/5 rounded bg-[#f0e7da]" />
                     </div>
                   </div>
@@ -2350,20 +2350,20 @@ export default function ActualiteFeed() {
             ) : erreurFil ? (
               <div
                 role="alert"
-                className="rounded-2xl border border-[#e8c8b8] bg-[#fffaf4] p-6 text-center"
+                className="rounded-2xl border border-[#e8c8b8] bg-surface p-6 text-center"
               >
                 <p className="font-semibold text-[#9b3e24]">{erreurFil}</p>
                 <button
                   type="button"
                   onClick={() => void chargerPublications()}
-                  className="mt-4 min-h-11 rounded-xl bg-[#0d6738] px-5 font-bold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2"
+                  className="mt-4 min-h-11 rounded-xl bg-brand px-5 font-bold text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2"
                 >
                   Réessayer
                 </button>
               </div>
             ) : publications.length === 0 ? (
-              <div className="rounded-2xl border border-[#eadcc7] bg-[#fffaf4] p-8 text-center">
-                <p className="text-lg font-bold text-[#2f261e]">
+              <div className="rounded-2xl border border-line-soft bg-surface p-8 text-center">
+                <p className="text-lg font-bold text-ink">
                   Aucune publication dans ce fil pour le moment
                 </p>
                 <p className="mt-2 text-[#786958]">
@@ -2385,7 +2385,7 @@ export default function ActualiteFeed() {
           </section>
         </main>
 
-        <div className="xl:sticky xl:top-[136px] xl:max-h-[calc(100dvh-160px)] xl:overflow-y-auto">
+        <div className="xl:sticky xl:top-[calc(var(--mw-header-h)+1.5rem)] xl:max-h-[calc(100dvh-160px)] xl:overflow-y-auto">
           <ColonneSuggestions
             suggestions={panneaux.suggestions}
             evenements={panneaux.evenements}

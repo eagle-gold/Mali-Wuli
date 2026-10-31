@@ -93,21 +93,21 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
 
   return (
     <main className="min-h-screen bg-[var(--color-page)] px-4 py-6 sm:px-6 sm:py-10">
-      <section className="mx-auto w-full max-w-[984px] rounded-[20px] border border-[#e4d2b3] bg-[#fffbf5] px-5 py-8 shadow-sm sm:px-10 sm:py-10">
-        <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#e3f0e9] text-[#0d6738] sm:h-[68px] sm:w-[68px]">
+      <section className="mx-auto w-full max-w-[984px] rounded-[20px] border border-line bg-surface px-5 py-8 shadow-sm sm:px-10 sm:py-10">
+        <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#e3f0e9] text-brand sm:h-[68px] sm:w-[68px]">
           <svg aria-hidden="true" className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.8}>
             <path strokeLinecap="round" strokeLinejoin="round" d="m5 12.5 4 4L19 6.5" />
           </svg>
         </div>
 
-        <h1 className="text-center font-display text-4xl font-bold leading-tight text-[#292119] sm:text-5xl">
+        <h1 className="text-center font-display text-4xl font-bold leading-tight text-ink sm:text-5xl">
           Bienvenue sur Mali Wuli !
         </h1>
         <p className="mx-auto mt-4 max-w-[730px] text-center text-base font-semibold leading-relaxed text-[#17120f] sm:text-lg">
           Votre profil est enregistré. Vous avez dès maintenant accès à toute la communauté.
         </p>
 
-        <div className="mt-8 rounded-[16px] bg-[#f6efe3] px-4 py-6 sm:px-7">
+        <div className="mt-8 rounded-[16px] bg-surface-sunken px-4 py-6 sm:px-7">
           <h2 className="titre-section text-center">Invitez vos proches</h2>
           <p className="mt-1 text-center text-base text-[#a44d28] sm:text-lg">
             Partagez votre lien d’invitation et agrandissez la communauté !
@@ -118,13 +118,13 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
               readOnly
               value={lienInvitation}
               placeholder="Préparation de votre lien…"
-              className="min-w-0 flex-1 rounded-[11px] border border-[#dfc9a8] bg-[#fffbf5] px-4 py-3 text-sm text-[#2e261f] outline-none sm:text-base"
+              className="min-w-0 flex-1 rounded-[11px] border border-line-strong bg-surface px-4 py-3 text-sm text-ink outline-none sm:text-base"
             />
             <button
               type="button"
               onClick={copierLien}
               disabled={!lienInvitation}
-              className="rounded-[11px] bg-[#0d6738] px-6 py-3 font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 disabled:cursor-wait disabled:opacity-60"
+              className="rounded-[11px] bg-brand px-6 py-3 font-semibold text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 disabled:cursor-wait disabled:opacity-60"
             >
               {lienCopie ? "Copié !" : "Copier"}
             </button>
@@ -134,14 +134,14 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
 
         <div className="mt-7 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { valeur: String(formationsNotees), libelle: "formation(s) notée(s)", couleur: "text-[#0d6738]" },
-            { valeur: String(data.experiences?.length || 0), libelle: "expérience(s)", couleur: "text-[#0d6738]" },
+            { valeur: String(formationsNotees), libelle: "formation(s) notée(s)", couleur: "text-brand" },
+            { valeur: String(data.experiences?.length || 0), libelle: "expérience(s)", couleur: "text-brand" },
             { valeur: residence, libelle: "résidence", couleur: "text-[#17120f]" },
-            { valeur: data.mentorat?.estVolontaire ? "Oui" : "Non", libelle: "mentorat", couleur: "text-[#0d6738]" },
+            { valeur: data.mentorat?.estVolontaire ? "Oui" : "Non", libelle: "mentorat", couleur: "text-brand" },
           ].map((item) => (
-            <article key={item.libelle} className="min-w-0 rounded-[15px] border border-[#ead8bd] bg-[#fffbf5] px-5 py-5">
+            <article key={item.libelle} className="min-w-0 rounded-[15px] border border-line-soft bg-surface px-5 py-5">
               <p className={`break-words text-2xl font-bold ${item.couleur}`}>{item.valeur}</p>
-              <p className="mt-1 text-base leading-snug text-[#2e261f]">{item.libelle}</p>
+              <p className="mt-1 text-base leading-snug text-ink">{item.libelle}</p>
             </article>
           ))}
         </div>
@@ -152,14 +152,14 @@ function EcranConfirmation({ data, onBack }: { data: OnboardingData; onBack: () 
             sauvegarderProfilLocal(data);
             router.replace("/profil");
           }}
-          className="mt-7 w-full rounded-[11px] bg-[#0d6738] px-6 py-4 text-base font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 sm:text-lg"
+          className="mt-7 w-full rounded-[11px] bg-brand px-6 py-4 text-base font-semibold text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:text-lg"
         >
           Découvrir votre profil
         </button>
         <button
           type="button"
           onClick={onBack}
-          className="mx-auto mt-4 block px-4 py-1 text-base font-semibold text-[#2e261f] hover:text-[#0d6738]"
+          className="mx-auto mt-4 block px-4 py-1 text-base font-semibold text-ink hover:text-brand"
         >
           ‹ Revenir aux associations
         </button>
@@ -264,7 +264,7 @@ export default function OnboardingPage() {
   if (chargementInitial) {
     return (
       <main className="flex min-h-screen items-center justify-center bg-[var(--color-page)] px-4">
-        <div role="status" aria-live="polite" className="rounded-[18px] border border-[#e4d2b3] bg-[#fffbf5] px-7 py-5 text-center font-semibold text-[#2e261f] shadow-sm">
+        <div role="status" aria-live="polite" className="rounded-[18px] border border-line bg-surface px-7 py-5 text-center font-semibold text-ink shadow-sm">
           Chargement de votre profil…
         </div>
       </main>
@@ -278,26 +278,26 @@ export default function OnboardingPage() {
         <div className="mx-auto w-full max-w-[1040px] space-y-6">
 
           {/* Header terre */}
-          <section className="rounded-[22px] bg-[#735133] px-6 py-8 text-[#fffaf4] sm:px-10 sm:py-10 lg:px-12 lg:py-11">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-[#fffaf4] sm:text-base">
+          <section className="rounded-[22px] bg-[#735133] px-6 py-8 text-surface sm:px-10 sm:py-10 lg:px-12 lg:py-11">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.08em] text-surface sm:text-base">
               Bienvenue sur Mali Wuli
             </p>
             <h1 className="mb-5 max-w-[850px] font-display text-3xl font-bold leading-[1.2] sm:text-4xl lg:text-[40px]">
               Un seul réseau pour les talents du Mali, ici et ailleurs.
             </h1>
-            <p className="max-w-[900px] text-base leading-[1.7] text-[#fffaf4] sm:text-[17px] lg:text-lg">
+            <p className="max-w-[900px] text-base leading-[1.7] text-surface sm:text-[17px] lg:text-lg">
               Mali Wuli relie ceux qui cherchent et ceux qui proposent : mentorat, orientation,
               chantiers concrets et emplois.
             </p>
           </section>
 
           {/* Étapes */}
-          <section className="rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-5 shadow-sm sm:p-8 lg:p-9">
+          <section className="rounded-[22px] border border-line bg-surface p-5 shadow-sm sm:p-8 lg:p-9">
             <div className="mb-6 flex flex-wrap items-center gap-3">
-              <span className="rounded-[9px] border border-[#edc9b7] bg-[#f8e4d7] px-3 py-2 text-sm font-bold uppercase tracking-[0.04em] text-[#2e261f] sm:text-base">
+              <span className="rounded-[9px] border border-[#edc9b7] bg-[#f8e4d7] px-3 py-2 text-sm font-bold uppercase tracking-[0.04em] text-ink sm:text-base">
                 Environ 5 minutes
               </span>
-              <span className="text-sm text-[#2e261f] sm:text-base">
+              <span className="text-sm text-ink sm:text-base">
                 Quatre étapes courtes et vos associations, si vous le souhaitez.
               </span>
             </div>
@@ -310,10 +310,10 @@ export default function OnboardingPage() {
                 { num: "ÉTAPE 4", titre: "Le mentorat", desc: "Voulez-vous ouvrir des créneaux ? Vous choisissez lesquels, et vous restez libre." },
                 { num: "ÉTAPE 5 · FACULTATIVE", titre: "Vos associations", desc: "Retrouvez vos associations et demandez la validation de votre affiliation." },
               ].map((s) => (
-                <article key={s.num} className="min-h-[200px] rounded-[18px] border border-[#ead8bd] bg-[#fffbf5] p-5 lg:min-h-[210px]">
-                  <p className="mb-2 text-sm font-bold text-[#c65327] sm:text-base">{s.num}</p>
+                <article key={s.num} className="min-h-[200px] rounded-[18px] border border-line-soft bg-surface p-5 lg:min-h-[210px]">
+                  <p className="mb-2 text-sm font-bold text-clay sm:text-base">{s.num}</p>
                   <h2 className="mb-2 titre-element">{s.titre}</h2>
-                  <p className="text-[15px] leading-[1.55] text-[#2e261f] lg:text-base">{s.desc}</p>
+                  <p className="text-[15px] leading-[1.55] text-ink lg:text-base">{s.desc}</p>
                 </article>
               ))}
             </div>
@@ -321,7 +321,7 @@ export default function OnboardingPage() {
             <button
               type="button"
               onClick={() => setStep(1)}
-              className="w-full rounded-full bg-[#0d6738] px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 sm:text-lg"
+              className="w-full rounded-full bg-brand px-6 py-4 text-base font-semibold text-white transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:text-lg"
             >
               Commencer le questionnaire
             </button>
@@ -338,7 +338,7 @@ export default function OnboardingPage() {
 
   return (
     <div className="min-h-screen bg-[var(--color-page)]">
-      <div className="border-b border-[#ead8bd] bg-[#fffbf5] px-4 py-5 sm:px-6">
+      <div className="border-b border-line-soft bg-surface px-4 py-5 sm:px-6">
         <div className="mx-auto w-full max-w-[1320px]">
           <StepIndicator currentStep={step} steps={STEPS} />
         </div>
@@ -352,7 +352,7 @@ export default function OnboardingPage() {
             className={`mb-5 rounded-[14px] border px-5 py-4 text-base font-semibold ${
               erreurEnregistrement
                 ? "border-[#d89474] bg-[#fff1e9] text-[#8f3518]"
-                : "border-[#bad7c6] bg-[#e7f3ec] text-[#0d6738]"
+                : "border-[#bad7c6] bg-[#e7f3ec] text-brand"
             }`}
           >
             {erreurEnregistrement || "Enregistrement sécurisé de votre profil…"}

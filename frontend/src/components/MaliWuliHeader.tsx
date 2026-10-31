@@ -29,6 +29,9 @@ import { EVENEMENT_SESSION, lireJetonSession, terminerSession, type CompteSessio
 import { aAccesAdministration, type AutorisationsUtilisateur } from "@/lib/autorisations";
 import { urlMediaBackend } from "@/lib/media";
 import { fermerSocket, useSocket } from "@/hooks/useSocket";
+import { definirMessagesNonLus, libellePastille } from "@/lib/compteur-messages";
+import { rubriqueActive } from "@/lib/navigation";
+import { classesBouton } from "@/components/ui/classes";
 import type {
   ConversationsResponseApi,
   MessageApi,
@@ -43,17 +46,18 @@ const LIENS_MEMBRE = [
 ];
 
 /** Rubriques déjà présentes dans la barre du bas (mobile et tablette). */
-const HREFS_BARRE_MOBILE = new Set(["/dashboard", "/offres"]);
+const HREFS_BARRE_MOBILE = new Set(["/dashboard", "/annuaire", "/offres"]);
 
 function PastilleCompteur({ valeur, variante }: { valeur: number; variante: "orange" | "jaune" }) {
   if (valeur < 1) return null;
   return (
     <span
-      className={`absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[11px] font-bold shadow-sm ${
-        variante === "orange" ? "bg-[#c85a2b] text-white" : "bg-[#f4b400] text-[#2e261f]"
+      aria-hidden="true"
+      className={`absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full px-1 text-[11px] font-bold ring-2 ring-bark ${
+        variante === "orange" ? "bg-clay text-white" : "bg-gold text-ink"
       }`}
     >
-      {valeur > 99 ? "99+" : valeur}
+      {libellePastille(valeur)}
     </span>
   );
 }
@@ -88,18 +92,19 @@ export function PublicHeader() {
   }, [pathname]);
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#84684d] bg-[#664c33] text-[#f4eee1] shadow-sm">
-      <div className="mx-auto flex h-[76px] w-full max-w-[1600px] items-center gap-5 px-4 sm:h-[96px] sm:px-6 lg:h-[112px] lg:gap-10 lg:px-10">
-        <Link href="/" aria-label="Accueil Mali Wuli" className="shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400]">
-          <LogoMaliWuli />
+    <header className="sticky top-0 z-50 border-b border-bark-line/70 bg-bark text-[#f4eee1] shadow-card">
+      <div className="mx-auto flex h-header w-full max-w-[1280px] items-center gap-5 px-4 sm:px-6 lg:gap-10 lg:px-8">
+        <Link href="/" aria-label="Accueil Mali Wuli" className="flex shrink-0 items-center gap-3 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-gold">
+          <LogoMaliWuli compact />
+          <span className="font-display text-xl font-bold tracking-tight text-[#fdfaf3]">Mali Wuli</span>
         </Link>
 
-        <div className="ml-auto hidden min-h-12 min-w-[310px] items-center justify-end gap-3 xl:flex">
+        <div className="ml-auto hidden min-h-11 min-w-[280px] items-center justify-end gap-3 md:flex">
           {sessionLocalePresente === true ? (
             <>
               <Link
                 href="/dashboard"
-                className="rounded-full bg-[#0d6738] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:text-base"
+                className={classesBouton({ variante: "inverse" })}
               >
                 Mon espace
               </Link>
@@ -107,7 +112,7 @@ export function PublicHeader() {
                 href="/profil"
                 aria-label="Ouvrir mon profil"
                 title="Mon profil"
-                className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-white/25 bg-[#f4eee1] text-[#0d6738] transition hover:border-[#f4b400] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400]"
+                className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/25 bg-[#f4eee1] text-brand transition hover:border-gold focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
               >
                 <UserRound aria-hidden="true" size={24} />
               </Link>
@@ -115,20 +120,20 @@ export function PublicHeader() {
           ) : sessionLocalePresente === false ? (
             <>
               <Link
-                href="/register"
-                className="rounded-full border-2 border-[#9a826b] px-5 py-3 text-sm font-semibold text-[#fffaf4] transition hover:border-[#fffaf4] hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:px-7 lg:text-base"
-              >
-                Créer un compte
-              </Link>
-              <Link
                 href="/login"
-                className="rounded-full bg-[#0d6738] px-5 py-3 text-sm font-semibold text-white transition hover:bg-[#09572f] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:px-7 lg:text-base"
+                className="inline-flex min-h-11 items-center rounded-full px-4 text-sm font-semibold text-surface transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold sm:text-[15px]"
               >
                 Se connecter
               </Link>
+              <Link
+                href="/register"
+                className={classesBouton({ variante: "inverse" })}
+              >
+                Créer mon profil
+              </Link>
             </>
           ) : (
-            <span aria-hidden="true" className="h-12 w-[310px]" />
+            <span aria-hidden="true" className="h-11 w-[280px]" />
           )}
         </div>
 
@@ -137,18 +142,18 @@ export function PublicHeader() {
           aria-label={menuOuvert ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={menuOuvert}
           onClick={() => setMenuOuvert((ouvert) => !ouvert)}
-          className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-[#fffaf4] transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] xl:hidden"
+          className="ml-auto flex h-11 w-11 items-center justify-center rounded-full border border-white/30 text-surface transition hover:bg-white/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold md:hidden"
         >
           {menuOuvert ? <X size={23} /> : <Menu size={24} />}
         </button>
       </div>
 
       {menuOuvert && (
-        <div className="border-t border-white/15 bg-[#664c33] px-4 pb-5 pt-3 xl:hidden">
+        <div className="border-t border-white/15 bg-bark px-4 pb-5 pt-3 md:hidden">
           <nav aria-label="Accès au compte" className="mx-auto grid max-w-[720px] gap-1">
             {sessionLocalePresente === true ? (
               <div className="grid grid-cols-2 gap-3">
-                <Link href="/dashboard" onClick={() => setMenuOuvert(false)} className="rounded-full bg-[#0d6738] px-4 py-3 text-center text-sm font-semibold text-white">
+                <Link href="/dashboard" onClick={() => setMenuOuvert(false)} className="rounded-full bg-brand px-4 py-3 text-center text-sm font-semibold text-white">
                   Mon espace
                 </Link>
                 <Link href="/profil" onClick={() => setMenuOuvert(false)} className="flex items-center justify-center gap-2 rounded-full border border-[#9a826b] px-4 py-3 text-center text-sm font-semibold">
@@ -161,7 +166,7 @@ export function PublicHeader() {
                 <Link href="/register" onClick={() => setMenuOuvert(false)} className="rounded-full border border-[#9a826b] px-4 py-3 text-center text-sm font-semibold">
                   Créer un compte
                 </Link>
-                <Link href="/login" onClick={() => setMenuOuvert(false)} className="rounded-full bg-[#0d6738] px-4 py-3 text-center text-sm font-semibold text-white">
+                <Link href="/login" onClick={() => setMenuOuvert(false)} className="rounded-full bg-brand px-4 py-3 text-center text-sm font-semibold text-white">
                   Se connecter
                 </Link>
               </div>
@@ -240,6 +245,7 @@ export function MemberHeader() {
       const total = (Array.isArray(data.conversations) ? data.conversations : [])
         .reduce((somme, conversation) => somme + Math.max(0, Number(conversation.nonLus) || 0), 0);
       setMessagesNonLus(total);
+      definirMessagesNonLus(total);
     } catch {
       // Un compteur indisponible ne doit pas bloquer la navigation.
     }
@@ -302,7 +308,7 @@ export function MemberHeader() {
   const liensMembre = aAccesAdministration(autorisations)
     ? [...LIENS_MEMBRE, { label: "Administration", href: "/admin", Icone: ShieldCheck }]
     : LIENS_MEMBRE;
-  const estActif = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const estActif = (href: string) => rubriqueActive(pathname, href);
   const deconnecter = () => {
     fermerSocket();
     terminerSession();
@@ -311,40 +317,39 @@ export function MemberHeader() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-[#84684d] bg-[#664c33] text-[#e5ddcf] shadow-sm">
-      <div className="mx-auto flex h-[76px] w-full max-w-[1800px] items-center gap-3 px-3 sm:h-[96px] sm:px-5 lg:h-[112px] lg:gap-5 lg:px-8">
-        <Link href="/dashboard" aria-label="Accueil Mali Wuli" className="shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400]">
+    <header className="sticky top-0 z-50 border-b border-bark-line/70 bg-bark text-bark-text shadow-card">
+      <div className="mx-auto flex h-header w-full max-w-[1280px] items-center gap-3 px-3 sm:px-5 lg:gap-4 lg:px-6">
+        <Link href="/dashboard" aria-label="Accueil Mali Wuli" className="shrink-0 rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-gold">
           <LogoMaliWuli compact />
         </Link>
 
-        <form onSubmit={rechercher} role="search" className="relative hidden w-[260px] shrink-0 xl:block 2xl:w-[290px]">
-          <Search aria-hidden="true" size={23} className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-[#d7cab7]" />
+        <form onSubmit={rechercher} role="search" className="relative hidden w-[240px] shrink-0 xl:block">
+          <Search aria-hidden="true" size={18} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#d7cab7]" />
           <input
             type="search"
             value={recherche}
             onChange={(event) => setRecherche(event.target.value)}
             placeholder="Rechercher sur Mali Wuli"
             aria-label="Rechercher sur Mali Wuli"
-            className="h-14 w-full rounded-full border border-white/10 bg-[#7a624c] py-3 pl-14 pr-5 text-sm text-white outline-none placeholder:text-[#d7cab7] focus:border-[#f4b400] focus-visible:ring-2 focus-visible:ring-[#f4b400]/30 2xl:text-base"
+            className="h-10 w-full rounded-full border border-white/10 bg-bark-400/80 py-2 pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-[#d7cab7] hover:bg-bark-400 focus:border-gold focus:bg-bark-400 focus-visible:ring-2 focus-visible:ring-gold/30"
           />
         </form>
 
-        <nav aria-label="Navigation membre" className="hidden h-full min-w-0 flex-1 items-stretch justify-evenly lg:flex">
+        <nav aria-label="Navigation membre" className="hidden h-full min-w-0 flex-1 items-stretch justify-center lg:flex">
           {liensMembre.map(({ label, href, Icone }) => {
             const actif = estActif(href);
             return (
               <Link
                 key={href}
                 href={href}
-                title={label}
-                aria-label={label}
                 aria-current={actif ? "page" : undefined}
-                className={`relative flex min-w-[48px] flex-1 items-center justify-center transition focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#f4b400] ${
-                  actif ? "text-[#f4b400]" : "text-[#e5ddcf] hover:bg-white/5 hover:text-white"
+                className={`group relative flex min-w-[76px] max-w-[112px] flex-1 flex-col items-center justify-center gap-1 px-1 text-xs font-medium transition focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-gold ${
+                  actif ? "text-gold" : "text-bark-text hover:text-white"
                 }`}
               >
-                <Icone aria-hidden="true" size={27} strokeWidth={2} />
-                {actif && <span className="absolute inset-x-2 bottom-0 h-1 rounded-t-full bg-[#f4b400]" />}
+                <Icone aria-hidden="true" size={22} strokeWidth={actif ? 2.3 : 1.9} className="transition group-hover:-translate-y-px" />
+                <span className="truncate">{label}</span>
+                <span aria-hidden="true" className={`absolute inset-x-3 bottom-0 h-[3px] rounded-t-full bg-gold transition ${actif ? "opacity-100" : "opacity-0"}`} />
               </Link>
             );
           })}
@@ -353,10 +358,13 @@ export function MemberHeader() {
         <div className="ml-auto flex h-full shrink-0 items-center gap-2 sm:gap-3 lg:ml-0">
           <Link
             href="/messages"
-            aria-label={messagesNonLus > 0 ? `${messagesNonLus} messages non lus` : "Messages"}
-            className="relative hidden h-11 w-11 items-center justify-center rounded-full bg-white/10 text-[#e5ddcf] transition hover:bg-white/15 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] sm:h-12 sm:w-12 lg:flex"
+            aria-label={messagesNonLus > 0 ? `Messages, ${messagesNonLus} non lus` : "Messages"}
+            aria-current={estActif("/messages") ? "page" : undefined}
+            className={`relative hidden h-11 w-11 items-center justify-center rounded-full transition focus:outline-none focus-visible:ring-2 focus-visible:ring-gold lg:flex ${
+              estActif("/messages") ? "bg-white/15 text-gold" : "bg-white/10 text-bark-text hover:bg-white/15 hover:text-white"
+            }`}
           >
-            <MessageCircle aria-hidden="true" size={24} />
+            <MessageCircle aria-hidden="true" size={21} />
             <PastilleCompteur valeur={messagesNonLus} variante="orange" />
           </Link>
           <NotificationsPopover onOpen={() => setMenuOuvert(false)} />
@@ -374,7 +382,7 @@ export function MemberHeader() {
             aria-label={menuOuvert ? "Fermer le menu" : "Ouvrir le menu"}
             aria-expanded={menuOuvert}
             onClick={() => setMenuOuvert((ouvert) => !ouvert)}
-            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-[#e5ddcf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f4b400] lg:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-bark-text focus:outline-none focus-visible:ring-2 focus-visible:ring-gold lg:hidden"
           >
             {menuOuvert ? <X size={22} /> : <Menu size={23} />}
           </button>
@@ -382,12 +390,12 @@ export function MemberHeader() {
       </div>
 
       {menuOuvert && (
-        <nav aria-label="Navigation membre mobile" className="grid max-h-[calc(100dvh-76px)] grid-cols-2 gap-2 overflow-y-auto border-t border-white/15 bg-[#664c33] p-3 sm:max-h-[calc(100dvh-96px)] lg:hidden">
+        <nav aria-label="Navigation membre mobile" className="grid max-h-[calc(100dvh-var(--mw-header-h))] grid-cols-2 gap-2 overflow-y-auto border-t border-white/15 bg-bark p-3 lg:hidden">
           <form onSubmit={rechercher} role="search" className="relative col-span-2 mb-2">
             <Search aria-hidden="true" size={20} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#d7cab7]" />
             <input type="search" value={recherche} onChange={(event) => setRecherche(event.target.value)}
               placeholder="Rechercher sur Mali Wuli" aria-label="Rechercher sur Mali Wuli"
-              className="h-12 w-full min-w-0 rounded-full border border-white/20 bg-[#7a624c] py-3 pl-11 pr-4 text-base text-white outline-none placeholder:text-sm placeholder:text-[#d7cab7] focus:border-[#f4b400]" />
+              className="h-12 w-full min-w-0 rounded-full border border-white/20 bg-bark-400 py-3 pl-11 pr-4 text-base text-white outline-none placeholder:text-sm placeholder:text-[#d7cab7] focus:border-gold" />
           </form>
           {liensMembre.filter(({ href }) => !HREFS_BARRE_MOBILE.has(href)).map(({ label, href, Icone }) => {
             const actif = estActif(href);
@@ -397,7 +405,7 @@ export function MemberHeader() {
                 href={href}
                 onClick={() => setMenuOuvert(false)}
                 aria-current={actif ? "page" : undefined}
-                className={`flex min-w-0 items-center gap-2 rounded-xl px-2 py-3 text-sm font-semibold ${actif ? "bg-white/10 text-[#f4b400]" : "text-[#f4eee1] hover:bg-white/5"}`}
+                className={`flex min-w-0 items-center gap-2 rounded-xl px-2 py-3 text-sm font-semibold ${actif ? "bg-white/10 text-gold" : "text-[#f4eee1] hover:bg-white/5"}`}
               >
                 <Icone aria-hidden="true" size={20} className="shrink-0" />
                 {label}
@@ -408,7 +416,7 @@ export function MemberHeader() {
             href="/corbeille"
             onClick={() => setMenuOuvert(false)}
             aria-current={estActif("/corbeille") ? "page" : undefined}
-            className={`flex min-w-0 items-center gap-2 rounded-xl px-2 py-3 text-sm font-semibold ${estActif("/corbeille") ? "bg-white/10 text-[#f4b400]" : "text-[#f4eee1] hover:bg-white/5"}`}
+            className={`flex min-w-0 items-center gap-2 rounded-xl px-2 py-3 text-sm font-semibold ${estActif("/corbeille") ? "bg-white/10 text-gold" : "text-[#f4eee1] hover:bg-white/5"}`}
           >
             <Trash2 aria-hidden="true" size={20} className="shrink-0" />
             Corbeille

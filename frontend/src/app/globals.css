@@ -2,28 +2,93 @@
 @tailwind components;
 @tailwind utilities;
 
+/*
+ * Design system Mali Wuli — source unique des tokens (docs/design-system.md).
+ * Les couleurs sont des canaux RGB pour permettre les opacités Tailwind
+ * (`bg-brand/10`). Dans un CSS module : `rgb(var(--mw-brand))`.
+ */
 @layer base {
   :root {
-    --color-page: #f4ecdd;
+    /* Vert principal (action, lien, état actif) */
+    --mw-brand-50: 229 239 232;   /* #e5efe8 */
+    --mw-brand-100: 205 226 212;  /* #cde2d4 */
+    --mw-brand-200: 157 199 172;  /* #9dc7ac */
+    --mw-brand-500: 22 128 72;    /* #168048 */
+    --mw-brand: 13 103 56;        /* #0d6738 */
+    --mw-brand-700: 9 87 47;      /* #09572f */
+    --mw-brand-800: 7 66 36;      /* #074224 */
+
+    /* Encre : textes sur fonds clairs (contrastes AA sur surface et page) */
+    --mw-ink: 46 38 31;           /* #2e261f — titres et texte principal */
+    --mw-ink-soft: 86 73 62;      /* #56493e — texte courant secondaire */
+    --mw-ink-muted: 105 92 75;    /* #695c4b — métadonnées (≥ 4,5:1 sur page) */
+
+    /* Surfaces */
+    --mw-page: 244 236 221;       /* #f4ecdd — fond beige */
+    --mw-surface: 255 251 245;    /* #fffbf5 — cartes */
+    --mw-surface-raised: 255 253 249; /* #fffdf9 — panneaux, menus */
+    --mw-surface-sunken: 246 239 227; /* #f6efe3 — zones en retrait, survols */
+
+    /* Filets */
+    --mw-line-soft: 234 220 199;  /* #eadcc7 */
+    --mw-line: 228 210 179;       /* #e4d2b3 */
+    --mw-line-strong: 223 201 168; /* #dfc9a8 */
+
+    /* Écorce : en-tête et zones sombres */
+    --mw-bark: 102 76 51;         /* #664c33 */
+    --mw-bark-700: 79 58 38;      /* #4f3a26 */
+    --mw-bark-900: 45 33 22;      /* #2d2116 */
+    --mw-bark-400: 122 98 76;     /* #7a624c */
+    --mw-bark-line: 132 104 77;   /* #84684d */
+    --mw-bark-text: 229 221 207;  /* #e5ddcf */
+
+    /* Accents */
+    --mw-gold: 244 180 0;         /* #f4b400 — focus et repères sur fond sombre */
+    --mw-clay: 198 83 39;         /* #c65327 — pastilles, accent chaud */
+    --mw-danger: 163 50 31;       /* #a3321f — erreurs et actions destructives */
+
+    --mw-header-h: 64px;
+
+    /* Compatibilité avec le code existant */
+    --color-page: rgb(var(--mw-page));
     --color-sable: #c8863a;
     --color-terre: #6b3418;
-    --color-vert: #2e7d32;
+    --color-vert: rgb(var(--mw-brand));
     --color-laterite: #c0392b;
+  }
+
+  @media (min-width: 1024px) {
+    :root { --mw-header-h: 72px; }
   }
 
   html {
     min-height: 100%;
-    background: var(--color-page);
+    background: rgb(var(--mw-page));
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
   }
 
   body {
-    @apply text-terre font-sans;
+    @apply text-terre font-sans antialiased;
     min-height: 100vh;
-    background: var(--color-page);
+    background: rgb(var(--mw-page));
   }
 
   h1, h2, h3 {
     @apply font-display;
+  }
+
+  ::selection {
+    background: rgb(var(--mw-brand) / 0.18);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
@@ -31,35 +96,50 @@
   /* Typographie des titres — référence : page profil (ProfilMembre).
      Titre de section ou de carte (h2). */
   .titre-section {
-    @apply font-display text-2xl font-bold leading-tight text-[#292119] sm:text-3xl;
+    @apply font-display text-2xl font-bold leading-tight text-ink sm:text-3xl;
   }
 
   /* Titre d’élément dans une section (h3 : employeur, poste, carte…). */
   .titre-element {
-    @apply font-display text-lg font-bold leading-snug text-[#292119] sm:text-xl;
+    @apply font-display text-lg font-bold leading-snug text-ink sm:text-xl;
+  }
+
+  /* Titre de colonne ou de carte latérale (fil, suggestions). */
+  .titre-carte {
+    @apply font-display text-xl font-bold leading-tight text-ink;
+  }
+
+  /* Surtitre en petites capitales. */
+  .surtitre {
+    @apply text-xs font-bold uppercase tracking-[0.14em] text-brand;
+  }
+
+  /* Anneau de focus standard sur fond clair. */
+  .focus-anneau {
+    @apply focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-surface;
   }
 
   .btn-primary {
-    @apply bg-vert text-white px-4 py-2 rounded-lg font-medium hover:bg-vert-500 transition-colors;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-brand px-5 py-2 font-semibold text-white shadow-card transition hover:bg-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .btn-secondary {
-    @apply bg-terre text-white px-4 py-2 rounded-lg font-medium hover:bg-terre-600 transition-colors;
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line-strong bg-surface-raised px-5 py-2 font-semibold text-ink transition hover:border-brand hover:text-brand focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-sable-100 p-4;
+    @apply rounded-2xl border border-line-soft bg-surface p-4 shadow-card;
   }
 
   .badge {
-    @apply inline-flex items-center px-2 py-1 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold;
   }
 
   .badge-vert {
-    @apply badge bg-vert-100 text-vert;
+    @apply badge bg-brand-50 text-brand;
   }
 
   .badge-terre {
-    @apply badge bg-terre-100 text-terre;
+    @apply badge bg-surface-sunken text-ink-soft;
   }
 }

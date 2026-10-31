@@ -61,8 +61,8 @@ const PAYS_DE_SECOURS: PaysOption[] = [
 ];
 
 const FIELD_CLASS =
-  "w-full min-w-0 rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-5 py-4 text-base text-[#2e261f] outline-none transition focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20 disabled:cursor-not-allowed disabled:bg-[#eee2d0] disabled:text-[#776b5e] sm:text-lg";
-const LABEL_CLASS = "mb-2 block text-base font-semibold text-[#2e261f]";
+  "w-full min-w-0 rounded-[14px] border border-line-strong bg-surface px-5 py-4 text-base text-ink outline-none transition focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:cursor-not-allowed disabled:bg-[#eee2d0] disabled:text-ink-muted sm:text-lg";
+const LABEL_CLASS = "mb-2 block text-base font-semibold text-ink";
 
 const creerExperienceVide = (): Omit<Experience, "id"> => ({
   poste: "",
@@ -112,8 +112,8 @@ function ExperienceCard({
   const localisation = [experience.ville, experience.pays].filter(Boolean).join(", ") || experience.lieu;
 
   return (
-    <article className="mb-5 flex min-w-0 gap-4 rounded-[18px] border border-[#e4d2b3] bg-[#fffbf5] p-4 sm:gap-5 sm:p-6">
-      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[12px] bg-[#e1f1e6] text-sm font-bold text-[#0d6738] sm:h-14 sm:w-14 sm:text-base">
+    <article className="mb-5 flex min-w-0 gap-4 rounded-[18px] border border-line bg-surface p-4 sm:gap-5 sm:p-6">
+      <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-[12px] bg-[#e1f1e6] text-sm font-bold text-brand sm:h-14 sm:w-14 sm:text-base">
         {initialesStructure(experience.structure)}
       </div>
       <div className="min-w-0 flex-1">
@@ -123,24 +123,24 @@ function ExperienceCard({
               <h3 className="titre-element break-words [overflow-wrap:anywhere]">
                 {experience.poste}
               </h3>
-              <span className="rounded-[7px] bg-[#eee2d0] px-3 py-1 text-xs font-bold text-[#2e261f] sm:text-sm">
+              <span className="rounded-[7px] bg-[#eee2d0] px-3 py-1 text-xs font-bold text-ink sm:text-sm">
                 {experience.typeContrat}
               </span>
             </div>
-            <p className="mt-1 break-words text-sm text-[#2e261f] [overflow-wrap:anywhere] sm:text-base">
+            <p className="mt-1 break-words text-sm text-ink [overflow-wrap:anywhere] sm:text-base">
               {experience.structure} · {localisation} · {formaterMoisAnnee(experience.moisDebut, experience.anneeDebut)} → {experience.posteActuel ? "aujourd’hui" : formaterMoisAnnee(experience.moisFin, experience.anneeFin)}
             </p>
             {experience.description && (
-              <p className="mt-2 break-words text-sm leading-relaxed text-[#56493e] [overflow-wrap:anywhere] sm:text-base">
+              <p className="mt-2 break-words text-sm leading-relaxed text-ink-soft [overflow-wrap:anywhere] sm:text-base">
                 {experience.description}
               </p>
             )}
           </div>
           <div className="flex shrink-0 gap-4 sm:flex-col sm:items-end sm:gap-2">
-            <button type="button" onClick={onModifier} className="text-sm font-semibold text-[#0d6738] hover:underline sm:text-base">
+            <button type="button" onClick={onModifier} className="text-sm font-semibold text-brand hover:underline sm:text-base">
               Modifier
             </button>
-            <button type="button" onClick={onRetirer} className="text-sm font-semibold text-[#2e261f] hover:text-[#b84f25] sm:text-base">
+            <button type="button" onClick={onRetirer} className="text-sm font-semibold text-ink hover:text-[#b84f25] sm:text-base">
               Retirer
             </button>
           </div>
@@ -241,24 +241,24 @@ function ExperienceForm({
 
       <div className="mb-5 grid min-w-0 gap-5 md:grid-cols-2">
         <div className="min-w-0">
-          <label htmlFor="experience-poste" className={LABEL_CLASS}>Intitulé du poste <span className="text-[#c65327]">*</span></label>
+          <label htmlFor="experience-poste" className={LABEL_CLASS}>Intitulé du poste <span className="text-clay">*</span></label>
           <input id="experience-poste" value={form.poste} onChange={(event) => set("poste", event.target.value)} placeholder="Ex. Cheffe de projet" className={FIELD_CLASS} />
         </div>
         <div className="min-w-0">
-          <label htmlFor="experience-structure" className={LABEL_CLASS}>Structure <span className="text-[#c65327]">*</span></label>
+          <label htmlFor="experience-structure" className={LABEL_CLASS}>Structure <span className="text-clay">*</span></label>
           <input id="experience-structure" value={form.structure} onChange={(event) => set("structure", event.target.value)} placeholder="Entreprise, association, administration…" className={FIELD_CLASS} />
         </div>
       </div>
 
       <div className="mb-5 grid min-w-0 gap-5 md:grid-cols-2">
         <div className="min-w-0">
-          <label htmlFor="experience-contrat" className={LABEL_CLASS}>Type de contrat <span className="text-[#c65327]">*</span></label>
+          <label htmlFor="experience-contrat" className={LABEL_CLASS}>Type de contrat <span className="text-clay">*</span></label>
           <select id="experience-contrat" value={form.typeContrat} onChange={(event) => set("typeContrat", event.target.value)} className={FIELD_CLASS}>
             {TYPES_CONTRAT.map((type) => <option key={type} value={type}>{type}</option>)}
           </select>
         </div>
         <div className="min-w-0">
-          <label htmlFor="experience-pays" className={LABEL_CLASS}>Pays <span className="text-[#c65327]">*</span></label>
+          <label htmlFor="experience-pays" className={LABEL_CLASS}>Pays <span className="text-clay">*</span></label>
           <select
             id="experience-pays"
             value={form.paysCode}
@@ -291,7 +291,7 @@ function ExperienceForm({
       </div>
 
       <div className="mb-5">
-        <label className={LABEL_CLASS}>Période <span className="text-[#c65327]">*</span></label>
+        <label className={LABEL_CLASS}>Période <span className="text-clay">*</span></label>
         <div className="grid min-w-0 items-center gap-3 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto]">
           <div className="grid min-w-0 gap-3 sm:grid-cols-2">
             <select aria-label="Mois de début" value={form.moisDebut} onChange={(event) => set("moisDebut", event.target.value)} className={FIELD_CLASS}>
@@ -300,7 +300,7 @@ function ExperienceForm({
             </select>
             <input aria-label="Année de début" type="text" inputMode="numeric" maxLength={4} value={form.anneeDebut} onChange={(event) => set("anneeDebut", normaliserAnnee(event.target.value))} placeholder="Année de début" className={FIELD_CLASS} />
           </div>
-          <span aria-hidden="true" className="hidden text-lg text-[#776b5e] sm:block">→</span>
+          <span aria-hidden="true" className="hidden text-lg text-ink-muted sm:block">→</span>
           <div className="grid min-w-0 gap-3 sm:grid-cols-2">
             <select aria-label="Mois de fin" value={form.posteActuel ? "" : form.moisFin} onChange={(event) => set("moisFin", event.target.value)} disabled={form.posteActuel} className={FIELD_CLASS}>
               <option value="">{form.posteActuel ? "Aujourd’hui" : "Mois de fin"}</option>
@@ -318,7 +318,7 @@ function ExperienceForm({
               className={FIELD_CLASS}
             />
           </div>
-          <label className="flex cursor-pointer items-center gap-3 whitespace-nowrap text-base font-semibold text-[#2e261f] lg:pl-1">
+          <label className="flex cursor-pointer items-center gap-3 whitespace-nowrap text-base font-semibold text-ink lg:pl-1">
             <input
               type="checkbox"
               checked={form.posteActuel}
@@ -328,7 +328,7 @@ function ExperienceForm({
                 moisFin: event.target.checked ? "" : precedent.moisFin,
                 anneeFin: event.target.checked ? "" : precedent.anneeFin,
               }))}
-              className="h-5 w-5 accent-[#0d6738]"
+              className="h-5 w-5 accent-brand"
             />
             Poste actuel
           </label>
@@ -342,7 +342,7 @@ function ExperienceForm({
       </div>
 
       <div className="mb-6">
-        <label htmlFor="experience-description" className={LABEL_CLASS}>Ce que vous y faites <span className="text-[#c65327]">*</span></label>
+        <label htmlFor="experience-description" className={LABEL_CLASS}>Ce que vous y faites <span className="text-clay">*</span></label>
         <textarea
           id="experience-description"
           value={form.description}
@@ -354,7 +354,7 @@ function ExperienceForm({
       </div>
 
       <div className="flex flex-col gap-3 sm:flex-row">
-        <button type="button" onClick={onCancel} className="rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-7 py-4 text-base font-semibold text-[#2e261f] hover:bg-[#f6efe3]">
+        <button type="button" onClick={onCancel} className="rounded-[14px] border border-line-strong bg-surface px-7 py-4 text-base font-semibold text-ink hover:bg-surface-sunken">
           Annuler
         </button>
         <button
@@ -364,7 +364,7 @@ function ExperienceForm({
             if (!canSave) return;
             onSave({ ...form, lieu: `${form.ville}, ${form.pays}`, id: initialData?.id || crypto.randomUUID() });
           }}
-          className={`flex-1 rounded-[14px] px-7 py-4 text-base font-semibold text-white transition-colors ${canSave ? "bg-[#0d6738] hover:bg-[#09572f]" : "cursor-not-allowed bg-[#aa997f]"}`}
+          className={`flex-1 rounded-[14px] px-7 py-4 text-base font-semibold text-white transition-colors ${canSave ? "bg-brand hover:bg-brand-700" : "cursor-not-allowed bg-[#aa997f]"}`}
         >
           {initialData ? "Enregistrer les modifications" : "Enregistrer cette expérience"}
         </button>
@@ -394,9 +394,9 @@ export default function StepExperiences({ onNext, onBack, initialData }: StepExp
   };
 
   return (
-    <section className="min-w-0 rounded-[22px] border border-[#e4d2b3] bg-[#fffbf5] p-5 shadow-sm sm:p-8 lg:p-9">
+    <section className="min-w-0 rounded-[22px] border border-line bg-surface p-5 shadow-sm sm:p-8 lg:p-9">
       <h2 className="mb-2 titre-section">Vos expériences</h2>
-      <p className="mb-7 max-w-[1050px] text-sm leading-relaxed text-[#2e261f] sm:text-base">
+      <p className="mb-7 max-w-[1050px] text-sm leading-relaxed text-ink sm:text-base">
         Postes, missions, stages, engagements associatifs. C’est ce qui permet aux autres membres de savoir quoi vous demander, et à vous de recevoir les bonnes sollicitations.
       </p>
 
@@ -424,20 +424,20 @@ export default function StepExperiences({ onNext, onBack, initialData }: StepExp
             setEditionId(null);
             setFormOuvert(true);
           }}
-          className="mb-6 w-full rounded-[14px] border border-dashed border-[#d7b98d] px-5 py-4 text-base font-semibold text-[#0d6738] transition-colors hover:border-[#0d6738] hover:bg-[#f6efe3]"
+          className="mb-6 w-full rounded-[14px] border border-dashed border-[#d7b98d] px-5 py-4 text-base font-semibold text-brand transition-colors hover:border-brand hover:bg-surface-sunken"
         >
           + Ajouter une expérience
         </button>
       )}
 
       <div className="flex flex-col gap-3 sm:flex-row">
-        <button type="button" onClick={onBack} className="rounded-[14px] border border-[#dfc9a8] bg-[#fffbf5] px-7 py-4 text-base font-semibold text-[#2e261f] hover:bg-[#f6efe3]">
+        <button type="button" onClick={onBack} className="rounded-[14px] border border-line-strong bg-surface px-7 py-4 text-base font-semibold text-ink hover:bg-surface-sunken">
           Retour
         </button>
         <button
           type="button"
           onClick={() => onNext(trierParDateDebut(experiences))}
-          className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${experiences.length ? "bg-[#0d6738] hover:bg-[#09572f]" : "bg-[#aa997f] hover:bg-[#96866e]"}`}
+          className={`flex-1 rounded-full px-8 py-4 text-base font-semibold text-white transition-colors sm:text-lg ${experiences.length ? "bg-brand hover:bg-brand-700" : "bg-[#aa997f] hover:bg-[#96866e]"}`}
         >
           {experiences.length ? "Continuer vers le mentorat" : "Passer cette étape"}
         </button>

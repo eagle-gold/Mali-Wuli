@@ -40,11 +40,11 @@ export default function ForgotPasswordPage() {
 
   return (
     <main className="min-h-screen bg-[var(--color-page)] flex items-center justify-center px-4 py-10">
-      <section className="bg-[#fffbf5] rounded-2xl shadow-sm border border-[#e4d2b3] w-full max-w-md p-8">
-        <h1 className="font-display text-3xl font-bold text-[#292119] mb-3">
+      <section className="bg-surface rounded-2xl shadow-sm border border-line w-full max-w-md p-8">
+        <h1 className="font-display text-3xl font-bold text-ink mb-3">
           Mot de passe oublié
         </h1>
-        <p className="text-sm leading-relaxed text-[#776b5e] mb-8">
+        <p className="text-sm leading-relaxed text-ink-muted mb-8">
           Entrez l&apos;adresse e-mail de votre compte. Si elle est reconnue, vous recevrez
           un code à 6 chiffres valable 15 minutes.
         </p>
@@ -60,7 +60,7 @@ export default function ForgotPasswordPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-[#2e261f] mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-ink mb-1">
               Adresse e-mail
             </label>
             <input
@@ -77,7 +77,7 @@ export default function ForgotPasswordPage() {
               inputMode="email"
               required
               autoFocus
-              className="w-full border border-[#dfc9a8] rounded-xl px-4 py-3 text-[#2e261f] bg-[#fffbf5] focus:outline-none focus:ring-2 focus:ring-[#0d6738] text-sm"
+              className="w-full border border-line-strong rounded-xl px-4 py-3 text-ink bg-surface focus:outline-none focus:ring-2 focus:ring-brand text-sm"
             />
           </div>
 
@@ -86,7 +86,7 @@ export default function ForgotPasswordPage() {
             disabled={!emailValide || loading}
             className={`w-full py-4 rounded-xl font-semibold text-sm transition-colors ${
               emailValide && !loading
-                ? "bg-[#0d6738] text-white hover:bg-[#09572f]"
+                ? "bg-brand text-white hover:bg-brand-700"
                 : "bg-[#eee2d0] text-[#ad9d89] cursor-not-allowed"
             }`}
           >
@@ -95,7 +95,7 @@ export default function ForgotPasswordPage() {
         </form>
 
         <p className="mt-6 text-center text-sm">
-          <Link href="/login" className="font-semibold text-[#0d6738] hover:underline">
+          <Link href="/login" className="font-semibold text-brand hover:underline">
             Retour à la connexion
           </Link>
         </p>

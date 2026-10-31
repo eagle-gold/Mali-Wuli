@@ -123,28 +123,28 @@ export default function VerifyEmailPage() {
 
   return (
     <main className="min-h-screen bg-[var(--color-page)] flex items-center justify-center px-4 py-10">
-      <section className="bg-[#fffbf5] rounded-2xl shadow-sm border border-[#e4d2b3] w-full min-w-0 max-w-md p-5 text-center sm:p-8">
+      <section className="bg-surface rounded-2xl shadow-sm border border-line w-full min-w-0 max-w-md p-5 text-center sm:p-8">
         <nav className="flex items-center justify-between mb-7" aria-label="Navigation de l'inscription">
           <button
             type="button"
             onClick={handleBack}
-            className="text-sm font-semibold text-[#2e261f] hover:text-[#0d6738] hover:underline"
+            className="text-sm font-semibold text-ink hover:text-brand hover:underline"
           >
             Retour
           </button>
           <button
             type="button"
             onClick={handleNext}
-            className="text-sm font-semibold text-[#0d6738] hover:underline"
+            className="text-sm font-semibold text-brand hover:underline"
           >
             Suivant
           </button>
         </nav>
 
-        <h1 className="font-display text-3xl font-bold text-[#292119] mb-3">
+        <h1 className="font-display text-3xl font-bold text-ink mb-3">
           Confirmez votre e-mail
         </h1>
-        <p className="break-words text-sm text-[#2e261f] mb-8">
+        <p className="break-words text-sm text-ink mb-8">
           Code à 6 chiffres envoyé à {" "}
           <strong>{email || "votre adresse e-mail"}</strong>
         </p>
@@ -168,17 +168,17 @@ export default function VerifyEmailPage() {
               aria-label={`Chiffre ${index + 1}`}
               onChange={(event) => handleChange(index, event.target.value)}
               onKeyDown={(event) => handleKeyDown(index, event)}
-              className={`h-12 w-full min-w-0 sm:h-14 rounded-xl border text-center text-xl font-bold text-[#2e261f] outline-none transition-colors focus:ring-2 focus:ring-[#0d6738] ${
+              className={`h-12 w-full min-w-0 sm:h-14 rounded-xl border text-center text-xl font-bold text-ink outline-none transition-colors focus:ring-2 focus:ring-brand ${
                 digit
-                  ? "border-[#0d6738] bg-[#eaf1e9]"
-                  : "border-[#dfc9a8] bg-[#fffbf5]"
+                  ? "border-brand bg-[#eaf1e9]"
+                  : "border-line-strong bg-surface"
               }`}
             />
           ))}
         </div>
 
         {erreur && <p role="alert" className="text-sm text-red-600 mt-4">{erreur}</p>}
-        {renvoiOk && <p className="text-sm text-[#0d6738] mt-4">Code renvoyé !</p>}
+        {renvoiOk && <p className="text-sm text-brand mt-4">Code renvoyé !</p>}
 
         <button
           type="button"
@@ -186,19 +186,19 @@ export default function VerifyEmailPage() {
           disabled={!codeComplet || loading}
           className={`w-full py-4 rounded-xl font-semibold text-sm mt-6 transition-colors ${
             codeComplet && !loading
-              ? "bg-[#0d6738] text-white hover:bg-[#09572f]"
+              ? "bg-brand text-white hover:bg-brand-700"
               : "bg-[#eee2d0] text-[#ad9d89] cursor-not-allowed"
           }`}
         >
           {loading ? "Vérification..." : "Confirmer"}
         </button>
 
-        <p className="mt-5 text-sm text-[#2e261f]">
+        <p className="mt-5 text-sm text-ink">
           Pas reçu ? {" "}
           <button
             type="button"
             onClick={handleResend}
-            className="font-semibold text-[#0d6738] hover:underline"
+            className="font-semibold text-brand hover:underline"
           >
             Renvoyer le code
           </button>

@@ -227,17 +227,17 @@ export default function ComposerPublication({ prenom, nom, initiales, photo, onP
   };
 
   const actionClasse =
-    "flex min-h-11 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg px-1 text-[13px] font-bold text-[#56493e] transition hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738] sm:gap-2 sm:px-2 sm:text-[15px]";
+    "flex min-h-11 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg px-1 text-[13px] font-bold text-ink-soft transition hover:bg-surface-sunken focus:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:gap-2 sm:px-2 sm:text-[15px]";
 
   return (
     <>
-      <section aria-label="Créer une publication" className="rounded-2xl border border-[#eadcc7] bg-[#fffaf4] px-3 pb-1.5 pt-3 sm:px-4 sm:pt-4">
+      <section aria-label="Créer une publication" className="rounded-2xl border border-line-soft bg-surface px-3 pb-1.5 pt-3 sm:px-4 sm:pt-4">
         <div className="flex items-center gap-3">
           <PastilleAvatar initiales={initiales} photo={photo} taille={48} />
           <button
             type="button"
             onClick={(event) => ouvrir(event.currentTarget)}
-            className="flex min-h-12 min-w-0 flex-1 items-center rounded-full border border-[#cdb99f] bg-[#fffdf9] px-5 text-left text-[15px] font-semibold text-[#6e5b49] transition hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738] sm:text-base"
+            className="flex min-h-12 min-w-0 flex-1 items-center rounded-full border border-[#cdb99f] bg-surface-raised px-5 text-left text-[15px] font-semibold text-[#6e5b49] transition hover:bg-surface-sunken focus:outline-none focus-visible:ring-2 focus-visible:ring-brand sm:text-base"
           >
             <span className="truncate">Commencer un post</span>
           </button>
@@ -252,7 +252,7 @@ export default function ComposerPublication({ prenom, nom, initiales, photo, onP
             Photo
           </button>
           <button type="button" className={actionClasse} onClick={(event) => ouvrir(event.currentTarget, { intention: "OFFRE" })}>
-            <Plus aria-hidden="true" size={22} className="text-[#0d6738]" />
+            <Plus aria-hidden="true" size={22} className="text-brand" />
             Je propose
           </button>
         </div>
@@ -270,14 +270,14 @@ export default function ComposerPublication({ prenom, nom, initiales, photo, onP
             aria-modal="true"
             aria-label="Créer une publication"
             tabIndex={-1}
-            className="flex max-h-[92dvh] outline-none w-full max-w-[600px] flex-col overflow-hidden rounded-t-2xl bg-[#fffdf9] shadow-2xl sm:rounded-2xl"
+            className="flex max-h-[92dvh] outline-none w-full max-w-[600px] flex-col overflow-hidden rounded-t-2xl bg-surface-raised shadow-2xl sm:rounded-2xl"
           >
             <form onSubmit={publier} className="flex min-h-0 flex-1 flex-col">
               <div className="flex items-start gap-3 px-5 pb-2 pt-4">
                 <PastilleAvatar initiales={initiales} photo={photo} taille={52} />
                 <div className="min-w-0 flex-1">
-                  <p className="truncate font-display text-lg font-bold leading-tight text-[#292119]">{nomComplet}</p>
-                  <p className="mt-0.5 flex items-center gap-1.5 text-sm text-[#806f5e]">
+                  <p className="truncate font-display text-lg font-bold leading-tight text-ink">{nomComplet}</p>
+                  <p className="mt-0.5 flex items-center gap-1.5 text-sm text-ink-muted">
                     <Globe2 aria-hidden="true" size={14} />
                     Visible par tous les membres
                   </p>
@@ -287,7 +287,7 @@ export default function ComposerPublication({ prenom, nom, initiales, photo, onP
                   onClick={fermer}
                   disabled={envoi}
                   aria-label="Fermer"
-                  className="-mr-2 -mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#6e5b49] hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738] disabled:opacity-40"
+                  className="-mr-2 -mt-1 flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-[#6e5b49] hover:bg-surface-sunken focus:outline-none focus-visible:ring-2 focus-visible:ring-brand disabled:opacity-40"
                 >
                   <X aria-hidden="true" size={22} />
                 </button>
@@ -299,15 +299,15 @@ export default function ComposerPublication({ prenom, nom, initiales, photo, onP
                 <div role="group" aria-label="Type de publication" className="grid grid-cols-2 gap-2">
                   {([
                     { valeur: "DEMANDE", libelle: "Je cherche", Icone: Search, actif: "border-[#d49a00] bg-[#fff1bf] text-[#3c2d1f]" },
-                    { valeur: "OFFRE", libelle: "Je propose", Icone: Plus, actif: "border-[#0d6738] bg-[#e1f0e7] text-[#0d6738]" },
+                    { valeur: "OFFRE", libelle: "Je propose", Icone: Plus, actif: "border-brand bg-[#e1f0e7] text-brand" },
                   ] as const).map(({ valeur, libelle, Icone, actif }) => (
                     <button
                       key={valeur}
                       type="button"
                       aria-pressed={intention === valeur}
                       onClick={() => setIntention(valeur)}
-                      className={`flex min-h-11 items-center justify-center gap-2 rounded-xl border px-3 text-sm font-bold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738] ${
-                        intention === valeur ? actif : "border-[#e5d4bc] bg-white text-[#56493e] hover:bg-[#f8f1e6]"
+                      className={`flex min-h-11 items-center justify-center gap-2 rounded-xl border px-3 text-sm font-bold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-brand ${
+                        intention === valeur ? actif : "border-[#e5d4bc] bg-white text-ink-soft hover:bg-[#f8f1e6]"
                       }`}
                     >
                       <Icone aria-hidden="true" size={18} />
@@ -321,7 +321,7 @@ export default function ComposerPublication({ prenom, nom, initiales, photo, onP
                   id="composer-thematique"
                   value={choixThematique}
                   onChange={(event) => setChoixThematique(event.target.value)}
-                  className="mt-3 min-h-11 w-full rounded-xl border border-[#dfcdb4] bg-white px-3 text-sm font-semibold text-[#2f261e] outline-none focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"
+                  className="mt-3 min-h-11 w-full rounded-xl border border-[#dfcdb4] bg-white px-3 text-sm font-semibold text-ink outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
                 >
                   <option value="" disabled>Choisir une thématique…</option>
                   {THEMATIQUES.map((option) => <option key={option} value={option}>{option}</option>)}
@@ -336,7 +336,7 @@ export default function ComposerPublication({ prenom, nom, initiales, photo, onP
                       onChange={(event) => setThematiqueLibre(event.target.value)}
                       maxLength={80}
                       placeholder="Votre thématique"
-                      className="mt-2 min-h-11 w-full rounded-xl border border-[#dfcdb4] bg-white px-3 text-sm text-[#2f261e] outline-none placeholder:text-[#75695d] focus:border-[#0d6738] focus:ring-2 focus:ring-[#0d6738]/20"
+                      className="mt-2 min-h-11 w-full rounded-xl border border-[#dfcdb4] bg-white px-3 text-sm text-ink outline-none placeholder:text-[#75695d] focus:border-brand focus:ring-2 focus:ring-brand/20"
                     />
                   </>
                 )}
@@ -357,12 +357,12 @@ export default function ComposerPublication({ prenom, nom, initiales, photo, onP
                         ? "Que proposez-vous ? Précisez pour qui, sous quelle forme et vos disponibilités."
                         : "De quoi voulez-vous parler ?"
                   }
-                  className="mt-3 block min-h-28 w-full resize-none bg-transparent text-base leading-7 text-[#2f261e] outline-none placeholder:text-[#75695d]"
+                  className="mt-3 block min-h-28 w-full resize-none bg-transparent text-base leading-7 text-ink outline-none placeholder:text-[#75695d]"
                 />
                 <p id={idCompteur} className="text-right text-xs text-[#6e5b49]">{texte.length}/{LONGUEUR_MAX} caractères</p>
 
                 {apercu && (
-                  <div className="relative mt-2 overflow-hidden rounded-xl border border-[#eadcc7] bg-[#f0e7da]">
+                  <div className="relative mt-2 overflow-hidden rounded-xl border border-line-soft bg-[#f0e7da]">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={apercu} alt="Aperçu de la photo à publier" className="max-h-72 w-full object-contain" />
                     <button
@@ -383,7 +383,7 @@ export default function ComposerPublication({ prenom, nom, initiales, photo, onP
               </div>
 
               {consigne && !envoi && <p id={idConsigne} className="px-5 pb-2 text-xs text-[#6e5b49]">{consigne}</p>}
-              <div className="flex items-center justify-between gap-3 border-t border-[#eadcc7] px-5 py-3">
+              <div className="flex items-center justify-between gap-3 border-t border-line-soft px-5 py-3">
                 <input
                   ref={champFichier}
                   type="file"
@@ -398,7 +398,7 @@ export default function ComposerPublication({ prenom, nom, initiales, photo, onP
                   type="button"
                   onClick={() => champFichier.current?.click()}
                   disabled={envoi}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm font-bold text-[#56493e] hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738] disabled:opacity-50"
+                  className="inline-flex min-h-11 items-center gap-2 rounded-full px-3 text-sm font-bold text-ink-soft hover:bg-surface-sunken focus:outline-none focus-visible:ring-2 focus-visible:ring-brand disabled:opacity-50"
                 >
                   <ImageIcon aria-hidden="true" size={22} className="text-[#2f7ec2]" />
                   {fichier ? "Changer la photo" : "Ajouter une photo"}
@@ -407,7 +407,7 @@ export default function ComposerPublication({ prenom, nom, initiales, photo, onP
                   type="submit"
                   disabled={!peutPublier}
                   aria-describedby={consigne && !envoi ? idConsigne : undefined}
-                  className="inline-flex min-h-11 min-w-28 items-center justify-center gap-2 rounded-full bg-[#0d6738] px-6 text-sm font-bold text-white transition hover:bg-[#09572f] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0d6738] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-[#ded2bc] disabled:text-[#a59784]"
+                  className="inline-flex min-h-11 min-w-28 items-center justify-center gap-2 rounded-full bg-brand px-6 text-sm font-bold text-white transition hover:bg-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:bg-[#ded2bc] disabled:text-[#a59784]"
                 >
                   {envoi ? <><LoaderCircle aria-hidden="true" size={16} className="animate-spin" />Publication…</> : "Publier"}
                 </button>

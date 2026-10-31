@@ -30,7 +30,7 @@ type PresentationNotification = {
 };
 
 const TONS: Record<TonNotification, string> = {
-  vert: "bg-[#e3f1eb] text-[#0d6738]",
+  vert: "bg-[#e3f1eb] text-brand",
   orange: "bg-[#f8e4d8] text-[#bd592d]",
   sable: "bg-[#f1e6d4] text-[#765131]",
 };
@@ -296,11 +296,11 @@ export default function NotificationsPopover({ onOpen }: NotificationsPopoverPro
             return prochainEtat;
           });
         }}
-        className={`relative flex h-11 w-11 items-center justify-center rounded-full text-[#e5ddcf] transition hover:bg-white/15 hover:text-white focus:outline-none focus:ring-2 focus:ring-[#f4b400] sm:h-12 sm:w-12 ${ouvert ? "bg-white/20 text-white" : "bg-white/10"}`}
+        className={`relative flex h-11 w-11 items-center justify-center rounded-full text-bark-text transition hover:bg-white/15 hover:text-white focus:outline-none focus:ring-2 focus:ring-gold sm:h-12 sm:w-12 ${ouvert ? "bg-white/20 text-white" : "bg-white/10"}`}
       >
         <Bell aria-hidden="true" size={23} />
         {nombreNonLues > 0 && (
-          <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-[#f4b400] px-1 text-[11px] font-bold text-[#2e261f] shadow-sm">
+          <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-gold px-1 text-[11px] font-bold text-ink shadow-sm">
             {nombreNonLues > 99 ? "99+" : nombreNonLues}
           </span>
         )}
@@ -312,18 +312,18 @@ export default function NotificationsPopover({ onOpen }: NotificationsPopoverPro
           role="dialog"
           aria-modal="false"
           aria-labelledby="titre-notifications"
-          className="fixed inset-x-3 top-[84px] z-[70] max-h-[calc(100dvh-172px)] overflow-y-auto overscroll-contain rounded-2xl border border-[#e9dcc8] bg-[#fffaf3] text-[#2d241d] shadow-[0_24px_55px_rgba(73,52,34,0.22)] sm:absolute sm:left-auto sm:right-0 sm:top-[calc(100%+12px)] sm:w-[528px] md:[max-height:min(642px,calc(100dvh-120px))]"
+          className="fixed inset-x-3 top-[84px] z-[70] max-h-[calc(100dvh-172px)] overflow-y-auto overscroll-contain rounded-2xl border border-[#e9dcc8] bg-[#fffaf3] text-ink shadow-[0_24px_55px_rgba(73,52,34,0.22)] sm:absolute sm:left-auto sm:right-0 sm:top-[calc(100%+12px)] sm:w-[528px] md:[max-height:min(642px,calc(100dvh-120px))]"
         >
           <header className="sticky top-0 z-10 flex min-h-[64px] items-center justify-between gap-4 border-b border-[#eee3d2] bg-[#fffaf3]/95 px-5 py-4 backdrop-blur-sm sm:px-6">
             <h2 id="titre-notifications" className="titre-section leading-none">Notifications</h2>
             <div className="flex items-center gap-3">
-              <span className="hidden text-sm text-[#887764] min-[420px]:inline sm:text-base">cette semaine</span>
+              <span className="hidden text-sm text-ink-muted min-[420px]:inline sm:text-base">cette semaine</span>
               {nombreNonLues > 0 && (
                 <button
                   type="button"
                   disabled={actionEnCours}
                   onClick={() => void toutMarquerCommeLu()}
-                  className="min-h-9 rounded-lg px-2 text-xs font-bold text-[#0d6738] hover:bg-[#e3f1eb] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:opacity-60 sm:text-sm"
+                  className="min-h-9 rounded-lg px-2 text-xs font-bold text-brand hover:bg-[#e3f1eb] focus:outline-none focus:ring-2 focus:ring-brand disabled:opacity-60 sm:text-sm"
                 >
                   Tout lire
                 </button>
@@ -333,11 +333,11 @@ export default function NotificationsPopover({ onOpen }: NotificationsPopoverPro
 
           <div aria-live="polite">
             {chargement && notifications.length === 0 ? (
-              <p className="px-6 py-12 text-center text-sm text-[#887764]">Chargement des notifications…</p>
+              <p className="px-6 py-12 text-center text-sm text-ink-muted">Chargement des notifications…</p>
             ) : erreur && notifications.length === 0 ? (
               <div className="px-6 py-10 text-center">
                 <p className="text-sm font-medium text-[#bd592d]" role="alert">{erreur}</p>
-                <button type="button" onClick={() => void chargerNotifications(false)} className="mt-3 min-h-10 rounded-lg border border-[#0d6738] px-4 text-sm font-bold text-[#0d6738] focus:outline-none focus:ring-2 focus:ring-[#0d6738]">Réessayer</button>
+                <button type="button" onClick={() => void chargerNotifications(false)} className="mt-3 min-h-10 rounded-lg border border-brand px-4 text-sm font-bold text-brand focus:outline-none focus:ring-2 focus:ring-brand">Réessayer</button>
               </div>
             ) : notificationsAffichees.length ? (
               notificationsAffichees.map(({ notification, presentation, anciennete, href }) => {
@@ -345,7 +345,7 @@ export default function NotificationsPopover({ onOpen }: NotificationsPopoverPro
                 return (
                   <article
                     key={notification.id}
-                    className={`grid grid-cols-[42px_minmax(0,1fr)_auto] items-start gap-x-3 border-b border-[#f0e7da] px-4 py-[18px] last:border-b-0 sm:grid-cols-[44px_minmax(0,1fr)_auto] sm:gap-x-4 sm:px-5 ${notification.lue ? "bg-[#fffdf9]" : "bg-[#fff9ef]"}`}
+                    className={`grid grid-cols-[42px_minmax(0,1fr)_auto] items-start gap-x-3 border-b border-[#f0e7da] px-4 py-[18px] last:border-b-0 sm:grid-cols-[44px_minmax(0,1fr)_auto] sm:gap-x-4 sm:px-5 ${notification.lue ? "bg-surface-raised" : "bg-[#fff9ef]"}`}
                   >
                     <span className={`flex h-10 w-10 items-center justify-center rounded-full sm:h-11 sm:w-11 ${TONS[presentation.ton]}`} aria-hidden="true">
                       <Icone size={17} strokeWidth={2.1} fill={Icone === Star ? "currentColor" : "none"} />
@@ -356,20 +356,20 @@ export default function NotificationsPopover({ onOpen }: NotificationsPopoverPro
                         <Link
                           href={href}
                           onClick={() => fermerApresNavigation(notification.id)}
-                          className="rounded-sm text-base font-bold leading-snug text-[#2d241d] hover:text-[#0d6738] hover:underline focus:outline-none focus:ring-2 focus:ring-[#0d6738] sm:text-lg"
+                          className="rounded-sm text-base font-bold leading-snug text-ink hover:text-brand hover:underline focus:outline-none focus:ring-2 focus:ring-brand sm:text-lg"
                         >
                           {notification.titre}
                         </Link>
                       ) : (
-                        <h3 className="text-base font-bold leading-snug text-[#2d241d] sm:text-lg">{notification.titre}</h3>
+                        <h3 className="text-base font-bold leading-snug text-ink sm:text-lg">{notification.titre}</h3>
                       )}
-                      {notification.detail && <p className="mt-1 text-sm leading-snug text-[#887764] sm:text-base">{notification.detail}</p>}
+                      {notification.detail && <p className="mt-1 text-sm leading-snug text-ink-muted sm:text-base">{notification.detail}</p>}
 
                       {presentation.action === "ouvrir" && href && (
                         <Link
                           href={href}
                           onClick={() => fermerApresNavigation(notification.id)}
-                          className="mt-3 inline-flex min-h-10 items-center rounded-lg bg-[#0d6738] px-4 py-2 text-sm font-bold text-white transition hover:bg-[#09572f] focus:outline-none focus:ring-2 focus:ring-[#0d6738] focus:ring-offset-2 sm:text-base"
+                          className="mt-3 inline-flex min-h-10 items-center rounded-lg bg-brand px-4 py-2 text-sm font-bold text-white transition hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand focus:ring-offset-2 sm:text-base"
                         >
                           Ouvrir
                         </Link>
@@ -382,17 +382,17 @@ export default function NotificationsPopover({ onOpen }: NotificationsPopoverPro
                 );
               })
             ) : (
-              <p className="px-6 py-12 text-center text-sm text-[#887764]">Vous n’avez aucune notification pour le moment.</p>
+              <p className="px-6 py-12 text-center text-sm text-ink-muted">Vous n’avez aucune notification pour le moment.</p>
             )}
           </div>
 
           {hasMore && nextCursor && (
-            <div className="border-t border-[#eee3d2] bg-[#fffdf9] p-3 text-center">
+            <div className="border-t border-[#eee3d2] bg-surface-raised p-3 text-center">
               <button
                 type="button"
                 disabled={chargementPlus}
                 onClick={() => void chargerNotifications(true)}
-                className="min-h-10 rounded-lg px-4 text-sm font-bold text-[#0d6738] hover:bg-[#e3f1eb] focus:outline-none focus:ring-2 focus:ring-[#0d6738] disabled:opacity-60"
+                className="min-h-10 rounded-lg px-4 text-sm font-bold text-brand hover:bg-[#e3f1eb] focus:outline-none focus:ring-2 focus:ring-brand disabled:opacity-60"
               >
                 {chargementPlus ? "Chargement…" : "Afficher plus"}
               </button>

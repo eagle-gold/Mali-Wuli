@@ -137,7 +137,7 @@ const CLASSE_CARTE =
 const CLASSE_BOUTON_PRIMAIRE =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#2a5b37] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#214a2c] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] focus:ring-offset-2 sm:text-base";
 const CLASSE_BOUTON_SECONDAIRE =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-[#dfd1bd] bg-[#fdfaf4] px-4 py-3 text-sm font-bold text-[#292119] transition hover:border-[#2a5b37] hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] focus:ring-offset-2 sm:text-base";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-[#dfd1bd] bg-[#fdfaf4] px-4 py-3 text-sm font-bold text-ink transition hover:border-[#2a5b37] hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] focus:ring-offset-2 sm:text-base";
 
 const estObjet = (valeur: unknown): valeur is Record<string, unknown> =>
   typeof valeur === "object" && valeur !== null && !Array.isArray(valeur);
@@ -362,7 +362,7 @@ const STATUT_PROFIL: Record<
   VALIDE: {
     libelle: "Profil validé",
     detail: "Votre profil est visible par les membres du réseau.",
-    classe: "bg-[#e5efe8] text-[#2a5b37]",
+    classe: "bg-brand-50 text-[#2a5b37]",
   },
   REFUSE: {
     libelle: "Profil refusé",
@@ -372,14 +372,14 @@ const STATUT_PROFIL: Record<
   SUSPENDU: {
     libelle: "Profil suspendu",
     detail: "Contactez l’équipe Mali Wuli pour réactiver votre profil.",
-    classe: "bg-[#eee8df] text-[#664c33]",
+    classe: "bg-[#eee8df] text-bark",
   },
 };
 
 const tonAvatar = {
-  vert: "bg-[#e5efe8] text-[#2a5b37]",
+  vert: "bg-brand-50 text-[#2a5b37]",
   orange: "bg-[#f3e4d8] text-[#ac6139]",
-  sable: "bg-[#eae3d4] text-[#664c33]",
+  sable: "bg-[#eae3d4] text-bark",
 };
 
 function AvatarInitiales({
@@ -422,7 +422,7 @@ function TitreCarte({
       {href && (
         <Link
           href={href}
-          className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#cee0d4] bg-[#f2f7f3] px-4 py-2 text-sm font-bold text-[#2a5b37] transition hover:bg-[#e5efe8] focus:outline-none focus:ring-2 focus:ring-[#2a5b37]"
+          className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-[#cee0d4] bg-[#f2f7f3] px-4 py-2 text-sm font-bold text-[#2a5b37] transition hover:bg-brand-50 focus:outline-none focus:ring-2 focus:ring-[#2a5b37]"
         >
           <Pencil aria-hidden="true" size={15} />
           {action}
@@ -445,7 +445,7 @@ function Experiences({ experiences, modifiable = true }: { experiences: Experien
                 {experience.poste || "Poste non renseigné"}
                 {experience.structure ? ", " + experience.structure : ""}
               </h3>
-              <p className="mt-1 text-sm leading-relaxed text-[#695c4b] sm:text-base">
+              <p className="mt-1 text-sm leading-relaxed text-ink-muted sm:text-base">
                 {lieuDe(experience.ville, experience.pays, experience.lieu)}
                 {" · "}
                 {periodeDe(
@@ -460,7 +460,7 @@ function Experiences({ experiences, modifiable = true }: { experiences: Experien
           ))}
         </ol>
       ) : (
-        <p className="rounded-xl bg-[var(--color-page)] p-4 text-[#695c4b]">
+        <p className="rounded-xl bg-[var(--color-page)] p-4 text-ink-muted">
           Aucune expérience renseignée pour le moment.
         </p>
       )}
@@ -502,13 +502,13 @@ function Formations({ formations, modifiable = true }: { formations: FormationPr
                   </p>
                 )}
                 {diplomes.length === 0 && (
-                  <p className="mt-1 text-sm leading-relaxed text-[#695c4b] sm:text-base">
+                  <p className="mt-1 text-sm leading-relaxed text-ink-muted sm:text-base">
                     {titreParcours}
                     {formation.specialite ? " · " + libelleProgramme(formation.specialite) : ""}
                     {formation.mention ? " · Mention " + formation.mention : ""}
                   </p>
                 )}
-                <p className="mt-1 text-sm leading-relaxed text-[#695c4b] sm:text-base">
+                <p className="mt-1 text-sm leading-relaxed text-ink-muted sm:text-base">
                   {lieuDe(formation.ville, formation.pays)}
                   {" · "}
                   {periode === "Période non renseignée" && formation.anneePromo
@@ -518,8 +518,8 @@ function Formations({ formations, modifiable = true }: { formations: FormationPr
                 {diplomes.length > 0 && (
                   <ul aria-label="Diplômes du parcours" className="mt-3 space-y-3">
                     {diplomes.map((diplome, diplomeIndex) => (
-                      <li key={`${diplome.type}-${diplome.anneeObtention}-${diplomeIndex}`} className="text-sm leading-relaxed text-[#695c4b]">
-                        <p className="font-medium text-[#292119]">
+                      <li key={`${diplome.type}-${diplome.anneeObtention}-${diplomeIndex}`} className="text-sm leading-relaxed text-ink-muted">
+                        <p className="font-medium text-ink">
                           {diplome.libelle || (diplome.type === "BAC" ? "Baccalauréat" : diplome.type === "BREVET" ? "Brevet" : "Diplôme")}
                         </p>
                         <p>
@@ -537,7 +537,7 @@ function Formations({ formations, modifiable = true }: { formations: FormationPr
           })}
         </ol>
       ) : (
-        <p className="rounded-xl bg-[var(--color-page)] p-4 text-[#695c4b]">
+        <p className="rounded-xl bg-[var(--color-page)] p-4 text-ink-muted">
           Aucune formation renseignée pour le moment.
         </p>
       )}
@@ -563,12 +563,12 @@ function Mentorat({ mentorat, modifiable = true }: { mentorat?: MentoratProfil; 
       <div className="mb-4 flex flex-wrap gap-2">
         {actif && sujets.length ? (
           sujets.map((sujet) => (
-            <span key={sujet} className="rounded-full bg-[#e5efe8] px-3 py-1.5 text-xs font-bold text-[#2a5b37]">
+            <span key={sujet} className="rounded-full bg-brand-50 px-3 py-1.5 text-xs font-bold text-[#2a5b37]">
               {sujet}
             </span>
           ))
         ) : (
-          <span className="rounded-full bg-[#e5efe8] px-3 py-1.5 text-xs font-bold text-[#2a5b37]">
+          <span className="rounded-full bg-brand-50 px-3 py-1.5 text-xs font-bold text-[#2a5b37]">
             {actif ? "Aucun sujet renseigné" : "Mentorat non activé"}
           </span>
         )}
@@ -595,7 +595,7 @@ function Mentorat({ mentorat, modifiable = true }: { mentorat?: MentoratProfil; 
               key={(jour.jour || "jour") + String(index)}
               className="flex flex-col gap-2 rounded-xl border border-[#eae3d4] px-4 py-3 sm:flex-row sm:items-center sm:justify-between"
             >
-              <span className="font-bold text-[#292119]">{jour.jour || "Jour"}</span>
+              <span className="font-bold text-ink">{jour.jour || "Jour"}</span>
               <span className="text-sm font-bold text-[#2a5b37]">
                 {(jour.plages || [])
                   .map((plage) => (plage.debut || "—") + " – " + (plage.fin || "—"))
@@ -660,7 +660,7 @@ function EnTeteProfil({
       </div>
       <div className="relative px-5 pb-7 pt-16 sm:px-8 sm:pb-8 sm:pt-5 sm:pl-[190px]">
         <div className="absolute -top-14 left-5 sm:-top-14 sm:left-10">
-          <div className="relative rounded-full border-4 border-[#fdfaf4] bg-[#e5efe8] shadow-sm">
+          <div className="relative rounded-full border-4 border-[#fdfaf4] bg-brand-50 shadow-sm">
             {photo ? (
               <img
                 src={photo}
@@ -677,7 +677,7 @@ function EnTeteProfil({
         <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
           <div className="min-w-0">
             <h1 className="break-words font-display text-2xl font-semibold leading-tight sm:text-3xl">{nomComplet}</h1>
-            <div className="mt-1 text-base text-[#2e261f] sm:text-lg">{sousTitre}</div>
+            <div className="mt-1 text-base text-ink sm:text-lg">{sousTitre}</div>
             {meta}
           </div>
           {actions}
@@ -765,7 +765,7 @@ function TitreProfilEditable({ titre, personnalise, onEnregistre }: {
           onKeyDown={(event) => { if (event.key === "Escape" && !envoi) { event.preventDefault(); fermer(); } }}
           aria-describedby="titre-profil-aide"
           placeholder="Ex. Ingénieur logiciel | Passionné par l’innovation"
-          className="min-h-11 w-full rounded-xl border border-[#d9c7aa] bg-white px-4 text-base text-[#2e261f] outline-none placeholder:text-[#75695d] focus:border-[#2a5b37] focus:ring-2 focus:ring-[#2a5b37]/20"
+          className="min-h-11 w-full rounded-xl border border-[#d9c7aa] bg-white px-4 text-base text-ink outline-none placeholder:text-[#75695d] focus:border-[#2a5b37] focus:ring-2 focus:ring-[#2a5b37]/20"
         />
         <p id="titre-profil-aide" className="mt-1 text-xs text-[#6e5b49]">
           {personnalise
@@ -779,7 +779,7 @@ function TitreProfilEditable({ titre, personnalise, onEnregistre }: {
             {envoi && <LoaderCircle aria-hidden="true" size={15} className="animate-spin" />}
             {envoi ? "Enregistrement…" : "Enregistrer"}
           </button>
-          <button type="button" onClick={fermer} disabled={envoi} className="min-h-10 rounded-full px-4 text-sm font-semibold text-[#56493e] hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37] disabled:opacity-60">
+          <button type="button" onClick={fermer} disabled={envoi} className="min-h-10 rounded-full px-4 text-sm font-semibold text-ink-soft hover:bg-surface-sunken focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37] disabled:opacity-60">
             Annuler
           </button>
           {personnalise && (
@@ -787,7 +787,7 @@ function TitreProfilEditable({ titre, personnalise, onEnregistre }: {
               type="button"
               disabled={envoi}
               onClick={() => void envoyer(null, "Le titre par défaut a été rétabli.")}
-              className="ml-auto min-h-10 rounded-full border border-[#d9c7aa] px-4 text-sm font-semibold text-[#2a5b37] hover:bg-[#f5ecdf] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37] disabled:opacity-60"
+              className="ml-auto min-h-10 rounded-full border border-[#d9c7aa] px-4 text-sm font-semibold text-[#2a5b37] hover:bg-surface-sunken focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37] disabled:opacity-60"
             >
               Rétablir le titre par défaut
             </button>
@@ -805,7 +805,7 @@ function TitreProfilEditable({ titre, personnalise, onEnregistre }: {
         type="button"
         onClick={() => setEdition(true)}
         aria-label="Modifier mon titre"
-        className="-mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-[#695c4b] hover:bg-[#f5ecdf] hover:text-[#2a5b37] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37]"
+        className="-mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-ink-muted hover:bg-surface-sunken hover:text-[#2a5b37] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2a5b37]"
       >
         <Pencil aria-hidden="true" size={16} />
       </button>
@@ -1030,8 +1030,8 @@ function ProfilProprietaire() {
 
   if (chargementProfil) {
     return (
-      <div className="flex min-h-[65vh] items-center justify-center bg-[var(--color-page)] px-4 text-[#292119]">
-        <div className={CLASSE_CARTE + " flex items-center gap-3 px-6 py-5 font-semibold text-[#695c4b]"} role="status">
+      <div className="flex min-h-[65vh] items-center justify-center bg-[var(--color-page)] px-4 text-ink">
+        <div className={CLASSE_CARTE + " flex items-center gap-3 px-6 py-5 font-semibold text-ink-muted"} role="status">
           <LoaderCircle aria-hidden="true" className="animate-spin text-[#2a5b37]" size={24} />
           Chargement de votre profil…
         </div>
@@ -1041,10 +1041,10 @@ function ProfilProprietaire() {
 
   if (!utilisateur) {
     return (
-      <div className="flex min-h-[65vh] items-center justify-center bg-[var(--color-page)] px-4 text-[#292119]">
+      <div className="flex min-h-[65vh] items-center justify-center bg-[var(--color-page)] px-4 text-ink">
         <section className={CLASSE_CARTE + " max-w-lg p-7 text-center"} role="alert">
           <h1 className="font-display text-2xl font-bold">Votre profil n’est pas disponible</h1>
-          <p className="mt-3 text-[#695c4b]">{erreurProfil || "Une erreur inattendue est survenue."}</p>
+          <p className="mt-3 text-ink-muted">{erreurProfil || "Une erreur inattendue est survenue."}</p>
           <button type="button" onClick={() => void chargerDonnees()} className={CLASSE_BOUTON_PRIMAIRE + " mt-5"}>
             <RefreshCw aria-hidden="true" size={17} />
             Réessayer
@@ -1055,12 +1055,12 @@ function ProfilProprietaire() {
   }
 
   return (
-    <div className="min-h-full min-w-0 [overflow-wrap:anywhere] bg-[var(--color-page)] px-4 py-6 text-[#292119] sm:px-6 sm:py-8">
+    <div className="min-h-full min-w-0 [overflow-wrap:anywhere] bg-[var(--color-page)] px-4 py-6 text-ink sm:px-6 sm:py-8">
       <div className="mx-auto w-full max-w-[1600px]">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
           <Link
             href="/dashboard"
-            className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-[#695c4b] transition hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] sm:text-base"
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-ink-muted transition hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] sm:text-base"
           >
             <ArrowLeft aria-hidden="true" size={18} />
             Retour à l’accueil
@@ -1078,7 +1078,7 @@ function ProfilProprietaire() {
               personnalise={utilisateur.profil.titrePersonnalise === true}
               onEnregistre={enregistrerTitre}
             />
-            {localisationProfil && <p className="mt-1 text-sm text-[#806f5e] sm:text-base">{localisationProfil}</p>}
+            {localisationProfil && <p className="mt-1 text-sm text-ink-muted sm:text-base">{localisationProfil}</p>}
           </>}
           controleCouverture={<>
             <button
@@ -1086,7 +1086,7 @@ function ProfilProprietaire() {
               onClick={() => fichierCouverture.current?.click()}
               disabled={couvertureEnCours}
               aria-describedby={erreurCouverture ? "erreur-photo-couverture" : "aide-photo-couverture"}
-              className="absolute right-3 top-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#fffbf5]/95 px-3 py-2 text-sm font-medium text-[#292119] shadow-sm transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#e0b33f] disabled:cursor-wait disabled:opacity-75 sm:right-5 sm:top-4 sm:px-4"
+              className="absolute right-3 top-3 inline-flex min-h-11 items-center gap-2 rounded-xl bg-surface/95 px-3 py-2 text-sm font-medium text-ink shadow-sm transition hover:bg-white focus:outline-none focus:ring-2 focus:ring-[#e0b33f] disabled:cursor-wait disabled:opacity-75 sm:right-5 sm:top-4 sm:px-4"
             >
               {couvertureEnCours
                 ? <LoaderCircle aria-hidden="true" className="animate-spin" size={17} />
@@ -1168,7 +1168,7 @@ function ProfilProprietaire() {
                 <span className={`w-fit rounded-lg px-3 py-2 text-xs font-extrabold uppercase ${statut.classe}`}>
                   {statut.libelle}
                 </span>
-                <p className="text-[#695c4b]">
+                <p className="text-ink-muted">
                   {statut.detail}
                 </p>
               </div>
@@ -1199,7 +1199,7 @@ function ProfilProprietaire() {
               </div>
 
               <h3 className="mb-3 mt-7 titre-element">Mes contributions</h3>
-              <ul className="space-y-2 text-sm leading-relaxed text-[#695c4b] sm:text-base">
+              <ul className="space-y-2 text-sm leading-relaxed text-ink-muted sm:text-base">
                 <li>{avisPublies} avis de formation publié{avisPublies === 1 ? "" : "s"}</li>
                 <li>{stats.nbPublications || 0} publication{stats.nbPublications === 1 ? "" : "s"} dans le fil</li>
                 <li>{stats.nbCommentaires || 0} commentaire{stats.nbCommentaires === 1 ? "" : "s"} publié{stats.nbCommentaires === 1 ? "" : "s"}</li>
@@ -1225,20 +1225,20 @@ function ProfilProprietaire() {
             </Link>
           </div>
           {chargementSuggestions ? (
-            <div className="flex min-h-32 items-center justify-center rounded-2xl border border-[#eae3d4] bg-[#fffefb] text-[#695c4b]" role="status">
+            <div className="flex min-h-32 items-center justify-center rounded-2xl border border-[#eae3d4] bg-[#fffefb] text-ink-muted" role="status">
               <LoaderCircle aria-hidden="true" className="mr-3 animate-spin text-[#2a5b37]" size={22} />
               Recherche de membres compatibles…
             </div>
           ) : erreurSuggestions ? (
             <div className="rounded-2xl border border-[#eae3d4] bg-[#fffefb] p-6 text-center">
-              <p className="text-[#695c4b]">{erreurSuggestions}</p>
+              <p className="text-ink-muted">{erreurSuggestions}</p>
               <button type="button" onClick={() => void chargerDonnees()} className={CLASSE_BOUTON_SECONDAIRE + " mt-4"}>
                 <RefreshCw aria-hidden="true" size={17} />
                 Réessayer
               </button>
             </div>
           ) : membresSuggeres.length === 0 ? (
-            <div className="rounded-2xl border border-[#eae3d4] bg-[#fffefb] p-6 text-center text-[#695c4b]">
+            <div className="rounded-2xl border border-[#eae3d4] bg-[#fffefb] p-6 text-center text-ink-muted">
               Aucune nouvelle suggestion pour le moment. Consultez l’annuaire pour découvrir d’autres membres.
             </div>
           ) : (
@@ -1292,7 +1292,7 @@ function ProfilProprietaire() {
         {annonce && (
           <div
             role="status"
-            className="fixed bottom-24 left-1/2 z-40 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-xl bg-[#292119] px-5 py-4 text-center text-sm font-semibold text-white shadow-xl md:bottom-6"
+            className="fixed bottom-24 left-1/2 z-40 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-xl bg-ink px-5 py-4 text-center text-sm font-semibold text-white shadow-xl md:bottom-6"
           >
             {annonce}
           </div>
@@ -1324,7 +1324,7 @@ function dateMembreDepuis(valeur?: string) {
 
 function EcranProfil({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-[65vh] items-center justify-center bg-[var(--color-page)] px-4 text-[#292119]">
+    <div className="flex min-h-[65vh] items-center justify-center bg-[var(--color-page)] px-4 text-ink">
       {children}
     </div>
   );
@@ -1435,7 +1435,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
   if (estMoiSession || chargement || (!membre && !erreur)) {
     return (
       <EcranProfil>
-        <div className={CLASSE_CARTE + " flex items-center gap-3 px-6 py-5 font-semibold text-[#695c4b]"} role="status">
+        <div className={CLASSE_CARTE + " flex items-center gap-3 px-6 py-5 font-semibold text-ink-muted"} role="status">
           <LoaderCircle aria-hidden="true" className="animate-spin text-[#2a5b37]" size={24} />
           Chargement du profil…
         </div>
@@ -1450,7 +1450,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
           <h1 className="font-display text-2xl font-bold">
             {erreur?.introuvable ? "Profil introuvable" : "Ce profil n’est pas disponible"}
           </h1>
-          <p className="mt-3 text-[#695c4b]">{erreur?.texte}</p>
+          <p className="mt-3 text-ink-muted">{erreur?.texte}</p>
           <div className="mt-5 flex flex-wrap justify-center gap-3">
             {!erreur?.introuvable && (
               <button type="button" onClick={() => setRevision((r) => r + 1)} className={CLASSE_BOUTON_PRIMAIRE}>
@@ -1510,12 +1510,12 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
   ) : null;
 
   return (
-    <div className="min-h-full min-w-0 [overflow-wrap:anywhere] bg-[var(--color-page)] px-4 py-6 text-[#292119] sm:px-6 sm:py-8">
+    <div className="min-h-full min-w-0 [overflow-wrap:anywhere] bg-[var(--color-page)] px-4 py-6 text-ink sm:px-6 sm:py-8">
       <div className="mx-auto w-full max-w-[1600px]">
         <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
           <Link
             href="/annuaire"
-            className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-[#695c4b] transition hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] sm:text-base"
+            className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-semibold text-ink-muted transition hover:text-[#2a5b37] focus:outline-none focus:ring-2 focus:ring-[#2a5b37] sm:text-base"
           >
             <ArrowLeft aria-hidden="true" size={18} />
             Retour à l’annuaire
@@ -1530,7 +1530,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
           photoCouverture={urlMediaBackend(membre.photoCouverture)}
           sousTitre={<>
             <p>{fonction}</p>
-            {lieuVisiteur && <p className="mt-1 text-sm text-[#806f5e] sm:text-base">{lieuVisiteur}</p>}
+            {lieuVisiteur && <p className="mt-1 text-sm text-ink-muted sm:text-base">{lieuVisiteur}</p>}
           </>}
           meta={
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm sm:text-base">
@@ -1573,7 +1573,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
             {membre.bio?.trim() && (
               <section className={CLASSE_CARTE + " p-5 sm:p-8"}>
                 <TitreCarte titre="À propos" />
-                <p className="whitespace-pre-line leading-relaxed text-[#695c4b]">{membre.bio}</p>
+                <p className="whitespace-pre-line leading-relaxed text-ink-muted">{membre.bio}</p>
               </section>
             )}
             <Experiences experiences={experiences} modifiable={false} />
@@ -1598,7 +1598,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
                             {association.nom}
                           </Link>
                         </h3>
-                        <p className="mt-1 text-sm text-[#695c4b]">
+                        <p className="mt-1 text-sm text-ink-muted">
                           {[association.vocation, association.ville, association.pays].filter(Boolean).join(" · ")}
                         </p>
                       </div>
@@ -1639,7 +1639,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
               <h2 className="mb-5 titre-section">
                 Dans le réseau
               </h2>
-              <ul className="space-y-2 text-sm leading-relaxed text-[#695c4b] sm:text-base">
+              <ul className="space-y-2 text-sm leading-relaxed text-ink-muted sm:text-base">
                 <li>{stats.nbSynergies || 0} mise{stats.nbSynergies === 1 ? "" : "s"} en relation acceptée{stats.nbSynergies === 1 ? "" : "s"}</li>
                 <li>{stats.nbPublications || 0} publication{stats.nbPublications === 1 ? "" : "s"} dans le fil</li>
                 <li>{stats.nbCommentaires || 0} commentaire{stats.nbCommentaires === 1 ? "" : "s"} publié{stats.nbCommentaires === 1 ? "" : "s"}</li>
@@ -1653,7 +1653,7 @@ function ProfilVisiteur({ membreId }: { membreId: string }) {
         {annonce && (
           <div
             role="status"
-            className="fixed bottom-24 left-1/2 z-40 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-xl bg-[#292119] px-5 py-4 text-center text-sm font-semibold text-white shadow-xl md:bottom-6"
+            className="fixed bottom-24 left-1/2 z-40 w-[calc(100%-2rem)] max-w-md -translate-x-1/2 rounded-xl bg-ink px-5 py-4 text-center text-sm font-semibold text-white shadow-xl md:bottom-6"
           >
             {annonce}
           </div>
