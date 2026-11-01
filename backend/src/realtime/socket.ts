@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 import { z } from "zod";
 import { verifierTokenAcces } from "../lib/auth-token";
 import { prisma } from "../lib/prisma";
+import { connexionFermee, connexionOuverte, enregistrerActivite } from "../lib/presence";
 
 type SocketIdentity = {
   userId: string;
@@ -76,6 +77,13 @@ export function initialiserSocket(httpServer: HttpServer, origins: string[]) {
     const identite = socket.data.identite as SocketIdentity;
     socket.join(`user:${identite.userId}`);
 
+    if (connexionOuverte(identite.userId)) void diffuserPresence(io, identite, true, null);
+    socket.on("disconnect", async () => {
+      if (!connexionFermee(identite.userId)) return;
+      const date = await enregistrerActivite(identite.userId);
+      void diffuserPresence(io, identite, false, date);
+    });
+
     socket.on("rejoindre_conversation", async (valeur: unknown, accuserReception?: (resultat: object) => void) => {
       const resultat = conversationIdSchema.safeParse(valeur);
       if (!resultat.success || !(await appartientConversation(identite.profilId, resultat.data))) {
@@ -105,6 +113,23 @@ export function initialiserSocket(httpServer: HttpServer, origins: string[]) {
 
   socketServer = io;
   return io;
+}
+
+/**
+ * Prévient les interlocuteurs qui ont une conversation ouverte avec ce membre
+ * (salles `conversation:`), pour mettre à jour « En ligne » sans rechargement.
+ */
+async function diffuserPresence(io: Server, identite: SocketIdentity, enLigne: boolean, derniereActiviteLe: Date | null) {
+  try {
+    const conversations = await prisma.conversationMembre.findMany({
+      where: { profilId: identite.profilId },
+      select: { conversationId: true },
+    });
+    const evenement = { profilId: identite.profilId, enLigne, derniereActiviteLe };
+    for (const { conversationId } of conversations) io.to(`conversation:${conversationId}`).emit("presence", evenement);
+  } catch (erreur) {
+    console.error("Présence non diffusée", erreur);
+  }
 }
 
 export function obtenirSocket() {

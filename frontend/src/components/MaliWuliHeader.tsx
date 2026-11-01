@@ -330,7 +330,8 @@ export function MemberHeader() {
             type="search"
             value={recherche}
             onChange={(event) => setRecherche(event.target.value)}
-            placeholder="Rechercher sur Mali Wuli"
+            name="q"
+              placeholder="Rechercher sur Mali Wuli"
             aria-label="Rechercher sur Mali Wuli"
             className="h-10 w-full rounded-full border border-white/10 bg-bark-400/80 py-2 pl-11 pr-4 text-sm text-white outline-none transition placeholder:text-[#d7cab7] hover:bg-bark-400 focus:border-gold focus:bg-bark-400 focus-visible:ring-2 focus-visible:ring-gold/30"
           />
@@ -395,6 +396,7 @@ export function MemberHeader() {
           <form onSubmit={rechercher} role="search" className="relative col-span-2 mb-2">
             <Search aria-hidden="true" size={20} className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-[#d7cab7]" />
             <input type="search" value={recherche} onChange={(event) => setRecherche(event.target.value)}
+              name="q"
               placeholder="Rechercher sur Mali Wuli" aria-label="Rechercher sur Mali Wuli"
               className="h-12 w-full min-w-0 rounded-full border border-white/20 bg-bark-400 py-3 pl-11 pr-4 text-base text-white outline-none placeholder:text-sm placeholder:text-[#d7cab7] focus:border-gold" />
           </form>

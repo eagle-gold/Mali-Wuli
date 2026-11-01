@@ -9,7 +9,7 @@ Le remote `origin` (`eagle-gold/MALI-WULI`) est PUBLIC : ne jamais y pousser.
 ## Statut courant
 
 <!-- Une seule ligne, remplacée à chaque début et fin de session. -->
-LIBRE — dernière session : Claude, 2026-10-31 (correctif avatars commité).
+LIBRE — dernière session : Claude, 2026-11-01 (refonte messagerie + correctifs d'accessibilité commités en local sur refonte/develop ; non poussés ; migration 20261101100000 appliquée en LOCAL seulement).
 
 ## Modèle d'entrée
 
@@ -29,6 +29,27 @@ LIBRE — dernière session : Claude, 2026-10-31 (correctif avatars commité).
 ```
 
 ## Entrées
+
+### 2026-11-01 — Claude — Refonte de la messagerie
+- Statut : TERMINÉ (commité en local sur refonte/develop ; ni push ni déploiement)
+- Complément : passe Chrome DevTools (Lighthouse) : accessibilité de la messagerie de 96 à 100 (token clay-ink, noms accessibles, attributs name) ; comptes QA qa-dt-a et qa-dt-b créés puis supprimés ; MySQL Docker redémarré par l'utilisateur.
+- Demande de l'utilisateur : refonte UX/UI et fonctionnelle de la messagerie : zone de saisie premium, statut d'activité, envoi d'images et de fichiers, en-tête, bulles, états, responsive.
+- État Git au début : refonte/develop = origin/develop (ab9cde5).
+- Fichiers touchés : backend `prisma/schema.prisma` (PieceJointeMessage, User.derniereActiviteLe) + migration `20261101100000_messagerie_pieces_jointes_presence`, `lib/pieces-jointes.ts` (+ test), `lib/presence.ts` (+ test), `realtime/socket.ts` (présence), `routes/message.routes.ts` (pièces jointes, téléchargement protégé, présence dans les réponses), `services/suppression-compte.service.ts` (effacement des pièces jointes) ; frontend `components/messages/Messagerie.tsx` (réécrit), `ZoneSaisie.tsx`, `PiecesJointes.tsx`, `lib/messagerie.ts` (+ test), `types/api.ts` ; `.gitignore` (backend/private-uploads/).
+- Fait et vérifié : back tsc OK, 236/236 ; front type-check OK, 47/47. API locale : envois, refus (exécutable déguisé, vide, non-membre sans écriture de fichier), téléchargement 200/404/401. Chrome à deux sessions : En ligne, écrit…, aperçus, réception en direct, Vu, visionneuse, « Actif à l’instant » après départ, mobile 390 px, aucune erreur JS. Suppression des comptes QA : 9 pièces jointes effacées du disque.
+- Fait mais non vérifié : vrais téléphones, lecteur d'écran, gros fichiers sur réseau lent, plusieurs instances Node (présence en mémoire).
+- Actions à effet externe : base LOCALE — `prisma migrate deploy` (20261101100000) ; comptes QA qa-msg-a/b/c créés puis supprimés par supprimerCompte. Serveurs de dev relancés pour les tests puis arrêtés.
+- Décisions à prendre par l'utilisateur : réglage « masquer mon statut d'activité » ; en production, dossier privé persistant `PRIVATE_UPLOAD_DIR` (hors public_html, sauvegardé).
+- Prochaine action : revue et commit ; en production, sauvegarde, `prisma migrate deploy`, création de PRIVATE_UPLOAD_DIR, backend puis frontend.
+
+### 2026-10-31 — Claude — Publication de la refonte sur origin/develop
+- Statut : TERMINÉ
+- Demande de l'utilisateur : pousser le projet sur la branche develop du dépôt ; mettre .claude/, CLAUDE.md et docs/ dans le .gitignore.
+- Décisions de l'utilisateur : docs/ (audit et sécurité, qui décrivent des failles pas encore corrigées en production) retiré de l'historique avant publication, puisque le dépôt eagle-gold/Mali-Wuli est PUBLIC ; création de la branche distante develop (master inchangé).
+- Fait et vérifié : les 5 commits locaux (jamais poussés) ont été réécrits sans docs/*.md dans un worktree temporaire (aucun écart de code hors docs/), puis commit du .gitignore ; aucun secret ni fichier sensible dans le diff ; `git push origin refonte/develop:develop` → origin/develop = ab9cde5, origin/master = dc8ee24 inchangé. La branche locale `refonte/develop` suit origin/develop ; les fichiers docs/*.md restent sur le disque (ignorés). Les deux suppressions non commitées de l'utilisateur sont conservées.
+- Sauvegarde : la branche locale `refonte/lot-1-design-system` (f1213ed) garde l'ancienne version avec docs/ dans l'historique ; ne jamais la pousser.
+- Actions à effet externe : push vers https://github.com/eagle-gold/Mali-Wuli (branche develop créée). Aucun déploiement.
+- Prochaine action : en production, sur accord, sauvegarde, `prisma migrate deploy` (20261031120000, 20261031130000), backend puis frontend ; ensuite export des données et CSP.
 
 ### 2026-10-31 — Claude — Correctif : avatars de repli
 - Statut : TERMINÉ (commité en local)

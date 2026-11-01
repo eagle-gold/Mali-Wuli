@@ -55,6 +55,7 @@ Thumbs.db
 # UPLOADS
 # ========================
 backend/uploads/
+backend/private-uploads/
 
 docker-compose.yml
 

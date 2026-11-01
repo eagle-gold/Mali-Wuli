@@ -109,6 +109,24 @@ export type MembreResumeApi = {
   titre?: string | null;
   ville?: string | null;
   photo?: string | null;
+  /** Présence (messagerie) : connecté en ce moment. */
+  enLigne?: boolean;
+  /** Présence (messagerie) : dernière activité connue. */
+  derniereActiviteLe?: string | null;
+};
+
+export type PieceJointeApi = {
+  id: string;
+  nom: string;
+  mime: string;
+  taille: number;
+  estImage: boolean;
+};
+
+export type PresenceEvenementApi = {
+  profilId: string;
+  enLigne: boolean;
+  derniereActiviteLe: string | null;
 };
 
 export type MessageApi = {
@@ -123,6 +141,7 @@ export type MessageApi = {
     initiales?: string | null;
     photo?: string | null;
   };
+  piecesJointes?: PieceJointeApi[];
 };
 
 export type ConversationApi = {

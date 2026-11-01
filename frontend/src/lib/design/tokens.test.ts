@@ -33,7 +33,7 @@ test("les tokens attendus sont définis", () => {
 });
 
 test("texte courant : contraste WCAG AA (≥ 4,5:1) sur toutes les surfaces claires", () => {
-  for (const texte of ["ink", "ink-soft", "ink-muted", "brand", "brand-700", "danger"]) {
+  for (const texte of ["ink", "ink-soft", "ink-muted", "brand", "brand-700", "danger", "clay-ink"]) {
     for (const fond of ["page", "surface", "surface-raised", "surface-sunken"]) {
       const ratio = contraste(texte, fond);
       assert.ok(ratio >= 4.5, `${texte} sur ${fond} : ${ratio.toFixed(2)}`);

@@ -46,6 +46,8 @@ model User {
   statut        StatutInscription @default(VALIDE)
   emailVerifie  Boolean           @default(false)
   tokenVersion  Int               @default(0)
+  /// Dernière activité connue (déconnexion du temps réel, envoi de message).
+  derniereActiviteLe DateTime?
   codeVerif     String?
   codeExpire    DateTime?
   cguAccepteLe  DateTime?
@@ -695,6 +697,24 @@ model Message {
   contenu        String       @db.Text
   lu             Boolean      @default(false)
   createdAt      DateTime     @default(now())
+  piecesJointes  PieceJointeMessage[]
+}
+
+/// Fichier joint à un message. Stocké dans un dossier PRIVÉ (hors /uploads),
+/// servi uniquement aux membres de la conversation.
+model PieceJointeMessage {
+  id        String   @id @default(cuid())
+  messageId String
+  message   Message  @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  /// Nom d'origine nettoyé, affiché et proposé au téléchargement.
+  nom       String   @db.VarChar(200)
+  mime      String   @db.VarChar(120)
+  taille    Int
+  /// Nom du fichier sur disque (aléatoire), relatif au dossier privé.
+  fichier   String   @db.VarChar(120)
+  createdAt DateTime @default(now())
+
+  @@index([messageId])
 }
 
 // =============================================

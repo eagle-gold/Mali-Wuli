@@ -19,6 +19,7 @@ type Props = {
 function Avatar({ photo, initiales, taille }: { photo: string | null; initiales: string; taille: number }) {
   return (
     <span
+      aria-hidden="true"
       style={{ width: taille, height: taille }}
       className="flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-[#f4eee1] font-bold text-brand"
     >
@@ -83,7 +84,6 @@ export default function MenuCompte({ nom, titre, initiales, photo, administratio
       <button
         ref={declencheur}
         type="button"
-        aria-label={`Menu du compte de ${nom}`}
         aria-haspopup="true"
         aria-expanded={ouvert}
         aria-controls={idPanneau}
@@ -95,6 +95,8 @@ export default function MenuCompte({ nom, titre, initiales, photo, administratio
         }}
         className="flex h-12 items-center gap-1 rounded-full pr-2 text-bark-text transition hover:bg-white/10 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-gold"
       >
+        {/* Nom accessible en texte (et non aria-label) : les initiales visibles restent décoratives. */}
+        <span className="sr-only">Menu du compte de {nom}</span>
         <span className={`flex rounded-full border-2 transition ${ouvert || profilActif ? "border-gold" : "border-white/25"}`}>
           <Avatar photo={photo} initiales={initiales} taille={44} />
         </span>

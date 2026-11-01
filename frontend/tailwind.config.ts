@@ -49,7 +49,7 @@ const config: Config = {
           text: token("bark-text"),
         },
         gold: token("gold"),
-        clay: token("clay"),
+        clay: { DEFAULT: token("clay"), ink: token("clay-ink") },
         danger: token("danger"),
         // Palette historique Mali Wuli : Terre, Vert, Sable
         sable: {

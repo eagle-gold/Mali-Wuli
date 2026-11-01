@@ -45,6 +45,7 @@
     /* Accents */
     --mw-gold: 244 180 0;         /* #f4b400 — focus et repères sur fond sombre */
     --mw-clay: 198 83 39;         /* #c65327 — pastilles, accent chaud */
+    --mw-clay-ink: 143 56 26;     /* #8f381a — texte sur fond clay clair (contraste AA) */
     --mw-danger: 163 50 31;       /* #a3321f — erreurs et actions destructives */
 
     --mw-header-h: 64px;

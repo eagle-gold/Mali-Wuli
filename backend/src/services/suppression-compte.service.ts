@@ -1,6 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import { prisma } from "../lib/prisma";
 import { emailAdminPrincipal } from "../lib/roles";
+import { supprimerPieceJointe } from "../lib/pieces-jointes";
 import { supprimerUpload } from "../middlewares/upload.middleware";
 
 /**
@@ -23,7 +24,7 @@ export function confirmationValide(saisie: unknown, emailCompte: string) {
 
 type Tx = Prisma.TransactionClient;
 
-async function supprimerDonneesProfil(tx: Tx, profilId: string, userId: string, fichiers: string[]) {
+async function supprimerDonneesProfil(tx: Tx, profilId: string, userId: string, fichiers: string[], piecesJointes: string[]) {
   const auteurs = [profilId, userId];
 
   // Messagerie : conversations privées supprimées, groupes conservés sans lui.
@@ -32,6 +33,12 @@ async function supprimerDonneesProfil(tx: Tx, profilId: string, userId: string, 
     select: { conversationId: true, conversation: { select: { estGroupe: true } } },
   });
   const privees = adhesions.filter((a) => !a.conversation.estGroupe).map((a) => a.conversationId);
+  // Pièces jointes des messages supprimés (stockage privé), effacées après validation.
+  const pieces = await tx.pieceJointeMessage.findMany({
+    where: { message: { OR: [{ conversationId: { in: privees } }, { auteurId: profilId }] } },
+    select: { fichier: true },
+  });
+  piecesJointes.push(...pieces.map((piece) => piece.fichier));
   if (privees.length) {
     await tx.message.deleteMany({ where: { conversationId: { in: privees } } });
     await tx.conversationMembre.deleteMany({ where: { conversationId: { in: privees } } });
@@ -96,6 +103,7 @@ async function supprimerDonneesProfil(tx: Tx, profilId: string, userId: string, 
 
 export async function supprimerCompte(userId: string) {
   const fichiers: string[] = [];
+  const piecesJointes: string[] = [];
 
   await prisma.$transaction(async (tx) => {
     const user = await tx.user.findUnique({
@@ -110,7 +118,7 @@ export async function supprimerCompte(userId: string) {
     if (user.profil) {
       if (user.profil.photo) fichiers.push(user.profil.photo);
       if (user.profil.photoCouverture) fichiers.push(user.profil.photoCouverture);
-      await supprimerDonneesProfil(tx, user.profil.id, user.id, fichiers);
+      await supprimerDonneesProfil(tx, user.profil.id, user.id, fichiers, piecesJointes);
     }
 
     await tx.user.updateMany({ where: { parrainId: user.id }, data: { parrainId: null } });
@@ -128,4 +136,5 @@ export async function supprimerCompte(userId: string) {
   for (const fichier of new Set(fichiers)) {
     try { supprimerUpload(fichier); } catch (err) { console.error("Fichier non supprimé après suppression de compte", err); }
   }
+  for (const fichier of new Set(piecesJointes)) supprimerPieceJointe(fichier);
 }
